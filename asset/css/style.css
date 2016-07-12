@@ -1,0 +1,715 @@
+/* Modified Meyer's CSS reset */
+html, body, div, span, object, iframe, h1, h2, h3,
+h4, h5, h6, p, blockquote, pre, a, abbr, acronym,
+address, big, code, del, dfn, em, img, small, strike,
+strong, sub, sup, b, u, i, center, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, article, aside, canvas,
+details, embed, figure, figcaption, footer, header,
+menu, nav, output, section, time, video {
+margin: 0; padding: 0; border: 0; font-size: 100%;
+font: inherit; vertical-align: baseline; }
+article, aside, details, figcaption, figure, footer,
+header, hgroup, menu, nav, section { display: block; }
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after,
+q:before, q:after { content: ''; content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+/*============================================================*/
+
+@font-face {
+  font-family: "TH Sarabun New";
+  font-style: normal;
+  src: url("../asset/THSarabunNew.ttf") format("truetype");
+}
+
+body{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  line-height: 1.25;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #212121;
+}
+
+html, body{
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+a:link, a:visited{
+  color: #9C27B0;
+  text-decoration: none;
+  border-bottom: 1px #9C27B0 solid;
+}
+
+.sPrimaryBg{
+  background: #9C27B0;
+  color: #FFF;
+}
+
+.sPrimaryText{ color: #9C27B0; }
+
+.sAccentBg{
+  background: #FF5252;
+  color: #FFF;
+}
+
+.sAccentText{ color: #FF5252; }
+
+.sSubtitle{
+  color: #888;
+  font-size: 11px;
+}
+
+.sElevation1{
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.sElevation2{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.sElevation4{
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.sElevation0h2{
+  box-shadow: 0 0px 0px rgba(0,0,0,0.16), 0 0px 0px rgba(0,0,0,0.23);
+}
+
+.sElevation0h2:hover{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.sClickable{ cursor: pointer; }
+
+/*============================================================*/
+
+#sidebar{
+  width: 30%;
+  display: inline-block;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 10;
+  position: relative; top: 0; left: 0;
+  background: #eaeaea;
+}
+
+#sidebarHead{
+  width: 100%;
+  height: 64px;
+  min-height: 64px;
+  line-height: 64px;
+  box-sizing: border-box;
+  border-bottom: 1px #eaeaea solid;
+  background: #fff;
+}
+
+#logo{
+  position: relative; top: 0; left: 0;
+  display: inline-block;
+  width: auto;
+  height: 64px;
+}
+
+#logo .logoHover{
+  position: absolute; top: 0; left: 0;
+  opacity: 0;
+  transition: all .2s ease-in-out;
+}
+
+#sidebar:hover .logoHover{
+  opacity: 1;
+}
+
+#sidebarToolbar{
+  float: right;
+  padding-right: 15px;
+}
+
+#forumSelector{
+  display: inline-block;
+  min-width: 180px;
+  text-align: right;
+}
+
+#forumSelect{
+  display: block;
+  background: #fff;
+  color: #212121;
+  font-size: 14px;
+  position: absolute;
+  top: 10px;
+  right: 40px;
+  height: 90vh;
+  overflow-y: scroll;
+  -webkit-clip-path: circle(0px at 100% 0px);
+  z-index: 20;
+  transition: all .3s ease-in-out;
+  overflow: hidden;
+}
+
+#forumSelect.active{
+  -webkit-clip-path: circle(100% at 50% 50%);
+  overflow: auto;
+}
+
+#forumSelect li{
+  padding: 10px 20px;
+  height: 36px;
+  line-height: 36px;
+  transition: .2s all ease-in-out;
+}
+
+#forumSelect li:hover{
+  background: #DEDEDE;
+}
+
+#forumSelect li img{
+  height: 36px;
+  margin-right: 15px;
+}
+
+#forumSelect .forumName{
+  vertical-align: top;
+  display: inline-block;
+}
+
+#leftPane{
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  background: #FFF;
+  -webkit-clip-path: circle(150% at 50% 55px);
+  transition: all .5s ease-in-out;
+  position: relative; top: 0; left: 0;
+}
+
+#leftPane.wrapUp{
+  -webkit-clip-path: circle(15px at 50% 55px);
+}
+
+#leftPane .loading, #rightPane .loading{
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  background: #FFF;
+  text-align: center;
+  line-height: 28px;
+  opacity: 0;
+  position: absolute;
+  top: -40px;
+  left: calc(50% - 15px);
+  transition: all .3s ease-in-out;
+  animation-name: spin;
+  animation-duration: .8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(.8, -0.2, 0.2, 1.2);
+}
+
+@keyframes spin{
+  from{
+    transform: rotate(0deg);
+  }
+
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+#leftPane .loading.active, #rightPane .loading.active{
+  top: 40px;
+  opacity: 1;
+}
+
+#leftPane .loading i, #rightPane .loading i{
+  margin: 0;
+}
+
+#leftPane.wrapUp #topicList, #leftPane.wrapUp #bestTopicList{
+  opacity: 0;
+}
+
+#bestTopicContainer{
+  border-bottom: 1px #EAEAEA solid;
+}
+
+#bestTopicHeader, #topicListHeader{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#topicListHeader{
+  padding-bottom: 0;
+}
+
+#bestTopicHeader .headerIcon, #topicListHeader .headerIcon{
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+#bestTopicHeader .dropdown{
+  float: right;
+  margin-right: 5px;
+  transform: rotate(0deg);
+  transition: .5s all cubic-bezier(.8, -0.2, 0.2, 1.2);
+}
+
+#bestTopicHeader.active .dropdown{
+  transform: rotate(180deg);
+}
+
+#bestTopicList{
+  max-height: 0;
+  overflow: hidden;
+  transition: all .2s ease-in-out;
+}
+
+#bestTopicList.active{
+  max-height: 800px;
+}
+
+#topicList, #bestTopicList{
+  width: 100%;
+  opacity: 1;
+  transition: all .2s ease-in-out;
+}
+
+#leftPane .topic{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  transition: all .2s;
+  background: #FFF;
+}
+
+#leftPane .topic:hover, #leftPane .topic.active{
+  background: #DEDEDE;
+}
+
+#leftPane .topic.lastTopic{
+  border-top: 1px #e0e0e0 dashed;
+}
+
+#leftPane .topic.beforeMore{
+  border-bottom: 1px #e0e0e0 solid;
+}
+
+#leftPane .topic .title{
+  font-size: 16px;
+}
+
+#leftPane .subtitle .ic{
+  font-size: 11px;
+  margin-bottom: 1px;
+}
+
+#leftPane .loadMore{
+  display: block;
+  margin: 10px auto;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 2px;
+  transition: all .2s ease-in-out;
+}
+
+/*============================================================*/
+
+#belly{
+  width: 70%;
+  display: inline-block;
+  flex: 7;
+  display: flex;
+  flex-direction: column;
+  background: #eaeaea;
+  z-index: 5;
+}
+
+#bellyHead{
+  width: 100%;
+  height: 64px;
+  min-height: 64px;
+  line-height: 64px;
+}
+
+#bellyTitle{
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 20px;
+  max-width: calc(100% - 130px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#bellyToolbar{
+  display: inline-block;
+  float: right;
+  padding-right: 15px;
+}
+
+#bellyToolbar i{
+  margin-left: 10px;
+}
+
+#rightPane{
+  height: auto;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-clip-path: circle(110% at 50% 55px);
+  transition: all .5s ease-in-out;
+  position: relative; top: 0; left: 0;
+}
+
+#rightPane.wrapUp{
+  -webkit-clip-path: circle(15px at 50% 55px);
+}
+
+#rightPane.wrapUp .topicWrapper{
+  opacity: 0;
+  transition: all .2s ease-in-out;
+}
+
+#rightPane .topicWrapper{
+  opacity: 1;
+}
+
+#topicView{
+  width: 100%;
+  max-width: 560px;
+  box-sizing: border-box;
+  margin: 20px auto;
+  border-radius: 2px;
+  background: #fff;
+}
+
+#topicView .empty{
+  display: block;
+  margin: 20px auto;
+}
+
+#topicView h1{
+  box-sizing: border-box;
+  padding: 15px;
+  padding-bottom: 0;
+  font-family: "TH Sarabun New";
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1;
+  word-wrap: break-word;
+}
+
+#topicView .tag{
+  padding: 15px 0 0 15px;
+}
+
+#topicView .tag .ic{
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+#topicView .tag.empty{
+  display: none;
+}
+
+#topicView .content{
+  box-sizing: border-box;
+  padding: 15px;
+  width: 100%;
+  font-family: "TH Sarabun New";
+  font-size: 26px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  margin-bottom: 30px;
+}
+
+#topicView .content img{
+  max-width: 100%;
+  margin: 10px 0;
+}
+
+#topicView .content u{
+  text-decoration: none;
+  border-bottom: 1px #333 solid;
+}
+
+#rightPane .spoil-style{
+  display: block;
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.07);
+}
+
+#rightPane .img-in-post{
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .2s ease-in-out .2s;
+}
+
+#rightPane .img-in-post.inLightBox{
+  opacity: 0;
+  transition: opacity .01s ease-in-out .1s;
+}
+
+/*============================================================*/
+
+#commentsView{
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+#commentsView .comment{
+  width: 100%;
+  box-sizing: border-box;
+  margin: 20px 0;
+  border-radius: 2px;
+  background: #fff;
+}
+
+#commentsView .content{
+  font-family: "TH Sarabun New";
+  font-size: 26px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  padding: 15px;
+  margin-bottom: 0px;
+}
+
+#commentsView .content img{
+  max-width: 100%;
+}
+
+#rightPane .info{
+  padding: 15px;
+  border-bottom: 1px #ddd solid;
+  position: relative; top: 0; left: 0;
+}
+
+#rightPane .author{
+  border-radius: 2px;
+  display: inline-block;
+}
+
+#rightPane .author.op{
+  padding: 0 5px;
+  border: 1px #9C27B0 solid;
+}
+
+#rightPane .numContainer{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+#rightPane .avatar{
+  width: 38px;
+  border-radius: 38px;
+  margin-right: 10px;
+  float: left;
+}
+
+#rightPane .reactions{
+  padding: 0 15px 15px 15px;
+  line-height: 28px;
+  position: relative; top: 0; left: 0;
+}
+
+#rightPane .reactions.empty{
+  display: none;
+}
+
+#rightPane .vote{
+  display: inline-block;
+  margin-right: 10px;
+  height: 28px;
+  vertical-align: top;
+}
+
+#rightPane .emotions{
+  display: inline-block;
+  height: 28px;
+}
+
+#rightPane .emotionIcons{
+  display: inline-block;
+  height: 28px;
+}
+
+#rightPane .emotionIcons img{
+  width: 18px;
+  height: auto;
+  margin-bottom: 5px;
+}
+
+#rightPane .emotionIcons img:first-child{
+  width: 28px;
+  margin-bottom: 0;
+}
+
+#rightPane .emotionCount{
+  display: inline-block;
+  vertical-align: top;
+}
+
+#rightPane .emotionsInfo{
+  position: absolute;
+  top: -40px;
+  left: 10px;
+  padding: 10px 10px 0 10px;
+  background: #fff;
+  -webkit-clip-path: circle(0 at 80px 100%);
+  transition: all .15s ease-in-out;
+}
+
+#rightPane .emotions:hover + .emotionsInfo{
+  -webkit-clip-path: circle(100% at 50% 50%);
+}
+
+#rightPane .emotionsInfo li{
+  display: inline-block;
+  height: 18px;
+  line-height: 18px;
+  margin-right: 10px;
+}
+
+#rightPane .emotionsInfo img{
+  width: 18px;
+  margin-right: 5px;
+}
+
+#rightPane .emotionsInfo span{
+  vertical-align: top;
+}
+
+#commentsView .subContainer{
+  padding-bottom: 1px;
+}
+
+#rightPane .loadMoreSubComments{
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 2px;
+  transition: all .2s ease-in-out;
+}
+
+#commentsView .sub.comment{
+  width: calc(100% - 10px);
+  margin-left: 10px;
+  background: #efefef;
+  box-shadow: none;
+}
+
+#commentsView .sub.comment:first-child{
+  margin-top: 0;
+}
+
+/*============================================================*/
+
+#fab{
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  text-align: center;
+  overflow: hidden;
+  transform: scale(0);
+  transition: all .2s cubic-bezier(.8, -0.2, 0.2, 1.2);
+}
+
+#fab.enable{
+  transform: scale(1);
+}
+
+#fab:hover{
+  height: 112px;
+}
+
+#fab .topContainer, #fab .bottomContainer{
+  position: absolute;
+  width: 56px;
+  line-height: 56px;
+  transition: transform .2s ease-in-out .1s,
+    opacity .1s ease-in-out 0s,
+    background-color .1s ease-in-out 0s;
+}
+
+#fab .topContainer:hover, #fab .bottomContainer:hover{
+  background: rgba(255, 255, 255, 0.12);
+}
+
+#fab .topContainer{
+  top: 0; left: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: rotate(180deg);
+}
+
+#fab:hover .topContainer{
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+#fab .bottomContainer{
+  bottom: 0; left: 0;
+}
+
+#fab .ic{
+  vertical-align: middle;
+  margin: 0;
+}
+
+/*============================================================*/
+
+#lightBox{
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0);
+  position: absolute; top: 100vh; right: 0;
+  z-index: 20;
+  opacity: 0;
+  transition: background-color .2s ease-in-out 0s,
+    top .01s ease-in-out .2s,
+    opacity .2s ease-in-out .01s;
+}
+
+#lightBox.active{
+  top: 0;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background-color .2s ease-in-out .1s,
+    top .01s ease-in-out 0s,
+    opacity .2s ease-in-out 0s;
+}
+
+#lightBox img{
+  position: absolute;
+  top: 0; left: 0;
+  transform: translate(0, 0);
+  width: auto;
+  height: auto;
+}
+
+#lightBox img.active{
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all .2s ease-in-out;
+}
