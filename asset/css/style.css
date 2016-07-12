@@ -1,0 +1,54 @@
+html, body, h1, h2, h3, h4, a{
+  margin: 0;padding: 0;font-weight: normal;
+}
+
+body{
+  line-height: 1.5;
+  font-size: 16px;
+  font-family: 'Kanit', sans-serif;
+}
+
+h1{
+  font-family: 'Roboto', sans-serif;
+  font-size: 80px;
+  margin-right: 50px;
+}
+
+h2{
+  font-size: 50px;
+  font-weight: 200;
+}
+
+a:link, a:visited{
+  text-decoration: none;
+}
+
+header{
+  width: 100%;
+  margin-bottom: 20px;
+  background: #9c27b0;
+  color: white;
+  text-align: center;
+}
+
+.headerWrapper{
+  display: inline-block;
+  width: auto;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.logoBig{
+  vertical-align: middle;
+}
+
+.titles{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+article{
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
