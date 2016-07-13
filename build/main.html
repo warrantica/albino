@@ -14,7 +14,7 @@
 <body>
 <div id="sidebar" class="sElevation2">
   <div id="sidebarHead">
-    <div id="logo">
+    <div id="logo" v-show="test">
       <img src="asset/img/logo.png"/>
       <img src="asset/img/logoHover.png" class="logoHover"/>
     </div>
@@ -26,10 +26,7 @@
       <i class="ic refreshButton sClickable">refresh</i>
     </div>
     <ul id="forumSelect" class="sElevation2 sClickable">
-      <li data-name="food">
-        <img src="asset/forumIcon/food.png" />
-        <span class="forumName">ก้นครัว</span>
-      </li>
+      <forum-select-item name="food">ก้นครัว</forum-select-item>
       <li data-name="chalermkrung">
         <img src="asset/forumIcon/chalermkrung.png" />
         <span class="forumName">เฉลิมกรุง</span>
@@ -201,6 +198,7 @@
 <div id="lightBox" class="sClickable">
   <img src="" />
 </div>
+<script src="asset/js/vue.js"></script>
 <script src="asset/js/jquery-2.2.3.min.js"></script>
 <script src="asset/js/jquery.timeago.js"></script>
 <script src="asset/js/main.js"></script>

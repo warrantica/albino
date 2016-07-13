@@ -621,3 +621,18 @@ $(function(){
     });
   }
 });
+
+let forumSelectItem = require('./components/forumSelectItem.vue');
+Vue.component('forumSelectItem', forumSelectItem);
+
+let vm = new Vue({
+  el: 'body',
+
+  data(){ return{
+    test: true
+  }},
+
+  ready(){
+    console.log("BUILT, SON");
+  }
+});
