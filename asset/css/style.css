@@ -6,6 +6,7 @@ body{
   line-height: 1.5;
   font-size: 18px;
   font-family: 'Kanit', sans-serif;
+  color: #333;
 }
 
 ::selection{
@@ -28,6 +29,11 @@ h2{
 
 a:link, a:visited{
   text-decoration: none;
+}
+
+a:link:not([class]), a:visited:not([class]){
+  color: #333;
+  border-bottom: 1px #333 solid;
 }
 
 header{
@@ -59,7 +65,7 @@ header{
   margin-top: 20px;
 }
 
-.mainLinks-download{
+header .mainLinks-download{
   background: #f01f41;
   margin-right: 10px;
   padding: 5px 20px;
