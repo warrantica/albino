@@ -473,6 +473,13 @@ $(function(){
   loadTopicList(currentForum);
   $('time.timeago').timeago();
 
+  chrome.storage.sync.get({
+    theme: 'default'
+  }, function(item){
+    $('body').addClass(item.theme);
+    console.log(item);
+  });
+
   //============================================================================
   //AJAXy stuff
   //============================================================================

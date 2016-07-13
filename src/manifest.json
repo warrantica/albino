@@ -19,6 +19,12 @@
   },
   "permissions": [
     "tabs",
-    "http://*.pantip.com/*"
-  ]
+    "http://*.pantip.com/*",
+    "storage"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true,
+    "open_in_tab": true
+  }
 }

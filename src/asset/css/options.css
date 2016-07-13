@@ -1,0 +1,7 @@
+body{
+  min-width: 50%;
+}
+
+label{
+  display: inline-block;
+}
