@@ -1,8 +1,10 @@
 function saveOptions(){
   var theme = document.getElementById('theme').value;
+  var defaultForum = document.getElementById('defaultForum').value;
 
   chrome.storage.sync.set({
-    theme: theme
+    theme: theme,
+    defaultForum: defaultForum
   }, function(){
     //Notify user
     console.log("Options saved");
@@ -14,6 +16,7 @@ function restoreOptions(){
     theme: 'default'
   }, function(item){
     document.getElementById('theme').value = item.theme;
+    document.getElementById('defaultForum').value = item.defaultForum;
   })
 }
 

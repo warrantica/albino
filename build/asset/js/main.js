@@ -10673,8 +10673,6 @@ var commentTemplate = $('<div>', {class: "comment sElevation1"});
 commentTemplate.load(rootURL + 'template/commentTemplate.html');
 
 var lastTopicID = 0;
-
-var currentForum = 'sinthorn'; //default here
 var currentTopic = 0;
 
 //============================================================================
@@ -10711,9 +10709,7 @@ function loadTopicList(forumName, loadMoreID=0){
       "data-tid":data['topics'][data['topics'].length - 1]['id']
     }));
 
-    //$('#forumSelectorName').text(forumInfo[forumName]);
     vm.currentForum = forumName;
-    console.log(vm.forumDisplayName);
   });
 }
 
@@ -11090,14 +11086,13 @@ let vm = new Vue({
   },
 
   ready(){
-    loadTopicList(currentForum);
-    $('time.timeago').timeago();
-
     //Get and apply options
     chrome.storage.sync.get({
-      theme: 'default'
+      theme: 'default',
+      defaultForum: ''
     }, function(item){
       $('body').addClass(item.theme);
+      loadTopicList(item.defaultForum);
     });
   }
 });

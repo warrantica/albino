@@ -46,8 +46,6 @@ var commentTemplate = $('<div>', {class: "comment sElevation1"});
 commentTemplate.load(rootURL + 'template/commentTemplate.html');
 
 var lastTopicID = 0;
-
-var currentForum = 'sinthorn'; //default here
 var currentTopic = 0;
 
 //============================================================================
@@ -461,14 +459,13 @@ let vm = new Vue({
   },
 
   ready(){
-    loadTopicList(currentForum);
-    $('time.timeago').timeago();
-
     //Get and apply options
     chrome.storage.sync.get({
-      theme: 'default'
+      theme: 'default',
+      defaultForum: ''
     }, function(item){
       $('body').addClass(item.theme);
+      loadTopicList(item.defaultForum);
     });
   }
 });
