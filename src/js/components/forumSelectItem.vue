@@ -10,7 +10,8 @@
 </style>
 
 <script>
-  export default {props: {
+  export default {
+    props: {
       name: String
     },
 
