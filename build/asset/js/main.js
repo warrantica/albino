@@ -10672,7 +10672,6 @@ viewTopicTemplate.load(rootURL + 'template/viewTopicTemplate.html');
 var commentTemplate = $('<div>', {class: "comment sElevation1"});
 commentTemplate.load(rootURL + 'template/commentTemplate.html');
 
-var lastTopicID = 0;
 var currentTopic = 0;
 
 //============================================================================
@@ -10700,15 +10699,7 @@ function loadTopicList(forumName, loadMoreID=0){
 
     vm.topics.push(...data['topics']);
 
-    lastTopicID = data['topics'][0]['id'];
-
-    //append loadMore button
-    $('#topicList').append($('<button>', {
-      class:"loadMore sPrimaryBg sElevation0h2",
-      text:"โหลดกระทู้เพิ่ม",
-      "data-tid":data['topics'][data['topics'].length - 1]['id']
-    }));
-
+    vm.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
     vm.currentForum = forumName;
   });
 }
@@ -10923,13 +10914,12 @@ $('#leftPane').on('click', '.topic', function(e){
   loadTopic($(this).data('id'));
   //loadTopic('35219493');
 });
-
+/*
 $('#leftPane').on('click', '.loadMore', function(e){
   loadTopicList(currentForum, $(this).data('tid'));
-  $(this).remove(); //maybe make it more elegant
   $('.topic.' + $(this).data('tid')).addClass('beforeMore');
 });
-
+*/
 $('#sidebar .refreshButton').on('click', function(e){
   loadTopicList(currentForum);
 });
@@ -11055,7 +11045,8 @@ let vm = new Vue({
       forumSelect: false
     },
     bestTopics: [],
-    topics: []
+    topics: [],
+    loadMoreId: ''
   }},
 
   computed: {
@@ -11076,6 +11067,11 @@ let vm = new Vue({
           this.showDialogues[key] = false;
         }
       }
+    },
+
+    loadMoreTopics(){
+      loadTopicList(currentForum, this.loadMoreId);
+      $('.topic.' + this.loadMoreId).addClass('beforeMore');
     }
   },
 

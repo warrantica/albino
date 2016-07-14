@@ -51,6 +51,11 @@
       <topic-item v-for="topic in topics" :data="topic">
         {{ topic.title }}
       </topic-item>
+      <button class="loadMore sPrimaryBg sElevation0h2"
+              :data-tid="loadMoreId"
+              @click="loadMoreTopics">
+        โหลดกระทู้เพิ่ม
+      </button>
     </div>
   </div>
 </div>
