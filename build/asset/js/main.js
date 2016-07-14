@@ -10520,12 +10520,43 @@ exports.insert = function (css) {
 },{}],5:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  props: {
+    title: String,
+    tid: String
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" _v-868bbca8=\"\">\n  <div class=\"title\" _v-868bbca8=\"\"><slot _v-868bbca8=\"\"></slot></div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-868bbca8", module.exports)
+  } else {
+    hotAPI.update("_v-868bbca8", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],6:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = { props: {
+exports.default = {
+  props: {
     name: String
   },
 
@@ -10551,8 +10582,38 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-41c115fe", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],6:[function(require,module,exports){
-var forumInfo = [
+},{"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],7:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n\n")
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  props: {
+    title: String,
+    tid: String
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"type\" _v-df29bfa0=\"\"></div>\n<div class=\"title\" _v-df29bfa0=\"\"></div>\n<div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n  <span class=\"author\" _v-df29bfa0=\"\"></span> • <time class=\"timeago\" _v-df29bfa0=\"\"></time> • <span class=\"commentsNum\" _v-df29bfa0=\"\"></span> <i class=\"ic\" _v-df29bfa0=\"\">chat_bubble</i>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-df29bfa0", module.exports)
+  } else {
+    hotAPI.update("_v-df29bfa0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],8:[function(require,module,exports){
+let forumInfo = [
   { name: 'food', label: 'ก้นครัว' },
   { name: 'chalermkrung', label: 'เฉลิมกรุง' },
   { name: 'blueplanet', label: 'บลูแพลนเน็ต' },
@@ -10589,7 +10650,6 @@ var forumInfo = [
   { name: 'supachalasai', label: 'ศุภชลาศัย' },
   { name: 'art', label: 'หอศิลป์' }
 ];
-
 
 //============================================================================
 //Global variables stuff
@@ -10637,10 +10697,11 @@ function populateTopicList(data, loadMoreID=0){
   $('#leftPane .loading').removeClass('active');
 
   if(loadMoreID === 0){
-    $('#bestTopicList').html('');
+    //$('#bestTopicList').html('');
     $('#topicList').html('');
 
-    var bestTopicEach;
+    vm.bestTopics = data['bestTopics'];
+    /*var bestTopicEach;
     for(var i=0; i<data['bestTopics'].length; ++i){
       bestTopicEach = bestTopicTemplate.clone();
 
@@ -10648,7 +10709,7 @@ function populateTopicList(data, loadMoreID=0){
       bestTopicEach.find('.title').text(data['bestTopics'][i]['title']);
 
       $('#bestTopicList').append(bestTopicEach);
-    }
+    }*/
   }
 
   var topicEach;
@@ -11006,7 +11067,12 @@ Y88b   d88P 888  888  .d88b.
 ===========================================================================*/
 
 let forumSelectItem = require('./components/forumSelectItem.vue');
+let bestTopicItem = require('./components/bestTopicItem.vue');
+let topicItem = require('./components/topicItem.vue');
+
 Vue.component('forumSelectItem', forumSelectItem);
+Vue.component('bestTopicItem', bestTopicItem);
+Vue.component('topicItem', topicItem);
 
 let vm = new Vue({
   el: 'body',
@@ -11017,7 +11083,8 @@ let vm = new Vue({
     showBestTopics: false,
     showDialogues: {
       forumSelect: false
-    }
+    },
+    bestTopics: []
   }},
 
   methods: {
@@ -11203,4 +11270,4 @@ function loadMoreSubCommentsAJAX(last, cid, c, callback){
   });
 }
 
-},{"./components/forumSelectItem.vue":5}]},{},[6]);
+},{"./components/bestTopicItem.vue":5,"./components/forumSelectItem.vue":6,"./components/topicItem.vue":7}]},{},[8]);

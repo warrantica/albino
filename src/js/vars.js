@@ -1,4 +1,4 @@
-export default [
+let forumInfo = [
   { name: 'food', label: 'ก้นครัว' },
   { name: 'chalermkrung', label: 'เฉลิมกรุง' },
   { name: 'blueplanet', label: 'บลูแพลนเน็ต' },

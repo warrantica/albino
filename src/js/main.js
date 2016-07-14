@@ -1,4 +1,40 @@
-let forumInfo = require('vars.js');
+let forumInfo = [
+  { name: 'food', label: 'ก้นครัว' },
+  { name: 'chalermkrung', label: 'เฉลิมกรุง' },
+  { name: 'blueplanet', label: 'บลูแพลนเน็ต' },
+  { name: 'all', label: 'รวมมิตร' },
+  { name: 'siam', label: 'สยามสแควร์' },
+  { name: 'greenzone', label: 'กรีนโซน' },
+  { name: 'chalermthai', label: 'เฉลิมไทย' },
+  { name: 'tvshow', label: 'บางขุนพรหม' },
+  { name: 'ratchada', label: 'รัชดา' },
+  { name: 'lumpini', label: 'สวนลุมพินี' },
+  { name: 'camera', label: 'กล้อง' },
+  { name: 'family', label: 'ชานเรือน' },
+  { name: 'bangrak', label: 'บางรัก' },
+  { name: 'rajdumnern', label: 'ราชดำเนิน' },
+  { name: 'sinthorn', label: 'สินธร' },
+  { name: 'cartoon', label: 'การ์ตูน' },
+  { name: 'home', label: 'ชายคา' },
+  { name: 'horoscope', label: 'พรหมชาติ' },
+  { name: 'isolate', label: 'ไร้สังกัด' },
+  { name: 'silom', label: 'สีลม' },
+  { name: 'gallery', label: 'แกลเลอรี่' },
+  { name: 'siliconvalley', label: 'ซิลิคอนวัลเลย์' },
+  { name: 'pantip', label: 'พันทิป' },
+  { name: 'social', label: 'ศาลาประชาคม' },
+  { name: 'wahkor', label: 'หว้ากอ' },
+  { name: 'klaibann', label: 'ไกลบ้าน' },
+  { name: 'beauty', label: 'โต๊ะเครื่องแป้ง' },
+  { name: 'region', label: 'ภูมิภาค' },
+  { name: 'religious', label: 'ศาสนา' },
+  { name: 'library', label: 'ห้องสมุด' },
+  { name: 'jatujak', label: 'จตุจักร' },
+  { name: 'writer', label: 'ถนนนักเขียน' },
+  { name: 'mbk', label: 'มาบุญครอง' },
+  { name: 'supachalasai', label: 'ศุภชลาศัย' },
+  { name: 'art', label: 'หอศิลป์' }
+];
 
 //============================================================================
 //Global variables stuff
@@ -46,10 +82,11 @@ function populateTopicList(data, loadMoreID=0){
   $('#leftPane .loading').removeClass('active');
 
   if(loadMoreID === 0){
-    $('#bestTopicList').html('');
+    //$('#bestTopicList').html('');
     $('#topicList').html('');
 
-    var bestTopicEach;
+    vm.bestTopics = data['bestTopics'];
+    /*var bestTopicEach;
     for(var i=0; i<data['bestTopics'].length; ++i){
       bestTopicEach = bestTopicTemplate.clone();
 
@@ -57,7 +94,7 @@ function populateTopicList(data, loadMoreID=0){
       bestTopicEach.find('.title').text(data['bestTopics'][i]['title']);
 
       $('#bestTopicList').append(bestTopicEach);
-    }
+    }*/
   }
 
   var topicEach;
@@ -415,7 +452,12 @@ Y88b   d88P 888  888  .d88b.
 ===========================================================================*/
 
 let forumSelectItem = require('./components/forumSelectItem.vue');
+let bestTopicItem = require('./components/bestTopicItem.vue');
+let topicItem = require('./components/topicItem.vue');
+
 Vue.component('forumSelectItem', forumSelectItem);
+Vue.component('bestTopicItem', bestTopicItem);
+Vue.component('topicItem', topicItem);
 
 let vm = new Vue({
   el: 'body',
@@ -426,7 +468,8 @@ let vm = new Vue({
     showBestTopics: false,
     showDialogues: {
       forumSelect: false
-    }
+    },
+    bestTopics: []
   }},
 
   methods: {
