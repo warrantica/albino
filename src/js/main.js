@@ -254,14 +254,6 @@ function populateComment(data, subComment = false){
 //Event binding stuff
 //============================================================================
 
-$('#leftPane').on('click', '.topic', function(e){
-  $('.topic').removeClass('active');
-  $(this).addClass('active');
-
-  loadTopic($(this).data('id'));
-  //loadTopic('35219493');
-});
-
 $('#belly .refreshButton').on('click', function(e){
   if(currentTopic !== 0)
     loadTopic(currentTopic);
@@ -439,6 +431,10 @@ let vm = new Vue({
   events: {
     'loadForum': function(forum){
       this.loadTopics(forum);
+    },
+
+    'loadTopic': function(topicId){
+      loadTopic(topicId);
     }
   },
 

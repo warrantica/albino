@@ -1,5 +1,7 @@
 <template>
-  <div class="topic sClickable" :data-id="data.tid" :class="data.tid">
+  <div class="topic sClickable"
+       :class="data.id"
+       @click="loadTopic">
     <div class="type"></div>
     <div class="title"><slot></slot></div>
     <div class="subtitle sSubtitle">
@@ -18,7 +20,7 @@
   export default {
     props: {
       data: {
-        tid: String,
+        id: String,
         title: String,
         author: String,
         commentsNum: Number,
@@ -26,6 +28,13 @@
         timeFull: String
       },
       commentIcon: String
+    },
+
+    methods: {
+      loadTopic(){
+        console.log("loading id: " + this.data.id);
+        this.$dispatch('loadTopic', this.data.id);
+      }
     },
 
     ready(){

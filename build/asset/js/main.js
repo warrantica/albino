@@ -10593,7 +10593,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
   props: {
     data: {
-      tid: String,
+      id: String,
       title: String,
       author: String,
       commentsNum: Number,
@@ -10603,13 +10603,20 @@ exports.default = {
     commentIcon: String
   },
 
+  methods: {
+    loadTopic: function loadTopic() {
+      console.log("loading id: " + this.data.id);
+      this.$dispatch('loadTopic', this.data.id);
+    }
+  },
+
   ready: function ready() {
     this.commentIcon = +this.data.commentsNum === 0 ? 'chat_bubble_outline' : 'chat_bubble';
     $('time.timeago').timeago();
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :data-id=\"data.tid\" :class=\"data.tid\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\"><slot _v-df29bfa0=\"\"></slot></div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    <span class=\"author\" _v-df29bfa0=\"\">{{ data.author }}</span> •\n    <time class=\"timeago\" :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time> •\n    <span class=\"commentsNum\" _v-df29bfa0=\"\">{{ data.commentsNum }}</span> <i class=\"ic\" _v-df29bfa0=\"\">{{ commentIcon }}</i>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"data.id\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\"><slot _v-df29bfa0=\"\"></slot></div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    <span class=\"author\" _v-df29bfa0=\"\">{{ data.author }}</span> •\n    <time class=\"timeago\" :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time> •\n    <span class=\"commentsNum\" _v-df29bfa0=\"\">{{ data.commentsNum }}</span> <i class=\"ic\" _v-df29bfa0=\"\">{{ commentIcon }}</i>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -10881,18 +10888,6 @@ function populateComment(data, subComment = false){
 //Event binding stuff
 //============================================================================
 
-$('#leftPane').on('click', '.topic', function(e){
-  $('.topic').removeClass('active');
-  $(this).addClass('active');
-
-  loadTopic($(this).data('id'));
-  //loadTopic('35219493');
-});
-/*
-$('#sidebar .refreshButton').on('click', function(e){
-  loadTopicList(currentForum);
-});
-*/
 $('#belly .refreshButton').on('click', function(e){
   if(currentTopic !== 0)
     loadTopic(currentTopic);
@@ -11070,6 +11065,10 @@ let vm = new Vue({
   events: {
     'loadForum': function(forum){
       this.loadTopics(forum);
+    },
+
+    'loadTopic': function(topicId){
+      loadTopic(topicId);
     }
   },
 
@@ -11194,7 +11193,6 @@ function loadTopicAJAX(topicID, callback){
         {name:"scary", count:res['emotionCount']['scary']},
         {name:"surprised", count:res['emotionCount']['surprised']}
       ];
-      console.log(res);
       callback(res);
     },
     error: function(){
