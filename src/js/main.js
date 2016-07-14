@@ -40,8 +40,6 @@ let forumInfo = [
 //Global variables stuff
 //============================================================================
 var rootURL = chrome.extension.getURL('');
-var topicTemplate = $('<div>', {class: "topic sClickable"});
-topicTemplate.load(rootURL + 'template/topicTemplate.html');
 var viewTopicTemplate = $('<div>', {class: "topicWrapper"});
 viewTopicTemplate.load(rootURL + 'template/viewTopicTemplate.html');
 var commentTemplate = $('<div>', {class: "comment sElevation1"});
@@ -75,36 +73,16 @@ function loadTopicList(forumName, loadMoreID=0){
 }
 
 function populateTopicList(data, loadMoreID=0){
-  console.log(data);
+  //console.log(data);
   $('#leftPane').removeClass('wrapUp');
   $('#leftPane .loading').removeClass('active');
 
   if(loadMoreID === 0){
-    $('#topicList').html('');
-
+    vm.topics = [];
     vm.bestTopics = data['bestTopics'];
   }
 
-  var topicEach;
-  for(var i=0; i<data['topics'].length; ++i){
-    topicEach = topicTemplate.clone();
-
-    topicEach.attr('data-id', data['topics'][i]['id']);
-    topicEach.addClass(data['topics'][i]['id']);
-    topicEach.find('.title').text(data['topics'][i]['title']);
-    topicEach.find('.author').text(data['topics'][i]['author']);
-    topicEach.find('time').text(data['topics'][i]['timeFull']);
-    topicEach.find('time').attr('datetime', data['topics'][i]['utime']);
-    topicEach.find('.commentsNum').text(data['topics'][i]['commentsNum']);
-
-    if(data['topics'][i]['commentsNum'] == '0'){
-      topicEach.find('.subtitle .ic').text('chat_bubble_outline');
-    }
-
-    if(data['topics'][i]['id'] == lastTopicID) topicEach.addClass('lastTopic');
-
-    $('#topicList').append(topicEach);
-  }
+  vm.topics.push(...data['topics']);
 
   lastTopicID = data['topics'][0]['id'];
 
@@ -457,7 +435,8 @@ let vm = new Vue({
     showDialogues: {
       forumSelect: false
     },
-    bestTopics: []
+    bestTopics: [],
+    topics: []
   }},
 
   methods: {
@@ -507,6 +486,7 @@ function convertTheirStupidDateTimeFormatToISO(utime){
 //============================================================================
 
 function loadTopicListAJAX(forumName, loadMoreID=0, callback){
+  if(forumName === 'all') forumName = '';
   var loadUrl = 'http://www.pantip.com/forum/' + forumName;
   if(loadMoreID !== 0){
     loadUrl += '?tid=' + loadMoreID;

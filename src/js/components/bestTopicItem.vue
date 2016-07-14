@@ -11,8 +11,8 @@
 <script>
   export default {
     props: {
-      title: String,
-      tid: String
+      tid: String,
+      title: String
     }
   }
 </script>

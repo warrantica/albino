@@ -10527,8 +10527,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   props: {
-    title: String,
-    tid: String
+    tid: String,
+    title: String
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
@@ -10585,19 +10585,30 @@ if (module.hot) {(function () {  module.hot.accept()
 },{"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],7:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
   props: {
-    title: String,
-    tid: String
+    data: {
+      tid: String,
+      title: String,
+      author: String,
+      commentsNum: Number,
+      utime: String,
+      timeFull: String
+    },
+    commentIcon: String
+  },
+
+  ready: function ready() {
+    this.commentIcon = +this.data.commentsNum === 0 ? 'chat_bubble_outline' : 'chat_bubble';
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"type\" _v-df29bfa0=\"\"></div>\n<div class=\"title\" _v-df29bfa0=\"\"></div>\n<div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n  <span class=\"author\" _v-df29bfa0=\"\"></span> • <time class=\"timeago\" _v-df29bfa0=\"\"></time> • <span class=\"commentsNum\" _v-df29bfa0=\"\"></span> <i class=\"ic\" _v-df29bfa0=\"\">chat_bubble</i>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :data-id=\"data.tid\" :class=\"data.tid\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\"><slot _v-df29bfa0=\"\"></slot></div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    <span class=\"author\" _v-df29bfa0=\"\">{{ data.author }}</span> •\n    <time class=\"timeago\" :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time> •\n    <span class=\"commentsNum\" _v-df29bfa0=\"\">{{ data.commentsNum }}</span> <i class=\"ic\" _v-df29bfa0=\"\">{{ commentIcon }}</i>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -10655,8 +10666,6 @@ let forumInfo = [
 //Global variables stuff
 //============================================================================
 var rootURL = chrome.extension.getURL('');
-var topicTemplate = $('<div>', {class: "topic sClickable"});
-topicTemplate.load(rootURL + 'template/topicTemplate.html');
 var viewTopicTemplate = $('<div>', {class: "topicWrapper"});
 viewTopicTemplate.load(rootURL + 'template/viewTopicTemplate.html');
 var commentTemplate = $('<div>', {class: "comment sElevation1"});
@@ -10690,36 +10699,16 @@ function loadTopicList(forumName, loadMoreID=0){
 }
 
 function populateTopicList(data, loadMoreID=0){
-  console.log(data);
+  //console.log(data);
   $('#leftPane').removeClass('wrapUp');
   $('#leftPane .loading').removeClass('active');
 
   if(loadMoreID === 0){
-    $('#topicList').html('');
-
+    vm.topics = [];
     vm.bestTopics = data['bestTopics'];
   }
 
-  var topicEach;
-  for(var i=0; i<data['topics'].length; ++i){
-    topicEach = topicTemplate.clone();
-
-    topicEach.attr('data-id', data['topics'][i]['id']);
-    topicEach.addClass(data['topics'][i]['id']);
-    topicEach.find('.title').text(data['topics'][i]['title']);
-    topicEach.find('.author').text(data['topics'][i]['author']);
-    topicEach.find('time').text(data['topics'][i]['timeFull']);
-    topicEach.find('time').attr('datetime', data['topics'][i]['utime']);
-    topicEach.find('.commentsNum').text(data['topics'][i]['commentsNum']);
-
-    if(data['topics'][i]['commentsNum'] == '0'){
-      topicEach.find('.subtitle .ic').text('chat_bubble_outline');
-    }
-
-    if(data['topics'][i]['id'] == lastTopicID) topicEach.addClass('lastTopic');
-
-    $('#topicList').append(topicEach);
-  }
+  vm.topics.push(...data['topics']);
 
   lastTopicID = data['topics'][0]['id'];
 
@@ -11072,7 +11061,8 @@ let vm = new Vue({
     showDialogues: {
       forumSelect: false
     },
-    bestTopics: []
+    bestTopics: [],
+    topics: []
   }},
 
   methods: {
@@ -11122,6 +11112,7 @@ function convertTheirStupidDateTimeFormatToISO(utime){
 //============================================================================
 
 function loadTopicListAJAX(forumName, loadMoreID=0, callback){
+  if(forumName === 'all') forumName = '';
   var loadUrl = 'http://www.pantip.com/forum/' + forumName;
   if(loadMoreID !== 0){
     loadUrl += '?tid=' + loadMoreID;
