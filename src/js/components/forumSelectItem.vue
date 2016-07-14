@@ -1,5 +1,5 @@
 <template>
-  <li data-name="{{ name }}">
+  <li @click="loadForum">
     <img src="asset/forumIcon/{{ name }}.png" />
     <span class="forumName"><slot></slot></span>
   </li>
@@ -10,17 +10,14 @@
 </style>
 
 <script>
-  export default {
-    data(){ return {
-
-    }},
-
-    props: {
+  export default {props: {
       name: String
     },
 
-    ready(){
-
+    methods: {
+      loadForum(){
+        this.$dispatch('loadForum', this.name);
+      }
     }
   }
 </script>
