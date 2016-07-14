@@ -10605,6 +10605,7 @@ exports.default = {
 
   ready: function ready() {
     this.commentIcon = +this.data.commentsNum === 0 ? 'chat_bubble_outline' : 'chat_bubble';
+    $('time.timeago').timeago();
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
@@ -10691,33 +10692,29 @@ function loadTopicList(forumName, loadMoreID=0){
   }
 
   loadTopicListAJAX(forumName, loadMoreID, function(data){
-    populateTopicList(data, loadMoreID);
+    $('#leftPane').removeClass('wrapUp');
+    $('#leftPane .loading').removeClass('active');
 
-    $('#forumSelectorName').text(forumInfo[forumName]);
-    $('time.timeago').timeago();
+    if(loadMoreID === 0){
+      vm.topics = [];
+      vm.bestTopics = data['bestTopics'];
+    }
+
+    vm.topics.push(...data['topics']);
+
+    lastTopicID = data['topics'][0]['id'];
+
+    //append loadMore button
+    $('#topicList').append($('<button>', {
+      class:"loadMore sPrimaryBg sElevation0h2",
+      text:"โหลดกระทู้เพิ่ม",
+      "data-tid":data['topics'][data['topics'].length - 1]['id']
+    }));
+
+    //$('#forumSelectorName').text(forumInfo[forumName]);
+    vm.currentForum = forumName;
+    console.log(vm.forumDisplayName);
   });
-}
-
-function populateTopicList(data, loadMoreID=0){
-  //console.log(data);
-  $('#leftPane').removeClass('wrapUp');
-  $('#leftPane .loading').removeClass('active');
-
-  if(loadMoreID === 0){
-    vm.topics = [];
-    vm.bestTopics = data['bestTopics'];
-  }
-
-  vm.topics.push(...data['topics']);
-
-  lastTopicID = data['topics'][0]['id'];
-
-  //append loadMore button
-  $('#topicList').append($('<button>', {
-    class:"loadMore sPrimaryBg sElevation0h2",
-    text:"โหลดกระทู้เพิ่ม",
-    "data-tid":data['topics'][data['topics'].length - 1]['id']
-  }));
 }
 
 function loadTopic(topicID){
@@ -11056,7 +11053,7 @@ let vm = new Vue({
 
   data(){ return{
     forums: forumInfo,
-    currentForum: 'all',
+    currentForum: '',
     showBestTopics: false,
     showDialogues: {
       forumSelect: false
@@ -11064,6 +11061,17 @@ let vm = new Vue({
     bestTopics: [],
     topics: []
   }},
+
+  computed: {
+    forumDisplayName(){
+      if(this.currentForum !== ''){
+        for(let forum of this.forums)
+          if(forum.name === this.currentForum) return forum.label;
+      }else{
+        return 'เลือกห้อง';
+      }
+    }
+  },
 
   methods: {
     dismissDialogues(){

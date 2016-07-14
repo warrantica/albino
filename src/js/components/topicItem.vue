@@ -32,6 +32,7 @@
       this.commentIcon = +this.data.commentsNum === 0
         ? 'chat_bubble_outline'
         : 'chat_bubble';
+      $('time.timeago').timeago();
     }
   }
 </script>
