@@ -23,7 +23,7 @@
         <span id="forumSelectorName">{{ forumDisplayName }}</span>
         <i class="ic">arrow_drop_down</i>
       </div>
-      <i class="ic refreshButton sClickable">refresh</i>
+      <i class="ic refreshButton sClickable" @click="loadTopics(currentForum)">refresh</i>
     </div>
     <ul id="forumSelect" class="sElevation2 sClickable"
         :class="{ active:showDialogues.forumSelect }">

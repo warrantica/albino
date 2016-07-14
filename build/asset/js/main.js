@@ -10888,11 +10888,11 @@ $('#leftPane').on('click', '.topic', function(e){
   loadTopic($(this).data('id'));
   //loadTopic('35219493');
 });
-
+/*
 $('#sidebar .refreshButton').on('click', function(e){
   loadTopicList(currentForum);
 });
-
+*/
 $('#belly .refreshButton').on('click', function(e){
   if(currentTopic !== 0)
     loadTopic(currentTopic);
@@ -10984,14 +10984,14 @@ $('#lightBox').on('click', function(e){
 
 /*===========================================================================
 
-V888     888
-888     888
-888     888
-Y88b   d88P 888  888  .d88b.
- Y88b d88P  888  888 d8P  Y8b
-  Y88o88P   888  888 88888888
-   Y888P    Y88b 888 Y8b.
-    Y8P      "Y88888  "Y8888
+        V888     888
+        888     888
+        888     888
+        Y88b   d88P 888  888  .d88b.
+         Y88b d88P  888  888 d8P  Y8b
+          Y88o88P   888  888 88888888
+           Y888P    Y88b 888 Y8b.
+            Y8P      "Y88888  "Y8888
 
 ===========================================================================*/
 
@@ -11039,12 +11039,15 @@ let vm = new Vue({
     },
 
     loadTopics(forumName, loadMore = false){
+      let _loadMoreId = loadMore ? this.loadMoreId : 0;
+      this.currentForum = forumName;
       if(!loadMore){
         $('#leftPane').addClass('wrapUp');
         $('#leftPane .loading').addClass('active');
       }
 
-      loadTopicListAJAX(forumName, this.loadMoreId, data => {
+      loadTopicListAJAX(forumName, _loadMoreId, data => {
+        console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
@@ -11054,14 +11057,11 @@ let vm = new Vue({
         }
 
         this.topics.push(...data['topics']);
-
         this.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
-        this.currentForum = forumName;
       });
     },
 
     loadMoreTopics(){
-      //loadTopicList(currentForum, this.loadMoreId);
       this.loadTopics(this.currentForum, true);
       $('.topic.' + this.loadMoreId).addClass('beforeMore');
     }
@@ -11069,7 +11069,6 @@ let vm = new Vue({
 
   events: {
     'loadForum': function(forum){
-      //loadTopicList(forum);
       this.loadTopics(forum);
     }
   },
@@ -11081,7 +11080,6 @@ let vm = new Vue({
       defaultForum: ''
     }, item => {
       $('body').addClass(item.theme);
-      //loadTopicList(item.defaultForum);
       this.loadTopics(item.defaultForum);
     });
   }
