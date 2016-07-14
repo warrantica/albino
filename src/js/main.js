@@ -40,8 +40,6 @@ let forumInfo = [
 //Global variables stuff
 //============================================================================
 var rootURL = chrome.extension.getURL('');
-var bestTopicTemplate = $('<div>', {class: "topic sClickable"});
-bestTopicTemplate.load(rootURL + 'template/bestTopicTemplate.html');
 var topicTemplate = $('<div>', {class: "topic sClickable"});
 topicTemplate.load(rootURL + 'template/topicTemplate.html');
 var viewTopicTemplate = $('<div>', {class: "topicWrapper"});
@@ -82,19 +80,9 @@ function populateTopicList(data, loadMoreID=0){
   $('#leftPane .loading').removeClass('active');
 
   if(loadMoreID === 0){
-    //$('#bestTopicList').html('');
     $('#topicList').html('');
 
     vm.bestTopics = data['bestTopics'];
-    /*var bestTopicEach;
-    for(var i=0; i<data['bestTopics'].length; ++i){
-      bestTopicEach = bestTopicTemplate.clone();
-
-      bestTopicEach.attr('data-id', data['bestTopics'][i]['id']);
-      bestTopicEach.find('.title').text(data['bestTopics'][i]['title']);
-
-      $('#bestTopicList').append(bestTopicEach);
-    }*/
   }
 
   var topicEach;
