@@ -10678,32 +10678,6 @@ var currentTopic = 0;
 //Functions stuff
 //============================================================================
 
-function loadTopicList(forumName, loadMoreID=0){
-  currentForum = forumName;
-
-  var topicsJSON;
-
-  if(loadMoreID === 0){
-    $('#leftPane').addClass('wrapUp');
-    $('#leftPane .loading').addClass('active');
-  }
-
-  loadTopicListAJAX(forumName, loadMoreID, function(data){
-    $('#leftPane').removeClass('wrapUp');
-    $('#leftPane .loading').removeClass('active');
-
-    if(loadMoreID === 0){
-      vm.topics = [];
-      vm.bestTopics = data['bestTopics'];
-    }
-
-    vm.topics.push(...data['topics']);
-
-    vm.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
-    vm.currentForum = forumName;
-  });
-}
-
 function loadTopic(topicID){
   $('#rightPane').addClass('wrapUp');
   $('#rightPane .loading').addClass('active');
@@ -11041,7 +11015,7 @@ let vm = new Vue({
     },
     bestTopics: [],
     topics: [],
-    loadMoreId: ''
+    loadMoreId: 0
   }},
 
   computed: {
@@ -11064,15 +11038,39 @@ let vm = new Vue({
       }
     },
 
+    loadTopics(forumName, loadMore = false){
+      if(!loadMore){
+        $('#leftPane').addClass('wrapUp');
+        $('#leftPane .loading').addClass('active');
+      }
+
+      loadTopicListAJAX(forumName, this.loadMoreId, data => {
+        $('#leftPane').removeClass('wrapUp');
+        $('#leftPane .loading').removeClass('active');
+
+        if(!loadMore){
+          this.topics = [];
+          this.bestTopics = data['bestTopics'];
+        }
+
+        this.topics.push(...data['topics']);
+
+        this.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
+        this.currentForum = forumName;
+      });
+    },
+
     loadMoreTopics(){
-      loadTopicList(currentForum, this.loadMoreId);
+      //loadTopicList(currentForum, this.loadMoreId);
+      this.loadTopics(this.currentForum, true);
       $('.topic.' + this.loadMoreId).addClass('beforeMore');
     }
   },
 
   events: {
-    'loadForum': forum => {
-      loadTopicList(forum);
+    'loadForum': function(forum){
+      //loadTopicList(forum);
+      this.loadTopics(forum);
     }
   },
 
@@ -11081,9 +11079,10 @@ let vm = new Vue({
     chrome.storage.sync.get({
       theme: 'default',
       defaultForum: ''
-    }, function(item){
+    }, item => {
       $('body').addClass(item.theme);
-      loadTopicList(item.defaultForum);
+      //loadTopicList(item.defaultForum);
+      this.loadTopics(item.defaultForum);
     });
   }
 });
