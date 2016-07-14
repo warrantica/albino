@@ -10914,12 +10914,7 @@ $('#leftPane').on('click', '.topic', function(e){
   loadTopic($(this).data('id'));
   //loadTopic('35219493');
 });
-/*
-$('#leftPane').on('click', '.loadMore', function(e){
-  loadTopicList(currentForum, $(this).data('tid'));
-  $('.topic.' + $(this).data('tid')).addClass('beforeMore');
-});
-*/
+
 $('#sidebar .refreshButton').on('click', function(e){
   loadTopicList(currentForum);
 });
