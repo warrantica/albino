@@ -11194,6 +11194,7 @@ function loadTopicAJAX(topicID, callback){
         {name:"scary", count:res['emotionCount']['scary']},
         {name:"surprised", count:res['emotionCount']['surprised']}
       ];
+      console.log(res);
       callback(res);
     },
     error: function(){

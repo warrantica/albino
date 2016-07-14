@@ -261,11 +261,7 @@ $('#leftPane').on('click', '.topic', function(e){
   loadTopic($(this).data('id'));
   //loadTopic('35219493');
 });
-/*
-$('#sidebar .refreshButton').on('click', function(e){
-  loadTopicList(currentForum);
-});
-*/
+
 $('#belly .refreshButton').on('click', function(e){
   if(currentTopic !== 0)
     loadTopic(currentTopic);
