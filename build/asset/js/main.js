@@ -11449,72 +11449,9 @@ function loadTopic(topicID){
   $('#rightPane .loading').addClass('active');
 
   loadTopicAJAX(topicID, function(data){
-    console.log(data);
     data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
     vm.$broadcast('loadTopicView', data);
 
-    var topicWrapperClone = viewTopicTemplate.clone();
-
-    topicWrapperClone.find('.title').text(data['title']);
-    topicWrapperClone.find('.author').text(data['author']);
-
-    //time
-    topicWrapperClone.find('.timeago').text(data['timeFull']);
-    topicWrapperClone.find('.timeago').attr('datetime', convertTheirStupidDateTimeFormatToISO(data['utime']));
-
-    //sanitising content
-    var content = $('<div>').append(data['content']);
-    //no eval for you!
-    $(content).find('script').remove();
-    $(content).find('.review-section').remove();
-    $(content).find('.edit-history').remove();
-    //no polls for you!
-    $(content).find('.q-poll').remove();
-    $(content).find('.button-container').remove();
-
-    topicWrapperClone.find('.content').html(content.html());
-
-    //avatar
-    if(data['avatarSrc'].substr(-9,9) === "38x38.png"){
-      //unknown avatar
-      topicWrapperClone.find('.avatar').attr('src', rootURL + 'asset/img/default_avatar.png');
-    }else{
-      topicWrapperClone.find('.avatar').attr('src', data['avatarSrc']);
-    }
-
-    //tags
-    if(data['tags'].length > 0){
-      topicWrapperClone.find('.tag').append(data['tags']);
-    }else{
-      topicWrapperClone.find('.tag').addClass('empty');
-    }
-
-    //reactions
-    if(data['voteCount'] > 0 || data['emotionCount'] > 0){
-      topicWrapperClone.find('.voteCount').text(data['voteCount']);
-
-      data['emotions'].sort(function(a,b){
-        return (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0);
-      });
-
-      topicWrapperClone.find('.emotionIcons').append($('<img />', {src: rootURL + '/asset/img/emotions/' + data['emotions'][0].name + '.png'}));
-      if(data['emotions'][1].count > 0)
-        topicWrapperClone.find('.emotionIcons').append($('<img />', {src: rootURL + '/asset/img/emotions/' + data['emotions'][1].name + '.png'}));
-      if(data['emotions'][2].count > 0)
-        topicWrapperClone.find('.emotionIcons').append($('<img />', {src: rootURL + '/asset/img/emotions/' + data['emotions'][2].name + '.png'}));
-
-      topicWrapperClone.find('.emotionCount').text(data['emotionCount']['sum']);
-      topicWrapperClone.find('.likeCount').text(data['emotionCount']['like']);
-      topicWrapperClone.find('.laughCount').text(data['emotionCount']['laugh']);
-      topicWrapperClone.find('.loveCount').text(data['emotionCount']['love']);
-      topicWrapperClone.find('.impressCount').text(data['emotionCount']['impress']);
-      topicWrapperClone.find('.scaryCount').text(data['emotionCount']['scary']);
-      topicWrapperClone.find('.surprisedCount').text(data['emotionCount']['surprised']);
-    }else{
-      topicWrapperClone.find('.reactions').addClass('empty');
-    }
-
-    $('#topicView').html(topicWrapperClone);
     $('#bellyTitle').text(data['title']);
 
     loadComments(topicID);
