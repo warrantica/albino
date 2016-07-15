@@ -56,6 +56,10 @@ function loadTopic(topicID){
   $('#rightPane .loading').addClass('active');
 
   loadTopicAJAX(topicID, function(data){
+    console.log(data);
+    data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
+    vm.$broadcast('loadTopicView', data);
+
     var topicWrapperClone = viewTopicTemplate.clone();
 
     topicWrapperClone.find('.title').text(data['title']);
@@ -87,7 +91,7 @@ function loadTopic(topicID){
 
     //tags
     if(data['tags'].length > 0){
-      topicWrapperClone.find('.tag').append(data['tags'].join(', '));
+      topicWrapperClone.find('.tag').append(data['tags']);
     }else{
       topicWrapperClone.find('.tag').addClass('empty');
     }
@@ -359,10 +363,12 @@ $('#lightBox').on('click', function(e){
 let forumSelectItem = require('./components/forumSelectItem.vue');
 let bestTopicItem = require('./components/bestTopicItem.vue');
 let topicItem = require('./components/topicItem.vue');
+let topicView = require('./components/topicView.vue');
 
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
 Vue.component('topicItem', topicItem);
+Vue.component('topicView', topicView);
 
 let vm = new Vue({
   el: 'body',
