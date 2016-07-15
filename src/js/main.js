@@ -40,8 +40,6 @@ let forumInfo = [
 //Global variables stuff
 //============================================================================
 var rootURL = chrome.extension.getURL('');
-var viewTopicTemplate = $('<div>', {class: "topicWrapper"});
-viewTopicTemplate.load(rootURL + 'template/viewTopicTemplate.html');
 var commentTemplate = $('<div>', {class: "comment sElevation1"});
 commentTemplate.load(rootURL + 'template/commentTemplate.html');
 
@@ -50,22 +48,6 @@ var currentTopic = 0;
 //============================================================================
 //Functions stuff
 //============================================================================
-
-function loadTopic(topicID){
-  $('#rightPane').addClass('wrapUp');
-  $('#rightPane .loading').addClass('active');
-
-  loadTopicAJAX(topicID, function(data){
-    data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
-    vm.$broadcast('loadTopicView', data);
-
-    $('#bellyTitle').text(data['title']);
-
-    loadComments(topicID);
-  });
-
-  $('#rightPane').animate({scrollTop:0}, "0.5s");
-}
 
 function loadComments(topicID){
   loadCommentsAJAX(topicID, function(data){
@@ -369,6 +351,22 @@ let vm = new Vue({
     loadMoreTopics(){
       this.loadTopics(this.currentForum, true);
       $('.topic.' + this.loadMoreId).addClass('beforeMore');
+    },
+
+    loadTopic(topicId){
+      $('#rightPane').addClass('wrapUp');
+      $('#rightPane .loading').addClass('active');
+
+      loadTopicAJAX(topicId, data => {
+        data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
+        this.$broadcast('loadTopicView', data);
+
+        $('#bellyTitle').text(data['title']);
+
+        loadComments(topicId);
+      });
+
+      $('#rightPane').animate({scrollTop:0}, "0.5s");
     }
   },
 
@@ -379,7 +377,7 @@ let vm = new Vue({
 
     'loadTopic': function(topicId){
       this.$broadcast('topicLoaded', topicId);
-      loadTopic(topicId);
+      this.loadTopic(topicId);
     }
   },
 
