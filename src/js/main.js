@@ -284,10 +284,14 @@ let bestTopicItem = require('./components/bestTopicItem.vue');
 let topicItem = require('./components/topicItem.vue');
 let topicView = require('./components/topicView.vue');
 
+let reactionView = require('./components/reactionView.vue');
+
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
 Vue.component('topicItem', topicItem);
 Vue.component('topicView', topicView);
+
+Vue.component('reactionView', reactionView);
 
 let vm = new Vue({
   el: 'body',

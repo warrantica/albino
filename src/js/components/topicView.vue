@@ -4,31 +4,13 @@
     <div class="info">
       <img class="avatar" src="{{ data.avatarSrc }}" />
       <div class="author">{{ data.author }}</div>
-      <div class="time sSubtitle"><time class="timeago" :datetime="data.utime">{{ data.timeFull }}</time></div>
+      <div class="time sSubtitle">
+        <time class="timeago" :datetime="data.utime">{{ data.timeFull }}</time>
+      </div>
     </div>
     <div class="tag sSubtitle" v-show="data.tags"><i class="ic">label</i> {{ data.tags }}</div>
     <div class="content">{{{ data.content }}}</div>
-    <div class="reactions" v-show="data.voteCount || data.emotionCount.sum">
-      <div class="vote" v-show="data.voteCount">
-        <i class="ic">add_box</i>{{ data.voteCount }}
-      </div>
-      <div class="emotions" v-show="data.emotionCount.sum">
-        <div class="emotionIcons">
-          <img src="asset/img/emotions/{{ topEmotions[0].name }}.png" v-if="topEmotions[0].count" />
-          <img src="asset/img/emotions/{{ topEmotions[1].name }}.png" v-if="topEmotions[1].count" />
-          <img src="asset/img/emotions/{{ topEmotions[2].name }}.png" v-if="topEmotions[2].count" />
-        </div>
-        <div class="emotionCount">{{ data.emotionCount.sum }}</div>
-      </div>
-      <ul class="emotionsInfo sElevation2">
-        <li><img src="asset/img/emotions/like.png"/><span>ถูกใจ {{ data.emotionCount.like }}</span></li>
-        <li><img src="asset/img/emotions/laugh.png"/><span>ขำกลิ้ง {{ data.emotionCount.laugh }}</span></li>
-        <li><img src="asset/img/emotions/love.png"/><span>หลงรัก {{ data.emotionCount.love }}</span></li>
-        <li><img src="asset/img/emotions/impress.png"/><span>ซึ้ง {{ data.emotionCount.impress }}</span></li>
-        <li><img src="asset/img/emotions/scary.png"/><span>สยอง {{ data.emotionCount.scary }}</span></li>
-        <li><img src="asset/img/emotions/surprised.png"/><span>ทึ่ง {{ data.emotionCount.surprised }}</span></li>
-      </ul>
-    </div>
+    <reaction-view></reaction-view>
   </div>
 </template>
 
@@ -45,10 +27,6 @@
     data(){ return {
       topEmotions: []
     }},
-
-    methods: {
-
-    },
 
     events: {
       'loadTopicView': function(data){
@@ -72,20 +50,11 @@
         //tags
         if(data.tags.length > 0) data.tags = data.tags.join(', ');
 
-        //reactions
-        this.topEmotions = [];
-        data.emotions.sort((a,b) => (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0));
-        for(let emotion of data.emotions){
-          if(emotion.count > 0) this.topEmotions.push(emotion);
-        }
 
         this.data = data;
+        this.$broadcast('loadReaction', data);
         $('time.timeago').timeago();
       }
-    },
-
-    ready(){
-
     }
   }
 </script>

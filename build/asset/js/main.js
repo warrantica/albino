@@ -11235,6 +11235,114 @@ var __vueify_style__ = __vueify_insert__.insert("\n\n")
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  data: function data() {
+    return {
+      data: {},
+      topEmotions: []
+    };
+  },
+
+
+  methods: {
+    refreshData: function refreshData() {
+      this.topEmotions = [];
+      this.data.emotions.sort(function (a, b) {
+        return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
+      });
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = (0, _getIterator3.default)(this.data.emotions), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var emotion = _step.value;
+
+          if (emotion.count > 0) this.topEmotions.push(emotion);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }
+  },
+
+  events: {
+    'loadReaction': function loadReaction(data) {
+      this.topEmotions = [];
+      data.emotions.sort(function (a, b) {
+        return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
+      });
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = (0, _getIterator3.default)(data.emotions), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var emotion = _step2.value;
+
+          if (emotion.count > 0) this.topEmotions.push(emotion);
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      this.data = data;
+    }
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"reactions\" v-show=\"data.voteCount || data.emotionCount.sum\" _v-58c21290=\"\">\n  <div class=\"vote\" v-show=\"data.voteCount\" _v-58c21290=\"\">\n    <i class=\"ic\" _v-58c21290=\"\">add_box</i>{{ data.voteCount }}\n  </div>\n  <div class=\"emotions\" v-show=\"data.emotionCount.sum\" _v-58c21290=\"\">\n    <div class=\"emotionIcons\" _v-58c21290=\"\">\n      <img src=\"asset/img/emotions/{{ topEmotions[0].name }}.png\" v-if=\"topEmotions[0].count\" _v-58c21290=\"\">\n      <img src=\"asset/img/emotions/{{ topEmotions[1].name }}.png\" v-if=\"topEmotions[1].count\" _v-58c21290=\"\">\n      <img src=\"asset/img/emotions/{{ topEmotions[2].name }}.png\" v-if=\"topEmotions[2].count\" _v-58c21290=\"\">\n    </div>\n    <div class=\"emotionCount\" _v-58c21290=\"\">{{ data.emotionCount.sum }}</div>\n  </div>\n  <ul class=\"emotionsInfo sElevation2\" _v-58c21290=\"\">\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/like.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ถูกใจ {{ data.emotionCount.like }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/laugh.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ขำกลิ้ง {{ data.emotionCount.laugh }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/love.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">หลงรัก {{ data.emotionCount.love }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/impress.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ซึ้ง {{ data.emotionCount.impress }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/scary.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">สยอง {{ data.emotionCount.scary }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/surprised.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ทึ่ง {{ data.emotionCount.surprised }}</span></li>\n  </ul>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-58c21290", module.exports)
+  } else {
+    hotAPI.update("_v-58c21290", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"babel-runtime/core-js/get-iterator":1,"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],61:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.default = {
   props: {
     data: {
@@ -11286,7 +11394,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-df29bfa0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],61:[function(require,module,exports){
+},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],62:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
@@ -11294,13 +11402,6 @@ var __vueify_style__ = __vueify_insert__.insert("\n\n")
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _getIterator2 = require('babel-runtime/core-js/get-iterator');
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 exports.default = {
   props: {
     data: Object
@@ -11312,8 +11413,6 @@ exports.default = {
     };
   },
 
-
-  methods: {},
 
   events: {
     'loadTopicView': function loadTopicView(data) {
@@ -11337,45 +11436,14 @@ exports.default = {
       //tags
       if (data.tags.length > 0) data.tags = data.tags.join(', ');
 
-      //reactions
-      this.topEmotions = [];
-      data.emotions.sort(function (a, b) {
-        return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
-      });
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = (0, _getIterator3.default)(data.emotions), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var emotion = _step.value;
-
-          if (emotion.count > 0) this.topEmotions.push(emotion);
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
       this.data = data;
+      this.$broadcast('loadReaction', data);
       $('time.timeago').timeago();
     }
-  },
-
-  ready: function ready() {}
+  }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-dcfa727c=\"\">\n  <h1 _v-dcfa727c=\"\">{{ data.title }}</h1>\n  <div class=\"info\" _v-dcfa727c=\"\">\n    <img class=\"avatar\" src=\"{{ data.avatarSrc }}\" _v-dcfa727c=\"\">\n    <div class=\"author\" _v-dcfa727c=\"\">{{ data.author }}</div>\n    <div class=\"time sSubtitle\" _v-dcfa727c=\"\"><time class=\"timeago\" :datetime=\"data.utime\" _v-dcfa727c=\"\">{{ data.timeFull }}</time></div>\n  </div>\n  <div class=\"tag sSubtitle\" v-show=\"data.tags\" _v-dcfa727c=\"\"><i class=\"ic\" _v-dcfa727c=\"\">label</i> {{ data.tags }}</div>\n  <div class=\"content\" _v-dcfa727c=\"\">{{{ data.content }}}</div>\n  <div class=\"reactions\" v-show=\"data.voteCount || data.emotionCount.sum\" _v-dcfa727c=\"\">\n    <div class=\"vote\" v-show=\"data.voteCount\" _v-dcfa727c=\"\">\n      <i class=\"ic\" _v-dcfa727c=\"\">add_box</i>{{ data.voteCount }}\n    </div>\n    <div class=\"emotions\" v-show=\"data.emotionCount.sum\" _v-dcfa727c=\"\">\n      <div class=\"emotionIcons\" _v-dcfa727c=\"\">\n        <img src=\"asset/img/emotions/{{ topEmotions[0].name }}.png\" v-if=\"topEmotions[0].count\" _v-dcfa727c=\"\">\n        <img src=\"asset/img/emotions/{{ topEmotions[1].name }}.png\" v-if=\"topEmotions[1].count\" _v-dcfa727c=\"\">\n        <img src=\"asset/img/emotions/{{ topEmotions[2].name }}.png\" v-if=\"topEmotions[2].count\" _v-dcfa727c=\"\">\n      </div>\n      <div class=\"emotionCount\" _v-dcfa727c=\"\">{{ data.emotionCount.sum }}</div>\n    </div>\n    <ul class=\"emotionsInfo sElevation2\" _v-dcfa727c=\"\">\n      <li _v-dcfa727c=\"\"><img src=\"asset/img/emotions/like.png\" _v-dcfa727c=\"\"><span _v-dcfa727c=\"\">ถูกใจ {{ data.emotionCount.like }}</span></li>\n      <li _v-dcfa727c=\"\"><img src=\"asset/img/emotions/laugh.png\" _v-dcfa727c=\"\"><span _v-dcfa727c=\"\">ขำกลิ้ง {{ data.emotionCount.laugh }}</span></li>\n      <li _v-dcfa727c=\"\"><img src=\"asset/img/emotions/love.png\" _v-dcfa727c=\"\"><span _v-dcfa727c=\"\">หลงรัก {{ data.emotionCount.love }}</span></li>\n      <li _v-dcfa727c=\"\"><img src=\"asset/img/emotions/impress.png\" _v-dcfa727c=\"\"><span _v-dcfa727c=\"\">ซึ้ง {{ data.emotionCount.impress }}</span></li>\n      <li _v-dcfa727c=\"\"><img src=\"asset/img/emotions/scary.png\" _v-dcfa727c=\"\"><span _v-dcfa727c=\"\">สยอง {{ data.emotionCount.scary }}</span></li>\n      <li _v-dcfa727c=\"\"><img src=\"asset/img/emotions/surprised.png\" _v-dcfa727c=\"\"><span _v-dcfa727c=\"\">ทึ่ง {{ data.emotionCount.surprised }}</span></li>\n    </ul>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-dcfa727c=\"\">\n  <h1 _v-dcfa727c=\"\">{{ data.title }}</h1>\n  <div class=\"info\" _v-dcfa727c=\"\">\n    <img class=\"avatar\" src=\"{{ data.avatarSrc }}\" _v-dcfa727c=\"\">\n    <div class=\"author\" _v-dcfa727c=\"\">{{ data.author }}</div>\n    <div class=\"time sSubtitle\" _v-dcfa727c=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-dcfa727c=\"\">{{ data.timeFull }}</time>\n    </div>\n  </div>\n  <div class=\"tag sSubtitle\" v-show=\"data.tags\" _v-dcfa727c=\"\"><i class=\"ic\" _v-dcfa727c=\"\">label</i> {{ data.tags }}</div>\n  <div class=\"content\" _v-dcfa727c=\"\">{{{ data.content }}}</div>\n  <reaction-view _v-dcfa727c=\"\"></reaction-view>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11390,7 +11458,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-dcfa727c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"babel-runtime/core-js/get-iterator":1,"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],62:[function(require,module,exports){
+},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],63:[function(require,module,exports){
 let forumInfo = [
   { name: 'food', label: 'ก้นครัว' },
   { name: 'chalermkrung', label: 'เฉลิมกรุง' },
@@ -11677,10 +11745,14 @@ let bestTopicItem = require('./components/bestTopicItem.vue');
 let topicItem = require('./components/topicItem.vue');
 let topicView = require('./components/topicView.vue');
 
+let reactionView = require('./components/reactionView.vue');
+
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
 Vue.component('topicItem', topicItem);
 Vue.component('topicView', topicView);
+
+Vue.component('reactionView', reactionView);
 
 let vm = new Vue({
   el: 'body',
@@ -11956,4 +12028,4 @@ function loadMoreSubCommentsAJAX(last, cid, c, callback){
   });
 }
 
-},{"./components/bestTopicItem.vue":58,"./components/forumSelectItem.vue":59,"./components/topicItem.vue":60,"./components/topicView.vue":61}]},{},[62]);
+},{"./components/bestTopicItem.vue":58,"./components/forumSelectItem.vue":59,"./components/reactionView.vue":60,"./components/topicItem.vue":61,"./components/topicView.vue":62}]},{},[63]);
