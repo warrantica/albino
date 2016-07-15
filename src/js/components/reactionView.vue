@@ -5,9 +5,9 @@
     </div>
     <div class="emotions" v-show="data.emotionCount.sum">
       <div class="emotionIcons">
-        <img src="asset/img/emotions/{{ topEmotions[0].name }}.png" v-if="topEmotions[0].count" />
-        <img src="asset/img/emotions/{{ topEmotions[1].name }}.png" v-if="topEmotions[1].count" />
-        <img src="asset/img/emotions/{{ topEmotions[2].name }}.png" v-if="topEmotions[2].count" />
+        <img :src="'asset/img/emotions/' + topEmotions[0].name + '.png'" v-if="topEmotions[0]" />
+        <img :src="'asset/img/emotions/' + topEmotions[1].name + '.png'" v-if="topEmotions[1]" />
+        <img :src="'asset/img/emotions/' + topEmotions[2].name + '.png'" v-if="topEmotions[2]" />
       </div>
       <div class="emotionCount">{{ data.emotionCount.sum }}</div>
     </div>
@@ -29,7 +29,10 @@
 <script>
   export default {
     data(){ return {
-      data: {},
+      data: {
+        voteCount: 0,
+        emotionCount: 0
+      },
       topEmotions: []
     }},
 

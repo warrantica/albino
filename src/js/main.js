@@ -443,7 +443,10 @@ function loadTopicListAJAX(forumName, loadMoreID=0, callback){
       var topics = new Array();
       var bestTopics = new Array();
 
-      var html = $(data).find('#show_topic_lists')[0];
+      data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
+      data = data.replace(/src=["'].*["']/g, 'src=""');
+
+      var html = $(data, null).find('#show_topic_lists')[0];
       $(html).find('.post-item').each(function(i){
         var item = {};
         item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
@@ -484,6 +487,8 @@ function loadTopicAJAX(topicID, callback){
     url: 'http://www.pantip.com/topic/' + topicID,
     dataType: 'text',
     success: function(data){
+
+      data = data.replace(/src="\/images.*"/g, 'src=""');
       var html = $(data).find('.main-post-inner')[0];
       var res = {};
 

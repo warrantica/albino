@@ -11212,7 +11212,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<li @click=\"loadForum\" _v-41c115fe=\"\">\n  <img src=\"asset/forumIcon/{{ name }}.png\" _v-41c115fe=\"\">\n  <span class=\"forumName\" _v-41c115fe=\"\"><slot _v-41c115fe=\"\"></slot></span>\n</li>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<li @click=\"loadForum\" _v-41c115fe=\"\">\n  <img :src=\"'asset/forumIcon/'+name+'.png'\" _v-41c115fe=\"\">\n  <span class=\"forumName\" _v-41c115fe=\"\"><slot _v-41c115fe=\"\"></slot></span>\n</li>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11245,7 +11245,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   data: function data() {
     return {
-      data: {},
+      data: {
+        voteCount: 0,
+        emotionCount: 0
+      },
       topEmotions: []
     };
   },
@@ -11320,7 +11323,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"reactions\" v-show=\"data.voteCount || data.emotionCount.sum\" _v-58c21290=\"\">\n  <div class=\"vote\" v-show=\"data.voteCount\" _v-58c21290=\"\">\n    <i class=\"ic\" _v-58c21290=\"\">add_box</i>{{ data.voteCount }}\n  </div>\n  <div class=\"emotions\" v-show=\"data.emotionCount.sum\" _v-58c21290=\"\">\n    <div class=\"emotionIcons\" _v-58c21290=\"\">\n      <img src=\"asset/img/emotions/{{ topEmotions[0].name }}.png\" v-if=\"topEmotions[0].count\" _v-58c21290=\"\">\n      <img src=\"asset/img/emotions/{{ topEmotions[1].name }}.png\" v-if=\"topEmotions[1].count\" _v-58c21290=\"\">\n      <img src=\"asset/img/emotions/{{ topEmotions[2].name }}.png\" v-if=\"topEmotions[2].count\" _v-58c21290=\"\">\n    </div>\n    <div class=\"emotionCount\" _v-58c21290=\"\">{{ data.emotionCount.sum }}</div>\n  </div>\n  <ul class=\"emotionsInfo sElevation2\" _v-58c21290=\"\">\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/like.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ถูกใจ {{ data.emotionCount.like }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/laugh.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ขำกลิ้ง {{ data.emotionCount.laugh }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/love.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">หลงรัก {{ data.emotionCount.love }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/impress.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ซึ้ง {{ data.emotionCount.impress }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/scary.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">สยอง {{ data.emotionCount.scary }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/surprised.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ทึ่ง {{ data.emotionCount.surprised }}</span></li>\n  </ul>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"reactions\" v-show=\"data.voteCount || data.emotionCount.sum\" _v-58c21290=\"\">\n  <div class=\"vote\" v-show=\"data.voteCount\" _v-58c21290=\"\">\n    <i class=\"ic\" _v-58c21290=\"\">add_box</i>{{ data.voteCount }}\n  </div>\n  <div class=\"emotions\" v-show=\"data.emotionCount.sum\" _v-58c21290=\"\">\n    <div class=\"emotionIcons\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[0].name + '.png'\" v-if=\"topEmotions[0]\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[1].name + '.png'\" v-if=\"topEmotions[1]\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[2].name + '.png'\" v-if=\"topEmotions[2]\" _v-58c21290=\"\">\n    </div>\n    <div class=\"emotionCount\" _v-58c21290=\"\">{{ data.emotionCount.sum }}</div>\n  </div>\n  <ul class=\"emotionsInfo sElevation2\" _v-58c21290=\"\">\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/like.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ถูกใจ {{ data.emotionCount.like }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/laugh.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ขำกลิ้ง {{ data.emotionCount.laugh }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/love.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">หลงรัก {{ data.emotionCount.love }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/impress.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ซึ้ง {{ data.emotionCount.impress }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/scary.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">สยอง {{ data.emotionCount.scary }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/surprised.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ทึ่ง {{ data.emotionCount.surprised }}</span></li>\n  </ul>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11404,7 +11407,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   props: {
-    data: Object
+    data: {
+      type: Object,
+      default: function _default() {
+        return {
+          title: '',
+          author: '',
+          utime: '',
+          timeFull: '',
+          tags: '',
+          content: ''
+        };
+      }
+    }
   },
 
   data: function data() {
@@ -11443,7 +11458,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-dcfa727c=\"\">\n  <h1 _v-dcfa727c=\"\">{{ data.title }}</h1>\n  <div class=\"info\" _v-dcfa727c=\"\">\n    <img class=\"avatar\" src=\"{{ data.avatarSrc }}\" _v-dcfa727c=\"\">\n    <div class=\"author\" _v-dcfa727c=\"\">{{ data.author }}</div>\n    <div class=\"time sSubtitle\" _v-dcfa727c=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-dcfa727c=\"\">{{ data.timeFull }}</time>\n    </div>\n  </div>\n  <div class=\"tag sSubtitle\" v-show=\"data.tags\" _v-dcfa727c=\"\"><i class=\"ic\" _v-dcfa727c=\"\">label</i> {{ data.tags }}</div>\n  <div class=\"content\" _v-dcfa727c=\"\">{{{ data.content }}}</div>\n  <reaction-view _v-dcfa727c=\"\"></reaction-view>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-dcfa727c=\"\">\n  <h1 _v-dcfa727c=\"\">{{ data.title }}</h1>\n  <div class=\"info\" _v-dcfa727c=\"\">\n    <img class=\"avatar\" :src=\"data.avatarSrc\" _v-dcfa727c=\"\">\n    <div class=\"author\" _v-dcfa727c=\"\">{{ data.author }}</div>\n    <div class=\"time sSubtitle\" _v-dcfa727c=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-dcfa727c=\"\">{{ data.timeFull }}</time>\n    </div>\n  </div>\n  <div class=\"tag sSubtitle\" v-show=\"data.tags\" _v-dcfa727c=\"\"><i class=\"ic\" _v-dcfa727c=\"\">label</i> {{ data.tags }}</div>\n  <div class=\"content\" _v-dcfa727c=\"\">{{{ data.content }}}</div>\n  <reaction-view _v-dcfa727c=\"\"></reaction-view>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11904,7 +11919,10 @@ function loadTopicListAJAX(forumName, loadMoreID=0, callback){
       var topics = new Array();
       var bestTopics = new Array();
 
-      var html = $(data).find('#show_topic_lists')[0];
+      data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
+      data = data.replace(/src=["'].*["']/g, 'src=""');
+
+      var html = $(data, null).find('#show_topic_lists')[0];
       $(html).find('.post-item').each(function(i){
         var item = {};
         item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
@@ -11945,6 +11963,8 @@ function loadTopicAJAX(topicID, callback){
     url: 'http://www.pantip.com/topic/' + topicID,
     dataType: 'text',
     success: function(data){
+
+      data = data.replace(/src="\/images.*"/g, 'src=""');
       var html = $(data).find('.main-post-inner')[0];
       var res = {};
 

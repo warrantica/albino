@@ -1,6 +1,6 @@
 <template>
   <li @click="loadForum">
-    <img src="asset/forumIcon/{{ name }}.png" />
+    <img :src="'asset/forumIcon/'+name+'.png'" />
     <span class="forumName"><slot></slot></span>
   </li>
 </template>

@@ -19,13 +19,13 @@ q:before, q:after { content: ''; content: none; }
 table { border-collapse: collapse; border-spacing: 0; }
 
 /*============================================================*/
-
+/*
 @font-face {
   font-family: "TH Sarabun New";
   font-style: normal;
-  src: url("../asset/THSarabunNew.ttf") format("truetype");
+  src: url("../THSarabunNew.ttf") format("truetype");
 }
-
+*/
 body{
   display: flex;
   flex-flow: row nowrap;
