@@ -10528,17 +10528,27 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
   props: {
     tid: String,
-    title: String
+    title: String,
+    isActive: {
+      type: Boolean,
+      default: false
+    }
   },
 
   methods: {
     loadTopic: function loadTopic() {
       this.$dispatch('loadTopic', this.tid);
     }
+  },
+
+  events: {
+    'topicLoaded': function topicLoaded(topicId) {
+      this.isActive = topicId === this.tid ? true : false;
+    }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" @click=\"loadTopic\" _v-868bbca8=\"\">\n  <div class=\"title\" _v-868bbca8=\"\"><slot _v-868bbca8=\"\"></slot></div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-868bbca8=\"\">\n  <div class=\"title\" _v-868bbca8=\"\"><slot _v-868bbca8=\"\"></slot></div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -10606,12 +10616,15 @@ exports.default = {
       utime: String,
       timeFull: String
     },
-    commentIcon: String
+    commentIcon: String,
+    isActive: {
+      type: Boolean,
+      default: false
+    }
   },
 
   methods: {
     loadTopic: function loadTopic() {
-      console.log("loading id: " + this.data.id);
       this.$dispatch('loadTopic', this.data.id);
     }
   },
@@ -10619,10 +10632,17 @@ exports.default = {
   ready: function ready() {
     this.commentIcon = +this.data.commentsNum === 0 ? 'chat_bubble_outline' : 'chat_bubble';
     $('time.timeago').timeago();
+  },
+
+
+  events: {
+    'topicLoaded': function topicLoaded(topicId) {
+      this.isActive = topicId === this.data.id ? true : false;
+    }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"data.id\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\"><slot _v-df29bfa0=\"\"></slot></div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    <span class=\"author\" _v-df29bfa0=\"\">{{ data.author }}</span> •\n    <time class=\"timeago\" :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time> •\n    <span class=\"commentsNum\" _v-df29bfa0=\"\">{{ data.commentsNum }}</span> <i class=\"ic\" _v-df29bfa0=\"\">{{ commentIcon }}</i>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\"><slot _v-df29bfa0=\"\"></slot></div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    <span class=\"author\" _v-df29bfa0=\"\">{{ data.author }}</span> •\n    <time class=\"timeago\" :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time> •\n    <span class=\"commentsNum\" _v-df29bfa0=\"\">{{ data.commentsNum }}</span> <i class=\"ic\" _v-df29bfa0=\"\">{{ commentIcon }}</i>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11075,6 +11095,7 @@ let vm = new Vue({
     },
 
     'loadTopic': function(topicId){
+      this.$broadcast('topicLoaded', topicId);
       loadTopic(topicId);
     }
   },

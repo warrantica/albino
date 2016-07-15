@@ -1,6 +1,6 @@
 <template>
   <div class="topic sClickable"
-       :class="data.id"
+       :class="{active: isActive}"
        @click="loadTopic">
     <div class="type"></div>
     <div class="title"><slot></slot></div>
@@ -27,12 +27,15 @@
         utime: String,
         timeFull: String
       },
-      commentIcon: String
+      commentIcon: String,
+      isActive: {
+        type: Boolean,
+        default: false
+      }
     },
 
     methods: {
       loadTopic(){
-        console.log("loading id: " + this.data.id);
         this.$dispatch('loadTopic', this.data.id);
       }
     },
@@ -42,6 +45,12 @@
         ? 'chat_bubble_outline'
         : 'chat_bubble';
       $('time.timeago').timeago();
+    },
+
+    events: {
+      'topicLoaded': function(topicId){
+        this.isActive = topicId === this.data.id ? true : false;
+      }
     }
   }
 </script>

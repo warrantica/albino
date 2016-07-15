@@ -435,6 +435,7 @@ let vm = new Vue({
     },
 
     'loadTopic': function(topicId){
+      this.$broadcast('topicLoaded', topicId);
       loadTopic(topicId);
     }
   },

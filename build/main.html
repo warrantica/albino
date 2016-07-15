@@ -41,7 +41,8 @@
         <i class="ic headerIcon">thumb_up</i>กระทู้แนะนำ<i class="ic dropdown">expand_more</i>
       </div>
       <div id="bestTopicList" :class="{ active: showBestTopics }">
-        <best-topic-item v-for="topic in bestTopics" :tid="topic.id">
+        <best-topic-item v-for="topic in bestTopics"
+                         :tid="topic.id">
           {{ topic.title }}
         </best-topic-item>
       </div>
