@@ -10520,7 +10520,7 @@ exports.insert = function (css) {
 },{}],5:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10529,10 +10529,16 @@ exports.default = {
   props: {
     tid: String,
     title: String
+  },
+
+  methods: {
+    loadTopic: function loadTopic() {
+      this.$dispatch('loadTopic', this.tid);
+    }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" _v-868bbca8=\"\">\n  <div class=\"title\" _v-868bbca8=\"\"><slot _v-868bbca8=\"\"></slot></div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" @click=\"loadTopic\" _v-868bbca8=\"\">\n  <div class=\"title\" _v-868bbca8=\"\"><slot _v-868bbca8=\"\"></slot></div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11010,7 +11016,8 @@ let vm = new Vue({
     },
     bestTopics: [],
     topics: [],
-    loadMoreId: 0
+    loadMoreId: 0,
+    test: ''
   }},
 
   computed: {
@@ -11081,6 +11088,21 @@ let vm = new Vue({
       $('body').addClass(item.theme);
       this.loadTopics(item.defaultForum);
     });
+
+
+    /*$.ajax({
+      type: 'POST',
+      url: 'http://pantip.com/forum/topic/best_answer',
+      data: {
+        tid: 35381062,
+        cid: 60829529
+      },
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      success: function(data){
+        //vm.test = JSON.parse(data);
+        console.log(data);
+      }
+    });*/
   }
 });
 
