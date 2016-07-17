@@ -3,57 +3,25 @@
 //============================================================================
 let Vue = require('vue');
 let Vars = require('./vars.js');
-var rootURL = chrome.extension.getURL('');
-var commentTemplate = $('<div>', {class: "comment sElevation1"});
-commentTemplate.load(rootURL + 'template/commentTemplate.html');
 
 var currentTopic = 0;
 
 //============================================================================
 //Functions stuff
 //============================================================================
-/*
-function loadComments(topicID){
-  loadCommentsAJAX(topicID, function(data){
-    //console.log(data);
-    var commentEach;
 
-    $('#commentsView').html('');
-    for(var i=0; i<data['comments'].length; ++i){
-      var commentEach = populateComment(data['comments'][i]);
-
-      if(data['comments'][i]['replies'].length > 0){
-        var subContainer = $('<div>', {class: "subContainer"});
-        for(var j=0; j<data['comments'][i]['replies'].length; ++j)
-          subContainer.append(populateComment(data['comments'][i]['replies'][j], true));
-
-        if(data['comments'][i]['reply_count'] > 5){
-          //add load more button
-          subContainer.append($('<button>', {
-            class: "loadMoreSubComments sElevation0h2 sPrimaryBg",
-            text: "โหลดความเห็นย่อยเพิ่ม",
-            'data-last': 5,
-            'data-cid': data['comments'][i]['_id'],
-            'data-c': data['comments'][i]['reply_count']
-          }));
-        }
-        commentEach.append(subContainer);
-      }
-
-      $('#commentsView').append(commentEach);
-    }
-
-    if(document.getElementById('rightPane').offsetHeight < document.getElementById('rightPane').scrollHeight){
-      $('#fab').addClass('enable');
-    }else{
-      $('#fab').removeClass('enable');
-    }
-    $('#rightPane').removeClass('wrapUp');
-    $('#rightPane .loading').removeClass('active');
-    $('time.timeago').timeago();
-    currentTopic = topicID;
-  });
-}*/
+function dummy(topicID){
+  if(data['comments'][i]['reply_count'] > 5){
+    //add load more button
+    subContainer.append($('<button>', {
+      class: "loadMoreSubComments sElevation0h2 sPrimaryBg",
+      text: "โหลดความเห็นย่อยเพิ่ม",
+      'data-last': 5,
+      'data-cid': data['comments'][i]['_id'],
+      'data-c': data['comments'][i]['reply_count']
+    }));
+  }
+}
 
 function loadMoreSubComments(last, cid, c, callback){
   loadMoreSubCommentsAJAX(last, cid, c, function(data){
@@ -64,79 +32,6 @@ function loadMoreSubComments(last, cid, c, callback){
     callback(repliesArray);
   });
 }
-/*
-function populateComment(data, subComment = false){
-  commentEach = commentTemplate.clone();
-
-  //basic info
-  commentEach.find('.content').html(data['message']);
-  commentEach.find('.author').html(data['user']['name']);
-
-  //time
-  commentEach.find('.timeago').text(data['data_addrtitle']);
-  commentEach.find('.timeago').attr('datetime', convertTheirStupidDateTimeFormatToISO(data['data_utime']));
-
-  //comment number, other differences
-  if(subComment){
-    commentEach.find('.num').text(data['comment_no']+ '-' + data['reply_no']);
-    commentEach.addClass('sub');
-  }else{
-    commentEach.find('.num').text(data['comment_no']);
-  }
-
-  //if OP
-  if(data['owner_topic'] === true){
-    commentEach.find('.author').addClass('op');
-  }
-
-  //avatar
-  if(data['user']['avatar']['medium'].substr(-9,9) === "38x38.png"){
-    //unknown avatar, placeholder for now
-    commentEach.find('.avatar').attr('src', rootURL + 'asset/img/default_avatar.png');
-  }else{
-    commentEach.find('.avatar').attr('src', data['user']['avatar']['medium']);
-  }
-
-  //emotions/reactions
-  if(data['emotion']['sum'] > 0 || data['good_bad_vote']['point'] > 0){
-
-    //vote
-    commentEach.find('.voteCount').text(data['good_bad_vote']['point']);
-
-    //emotions
-    var emotions = [
-      {name:"impress", count:data['emotion']['impress']['count']},
-      {name:"laugh", count:data['emotion']['laugh']['count']},
-      {name:"like", count:data['emotion']['like']['count']},
-      {name:"love", count:data['emotion']['love']['count']},
-      {name:"scary", count:data['emotion']['scary']['count']},
-      {name:"surprised", count:data['emotion']['surprised']['count']}
-    ];
-
-    emotions.sort(function(a,b){
-      return (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0);
-    });
-
-    commentEach.find('.emotionIcons').append($('<img />', {src: rootURL + '/asset/img/emotions/' + emotions[0].name + '.png'}));
-    if(emotions[1].count > 0)
-      commentEach.find('.emotionIcons').append($('<img />', {src: rootURL + '/asset/img/emotions/' + emotions[1].name + '.png'}));
-    if(emotions[2].count > 0)
-      commentEach.find('.emotionIcons').append($('<img />', {src: rootURL + '/asset/img/emotions/' + emotions[2].name + '.png'}));
-
-    commentEach.find('.emotionCount').text(data['emotion']['sum']);
-    commentEach.find('.likeCount').text(data['emotion']['like']['count']);
-    commentEach.find('.laughCount').text(data['emotion']['laugh']['count']);
-    commentEach.find('.loveCount').text(data['emotion']['love']['count']);
-    commentEach.find('.impressCount').text(data['emotion']['impress']['count']);
-    commentEach.find('.scaryCount').text(data['emotion']['scary']['count']);
-    commentEach.find('.surprisedCount').text(data['emotion']['surprised']['count']);
-  }else{
-    commentEach.find('.reactions').addClass('empty');
-  }
-
-  return commentEach;
-}
-*/
 //============================================================================
 //Event binding stuff
 //============================================================================

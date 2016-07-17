@@ -86,7 +86,7 @@
 
     events: {
       'loadReaction': function(data){
-        console.log("Propagation stopped");
+        //empty event handler to stop propagation from parent comment call
       }
     }
   }
