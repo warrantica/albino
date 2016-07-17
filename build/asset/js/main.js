@@ -11210,7 +11210,7 @@ exports.default = {
           author: '',
           utime: '',
           timeFull: '',
-          content: ''
+          message: ''
         };
       }
     }
@@ -11221,31 +11221,19 @@ exports.default = {
       topEmotions: []
     };
   },
-
-
-  events: {
-    'loadTopicView': function loadTopicView(data) {
-      //sanitising content
-      var content = $('<div>').append(data.content);
-      //no eval for you!
-      $(content).find('script').remove();
-      $(content).find('.edit-history').remove();
-      data.content = content.html();
-
-      //avatar
-      if (data.avatarSrc.substr(-9, 9) === '38x38.png') {
-        //unknown avatar
-        data.avatarSrc = 'asset/img/default_avatar.png';
-      }
-
-      this.data = data;
-      this.$broadcast('loadReaction', data);
-      $('time.timeago').timeago();
+  ready: function ready() {
+    //avatar
+    if (this.data.user.avatar.medium.substr(-9, 9) === '38x38.png') {
+      //unknown avatar
+      this.data.user.avatar.medium = 'asset/img/default_avatar.png';
     }
+
+    //reactions
+    this.$broadcast('loadReaction', this.data);
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-691c7be0=\"\">\n  <div class=\"info\" _v-691c7be0=\"\">\n    <img class=\"avatar\" :src=\"data.avatarSrc\" _v-691c7be0=\"\">\n    <div class=\"author\" _v-691c7be0=\"\">{{ data.author }}</div>\n    <div class=\"time sSubtitle\" _v-691c7be0=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-691c7be0=\"\">{{ data.timeFull }}</time>\n    </div>\n    <div class=\"numContainer sSubtitle\" _v-691c7be0=\"\">#<span class=\"num\" _v-691c7be0=\"\"></span></div>\n  </div>\n  <div class=\"content\" _v-691c7be0=\"\">{{{ data.content }}}</div>\n  <reaction-view _v-691c7be0=\"\"></reaction-view>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"comment sElevation1\" _v-691c7be0=\"\">\n  <div class=\"info\" _v-691c7be0=\"\">\n    <img class=\"avatar\" :src=\"data.user.avatar.medium\" _v-691c7be0=\"\">\n    <div class=\"author\" :class=\"{op:data.owner_topic}\" _v-691c7be0=\"\">{{ data.user.name }}</div>\n    <div class=\"time sSubtitle\" _v-691c7be0=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-691c7be0=\"\">{{ data.data_addrtitle }}</time>\n    </div>\n    <div class=\"numContainer sSubtitle\" _v-691c7be0=\"\">#{{ data.comment_no }}</div>\n  </div>\n  <div class=\"content\" _v-691c7be0=\"\">{{{ data.message }}}</div>\n  <reaction-view _v-691c7be0=\"\"></reaction-view>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11274,11 +11262,16 @@ exports.default = {
   },
 
   events: {
-    'loadComments': function loadComments(data) {}
+    'loadCommentView': function loadCommentView(data) {
+      this.comments = [];
+      if (data.count > 0) {
+        this.comments = data.comments;
+      }
+    }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView2\" _v-6a342272=\"\">\n  <comment-item _v-6a342272=\"\"></comment-item>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView2\" _v-6a342272=\"\">\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11575,11 +11568,10 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],65:[function(require,module,exports){
-let Vars = require('./vars.js');
-
 //============================================================================
 //Global variables stuff
 //============================================================================
+let Vars = require('./vars.js');
 var rootURL = chrome.extension.getURL('');
 var commentTemplate = $('<div>', {class: "comment sElevation1"});
 commentTemplate.load(rootURL + 'template/commentTemplate.html');
@@ -11592,7 +11584,7 @@ var currentTopic = 0;
 
 function loadComments(topicID){
   loadCommentsAJAX(topicID, function(data){
-    console.log(data);
+    //console.log(data);
     var commentEach;
 
     $('#commentsView').html('');
@@ -11881,7 +11873,7 @@ let vm = new Vue({
       }
 
       loadTopicListAJAX(forumName, _loadMoreId, data => {
-        console.log(data);
+        //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
@@ -11903,6 +11895,7 @@ let vm = new Vue({
     loadTopic(topicId){
       $('#rightPane').addClass('wrapUp');
       $('#rightPane .loading').addClass('active');
+      $('#rightPane').animate({scrollTop:0}, "0.5s");
 
       loadTopicAJAX(topicId, data => {
         data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
@@ -11913,7 +11906,10 @@ let vm = new Vue({
         loadComments(topicId);
       });
 
-      $('#rightPane').animate({scrollTop:0}, "0.5s");
+      loadCommentsAJAX(topicId, data => {
+        console.log(data);
+        this.$broadcast('loadCommentView', data);
+      });
     }
   },
 

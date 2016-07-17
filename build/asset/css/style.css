@@ -474,13 +474,13 @@ body.blue .sPrimaryText{ color: #03A9F4; }
 
 /*============================================================*/
 
-#commentsView{
+#commentsView, #commentsView2{
   width: 100%;
   max-width: 560px;
   margin: 0 auto;
 }
 
-#commentsView .comment{
+#commentsView .comment, #commentsView2 .comment{
   width: 100%;
   box-sizing: border-box;
   margin: 20px 0;
@@ -488,7 +488,7 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   background: #fff;
 }
 
-#commentsView .content{
+#commentsView .content, #commentsView2 .content{
   font-family: "TH Sarabun New";
   font-size: 26px;
   line-height: 1.5;
@@ -497,7 +497,7 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   margin-bottom: 0px;
 }
 
-#commentsView .content img{
+#commentsView .content img, #commentsView2 .content img{
   max-width: 100%;
 }
 
@@ -603,7 +603,7 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   vertical-align: top;
 }
 
-#commentsView .subContainer{
+#commentsView .subContainer, #commentsView2 .subContainer{
   padding-bottom: 1px;
 }
 
@@ -616,14 +616,14 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   transition: all .2s ease-in-out;
 }
 
-#commentsView .sub.comment{
+#commentsView .sub.comment, #commentsView2 .sub.comment{
   width: calc(100% - 10px);
   margin-left: 10px;
   background: #efefef;
   box-shadow: none;
 }
 
-#commentsView .sub.comment:first-child{
+#commentsView .sub.comment:first-child, #commentsView2 .sub.comment:first-child{
   margin-top: 0;
 }
 

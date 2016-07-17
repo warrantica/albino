@@ -1,14 +1,14 @@
 <template>
-  <div class="topicWrapper">
+  <div class="comment sElevation1">
     <div class="info">
-      <img class="avatar" :src="data.avatarSrc" />
-      <div class="author">{{ data.author }}</div>
+      <img class="avatar" :src="data.user.avatar.medium" />
+      <div class="author" :class="{op:data.owner_topic}">{{ data.user.name }}</div>
       <div class="time sSubtitle">
-        <time class="timeago" :datetime="data.utime">{{ data.timeFull }}</time>
+        <time class="timeago" :datetime="data.utime">{{ data.data_addrtitle }}</time>
       </div>
-      <div class="numContainer sSubtitle">#<span class="num"></span></div>
+      <div class="numContainer sSubtitle">#{{ data.comment_no }}</div>
     </div>
-    <div class="content">{{{ data.content }}}</div>
+    <div class="content">{{{ data.message }}}</div>
     <reaction-view></reaction-view>
   </div>
 </template>
@@ -27,7 +27,7 @@
           author: '',
           utime: '',
           timeFull: '',
-          content: ''
+          message: ''
         }}
       }
     },
@@ -36,25 +36,15 @@
       topEmotions: []
     }},
 
-    events: {
-      'loadTopicView': function(data){
-        //sanitising content
-        let content = $('<div>').append(data.content);
-        //no eval for you!
-        $(content).find('script').remove();
-        $(content).find('.edit-history').remove();
-        data.content = content.html();
-
-        //avatar
-        if(data.avatarSrc.substr(-9, 9) === '38x38.png'){
-          //unknown avatar
-          data.avatarSrc = 'asset/img/default_avatar.png';
-        }
-
-        this.data = data;
-        this.$broadcast('loadReaction', data);
-        $('time.timeago').timeago();
+    ready(){
+      //avatar
+      if(this.data.user.avatar.medium.substr(-9, 9) === '38x38.png'){
+        //unknown avatar
+        this.data.user.avatar.medium = 'asset/img/default_avatar.png';
       }
+
+      //reactions
+      //this.$broadcast('loadReaction', this.data);
     }
   }
 </script>

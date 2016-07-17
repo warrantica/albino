@@ -14,7 +14,7 @@ var currentTopic = 0;
 
 function loadComments(topicID){
   loadCommentsAJAX(topicID, function(data){
-    console.log(data);
+    //console.log(data);
     var commentEach;
 
     $('#commentsView').html('');
@@ -303,7 +303,7 @@ let vm = new Vue({
       }
 
       loadTopicListAJAX(forumName, _loadMoreId, data => {
-        console.log(data);
+        //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
@@ -325,6 +325,7 @@ let vm = new Vue({
     loadTopic(topicId){
       $('#rightPane').addClass('wrapUp');
       $('#rightPane .loading').addClass('active');
+      $('#rightPane').animate({scrollTop:0}, "0.5s");
 
       loadTopicAJAX(topicId, data => {
         data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
@@ -335,7 +336,10 @@ let vm = new Vue({
         loadComments(topicId);
       });
 
-      $('#rightPane').animate({scrollTop:0}, "0.5s");
+      loadCommentsAJAX(topicId, data => {
+        console.log(data);
+        this.$broadcast('loadCommentView', data);
+      });
     }
   },
 

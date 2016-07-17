@@ -1,6 +1,8 @@
 <template>
   <div id="commentsView2">
-    <comment-item></comment-item>
+    <comment-item v-for="comment in comments"
+                  :data="comment">
+    </comment-item>
   </div>
 </template>
 
@@ -15,8 +17,11 @@
     },
 
     events: {
-      'loadComments': function(data){
-
+      'loadCommentView': function(data){
+        this.comments = [];
+        if(data.count > 0){
+          this.comments = data.comments;
+        }
       }
     }
   }
