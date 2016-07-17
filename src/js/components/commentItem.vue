@@ -1,5 +1,5 @@
 <template>
-  <div class="comment sElevation1">
+  <div class="comment sElevation1" :class="{sub:sub}">
     <div class="info">
       <img class="avatar" :src="data.user.avatar.medium" />
       <div class="author" :class="{op:data.owner_topic}">{{ data.user.name }}</div>
@@ -10,6 +10,11 @@
     </div>
     <div class="content">{{{ data.message }}}</div>
     <reaction-view></reaction-view>
+    <div class="subContainer" v-if="data.reply_count">
+      <comment-item v-for="reply in data.replies"
+                    :data="reply" sub>
+      </comment-item>
+    </div>
   </div>
 </template>
 
@@ -19,6 +24,8 @@
 
 <script>
   export default {
+    name: 'comment-item',
+
     props: {
       data: {
         type: Object,
@@ -29,6 +36,11 @@
           timeFull: '',
           message: ''
         }}
+      },
+
+      sub: {
+        type: Boolean,
+        default: false
       }
     },
 
@@ -37,6 +49,11 @@
     }},
 
     ready(){
+      //comment number
+      if(this.sub){
+        this.data.comment_no = this.data.comment_no + '-' + this.data.reply_no;
+      }
+
       //avatar
       if(this.data.user.avatar.medium.substr(-9, 9) === '38x38.png'){
         //unknown avatar
@@ -65,6 +82,12 @@
         ]
       };
       this.$broadcast('loadReaction', reactionData);
+    },
+
+    events: {
+      'loadReaction': function(data){
+        console.log("Propagation stopped");
+      }
     }
   }
 </script>

@@ -1,6 +1,7 @@
 //============================================================================
 //Global variables stuff
 //============================================================================
+let Vue = require('vue');
 let Vars = require('./vars.js');
 var rootURL = chrome.extension.getURL('');
 var commentTemplate = $('<div>', {class: "comment sElevation1"});
@@ -11,7 +12,7 @@ var currentTopic = 0;
 //============================================================================
 //Functions stuff
 //============================================================================
-
+/*
 function loadComments(topicID){
   loadCommentsAJAX(topicID, function(data){
     //console.log(data);
@@ -52,7 +53,7 @@ function loadComments(topicID){
     $('time.timeago').timeago();
     currentTopic = topicID;
   });
-}
+}*/
 
 function loadMoreSubComments(last, cid, c, callback){
   loadMoreSubCommentsAJAX(last, cid, c, function(data){
@@ -63,7 +64,7 @@ function loadMoreSubComments(last, cid, c, callback){
     callback(repliesArray);
   });
 }
-
+/*
 function populateComment(data, subComment = false){
   commentEach = commentTemplate.clone();
 
@@ -135,7 +136,7 @@ function populateComment(data, subComment = false){
 
   return commentEach;
 }
-
+*/
 //============================================================================
 //Event binding stuff
 //============================================================================
@@ -328,16 +329,23 @@ let vm = new Vue({
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
       loadTopicAJAX(topicId, data => {
-        console.log(data);
         data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
         this.$broadcast('loadTopicView', data);
 
         $('#bellyTitle').text(data['title']);
 
-        loadComments(topicId);
+        //loadComments(topicId);
+        if(document.getElementById('rightPane').offsetHeight < document.getElementById('rightPane').scrollHeight){
+          $('#fab').addClass('enable');
+        }else{
+          $('#fab').removeClass('enable');
+        }
+        $('#rightPane').removeClass('wrapUp');
+        $('#rightPane .loading').removeClass('active');
       });
 
       loadCommentsAJAX(topicId, data => {
+        console.log(data);
         this.$broadcast('loadCommentView', data);
       });
     }
