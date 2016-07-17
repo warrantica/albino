@@ -11202,6 +11202,107 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   props: {
+    data: {
+      type: Object,
+      default: function _default() {
+        return {
+          title: '',
+          author: '',
+          utime: '',
+          timeFull: '',
+          content: ''
+        };
+      }
+    }
+  },
+
+  data: function data() {
+    return {
+      topEmotions: []
+    };
+  },
+
+
+  events: {
+    'loadTopicView': function loadTopicView(data) {
+      //sanitising content
+      var content = $('<div>').append(data.content);
+      //no eval for you!
+      $(content).find('script').remove();
+      $(content).find('.edit-history').remove();
+      data.content = content.html();
+
+      //avatar
+      if (data.avatarSrc.substr(-9, 9) === '38x38.png') {
+        //unknown avatar
+        data.avatarSrc = 'asset/img/default_avatar.png';
+      }
+
+      this.data = data;
+      this.$broadcast('loadReaction', data);
+      $('time.timeago').timeago();
+    }
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-691c7be0=\"\">\n  <div class=\"info\" _v-691c7be0=\"\">\n    <img class=\"avatar\" :src=\"data.avatarSrc\" _v-691c7be0=\"\">\n    <div class=\"author\" _v-691c7be0=\"\">{{ data.author }}</div>\n    <div class=\"time sSubtitle\" _v-691c7be0=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-691c7be0=\"\">{{ data.timeFull }}</time>\n    </div>\n    <div class=\"numContainer sSubtitle\" _v-691c7be0=\"\">#<span class=\"num\" _v-691c7be0=\"\"></span></div>\n  </div>\n  <div class=\"content\" _v-691c7be0=\"\">{{{ data.content }}}</div>\n  <reaction-view _v-691c7be0=\"\"></reaction-view>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-691c7be0", module.exports)
+  } else {
+    hotAPI.update("_v-691c7be0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],60:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  props: {
+    comments: []
+  },
+
+  events: {
+    'loadComments': function loadComments(data) {}
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView2\" _v-6a342272=\"\">\n  <comment-item _v-6a342272=\"\"></comment-item>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-6a342272", module.exports)
+  } else {
+    hotAPI.update("_v-6a342272", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],61:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  props: {
     name: String
   },
 
@@ -11227,7 +11328,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-41c115fe", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],60:[function(require,module,exports){
+},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],62:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
@@ -11338,7 +11439,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-58c21290", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"babel-runtime/core-js/get-iterator":1,"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],61:[function(require,module,exports){
+},{"babel-runtime/core-js/get-iterator":1,"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],63:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
@@ -11397,7 +11498,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-df29bfa0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],62:[function(require,module,exports){
+},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],64:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
@@ -11473,44 +11574,8 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-dcfa727c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],63:[function(require,module,exports){
-let forumInfo = [
-  { name: 'food', label: 'ก้นครัว' },
-  { name: 'chalermkrung', label: 'เฉลิมกรุง' },
-  { name: 'blueplanet', label: 'บลูแพลนเน็ต' },
-  { name: 'all', label: 'รวมมิตร' },
-  { name: 'siam', label: 'สยามสแควร์' },
-  { name: 'greenzone', label: 'กรีนโซน' },
-  { name: 'chalermthai', label: 'เฉลิมไทย' },
-  { name: 'tvshow', label: 'บางขุนพรหม' },
-  { name: 'ratchada', label: 'รัชดา' },
-  { name: 'lumpini', label: 'สวนลุมพินี' },
-  { name: 'camera', label: 'กล้อง' },
-  { name: 'family', label: 'ชานเรือน' },
-  { name: 'bangrak', label: 'บางรัก' },
-  { name: 'rajdumnern', label: 'ราชดำเนิน' },
-  { name: 'sinthorn', label: 'สินธร' },
-  { name: 'cartoon', label: 'การ์ตูน' },
-  { name: 'home', label: 'ชายคา' },
-  { name: 'horoscope', label: 'พรหมชาติ' },
-  { name: 'isolate', label: 'ไร้สังกัด' },
-  { name: 'silom', label: 'สีลม' },
-  { name: 'gallery', label: 'แกลเลอรี่' },
-  { name: 'siliconvalley', label: 'ซิลิคอนวัลเลย์' },
-  { name: 'pantip', label: 'พันทิป' },
-  { name: 'social', label: 'ศาลาประชาคม' },
-  { name: 'wahkor', label: 'หว้ากอ' },
-  { name: 'klaibann', label: 'ไกลบ้าน' },
-  { name: 'beauty', label: 'โต๊ะเครื่องแป้ง' },
-  { name: 'region', label: 'ภูมิภาค' },
-  { name: 'religious', label: 'ศาสนา' },
-  { name: 'library', label: 'ห้องสมุด' },
-  { name: 'jatujak', label: 'จตุจักร' },
-  { name: 'writer', label: 'ถนนนักเขียน' },
-  { name: 'mbk', label: 'มาบุญครอง' },
-  { name: 'supachalasai', label: 'ศุภชลาศัย' },
-  { name: 'art', label: 'หอศิลป์' }
-];
+},{"vue":56,"vue-hot-reload-api":55,"vueify/lib/insert-css":57}],65:[function(require,module,exports){
+let Vars = require('./vars.js');
 
 //============================================================================
 //Global variables stuff
@@ -11759,21 +11824,23 @@ let forumSelectItem = require('./components/forumSelectItem.vue');
 let bestTopicItem = require('./components/bestTopicItem.vue');
 let topicItem = require('./components/topicItem.vue');
 let topicView = require('./components/topicView.vue');
-
+let commentView = require('./components/commentView.vue');
+let commentItem = require('./components/commentItem.vue');
 let reactionView = require('./components/reactionView.vue');
 
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
 Vue.component('topicItem', topicItem);
 Vue.component('topicView', topicView);
-
+Vue.component('commentView', commentView);
+Vue.component('commentItem', commentItem);
 Vue.component('reactionView', reactionView);
 
 let vm = new Vue({
   el: 'body',
 
   data(){ return{
-    forums: forumInfo,
+    forums: Vars.forumInfo,
     currentForum: '',
     showBestTopics: false,
     showDialogues: {
@@ -12048,4 +12115,45 @@ function loadMoreSubCommentsAJAX(last, cid, c, callback){
   });
 }
 
-},{"./components/bestTopicItem.vue":58,"./components/forumSelectItem.vue":59,"./components/reactionView.vue":60,"./components/topicItem.vue":61,"./components/topicView.vue":62}]},{},[63]);
+},{"./components/bestTopicItem.vue":58,"./components/commentItem.vue":59,"./components/commentView.vue":60,"./components/forumSelectItem.vue":61,"./components/reactionView.vue":62,"./components/topicItem.vue":63,"./components/topicView.vue":64,"./vars.js":66}],66:[function(require,module,exports){
+module.exports = {
+  forumInfo: [
+    { name: 'food', label: 'ก้นครัว' },
+    { name: 'chalermkrung', label: 'เฉลิมกรุง' },
+    { name: 'blueplanet', label: 'บลูแพลนเน็ต' },
+    { name: 'all', label: 'รวมมิตร' },
+    { name: 'siam', label: 'สยามสแควร์' },
+    { name: 'greenzone', label: 'กรีนโซน' },
+    { name: 'chalermthai', label: 'เฉลิมไทย' },
+    { name: 'tvshow', label: 'บางขุนพรหม' },
+    { name: 'ratchada', label: 'รัชดา' },
+    { name: 'lumpini', label: 'สวนลุมพินี' },
+    { name: 'camera', label: 'กล้อง' },
+    { name: 'family', label: 'ชานเรือน' },
+    { name: 'bangrak', label: 'บางรัก' },
+    { name: 'rajdumnern', label: 'ราชดำเนิน' },
+    { name: 'sinthorn', label: 'สินธร' },
+    { name: 'cartoon', label: 'การ์ตูน' },
+    { name: 'home', label: 'ชายคา' },
+    { name: 'horoscope', label: 'พรหมชาติ' },
+    { name: 'isolate', label: 'ไร้สังกัด' },
+    { name: 'silom', label: 'สีลม' },
+    { name: 'gallery', label: 'แกลเลอรี่' },
+    { name: 'siliconvalley', label: 'ซิลิคอนวัลเลย์' },
+    { name: 'pantip', label: 'พันทิป' },
+    { name: 'social', label: 'ศาลาประชาคม' },
+    { name: 'wahkor', label: 'หว้ากอ' },
+    { name: 'klaibann', label: 'ไกลบ้าน' },
+    { name: 'beauty', label: 'โต๊ะเครื่องแป้ง' },
+    { name: 'region', label: 'ภูมิภาค' },
+    { name: 'religious', label: 'ศาสนา' },
+    { name: 'library', label: 'ห้องสมุด' },
+    { name: 'jatujak', label: 'จตุจักร' },
+    { name: 'writer', label: 'ถนนนักเขียน' },
+    { name: 'mbk', label: 'มาบุญครอง' },
+    { name: 'supachalasai', label: 'ศุภชลาศัย' },
+    { name: 'art', label: 'หอศิลป์' }
+  ]
+};
+
+},{}]},{},[65]);

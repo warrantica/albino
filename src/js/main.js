@@ -1,40 +1,4 @@
-let forumInfo = [
-  { name: 'food', label: 'ก้นครัว' },
-  { name: 'chalermkrung', label: 'เฉลิมกรุง' },
-  { name: 'blueplanet', label: 'บลูแพลนเน็ต' },
-  { name: 'all', label: 'รวมมิตร' },
-  { name: 'siam', label: 'สยามสแควร์' },
-  { name: 'greenzone', label: 'กรีนโซน' },
-  { name: 'chalermthai', label: 'เฉลิมไทย' },
-  { name: 'tvshow', label: 'บางขุนพรหม' },
-  { name: 'ratchada', label: 'รัชดา' },
-  { name: 'lumpini', label: 'สวนลุมพินี' },
-  { name: 'camera', label: 'กล้อง' },
-  { name: 'family', label: 'ชานเรือน' },
-  { name: 'bangrak', label: 'บางรัก' },
-  { name: 'rajdumnern', label: 'ราชดำเนิน' },
-  { name: 'sinthorn', label: 'สินธร' },
-  { name: 'cartoon', label: 'การ์ตูน' },
-  { name: 'home', label: 'ชายคา' },
-  { name: 'horoscope', label: 'พรหมชาติ' },
-  { name: 'isolate', label: 'ไร้สังกัด' },
-  { name: 'silom', label: 'สีลม' },
-  { name: 'gallery', label: 'แกลเลอรี่' },
-  { name: 'siliconvalley', label: 'ซิลิคอนวัลเลย์' },
-  { name: 'pantip', label: 'พันทิป' },
-  { name: 'social', label: 'ศาลาประชาคม' },
-  { name: 'wahkor', label: 'หว้ากอ' },
-  { name: 'klaibann', label: 'ไกลบ้าน' },
-  { name: 'beauty', label: 'โต๊ะเครื่องแป้ง' },
-  { name: 'region', label: 'ภูมิภาค' },
-  { name: 'religious', label: 'ศาสนา' },
-  { name: 'library', label: 'ห้องสมุด' },
-  { name: 'jatujak', label: 'จตุจักร' },
-  { name: 'writer', label: 'ถนนนักเขียน' },
-  { name: 'mbk', label: 'มาบุญครอง' },
-  { name: 'supachalasai', label: 'ศุภชลาศัย' },
-  { name: 'art', label: 'หอศิลป์' }
-];
+let Vars = require('./vars.js');
 
 //============================================================================
 //Global variables stuff
@@ -283,21 +247,23 @@ let forumSelectItem = require('./components/forumSelectItem.vue');
 let bestTopicItem = require('./components/bestTopicItem.vue');
 let topicItem = require('./components/topicItem.vue');
 let topicView = require('./components/topicView.vue');
-
+let commentView = require('./components/commentView.vue');
+let commentItem = require('./components/commentItem.vue');
 let reactionView = require('./components/reactionView.vue');
 
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
 Vue.component('topicItem', topicItem);
 Vue.component('topicView', topicView);
-
+Vue.component('commentView', commentView);
+Vue.component('commentItem', commentItem);
 Vue.component('reactionView', reactionView);
 
 let vm = new Vue({
   el: 'body',
 
   data(){ return{
-    forums: forumInfo,
+    forums: Vars.forumInfo,
     currentForum: '',
     showBestTopics: false,
     showDialogues: {
