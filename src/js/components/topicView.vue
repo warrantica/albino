@@ -29,7 +29,10 @@
           utime: '',
           timeFull: '',
           tags: '',
-          content: ''
+          content: '',
+          emotionCount: {
+            sum: 0
+          }
         }}
       }
     },
@@ -52,7 +55,7 @@
         data.content = content.html();
 
         //avatar
-        if(data.avatarSrc.substr(-9, 9) === '38x38.png'){
+        if(data.avatarSrc === ''){
           //unknown avatar
           data.avatarSrc = 'asset/img/default_avatar.png';
         }
@@ -62,7 +65,15 @@
 
 
         this.data = data;
-        this.$broadcast('loadReaction', data);
+
+        //reactions
+        let reactionData = {
+          voteSum: data.voteCount,
+          emotionSum: data.emotionCount.sum,
+          emotionCounts: data.emotionCount,
+          emotionSortable: data.emotions
+        };
+        this.$broadcast('loadReaction', reactionData);
         $('time.timeago').timeago();
       }
     }

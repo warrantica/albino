@@ -44,7 +44,27 @@
       }
 
       //reactions
-      //this.$broadcast('loadReaction', this.data);
+      let reactionData = {
+        voteSum: this.data.good_bad_vote.point,
+        emotionSum: this.data.emotion.sum,
+        emotionCounts: {
+          impress: this.data.emotion.impress.count,
+          laugh: this.data.emotion.laugh.count,
+          like: this.data.emotion.like.count,
+          love: this.data.emotion.love.count,
+          scary: this.data.emotion.scary.count,
+          surprised: this.data.emotion.surprised.count,
+        },
+        emotionSortable: [
+          {name:"impress", count:this.data.emotion.impress.count},
+          {name:"laugh", count:this.data.emotion.laugh.count},
+          {name:"like", count:this.data.emotion.like.count},
+          {name:"love", count:this.data.emotion.love.count},
+          {name:"scary", count:this.data.emotion.scary.count},
+          {name:"surprised", count:this.data.emotion.surprised.count}
+        ]
+      };
+      this.$broadcast('loadReaction', reactionData);
     }
   }
 </script>

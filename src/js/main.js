@@ -328,6 +328,7 @@ let vm = new Vue({
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
       loadTopicAJAX(topicId, data => {
+        console.log(data);
         data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
         this.$broadcast('loadTopicView', data);
 
@@ -337,7 +338,6 @@ let vm = new Vue({
       });
 
       loadCommentsAJAX(topicId, data => {
-        console.log(data);
         this.$broadcast('loadCommentView', data);
       });
     }
@@ -457,7 +457,7 @@ function loadTopicAJAX(topicID, callback){
     dataType: 'text',
     success: function(data){
 
-      data = data.replace(/src="\/images.*"/g, 'src=""');
+      data = data.replace(/src="\/images.*?"/g, 'src=""');
       var html = $(data).find('.main-post-inner')[0];
       var res = {};
 

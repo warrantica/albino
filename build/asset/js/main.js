@@ -11229,7 +11229,20 @@ exports.default = {
     }
 
     //reactions
-    this.$broadcast('loadReaction', this.data);
+    var reactionData = {
+      voteSum: this.data.good_bad_vote.point,
+      emotionSum: this.data.emotion.sum,
+      emotionCounts: {
+        impress: this.data.emotion.impress.count,
+        laugh: this.data.emotion.laugh.count,
+        like: this.data.emotion.like.count,
+        love: this.data.emotion.love.count,
+        scary: this.data.emotion.scary.count,
+        surprised: this.data.emotion.surprised.count
+      },
+      emotionSortable: [{ name: "impress", count: this.data.emotion.impress.count }, { name: "laugh", count: this.data.emotion.laugh.count }, { name: "like", count: this.data.emotion.like.count }, { name: "love", count: this.data.emotion.love.count }, { name: "scary", count: this.data.emotion.scary.count }, { name: "surprised", count: this.data.emotion.surprised.count }]
+    };
+    this.$broadcast('loadReaction', reactionData);
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
@@ -11340,18 +11353,20 @@ exports.default = {
   data: function data() {
     return {
       data: {
-        voteCount: 0,
-        emotionCount: 0
+        voteSum: 0,
+        emotionSum: 0,
+        emotionCounts: {},
+        emotionSortable: []
       },
       topEmotions: []
     };
   },
 
 
-  methods: {
-    refreshData: function refreshData() {
+  events: {
+    'loadReaction': function loadReaction(data) {
       this.topEmotions = [];
-      this.data.emotions.sort(function (a, b) {
+      data.emotionSortable.sort(function (a, b) {
         return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
       });
       var _iteratorNormalCompletion = true;
@@ -11359,7 +11374,7 @@ exports.default = {
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = (0, _getIterator3.default)(this.data.emotions), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = (0, _getIterator3.default)(data.emotionSortable), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var emotion = _step.value;
 
           if (emotion.count > 0) this.topEmotions.push(emotion);
@@ -11378,46 +11393,13 @@ exports.default = {
           }
         }
       }
-    }
-  },
-
-  events: {
-    'loadReaction': function loadReaction(data) {
-      this.topEmotions = [];
-      data.emotions.sort(function (a, b) {
-        return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
-      });
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = (0, _getIterator3.default)(data.emotions), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var emotion = _step2.value;
-
-          if (emotion.count > 0) this.topEmotions.push(emotion);
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
 
       this.data = data;
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"reactions\" v-show=\"data.voteCount || data.emotionCount.sum\" _v-58c21290=\"\">\n  <div class=\"vote\" v-show=\"data.voteCount\" _v-58c21290=\"\">\n    <i class=\"ic\" _v-58c21290=\"\">add_box</i>{{ data.voteCount }}\n  </div>\n  <div class=\"emotions\" v-show=\"data.emotionCount.sum\" _v-58c21290=\"\">\n    <div class=\"emotionIcons\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[0].name + '.png'\" v-if=\"topEmotions[0]\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[1].name + '.png'\" v-if=\"topEmotions[1]\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[2].name + '.png'\" v-if=\"topEmotions[2]\" _v-58c21290=\"\">\n    </div>\n    <div class=\"emotionCount\" _v-58c21290=\"\">{{ data.emotionCount.sum }}</div>\n  </div>\n  <ul class=\"emotionsInfo sElevation2\" _v-58c21290=\"\">\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/like.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ถูกใจ {{ data.emotionCount.like }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/laugh.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ขำกลิ้ง {{ data.emotionCount.laugh }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/love.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">หลงรัก {{ data.emotionCount.love }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/impress.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ซึ้ง {{ data.emotionCount.impress }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/scary.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">สยอง {{ data.emotionCount.scary }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/surprised.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ทึ่ง {{ data.emotionCount.surprised }}</span></li>\n  </ul>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"reactions\" v-show=\"data.voteSum || data.emotionSum\" _v-58c21290=\"\">\n  <div class=\"vote\" v-show=\"data.voteSum\" _v-58c21290=\"\">\n    <i class=\"ic\" _v-58c21290=\"\">add_box</i>{{ data.voteSum }}\n  </div>\n  <div class=\"emotions\" v-show=\"data.emotionSum\" _v-58c21290=\"\">\n    <div class=\"emotionIcons\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[0].name + '.png'\" v-if=\"topEmotions[0]\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[1].name + '.png'\" v-if=\"topEmotions[1]\" _v-58c21290=\"\">\n      <img :src=\"'asset/img/emotions/' + topEmotions[2].name + '.png'\" v-if=\"topEmotions[2]\" _v-58c21290=\"\">\n    </div>\n    <div class=\"emotionCount\" _v-58c21290=\"\">{{ data.emotionSum }}</div>\n  </div>\n  <ul class=\"emotionsInfo sElevation2\" _v-58c21290=\"\">\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/like.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ถูกใจ {{ data.emotionCounts.like }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/laugh.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ขำกลิ้ง {{ data.emotionCounts.laugh }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/love.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">หลงรัก {{ data.emotionCounts.love }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/impress.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ซึ้ง {{ data.emotionCounts.impress }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/scary.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">สยอง {{ data.emotionCounts.scary }}</span></li>\n    <li _v-58c21290=\"\"><img src=\"asset/img/emotions/surprised.png\" _v-58c21290=\"\"><span _v-58c21290=\"\">ทึ่ง {{ data.emotionCounts.surprised }}</span></li>\n  </ul>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -11510,7 +11492,10 @@ exports.default = {
           utime: '',
           timeFull: '',
           tags: '',
-          content: ''
+          content: '',
+          emotionCount: {
+            sum: 0
+          }
         };
       }
     }
@@ -11537,7 +11522,7 @@ exports.default = {
       data.content = content.html();
 
       //avatar
-      if (data.avatarSrc.substr(-9, 9) === '38x38.png') {
+      if (data.avatarSrc === '') {
         //unknown avatar
         data.avatarSrc = 'asset/img/default_avatar.png';
       }
@@ -11546,7 +11531,15 @@ exports.default = {
       if (data.tags.length > 0) data.tags = data.tags.join(', ');
 
       this.data = data;
-      this.$broadcast('loadReaction', data);
+
+      //reactions
+      var reactionData = {
+        voteSum: data.voteCount,
+        emotionSum: data.emotionCount.sum,
+        emotionCounts: data.emotionCount,
+        emotionSortable: data.emotions
+      };
+      this.$broadcast('loadReaction', reactionData);
       $('time.timeago').timeago();
     }
   }
@@ -11898,6 +11891,7 @@ let vm = new Vue({
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
       loadTopicAJAX(topicId, data => {
+        console.log(data);
         data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
         this.$broadcast('loadTopicView', data);
 
@@ -11907,7 +11901,6 @@ let vm = new Vue({
       });
 
       loadCommentsAJAX(topicId, data => {
-        console.log(data);
         this.$broadcast('loadCommentView', data);
       });
     }
@@ -12027,7 +12020,7 @@ function loadTopicAJAX(topicID, callback){
     dataType: 'text',
     success: function(data){
 
-      data = data.replace(/src="\/images.*"/g, 'src=""');
+      data = data.replace(/src="\/images.*?"/g, 'src=""');
       var html = $(data).find('.main-post-inner')[0];
       var res = {};
 

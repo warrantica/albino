@@ -1,23 +1,23 @@
 <template>
-  <div class="reactions" v-show="data.voteCount || data.emotionCount.sum">
-    <div class="vote" v-show="data.voteCount">
-      <i class="ic">add_box</i>{{ data.voteCount }}
+  <div class="reactions" v-show="data.voteSum || data.emotionSum">
+    <div class="vote" v-show="data.voteSum">
+      <i class="ic">add_box</i>{{ data.voteSum }}
     </div>
-    <div class="emotions" v-show="data.emotionCount.sum">
+    <div class="emotions" v-show="data.emotionSum">
       <div class="emotionIcons">
         <img :src="'asset/img/emotions/' + topEmotions[0].name + '.png'" v-if="topEmotions[0]" />
         <img :src="'asset/img/emotions/' + topEmotions[1].name + '.png'" v-if="topEmotions[1]" />
         <img :src="'asset/img/emotions/' + topEmotions[2].name + '.png'" v-if="topEmotions[2]" />
       </div>
-      <div class="emotionCount">{{ data.emotionCount.sum }}</div>
+      <div class="emotionCount">{{ data.emotionSum }}</div>
     </div>
     <ul class="emotionsInfo sElevation2">
-      <li><img src="asset/img/emotions/like.png"/><span>ถูกใจ {{ data.emotionCount.like }}</span></li>
-      <li><img src="asset/img/emotions/laugh.png"/><span>ขำกลิ้ง {{ data.emotionCount.laugh }}</span></li>
-      <li><img src="asset/img/emotions/love.png"/><span>หลงรัก {{ data.emotionCount.love }}</span></li>
-      <li><img src="asset/img/emotions/impress.png"/><span>ซึ้ง {{ data.emotionCount.impress }}</span></li>
-      <li><img src="asset/img/emotions/scary.png"/><span>สยอง {{ data.emotionCount.scary }}</span></li>
-      <li><img src="asset/img/emotions/surprised.png"/><span>ทึ่ง {{ data.emotionCount.surprised }}</span></li>
+      <li><img src="asset/img/emotions/like.png"/><span>ถูกใจ {{ data.emotionCounts.like }}</span></li>
+      <li><img src="asset/img/emotions/laugh.png"/><span>ขำกลิ้ง {{ data.emotionCounts.laugh }}</span></li>
+      <li><img src="asset/img/emotions/love.png"/><span>หลงรัก {{ data.emotionCounts.love }}</span></li>
+      <li><img src="asset/img/emotions/impress.png"/><span>ซึ้ง {{ data.emotionCounts.impress }}</span></li>
+      <li><img src="asset/img/emotions/scary.png"/><span>สยอง {{ data.emotionCounts.scary }}</span></li>
+      <li><img src="asset/img/emotions/surprised.png"/><span>ทึ่ง {{ data.emotionCounts.surprised }}</span></li>
     </ul>
   </div>
 </template>
@@ -30,27 +30,19 @@
   export default {
     data(){ return {
       data: {
-        voteCount: 0,
-        emotionCount: 0
+        voteSum: 0,
+        emotionSum: 0,
+        emotionCounts: {},
+        emotionSortable: []
       },
       topEmotions: []
     }},
 
-    methods: {
-      refreshData(){
-        this.topEmotions = [];
-        this.data.emotions.sort((a,b) => (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0));
-        for(let emotion of this.data.emotions){
-          if(emotion.count > 0) this.topEmotions.push(emotion);
-        }
-      }
-    },
-
     events: {
       'loadReaction': function(data){
         this.topEmotions = [];
-        data.emotions.sort((a,b) => (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0));
-        for(let emotion of data.emotions){
+        data.emotionSortable.sort((a,b) => (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0));
+        for(let emotion of data.emotionSortable){
           if(emotion.count > 0) this.topEmotions.push(emotion);
         }
 
