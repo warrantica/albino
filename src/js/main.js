@@ -1,8 +1,7 @@
-let Vars = require('./vars.js');
-
 //============================================================================
 //Global variables stuff
 //============================================================================
+let Vars = require('./vars.js');
 var rootURL = chrome.extension.getURL('');
 var commentTemplate = $('<div>', {class: "comment sElevation1"});
 commentTemplate.load(rootURL + 'template/commentTemplate.html');
