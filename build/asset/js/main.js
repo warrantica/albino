@@ -16424,8 +16424,8 @@ $('#rightPane').on('click', '.spoil-btn', function(e){
 });
 
 $('#fab').on('click', '.topContainer', function(e){
-  var scrollTo = 0;
-  var previousTop = 0;
+  let scrollTo = 0;
+  let previousTop = 0;
   $('#rightPane').find('.comment:not(.sub)').each(function(i){
     if(this.getBoundingClientRect().top >= 64){
       scrollTo = previousTop;
@@ -16441,7 +16441,7 @@ $('#fab').on('click', '.topContainer', function(e){
 });
 
 $('#fab').on('click', '.bottomContainer', function(e){
-  var scrollTo = 0;
+  let scrollTo = 0;
   $('#rightPane').find('.comment:not(.sub)').each(function(i){
     if(this.getBoundingClientRect().top > 64){
       scrollTo = this.getBoundingClientRect().top;
@@ -16459,7 +16459,7 @@ $('#rightPane').on('click', '.img-in-post', function(e){
   $(this).addClass('inLightBox');
   $('#lightBox').addClass('active');
 
-  var dimensions = this.getBoundingClientRect();
+  let dimensions = this.getBoundingClientRect();
   $('#lightBox img').attr('src', $(this).attr('src')).css({
     'top':dimensions.top,
     'left':dimensions.left,
@@ -16646,10 +16646,10 @@ let vm = new Vue({
 
 function convertTheirStupidDateTimeFormatToISO(utime){
   //utime format: mm/dd/yyyy hh:mm:ss
-  var y = utime.substr(6, 4);
-  var m = utime.substr(0, 2);
-  var d = utime.substr(3, 2);
-  var t = utime.substr(11, 8);
+  let y = utime.substr(6, 4);
+  let m = utime.substr(0, 2);
+  let d = utime.substr(3, 2);
+  let t = utime.substr(11, 8);
   return y+'-'+m+'-'+d+'T'+t;
 }
 
