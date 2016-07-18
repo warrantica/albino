@@ -14,6 +14,11 @@
       <comment-item v-for="reply in data.replies"
                     :data="reply" sub>
       </comment-item>
+      <button class="loadMoreSubComments sElevation0h2 sPrimaryBg"
+              v-show="showLoadMoreSubButton"
+              @click="loadMoreSubComments">
+        โหลดความเห็นย่อยเพิ่ม
+      </button>
     </div>
   </div>
 </template>
@@ -34,7 +39,8 @@
           author: '',
           utime: '',
           timeFull: '',
-          message: ''
+          message: '',
+          replies: []
         }}
       },
 
@@ -45,13 +51,48 @@
     },
 
     data(){ return {
-      topEmotions: []
+      topEmotions: [],
+      showLoadMoreSubButton: false,
+      subData: {
+        last: 5,
+        cid: '',
+        c: 0
+      }
     }},
+
+    methods: {
+      loadMoreSubComments(){
+        this.loadMoreSubCommentsAJAX(this.subData.last, this.subData.cid, this.subData.c, res=>{
+          console.log(res.replies);
+          console.log(this.data.replies);
+          this.data.replies.push(...res.replies);
+
+          this.subData.last += 5;
+          if(this.subData.last >= this.subData.c) this.showLoadMoreSubButton = false;
+        });
+      },
+
+      loadMoreSubCommentsAJAX(last, cid, c, callback){
+        $.ajax({
+          type: 'GET',
+          headers: {'X-Requested-With': 'XMLHttpRequest'},
+          url:'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
+          success: function(data){
+            dataJSON = JSON.parse(data);
+            callback(dataJSON);
+          }
+        });
+      }
+    },
 
     ready(){
       //comment number
       if(this.sub){
         this.data.comment_no = this.data.comment_no + '-' + this.data.reply_no;
+      }else if(this.data.reply_count > 5){
+        this.subData.cid = this.data._id;
+        this.subData.c = this.data.reply_count;
+        this.showLoadMoreSubButton = true;
       }
 
       //avatar

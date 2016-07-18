@@ -1,37 +1,12 @@
 //============================================================================
 //Global variables stuff
 //============================================================================
+
 let Vue = require('vue');
 let Vars = require('./vars.js');
 
 var currentTopic = 0;
 
-//============================================================================
-//Functions stuff
-//============================================================================
-
-function dummy(topicID){
-  if(data['comments'][i]['reply_count'] > 5){
-    //add load more button
-    subContainer.append($('<button>', {
-      class: "loadMoreSubComments sElevation0h2 sPrimaryBg",
-      text: "โหลดความเห็นย่อยเพิ่ม",
-      'data-last': 5,
-      'data-cid': data['comments'][i]['_id'],
-      'data-c': data['comments'][i]['reply_count']
-    }));
-  }
-}
-
-function loadMoreSubComments(last, cid, c, callback){
-  loadMoreSubCommentsAJAX(last, cid, c, function(data){
-    repliesArray = [];
-    for(var i=0; i<data['replies'].length; ++i){
-      repliesArray.push(populateComment(data['replies'][i], true));
-    }
-    callback(repliesArray);
-  });
-}
 //============================================================================
 //Event binding stuff
 //============================================================================
@@ -101,20 +76,6 @@ $('#rightPane').on('click', '.img-in-post', function(e){
       'max-height':'99vh'
     }).addClass('active');
   }, 50);
-});
-
-$('#rightPane').on('click', '.loadMoreSubComments', function(e){
-  var thisButton = $(this);
-  loadMoreSubComments(thisButton.attr('data-last'),
-    thisButton.attr('data-cid'), thisButton.attr('data-c'),
-    function(repliesArray){
-      thisButton.before(repliesArray);
-      if(parseInt(thisButton.attr('data-last')) + 5 < parseInt(thisButton.attr('data-c'))){
-        thisButton.attr('data-last', parseInt(thisButton.attr('data-last')) + 5);
-      }else{
-        thisButton.remove();
-      }
-    });
 });
 
 $('#lightBox').on('click', function(e){
