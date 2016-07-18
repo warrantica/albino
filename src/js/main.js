@@ -6,21 +6,9 @@ let Vue = require('vue');
 let Vars = require('./vars.js');
 let Pantip = require('./pantipInterface.js');
 
-var currentTopic = 0;
-
 //============================================================================
 //Event binding stuff
 //============================================================================
-
-$('#belly .refreshButton').on('click', function(e){
-  if(currentTopic !== 0)
-    loadTopic(currentTopic);
-});
-
-$('#belly .openInPantipButton').on('click', function(e){
-  if(currentTopic !== 0)
-    window.open('http://pantip.com/topic/' + currentTopic, '_blank');
-});
 
 $('#rightPane').on('click', '.spoil-btn', function(e){
   $(this).next().toggle();
@@ -122,6 +110,7 @@ let vm = new Vue({
   data(){ return{
     forums: Vars.forumInfo,
     currentForum: '',
+    currentTopic: 0,
     showBestTopics: false,
     showDialogues: {
       forumSelect: false
@@ -186,25 +175,36 @@ let vm = new Vue({
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
       Pantip.loadTopic(topicId, data => {
+        this.currentTopic = topicId;
+
         data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
         this.$broadcast('loadTopicView', data);
 
         $('#bellyTitle').text(data['title']);
 
-        //loadComments(topicId);
-        if(document.getElementById('rightPane').offsetHeight < document.getElementById('rightPane').scrollHeight){
+        //show FAB
+        let rightPane = document.getElementById('rightPane');
+        if(rightPane.offsetHeight < rightPane.scrollHeight){
           $('#fab').addClass('enable');
         }else{
           $('#fab').removeClass('enable');
         }
-        $('#rightPane').removeClass('wrapUp');
-        $('#rightPane .loading').removeClass('active');
       });
 
       Pantip.loadComments(topicId, data => {
-        console.log(data);
         this.$broadcast('loadCommentView', data);
+        $('#rightPane').removeClass('wrapUp');
+        $('#rightPane .loading').removeClass('active');
       });
+    },
+
+    refreshTopic(){
+      if(this.currentTopic !== 0) this.loadTopic(this.currentTopic);
+    },
+
+    openInPantip(){
+      if(this.currentTopic !== 0)
+        window.open(`http://pantip.com/topic/${this.currentTopic}`, '_blank');
     }
   },
 
