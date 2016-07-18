@@ -16408,7 +16408,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],73:[function(require,module,exports){
 //============================================================================
-//Global variables stuff
+//Browserify require stuff
 //============================================================================
 
 let Vue = require('vue');
@@ -16637,21 +16637,6 @@ let vm = new Vue({
       $('body').addClass(item.theme);
       this.loadTopics(item.defaultForum);
     });
-
-
-    /*$.ajax({
-      type: 'POST',
-      url: 'http://pantip.com/forum/topic/best_answer',
-      data: {
-        tid: 35381062,
-        cid: 60829529
-      },
-      headers: {'X-Requested-With': 'XMLHttpRequest'},
-      success: function(data){
-        //vm.test = JSON.parse(data);
-        console.log(data);
-      }
-    });*/
   }
 });
 
