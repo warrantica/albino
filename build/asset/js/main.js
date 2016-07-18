@@ -15999,6 +15999,7 @@ var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var Pantip = require('../pantipInterface.js');
 exports.default = {
   name: 'comment-item',
 
@@ -16040,26 +16041,12 @@ exports.default = {
     loadMoreSubComments: function loadMoreSubComments() {
       var _this = this;
 
-      this.loadMoreSubCommentsAJAX(this.subData.last, this.subData.cid, this.subData.c, function (res) {
+      Pantip.loadMoreSubComments(this.subData.last, this.subData.cid, this.subData.c, function (res) {
         var _data$replies;
 
-        console.log(res.replies);
-        console.log(_this.data.replies);
         (_data$replies = _this.data.replies).push.apply(_data$replies, (0, _toConsumableArray3.default)(res.replies));
-
         _this.subData.last += 5;
         if (_this.subData.last >= _this.subData.c) _this.showLoadMoreSubButton = false;
-      });
-    },
-    loadMoreSubCommentsAJAX: function loadMoreSubCommentsAJAX(last, cid, c, callback) {
-      $.ajax({
-        type: 'GET',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        url: 'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
-        success: function success(data) {
-          dataJSON = JSON.parse(data);
-          callback(dataJSON);
-        }
       });
     }
   },
@@ -16120,7 +16107,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-691c7be0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
+},{"../pantipInterface.js":74,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
@@ -16423,51 +16410,13 @@ if (module.hot) {(function () {  module.hot.accept()
 //============================================================================
 //Global variables stuff
 //============================================================================
+
 let Vue = require('vue');
 let Vars = require('./vars.js');
+let Pantip = require('./pantipInterface.js');
 
 var currentTopic = 0;
 
-//============================================================================
-//Functions stuff
-//============================================================================
-/*
-function dummy(topicID){
-  if(data['comments'][i]['reply_count'] > 5){
-    //add load more button
-    subContainer.append($('<button>', {
-      class: "loadMoreSubComments sElevation0h2 sPrimaryBg",
-      text: "โหลดความเห็นย่อยเพิ่ม",
-      'data-last': 5,
-      'data-cid': data['comments'][i]['_id'],
-      'data-c': data['comments'][i]['reply_count']
-    }));
-  }
-}
-
-$('#rightPane').on('click', '.loadMoreSubComments', function(e){
-  var thisButton = $(this);
-  loadMoreSubComments(thisButton.attr('data-last'),
-    thisButton.attr('data-cid'), thisButton.attr('data-c'),
-    function(repliesArray){
-      thisButton.before(repliesArray);
-      if(parseInt(thisButton.attr('data-last')) + 5 < parseInt(thisButton.attr('data-c'))){
-        thisButton.attr('data-last', parseInt(thisButton.attr('data-last')) + 5);
-      }else{
-        thisButton.remove();
-      }
-    });
-});
-
-function loadMoreSubComments(last, cid, c, callback){
-  loadMoreSubCommentsAJAX(last, cid, c, function(data){
-    repliesArray = [];
-    for(var i=0; i<data['replies'].length; ++i){
-      repliesArray.push(populateComment(data['replies'][i], true));
-    }
-    callback(repliesArray);
-  });
-}*/
 //============================================================================
 //Event binding stuff
 //============================================================================
@@ -16620,7 +16569,7 @@ let vm = new Vue({
         $('#leftPane .loading').addClass('active');
       }
 
-      loadTopicListAJAX(forumName, _loadMoreId, data => {
+      Pantip.loadTopics(forumName, _loadMoreId, data => {
         //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
@@ -16645,7 +16594,7 @@ let vm = new Vue({
       $('#rightPane .loading').addClass('active');
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
-      loadTopicAJAX(topicId, data => {
+      Pantip.loadTopic(topicId, data => {
         data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
         this.$broadcast('loadTopicView', data);
 
@@ -16661,7 +16610,7 @@ let vm = new Vue({
         $('#rightPane .loading').removeClass('active');
       });
 
-      loadCommentsAJAX(topicId, data => {
+      Pantip.loadComments(topicId, data => {
         console.log(data);
         this.$broadcast('loadCommentView', data);
       });
@@ -16719,154 +16668,154 @@ function convertTheirStupidDateTimeFormatToISO(utime){
   return y+'-'+m+'-'+d+'T'+t;
 }
 
-//============================================================================
-//AJAXy stuff
-//============================================================================
+},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/topicItem.vue":71,"./components/topicView.vue":72,"./pantipInterface.js":74,"./vars.js":75,"vue":64}],74:[function(require,module,exports){
+module.exports = {
+  loadTopics(forumName, loadMoreID=0, callback){
+    console.log("From another module!");
+    if(forumName === 'all') forumName = '';
+    var loadUrl = 'http://www.pantip.com/forum/' + forumName;
+    if(loadMoreID !== 0){
+      loadUrl += '?tid=' + loadMoreID;
+    }
+    $.ajax({
+      url: loadUrl,
+      dataType: 'text',
+      success: function(data){
+        var res = {};
+        var topics = new Array();
+        var bestTopics = new Array();
 
-function loadTopicListAJAX(forumName, loadMoreID=0, callback){
-  if(forumName === 'all') forumName = '';
-  var loadUrl = 'http://www.pantip.com/forum/' + forumName;
-  if(loadMoreID !== 0){
-    loadUrl += '?tid=' + loadMoreID;
-  }
-  $.ajax({
-    url: loadUrl,
-    dataType: 'text',
-    success: function(data){
-      var res = {};
-      var topics = new Array();
-      var bestTopics = new Array();
+        data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
+        data = data.replace(/src=["'].*["']/g, 'src=""');
 
-      data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
-      data = data.replace(/src=["'].*["']/g, 'src=""');
+        var html = $(data, null).find('#show_topic_lists')[0];
+        $(html).find('.post-item').each(function(i){
+          var item = {};
+          item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
+          item['title'] = $(this).find('.post-item-title a').text().trim();
+          item['author'] = $(this).find('.by-name').text().trim();
+          item['utime'] = $(this).find('.timestamp abbr').attr('data-utime');
+          item['timeFull'] = $(this).find('.timestamp abbr').attr('title');
 
-      var html = $(data, null).find('#show_topic_lists')[0];
-      $(html).find('.post-item').each(function(i){
-        var item = {};
-        item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-        item['title'] = $(this).find('.post-item-title a').text().trim();
-        item['author'] = $(this).find('.by-name').text().trim();
-        item['utime'] = $(this).find('.timestamp abbr').attr('data-utime');
-        item['timeFull'] = $(this).find('.timestamp abbr').attr('title');
+          if($(this).find('.post-item-status-i').length !== 0){
+            item['commentsNum'] = $(this).find('.post-item-status-i').first().text().trim();
+          }else{
+            item['commentsNum'] = "0";
+          }
+          topics.push(item);
+        });
 
-        if($(this).find('.post-item-status-i').length !== 0){
-          item['commentsNum'] = $(this).find('.post-item-status-i').first().text().trim();
-        }else{
-          item['commentsNum'] = "0";
+        var bestHtml = $(data).find('#item_pantip-best_room')[0];
+        $(bestHtml).find('.best-item').each(function(i){
+          var item = {};
+          item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
+          item['title'] = $(this).find('.post-item-title a').text().trim();
+
+          bestTopics.push(item);
+        });
+
+        res['bestTopics'] = bestTopics;
+        res['topics'] = topics;
+        callback(res);
+      },
+      error: function(){
+        console.log('loadTopicList ajax error.');
+      }
+    });
+  },
+
+  loadTopic(topicID, callback){
+    $.ajax({
+      url: 'http://www.pantip.com/topic/' + topicID,
+      dataType: 'text',
+      success: function(data){
+
+        data = data.replace(/src="\/images.*?"/g, 'src=""');
+        var html = $(data).find('.main-post-inner')[0];
+        var res = {};
+
+        res['author'] = $(html).find('.display-post-name').text();
+        res['title'] = $(html).find('.display-post-title').text();
+        res['content'] = $(html).find('.display-post-story').html();
+        res['utime'] = $(html).find('.display-post-timestamp abbr').attr('data-utime');
+        res['timeFull'] = $(html).find('.display-post-timestamp abbr').attr('title');
+        res['avatarSrc'] = $(html).find('.display-post-avatar img').attr('src');
+
+        //tags
+        res['tags'] = [];
+        $(html).find('.tag-item').each(function(i){
+          res['tags'][i] = $(this).text();
+        });
+
+        //reactions
+        res['voteCount'] = parseInt($(html).find('.like-score').text());
+        res['emotionCount'] = {
+          sum: parseInt($(html).find('.emotion-score').text()),
+          like: parseInt($(html).find('.emotion-choice-score:eq(1)').text()),
+          laugh: parseInt($(html).find('.emotion-choice-score:eq(2)').text()),
+          love: parseInt($(html).find('.emotion-choice-score:eq(3)').text()),
+          impress: parseInt($(html).find('.emotion-choice-score:eq(4)').text()),
+          scary: parseInt($(html).find('.emotion-choice-score:eq(5)').text()),
+          surprised: parseInt($(html).find('.emotion-choice-score:eq(6)').text())
         }
-        topics.push(item);
-      });
 
-      var bestHtml = $(data).find('#item_pantip-best_room')[0];
-      $(bestHtml).find('.best-item').each(function(i){
-        var item = {};
-        item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-        item['title'] = $(this).find('.post-item-title a').text().trim();
-
-        bestTopics.push(item);
-      });
-
-      res['bestTopics'] = bestTopics;
-      res['topics'] = topics;
-      callback(res);
-    },
-    error: function(){
-      console.log('loadTopicList ajax error.');
-    }
-  });
-}
-
-function loadTopicAJAX(topicID, callback){
-  $.ajax({
-    url: 'http://www.pantip.com/topic/' + topicID,
-    dataType: 'text',
-    success: function(data){
-
-      data = data.replace(/src="\/images.*?"/g, 'src=""');
-      var html = $(data).find('.main-post-inner')[0];
-      var res = {};
-
-      res['author'] = $(html).find('.display-post-name').text();
-      res['title'] = $(html).find('.display-post-title').text();
-      res['content'] = $(html).find('.display-post-story').html();
-      res['utime'] = $(html).find('.display-post-timestamp abbr').attr('data-utime');
-      res['timeFull'] = $(html).find('.display-post-timestamp abbr').attr('title');
-      res['avatarSrc'] = $(html).find('.display-post-avatar img').attr('src');
-
-      //tags
-      res['tags'] = [];
-      $(html).find('.tag-item').each(function(i){
-        res['tags'][i] = $(this).text();
-      });
-
-      //reactions
-      res['voteCount'] = parseInt($(html).find('.like-score').text());
-      res['emotionCount'] = {
-        sum: parseInt($(html).find('.emotion-score').text()),
-        like: parseInt($(html).find('.emotion-choice-score:eq(1)').text()),
-        laugh: parseInt($(html).find('.emotion-choice-score:eq(2)').text()),
-        love: parseInt($(html).find('.emotion-choice-score:eq(3)').text()),
-        impress: parseInt($(html).find('.emotion-choice-score:eq(4)').text()),
-        scary: parseInt($(html).find('.emotion-choice-score:eq(5)').text()),
-        surprised: parseInt($(html).find('.emotion-choice-score:eq(6)').text())
+        //for sorting
+        res['emotions'] = [
+          {name:"like", count:res['emotionCount']['like']},
+          {name:"laugh", count:res['emotionCount']['laugh']},
+          {name:"love", count:res['emotionCount']['love']},
+          {name:"impress", count:res['emotionCount']['impress']},
+          {name:"scary", count:res['emotionCount']['scary']},
+          {name:"surprised", count:res['emotionCount']['surprised']}
+        ];
+        callback(res);
+      },
+      error: function(){
+        console.log('loadTopicList ajax error.');
       }
+    });
 
-      //for sorting
-      res['emotions'] = [
-        {name:"like", count:res['emotionCount']['like']},
-        {name:"laugh", count:res['emotionCount']['laugh']},
-        {name:"love", count:res['emotionCount']['love']},
-        {name:"impress", count:res['emotionCount']['impress']},
-        {name:"scary", count:res['emotionCount']['scary']},
-        {name:"surprised", count:res['emotionCount']['surprised']}
-      ];
-      callback(res);
-    },
-    error: function(){
-      console.log('loadTopicList ajax error.');
-    }
-  });
+  },
 
-}
-
-function loadCommentsAJAX(topicID, callback){
-  $.ajax({
-    type: 'GET',
-    cache: false,
-    url: 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&param=&type=1&time=' + Math.random(),
-    dataType: 'text',
-    headers: {'X-Requested-With': 'XMLHttpRequest'},
-    success: function(data){
-      dataJSON = JSON.parse(data);
-      var res = {}
-      if(dataJSON['count'] !== undefined){
-        res['count'] = dataJSON['count'];
-        res['comments'] = dataJSON['comments'];
-      }else{
-        res['count'] = 0;
-        res['comments'] = [];
+  loadComments(topicID, callback){
+    $.ajax({
+      type: 'GET',
+      cache: false,
+      url: 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&param=&type=1&time=' + Math.random(),
+      dataType: 'text',
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      success: function(data){
+        dataJSON = JSON.parse(data);
+        var res = {}
+        if(dataJSON['count'] !== undefined){
+          res['count'] = dataJSON['count'];
+          res['comments'] = dataJSON['comments'];
+        }else{
+          res['count'] = 0;
+          res['comments'] = [];
+        }
+        callback(res);
+      },
+      error: function(){
+        console.log('loadComments ajax error.');
       }
-      callback(res);
-    },
-    error: function(){
-      console.log('loadComments ajax error.');
-    }
-  });
+    });
+  },
+
+  loadMoreSubComments(last, cid, c, callback){
+    $.ajax({
+      type: 'GET',
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      url:'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
+      success: function(data){
+        dataJSON = JSON.parse(data);
+        callback(dataJSON);
+      }
+    });
+  }
 }
 
-function loadMoreSubCommentsAJAX(last, cid, c, callback){
-  $.ajax({
-    type: 'GET',
-    headers: {'X-Requested-With': 'XMLHttpRequest'},
-    url:'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
-    success: function(data){
-      dataJSON = JSON.parse(data);
-      callback(dataJSON);
-    }
-  });
-}
-
-},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/topicItem.vue":71,"./components/topicView.vue":72,"./vars.js":74,"vue":64}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 module.exports = {
   forumInfo: [
     { name: 'food', label: 'ก้นครัว' },

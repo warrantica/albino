@@ -28,6 +28,7 @@
 </style>
 
 <script>
+  let Pantip = require('../pantipInterface.js');
   export default {
     name: 'comment-item',
 
@@ -62,25 +63,10 @@
 
     methods: {
       loadMoreSubComments(){
-        this.loadMoreSubCommentsAJAX(this.subData.last, this.subData.cid, this.subData.c, res=>{
-          console.log(res.replies);
-          console.log(this.data.replies);
+        Pantip.loadMoreSubComments(this.subData.last, this.subData.cid, this.subData.c, res=>{
           this.data.replies.push(...res.replies);
-
           this.subData.last += 5;
           if(this.subData.last >= this.subData.c) this.showLoadMoreSubButton = false;
-        });
-      },
-
-      loadMoreSubCommentsAJAX(last, cid, c, callback){
-        $.ajax({
-          type: 'GET',
-          headers: {'X-Requested-With': 'XMLHttpRequest'},
-          url:'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
-          success: function(data){
-            dataJSON = JSON.parse(data);
-            callback(dataJSON);
-          }
         });
       }
     },
