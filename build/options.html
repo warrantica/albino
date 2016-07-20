@@ -16,13 +16,10 @@
 
     <label for="defaultForum">Default forum:</label>
     <select id="defaultForum" name="defaultForum">
-      <option value="all">รวมมิตร</option>
-      <option value="sinthorn">สินธร</option>
-      <option value="siam">สยาม</option>
-      <option value="blueplanet">บลูแพลนเน็ต</option>
+      <option v-for="forum in forums" :value="forum.name">{{ forum.label }}</option>
     </select>
 
-    <button type="button" name="save" id="saveButton">Save</button>
+    <button @click="saveOptions">Save</button>
 
     <script src="asset/js/options.js"></script>
   </body>

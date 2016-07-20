@@ -1,26 +1,39 @@
+let Vue = require('vue');
 let Vars = require('./vars.js');
 
-function saveOptions(){
-  let theme = document.getElementById('theme').value;
+let vm = new Vue({
+  el: 'body',
 
-  chrome.storage.sync.set({
-    theme,
-    defaultForum
-  }, function(){
-    //Notify user
-    console.log("Options saved");
-  });
-}
+  data(){ return {
+    forums: Vars.forumInfo
+  }},
 
-function restoreOptions(){
-  chrome.storage.sync.get({
-    theme: 'default',
-    defaultForum: 'all'
-  }, function(item){
-    document.getElementById('theme').value = item.theme;
-    document.getElementById('defaultForum').value = item.defaultForum;
-  })
-}
+  methods: {
+    saveOptions(){
+      let theme = document.getElementById('theme').value;
+      let defaultForum = document.getElementById('defaultForum').value;
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
-document.getElementById('saveButton').addEventListener('click', saveOptions);
+      chrome.storage.sync.set({
+        theme,
+        defaultForum
+      }, function(){
+        //Notify user
+        console.log("Options saved");
+      });
+    },
+
+    restoreOptions(){
+      chrome.storage.sync.get({
+        theme: 'default',
+        defaultForum: 'all'
+      }, function(item){
+        document.getElementById('theme').value = item.theme;
+        document.getElementById('defaultForum').value = item.defaultForum;
+      });
+    }
+  },
+
+  ready(){
+    this.restoreOptions();
+  }
+});
