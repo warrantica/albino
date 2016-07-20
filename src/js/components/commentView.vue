@@ -1,5 +1,5 @@
 <template>
-  <div id="commentsView2">
+  <div id="commentsView">
     <comment-item v-for="comment in comments"
                   :data="comment">
     </comment-item>

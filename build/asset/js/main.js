@@ -16130,7 +16130,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView2\" _v-6a342272=\"\">\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

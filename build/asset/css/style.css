@@ -394,7 +394,7 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   opacity: 1;
 }
 
-#topicView, #topicView2{
+#topicView{
     width: 100%;
   max-width: 560px;
   box-sizing: border-box;
@@ -403,12 +403,12 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   background: #fff;
 }
 
-#topicView .empty, #topicView2 .empty{
+#topicView .empty{
   display: block;
   margin: 20px auto;
 }
 
-#topicView h1, #topicView2 h1{
+#topicView h1{
   box-sizing: border-box;
   padding: 15px;
   padding-bottom: 0;
@@ -419,20 +419,20 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   word-wrap: break-word;
 }
 
-#topicView .tag, #topicView2 .tag{
+#topicView .tag{
   padding: 15px 0 0 15px;
 }
 
-#topicView .tag .ic, #topicView2 .tag .ic{
+#topicView .tag .ic{
   font-size: 14px;
   margin-bottom: 2px;
 }
 
-#topicView .tag.empty, #topicView2 .tag.empty{
+#topicView .tag.empty{
   display: none;
 }
 
-#topicView .content, #topicView2 .content{
+#topicView .content{
   box-sizing: border-box;
   padding: 15px;
   width: 100%;
@@ -443,12 +443,12 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   margin-bottom: 30px;
 }
 
-#topicView .content img, #topicView2 .content img{
+#topicView .content img{
   max-width: 100%;
   margin: 10px 0;
 }
 
-#topicView .content u, #topicView2 .content u{
+#topicView .content u{
   text-decoration: none;
   border-bottom: 1px #333 solid;
 }
@@ -474,13 +474,13 @@ body.blue .sPrimaryText{ color: #03A9F4; }
 
 /*============================================================*/
 
-#commentsView, #commentsView2{
+#commentsView{
   width: 100%;
   max-width: 560px;
   margin: 0 auto;
 }
 
-#commentsView .comment, #commentsView2 .comment{
+#commentsView .comment{
   width: 100%;
   box-sizing: border-box;
   margin: 20px 0;
@@ -488,7 +488,7 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   background: #fff;
 }
 
-#commentsView .content, #commentsView2 .content{
+#commentsView .content{
   font-family: "TH Sarabun New";
   font-size: 26px;
   line-height: 1.5;
@@ -497,7 +497,7 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   margin-bottom: 0px;
 }
 
-#commentsView .content img, #commentsView2 .content img{
+#commentsView .content img{
   max-width: 100%;
 }
 
@@ -603,7 +603,7 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   vertical-align: top;
 }
 
-#commentsView .subContainer, #commentsView2 .subContainer{
+#commentsView .subContainer{
   padding-bottom: 1px;
 }
 
@@ -616,14 +616,14 @@ body.blue .sPrimaryText{ color: #03A9F4; }
   transition: all .2s ease-in-out;
 }
 
-#commentsView .sub.comment, #commentsView2 .sub.comment{
+#commentsView .sub.comment{
   width: calc(100% - 10px);
   margin-left: 10px;
   background: #efefef;
   box-shadow: none;
 }
 
-#commentsView .sub.comment:first-child, #commentsView2 .sub.comment:first-child{
+#commentsView .sub.comment:first-child{
   margin-top: 0;
 }
 
