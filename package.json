@@ -15,7 +15,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -t vueify -e src/js/main.js -o build/asset/js/main.js"
+    "build:main": "browserify -t vueify -e src/js/main.js -o build/asset/js/main.js",
+    "build:options": "browserify -t vueify -e src/js/options.js -o build/asset/js/options.js",
+    "build": "npm run build:main && npm run build:options"
   },
   "repository": {
     "type": "git",

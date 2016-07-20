@@ -1,8 +1,11 @@
+let Vars = require('./vars.js');
+
 function saveOptions(){
-  var theme = document.getElementById('theme').value;
+  let theme = document.getElementById('theme').value;
 
   chrome.storage.sync.set({
-    theme: theme
+    theme,
+    defaultForum
   }, function(){
     //Notify user
     console.log("Options saved");
@@ -11,9 +14,11 @@ function saveOptions(){
 
 function restoreOptions(){
   chrome.storage.sync.get({
-    theme: 'default'
+    theme: 'default',
+    defaultForum: 'all'
   }, function(item){
     document.getElementById('theme').value = item.theme;
+    document.getElementById('defaultForum').value = item.defaultForum;
   })
 }
 
