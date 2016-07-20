@@ -1,6 +1,10 @@
 let Vue = require('vue');
 let Vars = require('./vars.js');
 
+let themeItem = require('./components/themeItem.vue');
+
+Vue.component('themeItem', themeItem);
+
 let vm = new Vue({
   el: 'body',
 

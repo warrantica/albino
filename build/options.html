@@ -7,19 +7,35 @@
     <link rel="stylesheet" href="asset/css/options.css" >
   </head>
   <body>
-    <label for="theme">Theme:</label>
-    <select id="theme" name="theme">
-      <option value="default">Default (purple)</option>
-      <option value="blue">Blue</option>
-      <option value="red">Red</option>
-    </select>
+    <div class="wrapper">
+      <header>
+        <img src="asset/img/logoHover.png" alt="Albino for Pantip" />
+        <h1>ตั้งค่า</h1>
+      </header>
 
-    <label for="defaultForum">Default forum:</label>
-    <select id="defaultForum" name="defaultForum">
-      <option v-for="forum in forums" :value="forum.name">{{ forum.label }}</option>
-    </select>
+      <div class="formGroup">
+        <h2>ทั่วไป</h2>
+        <label for="defaultForum">ห้องหลัก:</label>
+        <select id="defaultForum" name="defaultForum">
+          <option v-for="forum in forums" :value="forum.name">{{ forum.label }}</option>
+        </select>
+      </div>
 
-    <button @click="saveOptions">Save</button>
+      <div class="formGroup">
+        <h2>หน้าตา</h2>
+        <label for="theme">ธีม:</label>
+        <select id="theme" name="theme">
+          <option value="default">Default (purple)</option>
+          <option value="blue">Blue</option>
+          <option value="red">Red</option>
+        </select>
+        <theme-item name="default" label="Default (purple)"></theme-item>
+        <theme-item name="blue" label="Blue"></theme-item>
+        <theme-item name="red" label="Red"></theme-item>
+      </div>
+
+      <button @click="saveOptions">เซฟ</button>
+    </div>
 
     <script src="asset/js/options.js"></script>
   </body>
