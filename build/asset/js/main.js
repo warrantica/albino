@@ -16634,11 +16634,9 @@ let vm = new Vue({
       theme: 'default',
       defaultForum: ''
     }, item => {
-      //$('body').addClass(item.theme);
       this.loadTopics(item.defaultForum);
       let currentTheme = Vars.themes.find(theme => theme.name === item.theme);
-      console.log(currentTheme.name);
-      //apply theme here
+      //apply theme
       $('.sPrimaryBg').css({backgroundColor: currentTheme.primary});
     });
   }
@@ -16660,7 +16658,6 @@ function convertTheirStupidDateTimeFormatToISO(utime){
 },{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/topicItem.vue":71,"./components/topicView.vue":72,"./pantipInterface.js":74,"./vars.js":75,"vue":64}],74:[function(require,module,exports){
 module.exports = {
   loadTopics(forumName, loadMoreID=0, callback){
-    console.log("From another module!");
     if(forumName === 'all') forumName = '';
     var loadUrl = 'http://www.pantip.com/forum/' + forumName;
     if(loadMoreID !== 0){

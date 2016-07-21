@@ -91,16 +91,6 @@ a:link, a:visited{
 
 /*============================================================*/
 
-body.red .sPrimaryBg{ background: #F44336; }
-
-body.red .sPrimaryText{ color: #F44336; }
-
-body.blue .sPrimaryBg{ background: #03A9F4; }
-
-body.blue .sPrimaryText{ color: #03A9F4; }
-
-/*============================================================*/
-
 #sidebar{
   width: 30%;
   display: inline-block;

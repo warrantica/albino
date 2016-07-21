@@ -225,7 +225,6 @@ let vm = new Vue({
       theme: 'default',
       defaultForum: ''
     }, item => {
-      //$('body').addClass(item.theme);
       this.loadTopics(item.defaultForum);
       let currentTheme = Vars.themes.find(theme => theme.name === item.theme);
       //apply theme
