@@ -15986,7 +15986,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],67:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n\n")
+var __vueify_style__ = __vueify_insert__.insert("\n.comment[_v-691c7be0]{\n  width: 100%;\n  box-sizing: border-box;\n  margin: 20px 0;\n  border-radius: 2px;\n}\n\n.subContainer[_v-691c7be0]{\n  padding-bottom: 1px;\n}\n\n.sub.comment[_v-691c7be0]{\n  width: calc(100% - 10px);\n  margin-left: 10px;\n  box-shadow: none;\n}\n\n.sub.comment[_v-691c7be0]:first-child{\n  margin-top: 0;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16092,13 +16092,13 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"comment sElevation1\" :class=\"{sub:sub}\" _v-691c7be0=\"\">\n  <div class=\"info\" _v-691c7be0=\"\">\n    <img class=\"avatar\" :src=\"data.user.avatar.medium\" _v-691c7be0=\"\">\n    <div class=\"author\" :class=\"{op:data.owner_topic}\" _v-691c7be0=\"\">{{ data.user.name }}</div>\n    <div class=\"time sSubtitle\" _v-691c7be0=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-691c7be0=\"\">{{ data.data_addrtitle }}</time>\n    </div>\n    <div class=\"numContainer sSubtitle\" _v-691c7be0=\"\">#{{ data.comment_no }}</div>\n  </div>\n  <div class=\"content\" _v-691c7be0=\"\">{{{ data.message }}}</div>\n  <reaction-view _v-691c7be0=\"\"></reaction-view>\n  <div class=\"subContainer\" v-if=\"data.reply_count\" _v-691c7be0=\"\">\n    <comment-item v-for=\"reply in data.replies\" :data=\"reply\" sub=\"\" _v-691c7be0=\"\">\n    </comment-item>\n    <button class=\"loadMoreSubComments sElevation0h2 sPrimaryBg\" v-show=\"showLoadMoreSubButton\" @click=\"loadMoreSubComments\" _v-691c7be0=\"\">\n      โหลดความเห็นย่อยเพิ่ม\n    </button>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"comment sElevation1\" :class=\"{sub:sub}\" _v-691c7be0=\"\">\n  <div class=\"info\" _v-691c7be0=\"\">\n    <img class=\"avatar\" :src=\"data.user.avatar.medium\" _v-691c7be0=\"\">\n    <div class=\"author\" :class=\"{op:data.owner_topic}\" _v-691c7be0=\"\">{{ data.user.name }}</div>\n    <div class=\"time sSubtitle\" _v-691c7be0=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-691c7be0=\"\">{{ data.data_addrtitle }}</time>\n    </div>\n    <div class=\"numContainer sSubtitle\" _v-691c7be0=\"\">#{{ data.comment_no }}</div>\n  </div>\n  <div class=\"content\" _v-691c7be0=\"\">{{{ data.message }}}</div>\n  <reaction-view _v-691c7be0=\"\"></reaction-view>\n  <div class=\"subContainer\" v-if=\"data.reply_count\" _v-691c7be0=\"\">\n    <comment-item v-for=\"reply in data.replies\" :data=\"reply\" sub=\"\" _v-691c7be0=\"\">\n    </comment-item>\n    <button class=\"loadMoreSubComments sElevation0h2 sAccentBg\" v-show=\"showLoadMoreSubButton\" @click=\"loadMoreSubComments\" _v-691c7be0=\"\">\n      โหลดความเห็นย่อยเพิ่ม\n    </button>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n\n"] = false
+    __vueify_insert__.cache["\n.comment[_v-691c7be0]{\n  width: 100%;\n  box-sizing: border-box;\n  margin: 20px 0;\n  border-radius: 2px;\n}\n\n.subContainer[_v-691c7be0]{\n  padding-bottom: 1px;\n}\n\n.sub.comment[_v-691c7be0]{\n  width: calc(100% - 10px);\n  margin-left: 10px;\n  box-shadow: none;\n}\n\n.sub.comment[_v-691c7be0]:first-child{\n  margin-top: 0;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {

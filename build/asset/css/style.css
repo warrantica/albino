@@ -408,11 +408,6 @@ a:link, a:visited{
   margin-bottom: 30px;
 }
 
-#topicView .content img{
-  max-width: 100%;
-  margin: 10px 0;
-}
-
 #topicView .content u{
   text-decoration: none;
   border-bottom: 1px #333 solid;
@@ -445,13 +440,6 @@ a:link, a:visited{
   margin: 0 auto;
 }
 
-#commentsView .comment{
-  width: 100%;
-  box-sizing: border-box;
-  margin: 20px 0;
-  border-radius: 2px;
-}
-
 #commentsView .content{
   font-family: "TH Sarabun New";
   font-size: 26px;
@@ -461,8 +449,9 @@ a:link, a:visited{
   margin-bottom: 0px;
 }
 
-#commentsView .content img{
+#rightPane .content img{
   max-width: 100%;
+  margin: 10px 0;
 }
 
 #rightPane .info{
@@ -494,10 +483,6 @@ a:link, a:visited{
   float: left;
 }
 
-#commentsView .subContainer{
-  padding-bottom: 1px;
-}
-
 #rightPane .loadMoreSubComments{
   display: block;
   margin: 0 auto 20px auto;
@@ -505,16 +490,6 @@ a:link, a:visited{
   border: none;
   border-radius: 2px;
   transition: all .2s ease-in-out;
-}
-
-#commentsView .sub.comment{
-  width: calc(100% - 10px);
-  margin-left: 10px;
-  box-shadow: none;
-}
-
-#commentsView .sub.comment:first-child{
-  margin-top: 0;
 }
 
 /*============================================================*/
