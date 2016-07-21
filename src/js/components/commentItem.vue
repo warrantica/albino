@@ -14,7 +14,7 @@
       <comment-item v-for="reply in data.replies"
                     :data="reply" sub>
       </comment-item>
-      <button class="loadMoreSubComments sElevation0h2 sAccentBg"
+      <button class="loadMoreSubComments sButton sElevation0h2 sAccentBg"
               v-show="showLoadMoreSubButton"
               @click="loadMoreSubComments">
         โหลดความเห็นย่อยเพิ่ม
@@ -30,7 +30,7 @@
     margin: 20px 0;
     border-radius: 2px;
   }
-  
+
   .subContainer{
     padding-bottom: 1px;
   }
