@@ -33,7 +33,7 @@
     </ul>
   </div>
   <div id="leftPane">
-    <div class="loading sPrimaryText"><i class="ic">refresh</i></div>
+    <div class="loading sAccentText"><i class="ic">refresh</i></div>
     <div id="bestTopicContainer">
       <div id="bestTopicHeader" class="sClickable"
            :class="{ active: showBestTopics }"
@@ -52,7 +52,7 @@
       <topic-item v-for="topic in topics" :data="topic">
         {{ topic.title }}
       </topic-item>
-      <button class="loadMore sPrimaryBg sElevation0h2"
+      <button class="loadMore sAccentBg sElevation0h2"
               :data-tid="loadMoreId"
               @click="loadMoreTopics">
         โหลดกระทู้เพิ่ม
@@ -69,7 +69,7 @@
     </div>
   </div>
   <div id="rightPane">
-    <div class="loading sPrimaryText"><i class="ic">hourglass_full</i></div>
+    <div class="loading sAccentText"><i class="ic">hourglass_full</i></div>
     <div id="topicView" class="sElevation1">
       <topic-view :data="topicData"></topic-view>
     </div>
