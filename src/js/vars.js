@@ -45,11 +45,17 @@ module.exports = {
       name: 'blue', label: 'Blue',
       primary: '#03A9F4', accent: '#FF5252', brightness: 'light'
     }, {
-      name: 'red', label: 'สนุก',
-      primary: '#F44336', accent: '#FF5252', brightness: 'light'
+      name: 'sanook', label: 'สนุก',
+      primary: '#ff1818', accent: '#f9babd', brightness: 'light'
     }, {
       name: 'thaiair', label: 'รักคุณเท่าฟ้า',
       primary: '#3e075b', accent: '#C4007C', brightness: 'light'
+    }, {
+      name: 'jony', label: 'โจนี่',
+      primary: '#333333', accent: '#2189db', brightness: 'light'
+    }, {
+      name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
+      primary: '#0a1128', accent: '#1282a2', brightness: 'dark'
     }
   ]
 };

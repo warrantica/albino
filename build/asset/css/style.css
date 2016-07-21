@@ -19,13 +19,22 @@ q:before, q:after { content: ''; content: none; }
 table { border-collapse: collapse; border-spacing: 0; }
 
 /*============================================================*/
-/*
-@font-face {
-  font-family: "TH Sarabun New";
-  font-style: normal;
-  src: url("../THSarabunNew.ttf") format("truetype");
+
+.dark #sidebarHead, .dark .topic, .dark #forumSelect,
+.dark #leftPane, .dark #leftPane .loading, .dark #rightPane .loading,
+.dark #leftPane .topic, .dark #topicView,
+.dark #commentsView .comment,
+.dark #rightPane .emotionsInfo{
+  background: #303030;
+  color: #fff;
 }
-*/
+
+.dark #belly, .dark #commentsView .sub.comment{
+  background: #424242;
+}
+
+/*============================================================*/
+
 body{
   display: flex;
   flex-flow: row nowrap;

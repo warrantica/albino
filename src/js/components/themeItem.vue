@@ -2,7 +2,7 @@
   <input type="radio" name="theme" :id="name" :value="name" v-model="$parent.options.theme">
   <label :for="name">
     <div class="colorSample" :style="{background:primary}">
-      <div class="brightnessSample" style="background:#f5f5f5"></div>
+      <div class="brightnessSample" :style="{background:brightnessColor}"></div>
       <div class="accentSample" :style="{background:accent}"></div>
     </div>
     <div class="labelText">{{ label }}</div>
@@ -65,6 +65,18 @@
       checked: {
         type: Boolean,
         default: false
+      }
+    },
+
+    data(){ return {
+      brightnessColor: '#f5f5f5'
+    }},
+
+    ready(){
+      switch(this.brightness){
+        case 'light': this.brightnessColor = '#fafafa'; break;
+        case 'dark': this.brightnessColor = '#303030'; break;
+        default: this.brightnessColor = '#fafafa'; break;
       }
     }
   }

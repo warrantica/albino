@@ -229,6 +229,14 @@ let vm = new Vue({
       let currentTheme = Vars.themes.find(theme => theme.name === item.theme);
       //apply theme
       $('.sPrimaryBg').css({backgroundColor: currentTheme.primary});
+      $('.sPrimaryText').css({color: currentTheme.primary});
+      $('.sAccentBg').css({backgroundColor: currentTheme.accent});
+      $('.sAccentText').css({color: currentTheme.accent});
+
+      switch(currentTheme.brightness){
+        default: case 'light': break;
+        case 'dark': $('body').addClass('dark');
+      }
     });
   }
 });
