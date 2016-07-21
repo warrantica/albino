@@ -16109,7 +16109,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"../pantipInterface.js":74,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n\n")
+var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16136,7 +16136,7 @@ if (module.hot) {(function () {  module.hot.accept()
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n\n"] = false
+    __vueify_insert__.cache["\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {

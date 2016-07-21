@@ -261,9 +261,7 @@ a:link, a:visited{
   transition: all .2s ease-in-out;
 }
 
-#bestTopicList.active{
-  max-height: 800px;
-}
+#bestTopicList.active{ max-height: 800px; }
 
 #topicList, #bestTopicList{
   width: 100%;
@@ -280,10 +278,6 @@ a:link, a:visited{
 
 #leftPane .topic.lastTopic{
   border-top: 1px #e0e0e0 dashed;
-}
-
-#leftPane .topic.beforeMore{
-  border-bottom: 1px #e0e0e0 solid;
 }
 
 #leftPane .topic .title{
@@ -333,9 +327,7 @@ a:link, a:visited{
   padding-right: 15px;
 }
 
-#bellyToolbar i{
-  margin-left: 10px;
-}
+#bellyToolbar i{ margin-left: 10px; }
 
 #rightPane{
   height: auto;
@@ -355,21 +347,14 @@ a:link, a:visited{
   transition: all .2s ease-in-out;
 }
 
-#rightPane .topicWrapper{
-  opacity: 1;
-}
+#rightPane .topicWrapper{ opacity: 1; }
 
 #topicView{
-    width: 100%;
+  width: 100%;
   max-width: 560px;
   box-sizing: border-box;
   margin: 20px auto;
   border-radius: 2px;
-}
-
-#topicView .empty{
-  display: block;
-  margin: 20px auto;
 }
 
 #topicView h1{
@@ -383,14 +368,17 @@ a:link, a:visited{
   word-wrap: break-word;
 }
 
-#topicView .content{
-  box-sizing: border-box;
+#rightPane .content{
   padding: 15px;
-  width: 100%;
   font-family: "TH Sarabun New";
   font-size: 26px;
   line-height: 1.5;
   word-wrap: break-word;
+}
+
+#topicView .content{
+  box-sizing: border-box;
+  width: 100%;
   margin-bottom: 30px;
 }
 
@@ -420,18 +408,7 @@ a:link, a:visited{
 
 /*============================================================*/
 
-#commentsView{
-  width: 100%;
-  max-width: 560px;
-  margin: 0 auto;
-}
-
 #commentsView .content{
-  font-family: "TH Sarabun New";
-  font-size: 26px;
-  line-height: 1.5;
-  word-wrap: break-word;
-  padding: 15px;
   margin-bottom: 0px;
 }
 
@@ -476,9 +453,7 @@ a:link, a:visited{
 /*============================================================*/
 
 #fab{
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
+  position: absolute; bottom: 30px; right: 30px;
   width: 56px;
   height: 56px;
   border-radius: 28px;

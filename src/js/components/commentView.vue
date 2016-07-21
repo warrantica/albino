@@ -7,7 +7,11 @@
 </template>
 
 <style scoped>
-
+  #commentsView{
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+  }
 </style>
 
 <script>
