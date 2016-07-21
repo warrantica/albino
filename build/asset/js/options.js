@@ -15191,7 +15191,7 @@ exports.insert = function (css) {
 
 },{}],5:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\ninput[_v-232ae26c]{\n  display: none;\n}\n\nlabel[_v-232ae26c]{\n  display: block;\n  margin: 10px 0;\n}\n\n.colorSample[_v-232ae26c]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  background: red;\n  vertical-align: middle;\n}\n\n.labelText[_v-232ae26c]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[_v-232ae26c]{\n  background: red;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\ninput[_v-232ae26c]{ display: none; }\n\nlabel[_v-232ae26c]{\n  display: block;\n  padding: 10px;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n\n.colorSample[_v-232ae26c]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  vertical-align: middle;\n  position: relative; top: 0; left: 0;\n}\n\n.brightnessSample[_v-232ae26c]{\n  width: 26px;\n  height: 13px;\n  border-radius: 0 0 26px 26px;\n  margin: 16px 0 0 3px;\n}\n\n.accentSample[_v-232ae26c]{\n  position: absolute;\n  bottom: 0; right: 0;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n}\n\n.labelText[_v-232ae26c]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[_v-232ae26c]{\n  background: #e3e3e3;\n}\n")
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15201,6 +15201,9 @@ exports.default = {
   props: {
     label: String,
     name: String,
+    primary: String,
+    accent: String,
+    brightness: String,
     checked: {
       type: Boolean,
       default: false
@@ -15208,13 +15211,13 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<input type=\"radio\" name=\"theme\" :id=\"name\" :value=\"name\" _v-232ae26c=\"\">\n<label :for=\"name\" _v-232ae26c=\"\">\n  <div class=\"colorSample\" _v-232ae26c=\"\"></div>\n  <div class=\"labelText\" _v-232ae26c=\"\">{{ label }}</div>\n</label>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<input type=\"radio\" name=\"theme\" :id=\"name\" :value=\"name\" v-model=\"$parent.options.theme\" _v-232ae26c=\"\">\n<label :for=\"name\" _v-232ae26c=\"\">\n  <div class=\"colorSample\" :style=\"{background:primary}\" _v-232ae26c=\"\">\n    <div class=\"brightnessSample\" style=\"background:#f5f5f5\" _v-232ae26c=\"\"></div>\n    <div class=\"accentSample\" :style=\"{background:accent}\" _v-232ae26c=\"\"></div>\n  </div>\n  <div class=\"labelText\" _v-232ae26c=\"\">{{ label }}</div>\n</label>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\ninput[_v-232ae26c]{\n  display: none;\n}\n\nlabel[_v-232ae26c]{\n  display: block;\n  margin: 10px 0;\n}\n\n.colorSample[_v-232ae26c]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  background: red;\n  vertical-align: middle;\n}\n\n.labelText[_v-232ae26c]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[_v-232ae26c]{\n  background: red;\n}\n"] = false
+    __vueify_insert__.cache["\ninput[_v-232ae26c]{ display: none; }\n\nlabel[_v-232ae26c]{\n  display: block;\n  padding: 10px;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n\n.colorSample[_v-232ae26c]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  vertical-align: middle;\n  position: relative; top: 0; left: 0;\n}\n\n.brightnessSample[_v-232ae26c]{\n  width: 26px;\n  height: 13px;\n  border-radius: 0 0 26px 26px;\n  margin: 16px 0 0 3px;\n}\n\n.accentSample[_v-232ae26c]{\n  position: absolute;\n  bottom: 0; right: 0;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n}\n\n.labelText[_v-232ae26c]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[_v-232ae26c]{\n  background: #e3e3e3;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -15229,42 +15232,48 @@ let Vars = require('./vars.js');
 
 let themeItem = require('./components/themeItem.vue');
 
+let themes = [
+  {
+    name: 'default', label: 'เผือก (default)',
+    primary: '#9C27B0', accent: '#FF5252', brightness: 'light'
+  }, {
+    name: 'blue', label: 'Blue',
+    primary: '#03A9F4', accent: '#FF5252', brightness: 'light'
+  }, {
+    name: 'red', label: 'สนุก',
+    primary: '#F44336', accent: '#FF5252', brightness: 'light'
+  }, {
+    name: 'thaiair', label: 'รักคุณเท่าฟ้า',
+    primary: '#3e075b', accent: '#C4007C', brightness: 'light'
+  }
+];
+
 Vue.component('themeItem', themeItem);
 
 let vm = new Vue({
   el: 'body',
 
   data(){ return {
-    forums: Vars.forumInfo
+    forums: Vars.forumInfo,
+    themes: themes,
+    options: {
+      defaultForum: 'all',
+      theme: 'default'
+    }
   }},
 
   methods: {
     saveOptions(){
-      let theme = document.getElementById('theme').value;
-      let defaultForum = document.getElementById('defaultForum').value;
-
-      chrome.storage.sync.set({
-        theme,
-        defaultForum
-      }, function(){
+      chrome.storage.sync.set(this.options, () => {
         //Notify user
         console.log("Options saved");
-      });
-    },
-
-    restoreOptions(){
-      chrome.storage.sync.get({
-        theme: 'default',
-        defaultForum: 'all'
-      }, function(item){
-        document.getElementById('theme').value = item.theme;
-        document.getElementById('defaultForum').value = item.defaultForum;
       });
     }
   },
 
   ready(){
-    this.restoreOptions();
+    //restore options
+    chrome.storage.sync.get(this.options, item => this.options = item);
   }
 });
 
