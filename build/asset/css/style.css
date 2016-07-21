@@ -1,22 +1,10 @@
 /* Modified Meyer's CSS reset */
-html, body, div, span, object, iframe, h1, h2, h3,
-h4, h5, h6, p, blockquote, pre, a, abbr, acronym,
-address, big, code, del, dfn, em, img, small, strike,
-strong, sub, sup, b, u, i, center, ol, ul, li,
-fieldset, form, label, legend, table, caption, tbody,
-tfoot, thead, tr, th, td, article, aside, canvas,
-details, embed, figure, figcaption, footer, header,
-menu, nav, output, section, time, video {
-margin: 0; padding: 0; border: 0; font-size: 100%;
-font: inherit; vertical-align: baseline; }
-article, aside, details, figcaption, figure, footer,
-header, hgroup, menu, nav, section { display: block; }
-body { line-height: 1; }
-ol, ul { list-style: none; }
-blockquote, q { quotes: none; }
-blockquote:before, blockquote:after,
-q:before, q:after { content: ''; content: none; }
-table { border-collapse: collapse; border-spacing: 0; }
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,a,img,strike,strong,sub,
+sup,b,u,i,ol,ul,li,fieldset,form,label,table,tbody,tfoot,thead,tr,th,td,canvas,
+embed,header,nav,section,time,video{margin:0;padding:0;border:0;font-size:100%;
+font:inherit;vertical-align:baseline;}
+ol,ul{list-style:none;}
+table{border-collapse:collapse;border-spacing:0;}
 
 /*============================================================*/
 
@@ -424,19 +412,6 @@ a:link, a:visited{
   word-wrap: break-word;
 }
 
-#topicView .tag{
-  padding: 15px 0 0 15px;
-}
-
-#topicView .tag .ic{
-  font-size: 14px;
-  margin-bottom: 2px;
-}
-
-#topicView .tag.empty{
-  display: none;
-}
-
 #topicView .content{
   box-sizing: border-box;
   padding: 15px;
@@ -532,78 +507,6 @@ a:link, a:visited{
   border-radius: 38px;
   margin-right: 10px;
   float: left;
-}
-
-#rightPane .reactions{
-  padding: 0 15px 15px 15px;
-  line-height: 28px;
-  position: relative; top: 0; left: 0;
-}
-
-#rightPane .reactions.empty{
-  display: none;
-}
-
-#rightPane .vote{
-  display: inline-block;
-  margin-right: 10px;
-  height: 28px;
-  vertical-align: top;
-}
-
-#rightPane .emotions{
-  display: inline-block;
-  height: 28px;
-}
-
-#rightPane .emotionIcons{
-  display: inline-block;
-  height: 28px;
-}
-
-#rightPane .emotionIcons img{
-  width: 18px;
-  height: auto;
-  margin-bottom: 5px;
-}
-
-#rightPane .emotionIcons img:first-child{
-  width: 28px;
-  margin-bottom: 0;
-}
-
-#rightPane .emotionCount{
-  display: inline-block;
-  vertical-align: top;
-}
-
-#rightPane .emotionsInfo{
-  position: absolute;
-  top: -40px;
-  left: 10px;
-  padding: 10px 10px 0 10px;
-  -webkit-clip-path: circle(0 at 80px 100%);
-  transition: all .15s ease-in-out;
-}
-
-#rightPane .emotions:hover + .emotionsInfo{
-  -webkit-clip-path: circle(100% at 50% 50%);
-}
-
-#rightPane .emotionsInfo li{
-  display: inline-block;
-  height: 18px;
-  line-height: 18px;
-  margin-right: 10px;
-}
-
-#rightPane .emotionsInfo img{
-  width: 18px;
-  margin-right: 5px;
-}
-
-#rightPane .emotionsInfo span{
-  vertical-align: top;
 }
 
 #commentsView .subContainer{

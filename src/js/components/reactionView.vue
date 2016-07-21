@@ -23,7 +23,68 @@
 </template>
 
 <style scoped>
+  .reactions{
+    padding: 0 15px 15px 15px;
+    line-height: 28px;
+    position: relative; top: 0; left: 0;
+  }
 
+  .vote{
+    display: inline-block;
+    margin-right: 10px;
+    height: 28px;
+    vertical-align: top;
+  }
+
+  .emotions, .emotionIcons{
+    display: inline-block;
+    height: 28px;
+  }
+
+  .emotionIcons img{
+    width: 18px;
+    height: auto;
+    margin-bottom: 5px;
+  }
+
+  .emotionIcons img:first-child{
+    width: 28px;
+    margin-bottom: 0;
+  }
+
+  .emotionCount{
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .emotionsInfo{
+    position: absolute;
+    top: -40px;
+    left: 10px;
+    padding: 10px 10px 0 10px;
+    -webkit-clip-path: circle(0 at 80px 100%);
+    transition: all .15s ease-in-out;
+  }
+
+  .emotions:hover + .emotionsInfo{
+    -webkit-clip-path: circle(100% at 50% 50%);
+  }
+
+  .emotionsInfo li{
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    margin-right: 10px;
+  }
+
+  .emotionsInfo img{
+    width: 18px;
+    margin-right: 5px;
+  }
+
+  .emotionsInfo span{
+    vertical-align: top;
+  }
 </style>
 
 <script>

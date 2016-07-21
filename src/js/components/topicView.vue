@@ -15,7 +15,14 @@
 </template>
 
 <style scoped>
+  .tag{
+    padding: 15px 0 0 15px;
+  }
 
+  .tag .ic{
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
 </style>
 
 <script>

@@ -16182,7 +16182,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],70:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n\n")
+var __vueify_style__ = __vueify_insert__.insert("\n.reactions[_v-58c21290]{\n  padding: 0 15px 15px 15px;\n  line-height: 28px;\n  position: relative; top: 0; left: 0;\n}\n\n.vote[_v-58c21290]{\n  display: inline-block;\n  margin-right: 10px;\n  height: 28px;\n  vertical-align: top;\n}\n\n.emotions[_v-58c21290], .emotionIcons[_v-58c21290]{\n  display: inline-block;\n  height: 28px;\n}\n\n.emotionIcons img[_v-58c21290]{\n  width: 18px;\n  height: auto;\n  margin-bottom: 5px;\n}\n\n.emotionIcons img[_v-58c21290]:first-child{\n  width: 28px;\n  margin-bottom: 0;\n}\n\n.emotionCount[_v-58c21290]{\n  display: inline-block;\n  vertical-align: top;\n}\n\n.emotionsInfo[_v-58c21290]{\n  position: absolute;\n  top: -40px;\n  left: 10px;\n  padding: 10px 10px 0 10px;\n  -webkit-clip-path: circle(0 at 80px 100%);\n  -webkit-transition: all .15s ease-in-out;\n  transition: all .15s ease-in-out;\n}\n\n.emotions:hover + .emotionsInfo[_v-58c21290]{\n  -webkit-clip-path: circle(100% at 50% 50%);\n}\n\n.emotionsInfo li[_v-58c21290]{\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  margin-right: 10px;\n}\n\n.emotionsInfo img[_v-58c21290]{\n  width: 18px;\n  margin-right: 5px;\n}\n\n.emotionsInfo span[_v-58c21290]{\n  vertical-align: top;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16251,7 +16251,7 @@ if (module.hot) {(function () {  module.hot.accept()
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n\n"] = false
+    __vueify_insert__.cache["\n.reactions[_v-58c21290]{\n  padding: 0 15px 15px 15px;\n  line-height: 28px;\n  position: relative; top: 0; left: 0;\n}\n\n.vote[_v-58c21290]{\n  display: inline-block;\n  margin-right: 10px;\n  height: 28px;\n  vertical-align: top;\n}\n\n.emotions[_v-58c21290], .emotionIcons[_v-58c21290]{\n  display: inline-block;\n  height: 28px;\n}\n\n.emotionIcons img[_v-58c21290]{\n  width: 18px;\n  height: auto;\n  margin-bottom: 5px;\n}\n\n.emotionIcons img[_v-58c21290]:first-child{\n  width: 28px;\n  margin-bottom: 0;\n}\n\n.emotionCount[_v-58c21290]{\n  display: inline-block;\n  vertical-align: top;\n}\n\n.emotionsInfo[_v-58c21290]{\n  position: absolute;\n  top: -40px;\n  left: 10px;\n  padding: 10px 10px 0 10px;\n  -webkit-clip-path: circle(0 at 80px 100%);\n  -webkit-transition: all .15s ease-in-out;\n  transition: all .15s ease-in-out;\n}\n\n.emotions:hover + .emotionsInfo[_v-58c21290]{\n  -webkit-clip-path: circle(100% at 50% 50%);\n}\n\n.emotionsInfo li[_v-58c21290]{\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  margin-right: 10px;\n}\n\n.emotionsInfo img[_v-58c21290]{\n  width: 18px;\n  margin-right: 5px;\n}\n\n.emotionsInfo span[_v-58c21290]{\n  vertical-align: top;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -16321,7 +16321,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],72:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n\n")
+var __vueify_style__ = __vueify_insert__.insert("\n.tag[_v-dcfa727c]{\n  padding: 15px 0 0 15px;\n}\n\n.tag .ic[_v-dcfa727c]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16397,7 +16397,7 @@ if (module.hot) {(function () {  module.hot.accept()
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n\n"] = false
+    __vueify_insert__.cache["\n.tag[_v-dcfa727c]{\n  padding: 15px 0 0 15px;\n}\n\n.tag .ic[_v-dcfa727c]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
