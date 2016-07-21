@@ -16868,6 +16868,12 @@ module.exports = {
     }, {
       name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
       primary: '#0a1128', accent: '#1282a2', brightness: 'dark'
+    }, {
+      name: 'snyder', label: 'ซไนเดอร์',
+      primary: '#314d62', accent: '#a8d1c3', brightness: 'dark'
+    }, {
+      name: 'squirtle', label: 'เซนิกาเมะ',
+      primary: '#76bbc0', accent: '#a76a57', brightness: 'light'
     }
   ]
 };
