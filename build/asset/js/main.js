@@ -16147,7 +16147,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],69:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n\n")
+var __vueify_style__ = __vueify_insert__.insert("\nli[_v-41c115fe]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n  -webkit-transition: .2s all ease-in-out;\n  transition: .2s all ease-in-out;\n}\n\nimg[_v-41c115fe]{\n  height: 36px;\n  margin-right: 15px;\n}\n\nspan[_v-41c115fe]{\n  vertical-align: top;\n  display: inline-block;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16165,13 +16165,13 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<li @click=\"loadForum\" _v-41c115fe=\"\">\n  <img :src=\"'asset/forumIcon/'+name+'.png'\" _v-41c115fe=\"\">\n  <span class=\"forumName\" _v-41c115fe=\"\"><slot _v-41c115fe=\"\"></slot></span>\n</li>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<li @click=\"loadForum\" _v-41c115fe=\"\">\n  <img :src=\"'asset/forumIcon/'+name+'.png'\" _v-41c115fe=\"\">\n  <span _v-41c115fe=\"\"><slot _v-41c115fe=\"\"></slot></span>\n</li>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n\n"] = false
+    __vueify_insert__.cache["\nli[_v-41c115fe]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n  -webkit-transition: .2s all ease-in-out;\n  transition: .2s all ease-in-out;\n}\n\nimg[_v-41c115fe]{\n  height: 36px;\n  margin-right: 15px;\n}\n\nspan[_v-41c115fe]{\n  vertical-align: top;\n  display: inline-block;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
