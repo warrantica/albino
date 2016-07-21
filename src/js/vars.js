@@ -35,5 +35,21 @@ module.exports = {
     { name: 'mbk', label: 'มาบุญครอง' },
     { name: 'supachalasai', label: 'ศุภชลาศัย' },
     { name: 'art', label: 'หอศิลป์' }
+  ],
+
+  themes: [
+    {
+      name: 'default', label: 'เผือก (default)',
+      primary: '#9C27B0', accent: '#FF5252', brightness: 'light'
+    }, {
+      name: 'blue', label: 'Blue',
+      primary: '#03A9F4', accent: '#FF5252', brightness: 'light'
+    }, {
+      name: 'red', label: 'สนุก',
+      primary: '#F44336', accent: '#FF5252', brightness: 'light'
+    }, {
+      name: 'thaiair', label: 'รักคุณเท่าฟ้า',
+      primary: '#3e075b', accent: '#C4007C', brightness: 'light'
+    }
   ]
 };

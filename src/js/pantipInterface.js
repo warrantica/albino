@@ -1,6 +1,5 @@
 module.exports = {
   loadTopics(forumName, loadMoreID=0, callback){
-    console.log("From another module!");
     if(forumName === 'all') forumName = '';
     var loadUrl = 'http://www.pantip.com/forum/' + forumName;
     if(loadMoreID !== 0){
