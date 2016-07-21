@@ -27,6 +27,8 @@ table{border-collapse:collapse;border-spacing:0;}
   background: #efefef;
 }
 
+.sSubtitle{ color: #888; }
+
 /*============================================================*/
 
 .dark #sidebar, .dark #belly{
@@ -73,18 +75,9 @@ a:link, a:visited{
   border-bottom: 1px #9C27B0 solid;
 }
 
-.sPrimaryBg{
-  color: #FFF;
-}
+.sPrimaryBg, .sAccentBg{ color: #FFF; }
 
-.sAccentBg{
-  color: #FFF;
-}
-
-.sSubtitle{
-  color: #888;
-  font-size: 11px;
-}
+.sSubtitle{ font-size: 11px; }
 
 .sElevation1{
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -160,7 +153,6 @@ a:link, a:visited{
 
 #forumSelect{
   display: block;
-  color: #212121;
   font-size: 14px;
   position: absolute;
   top: 10px;
@@ -208,7 +200,7 @@ a:link, a:visited{
   -webkit-clip-path: circle(15px at 50% 55px);
 }
 
-#leftPane .loading, #rightPane .loading{
+.loading{
   width: 30px;
   height: 30px;
   border-radius: 100px;
@@ -226,23 +218,16 @@ a:link, a:visited{
 }
 
 @keyframes spin{
-  from{
-    transform: rotate(0deg);
-  }
-
-  to{
-    transform: rotate(360deg);
-  }
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
 }
 
-#leftPane .loading.active, #rightPane .loading.active{
+.loading.active{
   top: 40px;
   opacity: 1;
 }
 
-#leftPane .loading i, #rightPane .loading i{
-  margin: 0;
-}
+.loading i{ margin: 0; }
 
 #leftPane.wrapUp #topicList, #leftPane.wrapUp #bestTopicList{
   opacity: 0;
@@ -547,21 +532,17 @@ a:link, a:visited{
   transition: all .2s cubic-bezier(.8, -0.2, 0.2, 1.2);
 }
 
-#fab.enable{
-  transform: scale(1);
-}
+#fab.enable{ transform: scale(1); }
 
-#fab:hover{
-  height: 112px;
-}
+#fab:hover{ height: 112px; }
 
 #fab .topContainer, #fab .bottomContainer{
   position: absolute;
   width: 56px;
   line-height: 56px;
   transition: transform .2s ease-in-out .1s,
-    opacity .1s ease-in-out 0s,
-    background-color .1s ease-in-out 0s;
+              opacity .1s ease-in-out 0s,
+              background-color .1s ease-in-out 0s;
 }
 
 #fab .topContainer:hover, #fab .bottomContainer:hover{
@@ -599,8 +580,8 @@ a:link, a:visited{
   z-index: 20;
   opacity: 0;
   transition: background-color .2s ease-in-out 0s,
-    top .01s ease-in-out .2s,
-    opacity .2s ease-in-out .01s;
+              top .01s ease-in-out .2s,
+              opacity .2s ease-in-out .01s;
 }
 
 #lightBox.active{
@@ -608,8 +589,8 @@ a:link, a:visited{
   opacity: 1;
   background: rgba(0, 0, 0, 0.3);
   transition: background-color .2s ease-in-out .1s,
-    top .01s ease-in-out 0s,
-    opacity .2s ease-in-out 0s;
+              top .01s ease-in-out 0s,
+              opacity .2s ease-in-out 0s;
 }
 
 #lightBox img{
