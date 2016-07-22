@@ -15408,7 +15408,7 @@ module.exports = {
     text: '#ffffff', subtitle: '#b3b3b3'
   },{
     name: 'pantip',
-    fore: '#2d2a49', back: '#38355c', hover: '#1f1d33',
+    fore: '#222244', back: '#38355c', hover: '#1b1b37',
     text: '#dbdbdb', subtitle: '#a6a3c7'
   }],
 

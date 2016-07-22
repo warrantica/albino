@@ -23,9 +23,13 @@
 
     #sidebarHead, #forumSelect, #leftPane,
     #leftPane .loading, #rightPane .loading,
-    #leftPane .topic, #topicView, #commentsView .comment,
+    #leftPane .topic, #topicView, .comment,
     #rightPane .emotionsInfo{
       background: {{ base.fore }};
+    }
+
+    .sub.comment{
+      background: {{ base.back }};
     }
 
     #forumSelect li:hover, #leftPane .topic:hover, #leftPane .topic.active{

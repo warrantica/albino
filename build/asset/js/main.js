@@ -16299,7 +16299,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n  }\n\n  .sPrimaryText{\n    color: {{ theme.primary }};\n  }\n\n  .sAccentBg{\n    background: {{ theme.accent }};\n  }\n\n  .sAccentText{\n    color: {{ theme.accent }};\n  }\n\n  #sidebar, #belly{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  #leftPane .loading, #rightPane .loading,\n  #leftPane .topic, #topicView, #commentsView .comment,\n  #rightPane .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, #leftPane .topic:hover, #leftPane .topic.active{\n    background: {{ base.hover }};\n  }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n  }\n\n  .sPrimaryText{\n    color: {{ theme.primary }};\n  }\n\n  .sAccentBg{\n    background: {{ theme.accent }};\n  }\n\n  .sAccentText{\n    color: {{ theme.accent }};\n  }\n\n  #sidebar, #belly{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  #leftPane .loading, #rightPane .loading,\n  #leftPane .topic, #topicView, .comment,\n  #rightPane .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  .sub.comment{\n    background: {{ base.back }};\n  }\n\n  #forumSelect li:hover, #leftPane .topic:hover, #leftPane .topic.active{\n    background: {{ base.hover }};\n  }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16936,7 +16936,7 @@ module.exports = {
     text: '#ffffff', subtitle: '#b3b3b3'
   },{
     name: 'pantip',
-    fore: '#2d2a49', back: '#38355c', hover: '#1f1d33',
+    fore: '#222244', back: '#38355c', hover: '#1b1b37',
     text: '#dbdbdb', subtitle: '#a6a3c7'
   }],
 
