@@ -7,51 +7,6 @@ ol,ul{list-style:none;}
 table{border-collapse:collapse;border-spacing:0;}
 
 /*============================================================*/
-/*
-#sidebar, #belly{
-  background: #eaeaea;
-}
-
-#forumSelect li:hover, #leftPane .topic:hover, #leftPane .topic.active{
-  background: #dedede;
-}
-
-#sidebarHead, #forumSelect, #leftPane,
-#leftPane .loading, #rightPane .loading,
-#leftPane .topic, #topicView, #commentsView .comment,
-#rightPane .emotionsInfo{
-  background: #ffffff;
-}
-
-#commentsView .sub.comment{
-  background: #efefef;
-}
-
-.sSubtitle{ color: #888; }
-*/
-/*============================================================*/
-/*
-.dark #sidebar, .dark #belly{
-  background: #212121;
-  color: #fff;
-}
-
-.dark #forumSelect li:hover, .dark #leftPane .topic:hover, .dark #leftPane .topic.active{
-  background: #212121;
-}
-
-.dark #sidebarHead, .dark #forumSelect, .dark #leftPane,
-.dark #leftPane .loading, .dark #rightPane .loading,
-.dark #leftPane .topic, .dark #topicView, .dark #commentsView .comment,
-.dark #rightPane .emotionsInfo{
-  background: #303030;
-}
-
-.dark #commentsView .sub.comment{
-  background: #424242;
-}
-*/
-/*============================================================*/
 
 body{
   display: flex;

@@ -80,13 +80,8 @@
     },
 
     computed: {
-      theme(){
-        return Vars.getTheme(this.themeName);
-      },
-
-      base(){
-        return Vars.getBase(this.theme.base);
-      }
+      theme(){ return Vars.getTheme(this.themeName); },
+      base(){ return Vars.getBase(this.theme.base); }
     }
   }
 </script>
