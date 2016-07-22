@@ -95,6 +95,7 @@ let topicView = require('./components/topicView.vue');
 let commentView = require('./components/commentView.vue');
 let commentItem = require('./components/commentItem.vue');
 let reactionView = require('./components/reactionView.vue');
+let themeStyle = require('./components/themeStyle.vue');
 
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
@@ -103,6 +104,7 @@ Vue.component('topicView', topicView);
 Vue.component('commentView', commentView);
 Vue.component('commentItem', commentItem);
 Vue.component('reactionView', reactionView);
+Vue.component('themeStyle', themeStyle);
 
 let vm = new Vue({
   el: 'body',
@@ -227,11 +229,7 @@ let vm = new Vue({
     }, item => {
       this.loadTopics(item.defaultForum);
       let currentTheme = Vars.themes.find(theme => theme.name === item.theme);
-      //apply theme
-      $('.sPrimaryBg').css({backgroundColor: currentTheme.primary});
-      $('.sPrimaryText').css({color: currentTheme.primary});
-      $('.sAccentBg').css({backgroundColor: currentTheme.accent});
-      $('.sAccentText').css({color: currentTheme.accent});
+      this.$broadcast('applyTheme', item.theme);
 
       switch(currentTheme.base){
         default: case 'light': break;

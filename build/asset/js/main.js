@@ -16107,7 +16107,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-691c7be0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../pantipInterface.js":74,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
+},{"../pantipInterface.js":75,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n")
 'use strict';
@@ -16261,6 +16261,49 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"babel-runtime/core-js/get-iterator":2,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],71:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+
+var Vars = require('../vars.js');
+
+exports.default = {
+  data: function data() {
+    return {
+      theme: {
+        name: 'default',
+        label: '',
+        primary: '',
+        accent: ''
+      }
+    };
+  },
+
+
+  events: {
+    'applyTheme': function applyTheme(themeName) {
+      this.theme = Vars.themes.find(function (theme) {
+        return theme.name === themeName;
+      });
+    }
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n  }\n\n  .sPrimaryText{\n    color: {{ theme.primary }};\n  }\n\n  .sAccentBg{\n    background: {{ theme.accent }};\n  }\n\n  .sAccentText{\n    color: {{ theme.accent }};\n  }\n</style>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-667c7dec", module.exports)
+  } else {
+    hotAPI.update("_v-667c7dec", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../vars.js":76,"vue":64,"vue-hot-reload-api":63}],72:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
@@ -16319,7 +16362,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-df29bfa0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],72:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],73:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.tag[_v-dcfa727c]{\n  padding: 15px 0 0 15px;\n}\n\n.tag .ic[_v-dcfa727c]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}\n")
 'use strict';
@@ -16406,7 +16449,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-dcfa727c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],73:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],74:[function(require,module,exports){
 //============================================================================
 //Browserify require stuff
 //============================================================================
@@ -16504,6 +16547,7 @@ let topicView = require('./components/topicView.vue');
 let commentView = require('./components/commentView.vue');
 let commentItem = require('./components/commentItem.vue');
 let reactionView = require('./components/reactionView.vue');
+let themeStyle = require('./components/themeStyle.vue');
 
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
@@ -16512,6 +16556,7 @@ Vue.component('topicView', topicView);
 Vue.component('commentView', commentView);
 Vue.component('commentItem', commentItem);
 Vue.component('reactionView', reactionView);
+Vue.component('themeStyle', themeStyle);
 
 let vm = new Vue({
   el: 'body',
@@ -16636,11 +16681,12 @@ let vm = new Vue({
     }, item => {
       this.loadTopics(item.defaultForum);
       let currentTheme = Vars.themes.find(theme => theme.name === item.theme);
-      //apply theme
-      $('.sPrimaryBg').css({backgroundColor: currentTheme.primary});
-      $('.sPrimaryText').css({color: currentTheme.primary});
-      $('.sAccentBg').css({backgroundColor: currentTheme.accent});
-      $('.sAccentText').css({color: currentTheme.accent});
+      this.$broadcast('applyTheme', item.theme);
+      // //apply theme
+      // //$('.sPrimaryBg').css({backgroundColor: currentTheme.primary});
+      // $('.sPrimaryText').css({color: currentTheme.primary});
+      // $('.sAccentBg').css({backgroundColor: currentTheme.accent});
+      // $('.sAccentText').css({color: currentTheme.accent});
 
       switch(currentTheme.base){
         default: case 'light': break;
@@ -16663,7 +16709,7 @@ function convertTheirStupidDateTimeFormatToISO(utime){
   return y+'-'+m+'-'+d+'T'+t;
 }
 
-},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/topicItem.vue":71,"./components/topicView.vue":72,"./pantipInterface.js":74,"./vars.js":75,"vue":64}],74:[function(require,module,exports){
+},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/topicItem.vue":72,"./components/topicView.vue":73,"./pantipInterface.js":75,"./vars.js":76,"vue":64}],75:[function(require,module,exports){
 module.exports = {
   loadTopics(forumName, loadMoreID=0, callback){
     if(forumName === 'all') forumName = '';
@@ -16809,7 +16855,7 @@ module.exports = {
   }
 }
 
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 module.exports = {
   forumInfo: [
     { name: 'food', label: 'ก้นครัว' },
@@ -16878,4 +16924,4 @@ module.exports = {
   ]
 };
 
-},{}]},{},[73]);
+},{}]},{},[74]);
