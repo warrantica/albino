@@ -2,7 +2,7 @@
   <div class="topicWrapper">
     <h1>{{ data.title }}</h1>
     <div class="info">
-      <img class="avatar" :src="data.avatarSrc" />
+      <img class="avatar sPrimaryBg" :src="data.avatarSrc" />
       <div class="author">{{ data.author }}</div>
       <div class="time sSubtitle">
         <time class="timeago" :datetime="data.utime">{{ data.timeFull }}</time>

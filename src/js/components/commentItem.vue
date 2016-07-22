@@ -1,7 +1,7 @@
 <template>
   <div class="comment sElevation1" :class="{sub:sub}">
     <div class="info">
-      <img class="avatar" :src="data.user.avatar.medium" />
+      <img class="avatar sPrimaryBg" :src="data.user.avatar.medium" />
       <div class="author" :class="{op:data.owner_topic}">{{ data.user.name }}</div>
       <div class="time sSubtitle">
         <time class="timeago" :datetime="data.utime">{{ data.data_addrtitle }}</time>
