@@ -15191,7 +15191,7 @@ exports.insert = function (css) {
 
 },{}],5:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\ninput[_v-232ae26c]{ display: none; }\n\nlabel[_v-232ae26c]{\n  display: block;\n  padding: 10px;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n\n.colorSample[_v-232ae26c]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  vertical-align: middle;\n  position: relative; top: 0; left: 0;\n}\n\n.brightnessSample[_v-232ae26c]{\n  width: 26px;\n  height: 13px;\n  border-radius: 0 0 26px 26px;\n  margin: 16px 0 0 3px;\n}\n\n.accentSample[_v-232ae26c]{\n  position: absolute;\n  bottom: 0; right: 0;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n}\n\n.labelText[_v-232ae26c]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[_v-232ae26c]{\n  background: #e3e3e3;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\ninput[_v-232ae26c]{ display: none; }\n\nlabel[_v-232ae26c]{\n  display: block;\n  padding: 10px;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n\n.colorSample[_v-232ae26c]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  vertical-align: middle;\n  position: relative; top: 0; left: 0;\n}\n\n.baseColor[_v-232ae26c]{\n  width: 26px;\n  height: 13px;\n  border-radius: 0 0 26px 26px;\n  margin: 16px 0 0 3px;\n}\n\n.accentSample[_v-232ae26c]{\n  position: absolute;\n  bottom: 0; right: 0;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n}\n\n.labelText[_v-232ae26c]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[_v-232ae26c]{\n  background: #e3e3e3;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15203,7 +15203,7 @@ exports.default = {
     name: String,
     primary: String,
     accent: String,
-    brightness: String,
+    base: String,
     checked: {
       type: Boolean,
       default: false
@@ -15212,28 +15212,28 @@ exports.default = {
 
   data: function data() {
     return {
-      brightnessColor: '#f5f5f5'
+      baseColor: '#f5f5f5'
     };
   },
   ready: function ready() {
-    switch (this.brightness) {
+    switch (this.base) {
       case 'light':
-        this.brightnessColor = '#fafafa';break;
+        this.baseColor = '#fafafa';break;
       case 'dark':
-        this.brightnessColor = '#303030';break;
+        this.baseColor = '#303030';break;
       default:
-        this.brightnessColor = '#fafafa';break;
+        this.baseColor = '#fafafa';break;
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<input type=\"radio\" name=\"theme\" :id=\"name\" :value=\"name\" v-model=\"$parent.options.theme\" _v-232ae26c=\"\">\n<label :for=\"name\" _v-232ae26c=\"\">\n  <div class=\"colorSample\" :style=\"{background:primary}\" _v-232ae26c=\"\">\n    <div class=\"brightnessSample\" :style=\"{background:brightnessColor}\" _v-232ae26c=\"\"></div>\n    <div class=\"accentSample\" :style=\"{background:accent}\" _v-232ae26c=\"\"></div>\n  </div>\n  <div class=\"labelText\" _v-232ae26c=\"\">{{ label }}</div>\n</label>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<input type=\"radio\" name=\"theme\" :id=\"name\" :value=\"name\" v-model=\"$parent.options.theme\" _v-232ae26c=\"\">\n<label :for=\"name\" _v-232ae26c=\"\">\n  <div class=\"colorSample\" :style=\"{background:primary}\" _v-232ae26c=\"\">\n    <div class=\"baseColor\" :style=\"{background:baseColor}\" _v-232ae26c=\"\"></div>\n    <div class=\"accentSample\" :style=\"{background:accent}\" _v-232ae26c=\"\"></div>\n  </div>\n  <div class=\"labelText\" _v-232ae26c=\"\">{{ label }}</div>\n</label>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\ninput[_v-232ae26c]{ display: none; }\n\nlabel[_v-232ae26c]{\n  display: block;\n  padding: 10px;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n\n.colorSample[_v-232ae26c]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  vertical-align: middle;\n  position: relative; top: 0; left: 0;\n}\n\n.brightnessSample[_v-232ae26c]{\n  width: 26px;\n  height: 13px;\n  border-radius: 0 0 26px 26px;\n  margin: 16px 0 0 3px;\n}\n\n.accentSample[_v-232ae26c]{\n  position: absolute;\n  bottom: 0; right: 0;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n}\n\n.labelText[_v-232ae26c]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[_v-232ae26c]{\n  background: #e3e3e3;\n}\n"] = false
+    __vueify_insert__.cache["\ninput[_v-232ae26c]{ display: none; }\n\nlabel[_v-232ae26c]{\n  display: block;\n  padding: 10px;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n\n.colorSample[_v-232ae26c]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  vertical-align: middle;\n  position: relative; top: 0; left: 0;\n}\n\n.baseColor[_v-232ae26c]{\n  width: 26px;\n  height: 13px;\n  border-radius: 0 0 26px 26px;\n  margin: 16px 0 0 3px;\n}\n\n.accentSample[_v-232ae26c]{\n  position: absolute;\n  bottom: 0; right: 0;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n}\n\n.labelText[_v-232ae26c]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[_v-232ae26c]{\n  background: #e3e3e3;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -15243,12 +15243,83 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],6:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\ndiv[_v-b22d513e]{ -webkit-transition: background-color .2s ease; transition: background-color .2s ease; }\n\n.themePreview[_v-b22d513e]{\n  display: inline-block;\n  width: 40%;\n  height: 120px;\n  margin-left: 5%;\n  margin-top: 20px;\n  vertical-align: top;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n}\n\n.container[_v-b22d513e]{\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative; top: 0; left: 0;\n}\n\n.sidebar[_v-b22d513e]{\n  display: inline-block;\n  width: 30%;\n}\n\n.belly[_v-b22d513e]{\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n\n.header[_v-b22d513e]{\n  height: 20px;\n  padding: 0 2px;\n  color: #fff;\n  font-size: 10px;\n  line-height: 20px;\n}\n\n.content[_v-b22d513e]{\n  width: 50%;\n  height: 60px;\n  margin: 5px auto 0 auto;\n}\n\n.fab[_v-b22d513e]{\n  width: 18px;\n  height: 18px;\n  border-radius: 50%;\n  position: absolute;\n  bottom: 5px; right: 5px;\n}\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+
+var Vars = require('../vars.js');
+
+exports.default = {
+  props: {
+    themeName: {
+      type: String,
+      default: 'default'
+    }
+  },
+
+  data: function data() {
+    return {
+      baseColor: '#f5f5f5'
+    };
+  },
+
+
+  computed: {
+    theme: function theme() {
+      var _this = this;
+
+      return Vars.themes.find(function (theme) {
+        return theme.name === _this.themeName;
+      });
+    },
+    baseDark: function baseDark() {
+      switch (this.theme.base) {
+        default:case 'light':
+          return '#eaeaea';
+        case 'dark':
+          return '#212121';
+      }
+    },
+    baseLight: function baseLight() {
+      switch (this.theme.base) {
+        default:case 'light':
+          return '#ffffff';
+        case 'dark':
+          return '#303030';
+      }
+    }
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"themePreview\" _v-b22d513e=\"\">\n  <div class=\"container\" _v-b22d513e=\"\">\n    <div class=\"sidebar\" :style=\"{background:baseLight}\" _v-b22d513e=\"\">\n\n    </div>\n    <div class=\"belly\" :style=\"{background:baseDark}\" _v-b22d513e=\"\">\n        <div class=\"header\" :style=\"{background:theme.primary}\" _v-b22d513e=\"\">\n          ตัวอย่างหัวข้อกระทู้\n        </div>\n        <div class=\"content\" :style=\"{background:baseLight}\" _v-b22d513e=\"\"></div>\n        <div class=\"fab\" :style=\"{background:theme.accent}\" _v-b22d513e=\"\"></div>\n    </div>\n  </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\ndiv[_v-b22d513e]{ -webkit-transition: background-color .2s ease; transition: background-color .2s ease; }\n\n.themePreview[_v-b22d513e]{\n  display: inline-block;\n  width: 40%;\n  height: 120px;\n  margin-left: 5%;\n  margin-top: 20px;\n  vertical-align: top;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n}\n\n.container[_v-b22d513e]{\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative; top: 0; left: 0;\n}\n\n.sidebar[_v-b22d513e]{\n  display: inline-block;\n  width: 30%;\n}\n\n.belly[_v-b22d513e]{\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n\n.header[_v-b22d513e]{\n  height: 20px;\n  padding: 0 2px;\n  color: #fff;\n  font-size: 10px;\n  line-height: 20px;\n}\n\n.content[_v-b22d513e]{\n  width: 50%;\n  height: 60px;\n  margin: 5px auto 0 auto;\n}\n\n.fab[_v-b22d513e]{\n  width: 18px;\n  height: 18px;\n  border-radius: 50%;\n  position: absolute;\n  bottom: 5px; right: 5px;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-b22d513e", module.exports)
+  } else {
+    hotAPI.update("_v-b22d513e", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../vars.js":8,"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],7:[function(require,module,exports){
 let Vue = require('vue');
 let Vars = require('./vars.js');
 
 let themeItem = require('./components/themeItem.vue');
+let themePreview = require('./components/themePreview.vue');
 
 Vue.component('themeItem', themeItem);
+Vue.component('themePreview', themePreview);
 
 let vm = new Vue({
   el: 'body',
@@ -15277,7 +15348,7 @@ let vm = new Vue({
   }
 });
 
-},{"./components/themeItem.vue":5,"./vars.js":7,"vue":3}],7:[function(require,module,exports){
+},{"./components/themeItem.vue":5,"./components/themePreview.vue":6,"./vars.js":8,"vue":3}],8:[function(require,module,exports){
 module.exports = {
   forumInfo: [
     { name: 'food', label: 'ก้นครัว' },
@@ -15320,30 +15391,30 @@ module.exports = {
   themes: [
     {
       name: 'default', label: 'เผือก (default)',
-      primary: '#9C27B0', accent: '#FF5252', brightness: 'light'
+      primary: '#9C27B0', accent: '#FF5252', base: 'light'
     }, {
       name: 'blue', label: 'Blue',
-      primary: '#03A9F4', accent: '#FF5252', brightness: 'light'
+      primary: '#03A9F4', accent: '#FF5252', base: 'light'
     }, {
       name: 'sanook', label: 'สนุก',
-      primary: '#ff1818', accent: '#f9babd', brightness: 'light'
+      primary: '#ff1818', accent: '#f9babd', base: 'light'
     }, {
       name: 'thaiair', label: 'รักคุณเท่าฟ้า',
-      primary: '#3e075b', accent: '#C4007C', brightness: 'light'
+      primary: '#3e075b', accent: '#C4007C', base: 'light'
     }, {
       name: 'jony', label: 'โจนี่',
-      primary: '#333333', accent: '#2189db', brightness: 'light'
+      primary: '#333333', accent: '#2189db', base: 'light'
     }, {
       name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
-      primary: '#0a1128', accent: '#1282a2', brightness: 'dark'
+      primary: '#0a1128', accent: '#1282a2', base: 'dark'
     }, {
-      name: 'snyder', label: 'ซไนเดอร์',
-      primary: '#314d62', accent: '#a8d1c3', brightness: 'dark'
+      name: 'snyder', label: 'สไนเดอร์',
+      primary: '#314d62', accent: '#a8d1c3', base: 'dark'
     }, {
       name: 'squirtle', label: 'เซนิกาเมะ',
-      primary: '#76bbc0', accent: '#a76a57', brightness: 'light'
+      primary: '#76bbc0', accent: '#a76a57', base: 'light'
     }
   ]
 };
 
-},{}]},{},[6]);
+},{}]},{},[7]);

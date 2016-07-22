@@ -24,14 +24,17 @@
 
         <div class="formGroup">
           <h2>หน้าตา</h2>
-          <label for="theme">ธีม:</label>
-          <theme-item v-for="theme in themes"
-                      :name="theme.name"
-                      :label="theme.label"
-                      :primary="theme.primary"
-                      :accent="theme.accent"
-                      :brightness="theme.brightness">
-          </theme-item>
+          <div class="themeSelect">
+            <label for="theme">ธีม:</label>
+            <theme-item v-for="theme in themes"
+                        :name="theme.name"
+                        :label="theme.label"
+                        :primary="theme.primary"
+                        :accent="theme.accent"
+                        :base="theme.base">
+            </theme-item>
+          </div>
+          <theme-preview :theme-name.sync="options.theme"></theme-preview>
         </div>
 
         <button @click.prevent="saveOptions">เซฟ</button>

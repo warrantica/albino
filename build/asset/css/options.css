@@ -71,3 +71,9 @@ button:active, button:focus{
   outline: none;
   background: #CE93D8;
 }
+
+.themeSelect{
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
