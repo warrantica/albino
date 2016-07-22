@@ -1,42 +1,35 @@
 <template>
   <style>
-    .sPrimaryBg{
-      background: {{ theme.primary }};
-    }
-
-    .sPrimaryText{
-      color: {{ theme.primary }};
-    }
-
-    .sAccentBg{
-      background: {{ theme.accent }};
-    }
-
-    .sAccentText{
+    a:link, a:visited{
       color: {{ theme.accent }};
+      border-bottom: 1px {{ theme.accent }} solid;
     }
 
-    #sidebar, #belly{
+    .author.op{ border: 1px {{ theme.accent }} solid; }
+
+    .sPrimaryBg{ background: {{ theme.primary }}; }
+
+    .sPrimaryText{ color: {{ theme.primary }}; }
+
+    .sAccentBg{ background: {{ theme.accent }}; }
+
+    .sAccentText{ color: {{ theme.accent }}; }
+
+    .sSubtitle{ color: {{ base.subtitle }}; }
+
+    #sidebar, #belly, .sub.comment{
       background: {{ base.back }};
       color: {{ base.text }};
     }
 
     #sidebarHead, #forumSelect, #leftPane,
-    #leftPane .loading, #rightPane .loading,
-    #leftPane .topic, #topicView, .comment,
-    #rightPane .emotionsInfo{
+    .loading, .topic, #topicView, .comment, .emotionsInfo{
       background: {{ base.fore }};
     }
 
-    .sub.comment{
-      background: {{ base.back }};
-    }
-
-    #forumSelect li:hover, #leftPane .topic:hover, #leftPane .topic.active{
+    #forumSelect li:hover, .topic:hover, .topic.active{
       background: {{ base.hover }};
     }
-
-    .sSubtitle{ color: {{ base.subtitle }}; }
   </style>
 </template>
 
@@ -47,22 +40,17 @@
     data(){ return {
       theme: {
         name: 'default',
-        label: '',
-        primary: '',
-        accent: '',
+        label: '', primary: '', accent: '',
       },
 
       base: {
         name: 'light',
-        fore: '',
-        back: '',
-        hover: ''
+        fore: '', back: '', hover: ''
       }
     }},
 
     events: {
       'applyTheme': function(themeName){
-        //this.theme = Vars.themes.find(theme => theme.name === themeName);
         this.theme = Vars.getTheme(themeName);
         this.base = Vars.getBase(this.theme.base);
       }

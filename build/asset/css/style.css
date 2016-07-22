@@ -24,11 +24,7 @@ html, body{
   overflow: hidden;
 }
 
-a:link, a:visited{
-  color: #9C27B0;
-  text-decoration: none;
-  border-bottom: 1px #9C27B0 solid;
-}
+a:link, a:visited{ text-decoration: none; }
 
 .sPrimaryBg, .sAccentBg{ color: #FFF; }
 
@@ -383,10 +379,7 @@ a:link, a:visited{
   display: inline-block;
 }
 
-#rightPane .author.op{
-  padding: 0 5px;
-  border: 1px #9C27B0 solid;
-}
+#rightPane .author.op{ padding: 0 5px; }
 
 #rightPane .numContainer{
   position: absolute;

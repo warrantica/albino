@@ -16275,16 +16275,12 @@ exports.default = {
     return {
       theme: {
         name: 'default',
-        label: '',
-        primary: '',
-        accent: ''
+        label: '', primary: '', accent: ''
       },
 
       base: {
         name: 'light',
-        fore: '',
-        back: '',
-        hover: ''
+        fore: '', back: '', hover: ''
       }
     };
   },
@@ -16292,14 +16288,13 @@ exports.default = {
 
   events: {
     'applyTheme': function applyTheme(themeName) {
-      //this.theme = Vars.themes.find(theme => theme.name === themeName);
       this.theme = Vars.getTheme(themeName);
       this.base = Vars.getBase(this.theme.base);
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n  }\n\n  .sPrimaryText{\n    color: {{ theme.primary }};\n  }\n\n  .sAccentBg{\n    background: {{ theme.accent }};\n  }\n\n  .sAccentText{\n    color: {{ theme.accent }};\n  }\n\n  #sidebar, #belly{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  #leftPane .loading, #rightPane .loading,\n  #leftPane .topic, #topicView, .comment,\n  #rightPane .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  .sub.comment{\n    background: {{ base.back }};\n  }\n\n  #forumSelect li:hover, #leftPane .topic:hover, #leftPane .topic.active{\n    background: {{ base.hover }};\n  }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .author.op{ border: 1px {{ theme.accent }} solid; }\n\n  .sPrimaryBg{ background: {{ theme.primary }}; }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg{ background: {{ theme.accent }}; }\n\n  .sAccentText{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
