@@ -16278,6 +16278,13 @@ exports.default = {
         label: '',
         primary: '',
         accent: ''
+      },
+
+      base: {
+        name: 'light',
+        fore: '',
+        back: '',
+        hover: ''
       }
     };
   },
@@ -16285,14 +16292,14 @@ exports.default = {
 
   events: {
     'applyTheme': function applyTheme(themeName) {
-      this.theme = Vars.themes.find(function (theme) {
-        return theme.name === themeName;
-      });
+      //this.theme = Vars.themes.find(theme => theme.name === themeName);
+      this.theme = Vars.getTheme(themeName);
+      this.base = Vars.getBase(this.theme.base);
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n  }\n\n  .sPrimaryText{\n    color: {{ theme.primary }};\n  }\n\n  .sAccentBg{\n    background: {{ theme.accent }};\n  }\n\n  .sAccentText{\n    color: {{ theme.accent }};\n  }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n  }\n\n  .sPrimaryText{\n    color: {{ theme.primary }};\n  }\n\n  .sAccentBg{\n    background: {{ theme.accent }};\n  }\n\n  .sAccentText{\n    color: {{ theme.accent }};\n  }\n\n  #sidebar, #belly{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  #leftPane .loading, #rightPane .loading,\n  #leftPane .topic, #topicView, #commentsView .comment,\n  #rightPane .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, #leftPane .topic:hover, #leftPane .topic.active{\n    background: {{ base.hover }};\n  }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16680,13 +16687,7 @@ let vm = new Vue({
       defaultForum: ''
     }, item => {
       this.loadTopics(item.defaultForum);
-      let currentTheme = Vars.themes.find(theme => theme.name === item.theme);
       this.$broadcast('applyTheme', item.theme);
-
-      switch(currentTheme.base){
-        default: case 'light': break;
-        case 'dark': $('body').addClass('dark');
-      }
     });
   }
 });
@@ -16890,39 +16891,62 @@ module.exports = {
     { name: 'art', label: 'หอศิลป์' }
   ],
 
-  themes: [
-    {
-      name: 'default', label: 'เผือก (default)',
-      primary: '#9C27B0', accent: '#FF5252', base: 'light'
-    }, {
-      name: 'blue', label: 'Blue',
-      primary: '#03A9F4', accent: '#FF5252', base: 'light'
-    }, {
-      name: 'sanook', label: 'สนุก',
-      primary: '#ff1818', accent: '#f9babd', base: 'light'
-    }, {
-      name: 'thaiair', label: 'รักคุณเท่าฟ้า',
-      primary: '#3e075b', accent: '#C4007C', base: 'light'
-    }, {
-      name: 'cupertino', label: 'คูเปอร์ติโน่',
-      primary: '#d8d8d8', accent: '#0088cc', base: 'light'
-    }, {
-      name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
-      primary: '#0a1128', accent: '#1282a2', base: 'dark'
-    }, {
-      name: 'snyder', label: 'สไนเดอร์',
-      primary: '#314d62', accent: '#a8d1c3', base: 'dark'
-    }, {
-      name: 'squirtle', label: 'เซนิกาเมะ',
-      primary: '#76bbc0', accent: '#a76a57', base: 'light'
-    }, {
-      name: 'stark', label: 'สตาร์ก',
-      primary: '#dc1405', accent: '#efce0b', base: 'light'
-    }, {
-      name: 'andromeda', label: 'แอนโดรเมด้า',
-      primary: '#e65b8b', accent: '#11984f', base: 'light'
-    }
-  ]
+  themes: [{
+    name: 'default', label: 'เผือก (default)',
+    primary: '#9C27B0', accent: '#FF5252', base: 'light'
+  }, {
+    name: 'pantip', label: 'ต้นตำรับ',
+    primary: '#38355c', accent: '#f9d135', base: 'pantip'
+  }, {
+    name: 'zuck', label: 'ซักเกอร์เบิร์ก',
+    primary: '#3b5998', accent: '#f7412d', base: 'light'
+  }, {
+    name: 'sanook', label: 'สนุก',
+    primary: '#ff1818', accent: '#f9babd', base: 'light'
+  }, {
+    name: 'thaiair', label: 'รักคุณเท่าฟ้า',
+    primary: '#3e075b', accent: '#C4007C', base: 'light'
+  }, {
+    name: 'cupertino', label: 'คูเปอร์ติโน่',
+    primary: '#d8d8d8', accent: '#0088cc', base: 'light'
+  }, {
+    name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
+    primary: '#0a1128', accent: '#1282a2', base: 'dark'
+  }, {
+    name: 'snyder', label: 'สไนเดอร์',
+    primary: '#314d62', accent: '#a8d1c3', base: 'dark'
+  }, {
+    name: 'squirtle', label: 'เซนิกาเมะ',
+    primary: '#76bbc0', accent: '#a76a57', base: 'light'
+  }, {
+    name: 'stark', label: 'สตาร์ก',
+    primary: '#dc1405', accent: '#efce0b', base: 'light'
+  }, {
+    name: 'andromeda', label: 'แอนโดรเมด้า',
+    primary: '#e65b8b', accent: '#11984f', base: 'light'
+  }],
+
+  bases: [{
+    name: 'light',
+    fore: '#ffffff', back: '#eaeaea', hover: '#dedede',
+    text: '#212121', subtitle: '#888'
+  },{
+    name: 'dark',
+    fore: '#303030', back: '#212121', hover: '#212121',
+    text: '#ffffff', subtitle: '#b3b3b3'
+  },{
+    name: 'pantip',
+    fore: '#2d2a49', back: '#38355c', hover: '#1f1d33',
+    text: '#dbdbdb', subtitle: '#a6a3c7'
+  }],
+
+  getTheme(themeName){
+    return this.themes.find(theme => theme.name === themeName);
+  },
+
+  getBase(baseName){
+    return this.bases.find(base => base.name === baseName);
+  }
 };
 
 },{}]},{},[74]);

@@ -1,14 +1,14 @@
 <template>
   <div class="themePreview">
     <div class="container">
-      <div class="sidebar" :style="{background:baseLight}">
+      <div class="sidebar" :style="{background:base.fore}">
 
       </div>
-      <div class="belly" :style="{background:baseDark}">
+      <div class="belly" :style="{background:base.back}">
           <div class="header" :style="{background:theme.primary}">
             ตัวอย่างหัวข้อกระทู้
           </div>
-          <div class="content" :style="{background:baseLight}"></div>
+          <div class="content" :style="{background:base.fore}"></div>
           <div class="fab" :style="{background:theme.accent}"></div>
       </div>
     </div>
@@ -79,27 +79,13 @@
       }
     },
 
-    data(){ return {
-      baseColor: '#f5f5f5'
-    }},
-
     computed: {
       theme(){
-        return Vars.themes.find(theme => theme.name === this.themeName);
+        return Vars.getTheme(this.themeName);
       },
 
-      baseDark(){
-        switch(this.theme.base){
-          default: case 'light': return '#eaeaea';
-          case 'dark': return '#212121';
-        }
-      },
-
-      baseLight(){
-        switch(this.theme.base){
-          default: case 'light': return '#ffffff';
-          case 'dark': return '#303030';
-        }
+      base(){
+        return Vars.getBase(this.theme.base);
       }
     }
   }

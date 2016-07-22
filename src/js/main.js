@@ -228,13 +228,7 @@ let vm = new Vue({
       defaultForum: ''
     }, item => {
       this.loadTopics(item.defaultForum);
-      let currentTheme = Vars.themes.find(theme => theme.name === item.theme);
       this.$broadcast('applyTheme', item.theme);
-
-      switch(currentTheme.base){
-        default: case 'light': break;
-        case 'dark': $('body').addClass('dark');
-      }
     });
   }
 });

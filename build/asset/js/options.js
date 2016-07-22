@@ -15197,6 +15197,10 @@ var __vueify_style__ = __vueify_insert__.insert("\ninput[_v-232ae26c]{ display: 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+
+var Vars = require('../vars.js');
+
 exports.default = {
   props: {
     label: String,
@@ -15212,22 +15216,17 @@ exports.default = {
 
   data: function data() {
     return {
-      baseColor: '#f5f5f5'
+      baseData: {
+        name: '', fore: '', back: ''
+      }
     };
   },
   ready: function ready() {
-    switch (this.base) {
-      case 'light':
-        this.baseColor = '#fafafa';break;
-      case 'dark':
-        this.baseColor = '#303030';break;
-      default:
-        this.baseColor = '#fafafa';break;
-    }
+    this.baseData = Vars.getBase(this.base);
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<input type=\"radio\" name=\"theme\" :id=\"name\" :value=\"name\" v-model=\"$parent.options.theme\" _v-232ae26c=\"\">\n<label :for=\"name\" _v-232ae26c=\"\">\n  <div class=\"colorSample\" :style=\"{background:primary}\" _v-232ae26c=\"\">\n    <div class=\"baseColor\" :style=\"{background:baseColor}\" _v-232ae26c=\"\"></div>\n    <div class=\"accentSample\" :style=\"{background:accent}\" _v-232ae26c=\"\"></div>\n  </div>\n  <div class=\"labelText\" _v-232ae26c=\"\">{{ label }}</div>\n</label>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<input type=\"radio\" name=\"theme\" :id=\"name\" :value=\"name\" v-model=\"$parent.options.theme\" _v-232ae26c=\"\">\n<label :for=\"name\" _v-232ae26c=\"\">\n  <div class=\"colorSample\" :style=\"{background:primary}\" _v-232ae26c=\"\">\n    <div class=\"baseColor\" :style=\"{background:baseData.fore}\" _v-232ae26c=\"\"></div>\n    <div class=\"accentSample\" :style=\"{background:accent}\" _v-232ae26c=\"\"></div>\n  </div>\n  <div class=\"labelText\" _v-232ae26c=\"\">{{ label }}</div>\n</label>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -15242,7 +15241,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-232ae26c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],6:[function(require,module,exports){
+},{"../vars.js":8,"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],6:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\ndiv[_v-b22d513e]{ -webkit-transition: background-color .2s ease; transition: background-color .2s ease; }\n\n.themePreview[_v-b22d513e]{\n  display: inline-block;\n  width: 40%;\n  height: 120px;\n  margin-left: 5%;\n  margin-top: 20px;\n  vertical-align: top;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n}\n\n.container[_v-b22d513e]{\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  position: relative; top: 0; left: 0;\n}\n\n.sidebar[_v-b22d513e]{\n  display: inline-block;\n  width: 30%;\n}\n\n.belly[_v-b22d513e]{\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n\n.header[_v-b22d513e]{\n  height: 20px;\n  padding: 0 2px;\n  color: #fff;\n  font-size: 10px;\n  line-height: 20px;\n}\n\n.content[_v-b22d513e]{\n  width: 50%;\n  height: 60px;\n  margin: 5px auto 0 auto;\n}\n\n.fab[_v-b22d513e]{\n  width: 18px;\n  height: 18px;\n  border-radius: 50%;\n  position: absolute;\n  bottom: 5px; right: 5px;\n}\n")
 'use strict';
@@ -15262,41 +15261,17 @@ exports.default = {
     }
   },
 
-  data: function data() {
-    return {
-      baseColor: '#f5f5f5'
-    };
-  },
-
-
   computed: {
     theme: function theme() {
-      var _this = this;
-
-      return Vars.themes.find(function (theme) {
-        return theme.name === _this.themeName;
-      });
+      return Vars.getTheme(this.themeName);
     },
-    baseDark: function baseDark() {
-      switch (this.theme.base) {
-        default:case 'light':
-          return '#eaeaea';
-        case 'dark':
-          return '#212121';
-      }
-    },
-    baseLight: function baseLight() {
-      switch (this.theme.base) {
-        default:case 'light':
-          return '#ffffff';
-        case 'dark':
-          return '#303030';
-      }
+    base: function base() {
+      return Vars.getBase(this.theme.base);
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"themePreview\" _v-b22d513e=\"\">\n  <div class=\"container\" _v-b22d513e=\"\">\n    <div class=\"sidebar\" :style=\"{background:baseLight}\" _v-b22d513e=\"\">\n\n    </div>\n    <div class=\"belly\" :style=\"{background:baseDark}\" _v-b22d513e=\"\">\n        <div class=\"header\" :style=\"{background:theme.primary}\" _v-b22d513e=\"\">\n          ตัวอย่างหัวข้อกระทู้\n        </div>\n        <div class=\"content\" :style=\"{background:baseLight}\" _v-b22d513e=\"\"></div>\n        <div class=\"fab\" :style=\"{background:theme.accent}\" _v-b22d513e=\"\"></div>\n    </div>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"themePreview\" _v-b22d513e=\"\">\n  <div class=\"container\" _v-b22d513e=\"\">\n    <div class=\"sidebar\" :style=\"{background:base.fore}\" _v-b22d513e=\"\">\n\n    </div>\n    <div class=\"belly\" :style=\"{background:base.back}\" _v-b22d513e=\"\">\n        <div class=\"header\" :style=\"{background:theme.primary}\" _v-b22d513e=\"\">\n          ตัวอย่างหัวข้อกระทู้\n        </div>\n        <div class=\"content\" :style=\"{background:base.fore}\" _v-b22d513e=\"\"></div>\n        <div class=\"fab\" :style=\"{background:theme.accent}\" _v-b22d513e=\"\"></div>\n    </div>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -15388,39 +15363,62 @@ module.exports = {
     { name: 'art', label: 'หอศิลป์' }
   ],
 
-  themes: [
-    {
-      name: 'default', label: 'เผือก (default)',
-      primary: '#9C27B0', accent: '#FF5252', base: 'light'
-    }, {
-      name: 'blue', label: 'Blue',
-      primary: '#03A9F4', accent: '#FF5252', base: 'light'
-    }, {
-      name: 'sanook', label: 'สนุก',
-      primary: '#ff1818', accent: '#f9babd', base: 'light'
-    }, {
-      name: 'thaiair', label: 'รักคุณเท่าฟ้า',
-      primary: '#3e075b', accent: '#C4007C', base: 'light'
-    }, {
-      name: 'cupertino', label: 'คูเปอร์ติโน่',
-      primary: '#d8d8d8', accent: '#0088cc', base: 'light'
-    }, {
-      name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
-      primary: '#0a1128', accent: '#1282a2', base: 'dark'
-    }, {
-      name: 'snyder', label: 'สไนเดอร์',
-      primary: '#314d62', accent: '#a8d1c3', base: 'dark'
-    }, {
-      name: 'squirtle', label: 'เซนิกาเมะ',
-      primary: '#76bbc0', accent: '#a76a57', base: 'light'
-    }, {
-      name: 'stark', label: 'สตาร์ก',
-      primary: '#dc1405', accent: '#efce0b', base: 'light'
-    }, {
-      name: 'andromeda', label: 'แอนโดรเมด้า',
-      primary: '#e65b8b', accent: '#11984f', base: 'light'
-    }
-  ]
+  themes: [{
+    name: 'default', label: 'เผือก (default)',
+    primary: '#9C27B0', accent: '#FF5252', base: 'light'
+  }, {
+    name: 'pantip', label: 'ต้นตำรับ',
+    primary: '#38355c', accent: '#f9d135', base: 'pantip'
+  }, {
+    name: 'zuck', label: 'ซักเกอร์เบิร์ก',
+    primary: '#3b5998', accent: '#f7412d', base: 'light'
+  }, {
+    name: 'sanook', label: 'สนุก',
+    primary: '#ff1818', accent: '#f9babd', base: 'light'
+  }, {
+    name: 'thaiair', label: 'รักคุณเท่าฟ้า',
+    primary: '#3e075b', accent: '#C4007C', base: 'light'
+  }, {
+    name: 'cupertino', label: 'คูเปอร์ติโน่',
+    primary: '#d8d8d8', accent: '#0088cc', base: 'light'
+  }, {
+    name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
+    primary: '#0a1128', accent: '#1282a2', base: 'dark'
+  }, {
+    name: 'snyder', label: 'สไนเดอร์',
+    primary: '#314d62', accent: '#a8d1c3', base: 'dark'
+  }, {
+    name: 'squirtle', label: 'เซนิกาเมะ',
+    primary: '#76bbc0', accent: '#a76a57', base: 'light'
+  }, {
+    name: 'stark', label: 'สตาร์ก',
+    primary: '#dc1405', accent: '#efce0b', base: 'light'
+  }, {
+    name: 'andromeda', label: 'แอนโดรเมด้า',
+    primary: '#e65b8b', accent: '#11984f', base: 'light'
+  }],
+
+  bases: [{
+    name: 'light',
+    fore: '#ffffff', back: '#eaeaea', hover: '#dedede',
+    text: '#212121', subtitle: '#888'
+  },{
+    name: 'dark',
+    fore: '#303030', back: '#212121', hover: '#212121',
+    text: '#ffffff', subtitle: '#b3b3b3'
+  },{
+    name: 'pantip',
+    fore: '#2d2a49', back: '#38355c', hover: '#1f1d33',
+    text: '#dbdbdb', subtitle: '#a6a3c7'
+  }],
+
+  getTheme(themeName){
+    return this.themes.find(theme => theme.name === themeName);
+  },
+
+  getBase(baseName){
+    return this.bases.find(base => base.name === baseName);
+  }
 };
 
 },{}]},{},[7]);

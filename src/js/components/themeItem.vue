@@ -2,7 +2,7 @@
   <input type="radio" name="theme" :id="name" :value="name" v-model="$parent.options.theme">
   <label :for="name">
     <div class="colorSample" :style="{background:primary}">
-      <div class="baseColor" :style="{background:baseColor}"></div>
+      <div class="baseColor" :style="{background:baseData.fore}"></div>
       <div class="accentSample" :style="{background:accent}"></div>
     </div>
     <div class="labelText">{{ label }}</div>
@@ -55,6 +55,8 @@
 </style>
 
 <script>
+  let Vars = require('../vars.js');
+
   export default {
     props: {
       label: String,
@@ -69,15 +71,13 @@
     },
 
     data(){ return {
-      baseColor: '#f5f5f5'
+      baseData: {
+        name: '', fore: '', back: ''
+      }
     }},
 
     ready(){
-      switch(this.base){
-        case 'light': this.baseColor = '#fafafa'; break;
-        case 'dark': this.baseColor = '#303030'; break;
-        default: this.baseColor = '#fafafa'; break;
-      }
+      this.baseData = Vars.getBase(this.base);
     }
   }
 </script>

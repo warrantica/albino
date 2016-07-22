@@ -7,7 +7,7 @@ ol,ul{list-style:none;}
 table{border-collapse:collapse;border-spacing:0;}
 
 /*============================================================*/
-
+/*
 #sidebar, #belly{
   background: #eaeaea;
 }
@@ -28,9 +28,9 @@ table{border-collapse:collapse;border-spacing:0;}
 }
 
 .sSubtitle{ color: #888; }
-
+*/
 /*============================================================*/
-
+/*
 .dark #sidebar, .dark #belly{
   background: #212121;
   color: #fff;
@@ -50,7 +50,7 @@ table{border-collapse:collapse;border-spacing:0;}
 .dark #commentsView .sub.comment{
   background: #424242;
 }
-
+*/
 /*============================================================*/
 
 body{
