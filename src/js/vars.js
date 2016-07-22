@@ -40,28 +40,28 @@ module.exports = {
   themes: [
     {
       name: 'default', label: 'เผือก (default)',
-      primary: '#9C27B0', accent: '#FF5252', brightness: 'light'
+      primary: '#9C27B0', accent: '#FF5252', base: 'light'
     }, {
       name: 'blue', label: 'Blue',
-      primary: '#03A9F4', accent: '#FF5252', brightness: 'light'
+      primary: '#03A9F4', accent: '#FF5252', base: 'light'
     }, {
       name: 'sanook', label: 'สนุก',
-      primary: '#ff1818', accent: '#f9babd', brightness: 'light'
+      primary: '#ff1818', accent: '#f9babd', base: 'light'
     }, {
       name: 'thaiair', label: 'รักคุณเท่าฟ้า',
-      primary: '#3e075b', accent: '#C4007C', brightness: 'light'
+      primary: '#3e075b', accent: '#C4007C', base: 'light'
     }, {
       name: 'jony', label: 'โจนี่',
-      primary: '#333333', accent: '#2189db', brightness: 'light'
+      primary: '#333333', accent: '#2189db', base: 'light'
     }, {
       name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
-      primary: '#0a1128', accent: '#1282a2', brightness: 'dark'
+      primary: '#0a1128', accent: '#1282a2', base: 'dark'
     }, {
-      name: 'snyder', label: 'ซไนเดอร์',
-      primary: '#314d62', accent: '#a8d1c3', brightness: 'dark'
+      name: 'snyder', label: 'สไนเดอร์',
+      primary: '#314d62', accent: '#a8d1c3', base: 'dark'
     }, {
       name: 'squirtle', label: 'เซนิกาเมะ',
-      primary: '#76bbc0', accent: '#a76a57', brightness: 'light'
+      primary: '#76bbc0', accent: '#a76a57', base: 'light'
     }
   ]
 };

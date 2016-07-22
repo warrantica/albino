@@ -233,7 +233,7 @@ let vm = new Vue({
       $('.sAccentBg').css({backgroundColor: currentTheme.accent});
       $('.sAccentText').css({color: currentTheme.accent});
 
-      switch(currentTheme.brightness){
+      switch(currentTheme.base){
         default: case 'light': break;
         case 'dark': $('body').addClass('dark');
       }
