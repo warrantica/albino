@@ -15402,8 +15402,8 @@ module.exports = {
       name: 'thaiair', label: 'รักคุณเท่าฟ้า',
       primary: '#3e075b', accent: '#C4007C', base: 'light'
     }, {
-      name: 'jony', label: 'โจนี่',
-      primary: '#333333', accent: '#2189db', base: 'light'
+      name: 'cupertino', label: 'คูเปอร์ติโน่',
+      primary: '#d8d8d8', accent: '#0088cc', base: 'light'
     }, {
       name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
       primary: '#0a1128', accent: '#1282a2', base: 'dark'
@@ -15413,6 +15413,12 @@ module.exports = {
     }, {
       name: 'squirtle', label: 'เซนิกาเมะ',
       primary: '#76bbc0', accent: '#a76a57', base: 'light'
+    }, {
+      name: 'stark', label: 'สตาร์ก',
+      primary: '#dc1405', accent: '#efce0b', base: 'light'
+    }, {
+      name: 'andromeda', label: 'แอนโดรเมด้า',
+      primary: '#e65b8b', accent: '#11984f', base: 'light'
     }
   ]
 };
