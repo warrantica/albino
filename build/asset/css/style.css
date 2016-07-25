@@ -26,8 +26,6 @@ html, body{
 
 a:link, a:visited{ text-decoration: none; }
 
-.sPrimaryBg, .sAccentBg{ color: #FFF; }
-
 .sSubtitle{ font-size: 11px; }
 
 .sButton{

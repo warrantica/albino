@@ -16303,7 +16303,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .author.op{ border: 1px {{ theme.accent }} solid; }\n\n  .sPrimaryBg{ background: {{ theme.primary }}; }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg{ background: {{ theme.accent }}; }\n\n  .sAccentText{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .author.op{ border: 1px {{ theme.accent }} solid; }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16897,37 +16897,48 @@ module.exports = {
 
   themes: [{
     name: 'default', label: 'เผือก (default)',
-    primary: '#9C27B0', accent: '#FF5252', base: 'light'
+    primary: '#9C27B0', accent: '#FF5252', base: 'light',
+    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
   }, {
     name: 'pantip', label: 'ต้นตำรับ',
-    primary: '#38355c', accent: '#f9d135', base: 'pantip'
+    primary: '#38355c', accent: '#f9d135', base: 'pantip',
+    textOnPrimary: '#ffffff', textOnAccent: '#222244'
   }, {
     name: 'zuck', label: 'ซักเกอร์เบิร์ก',
-    primary: '#3b5998', accent: '#f7412d', base: 'light'
+    primary: '#3b5998', accent: '#f7412d', base: 'light',
+    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
   }, {
     name: 'sanook', label: 'สนุก',
-    primary: '#ff1818', accent: '#f9babd', base: 'light'
+    primary: '#ff1818', accent: '#f9babd', base: 'light',
+    textOnPrimary: '#ffffff', textOnAccent: '#333333'
   }, {
     name: 'thaiair', label: 'รักคุณเท่าฟ้า',
-    primary: '#3e075b', accent: '#C4007C', base: 'light'
+    primary: '#3e075b', accent: '#C4007C', base: 'light',
+    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
   }, {
     name: 'cupertino', label: 'คูเปอร์ติโน่',
-    primary: '#d8d8d8', accent: '#0088cc', base: 'light'
+    primary: '#d8d8d8', accent: '#0088cc', base: 'light',
+    textOnPrimary: '#333333', textOnAccent: '#ffffff'
   }, {
     name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
-    primary: '#0a1128', accent: '#1282a2', base: 'dark'
+    primary: '#0a1128', accent: '#1282a2', base: 'dark',
+    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
   }, {
     name: 'snyder', label: 'สไนเดอร์',
-    primary: '#314d62', accent: '#a8d1c3', base: 'dark'
+    primary: '#314d62', accent: '#a8d1c3', base: 'dark',
+    textOnPrimary: '#ffffff', textOnAccent: '#333333'
   }, {
     name: 'squirtle', label: 'เซนิกาเมะ',
-    primary: '#76bbc0', accent: '#a76a57', base: 'light'
+    primary: '#76bbc0', accent: '#a76a57', base: 'light',
+    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
   }, {
     name: 'stark', label: 'สตาร์ก',
-    primary: '#dc1405', accent: '#efce0b', base: 'light'
+    primary: '#dc1405', accent: '#efce0b', base: 'light',
+    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
   }, {
     name: 'andromeda', label: 'แอนโดรเมด้า',
-    primary: '#e65b8b', accent: '#11984f', base: 'light'
+    primary: '#e65b8b', accent: '#11984f', base: 'light',
+    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
   }],
 
   bases: [{

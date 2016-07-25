@@ -7,11 +7,17 @@
 
     .author.op{ border: 1px {{ theme.accent }} solid; }
 
-    .sPrimaryBg{ background: {{ theme.primary }}; }
+    .sPrimaryBg{
+      background: {{ theme.primary }};
+      color: {{ theme.textOnPrimary }};
+    }
 
     .sPrimaryText{ color: {{ theme.primary }}; }
 
-    .sAccentBg{ background: {{ theme.accent }}; }
+    .sAccentBg{
+      background: {{ theme.accent }};
+      color: {{ theme.textOnAccent }};
+    }
 
     .sAccentText{ color: {{ theme.accent }}; }
 

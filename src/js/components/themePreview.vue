@@ -5,7 +5,7 @@
 
       </div>
       <div class="belly" :style="{background:base.back}">
-          <div class="header" :style="{background:theme.primary}">
+          <div class="header" :style="{background:theme.primary, color:theme.textOnPrimary}">
             ตัวอย่างหัวข้อกระทู้
           </div>
           <div class="content" :style="{background:base.fore}"></div>
