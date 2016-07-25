@@ -16279,9 +16279,11 @@ exports.default = {
       },
 
       base: {
-        name: 'light',
+        name: 'light', brightness: 'light',
         fore: '', back: '', hover: ''
-      }
+      },
+
+      border: 'rgba(255, 255, 255, 0.12)'
     };
   },
 
@@ -16290,11 +16292,18 @@ exports.default = {
     'applyTheme': function applyTheme(themeName) {
       this.theme = Vars.getTheme(themeName);
       this.base = Vars.getBase(this.theme.base);
+
+      switch (this.base.brightness) {
+        default:case 'light':
+          this.border = 'rgba(0, 0, 0, 0.13)';break;
+        case 'dark':
+          this.border = 'rgba(255, 255, 255, 0.13)';
+      }
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .author.op{ border: 1px {{ theme.accent }} solid; }\n\n  .sPrimaryBg{ background: {{ theme.primary }}; }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg{ background: {{ theme.accent }}; }\n\n  .sAccentText{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .author.op{ border: 1px {{ theme.accent }} solid; }\n\n  .sPrimaryBg{ background: {{ theme.primary }}; }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg{ background: {{ theme.accent }}; }\n\n  .sAccentText{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16922,15 +16931,15 @@ module.exports = {
   }],
 
   bases: [{
-    name: 'light',
+    name: 'light', brightness: 'light',
     fore: '#ffffff', back: '#eaeaea', hover: '#dedede',
     text: '#212121', subtitle: '#888'
   },{
-    name: 'dark',
+    name: 'dark', brightness: 'dark',
     fore: '#303030', back: '#212121', hover: '#212121',
     text: '#ffffff', subtitle: '#b3b3b3'
   },{
-    name: 'pantip',
+    name: 'pantip', brightness: 'dark',
     fore: '#222244', back: '#38355c', hover: '#1b1b37',
     text: '#dbdbdb', subtitle: '#a6a3c7'
   }],

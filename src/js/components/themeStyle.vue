@@ -30,6 +30,10 @@
     #forumSelect li:hover, .topic:hover, .topic.active{
       background: {{ base.hover }};
     }
+
+    #sidebarHead, #bestTopicContainer, #rightPane .info{
+      border-bottom: 1px {{ border }} solid;
+    }
   </style>
 </template>
 
@@ -44,15 +48,23 @@
       },
 
       base: {
-        name: 'light',
+        name: 'light', brightness: 'light',
         fore: '', back: '', hover: ''
-      }
+      },
+
+      border: 'rgba(255, 255, 255, 0.12)'
     }},
 
     events: {
       'applyTheme': function(themeName){
         this.theme = Vars.getTheme(themeName);
         this.base = Vars.getBase(this.theme.base);
+
+        switch (this.base.brightness) {
+          default: case 'light':
+            this.border = 'rgba(0, 0, 0, 0.13)'; break;
+          case 'dark': this.border = 'rgba(255, 255, 255, 0.13)'
+        }
       }
     }
   }

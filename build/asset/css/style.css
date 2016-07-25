@@ -79,7 +79,6 @@ a:link, a:visited{ text-decoration: none; }
   min-height: 64px;
   line-height: 64px;
   box-sizing: border-box;
-  border-bottom: 1px #eaeaea solid;
 }
 
 #logo{
@@ -173,10 +172,6 @@ a:link, a:visited{ text-decoration: none; }
 
 #leftPane.wrapUp #topicList, #leftPane.wrapUp #bestTopicList{
   opacity: 0;
-}
-
-#bestTopicContainer{
-  border-bottom: 1px #EAEAEA solid;
 }
 
 #bestTopicHeader, #topicListHeader{
@@ -370,7 +365,6 @@ a:link, a:visited{ text-decoration: none; }
 
 #rightPane .info{
   padding: 15px;
-  border-bottom: 1px #ddd solid;
   position: relative; top: 0; left: 0;
 }
 

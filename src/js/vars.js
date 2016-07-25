@@ -73,15 +73,15 @@ module.exports = {
   }],
 
   bases: [{
-    name: 'light',
+    name: 'light', brightness: 'light',
     fore: '#ffffff', back: '#eaeaea', hover: '#dedede',
     text: '#212121', subtitle: '#888'
   },{
-    name: 'dark',
+    name: 'dark', brightness: 'dark',
     fore: '#303030', back: '#212121', hover: '#212121',
     text: '#ffffff', subtitle: '#b3b3b3'
   },{
-    name: 'pantip',
+    name: 'pantip', brightness: 'dark',
     fore: '#222244', back: '#38355c', hover: '#1b1b37',
     text: '#dbdbdb', subtitle: '#a6a3c7'
   }],
