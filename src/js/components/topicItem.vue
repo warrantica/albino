@@ -3,11 +3,12 @@
        :class="{active: isActive}"
        @click="loadTopic">
     <div class="type"></div>
-    <div class="title"><slot></slot></div>
+    <div class="title">{{ data.disp_topic }}</div>
     <div class="subtitle sSubtitle">
-      <span class="author">{{ data.author }}</span> &#149;
-      <time class="timeago" :datetime="data.utime">{{ data.timeFull }}</time> &#149;
-      <span class="commentsNum">{{ data.comments }}</span> <i class="ic">{{ commentIcon }}</i>
+      {{ data.author }}
+      &#149; <time :datetime="data.utime">{{ data.timeFull }}</time>
+      <span v-show="data.comments">&#149; {{ data.comments }} <i class="ic">chat_bubble</i></span>
+      <span v-show="data.votes">&#149; {{ data.votes }} <i class="ic">add_box</i></span>
     </div>
   </div>
 </template>
@@ -28,6 +29,7 @@
         timeFull: String
       },
       commentIcon: String,
+      voteIcon: String,
       isActive: {
         type: Boolean,
         default: false
@@ -41,10 +43,7 @@
     },
 
     ready(){
-      this.commentIcon = +this.data.comments === 0
-        ? 'chat_bubble_outline'
-        : 'chat_bubble';
-      $('time.timeago').timeago();
+      $('time').timeago();
     },
 
     events: {

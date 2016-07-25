@@ -16333,6 +16333,7 @@ exports.default = {
       timeFull: String
     },
     commentIcon: String,
+    voteIcon: String,
     isActive: {
       type: Boolean,
       default: false
@@ -16346,8 +16347,7 @@ exports.default = {
   },
 
   ready: function ready() {
-    this.commentIcon = +this.data.comments === 0 ? 'chat_bubble_outline' : 'chat_bubble';
-    $('time.timeago').timeago();
+    $('time').timeago();
   },
 
 
@@ -16358,7 +16358,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\"><slot _v-df29bfa0=\"\"></slot></div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    <span class=\"author\" _v-df29bfa0=\"\">{{ data.author }}</span> •\n    <time class=\"timeago\" :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time> •\n    <span class=\"commentsNum\" _v-df29bfa0=\"\">{{ data.comments }}</span> <i class=\"ic\" _v-df29bfa0=\"\">{{ commentIcon }}</i>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\">{{ data.disp_topic }}</div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    {{ data.author }}\n    • <time :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time>\n    <span v-show=\"data.comments\" _v-df29bfa0=\"\">• {{ data.comments }} <i class=\"ic\" _v-df29bfa0=\"\">chat_bubble</i></span>\n    <span v-show=\"data.votes\" _v-df29bfa0=\"\">• {{ data.votes }} <i class=\"ic\" _v-df29bfa0=\"\">add_box</i></span>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16775,12 +16775,13 @@ module.exports = {
         last_id_current_page: loadMoreID,
         dataSend: { room: forumName, topic_type: {type: 0, default_type: 1} },
         thumbnailview: false,
-        current_page: 1
+        current_page: 2
       },
       headers: {'X-Requested-With': 'XMLHttpRequest'},
       dataType: 'text',
       success: function(data){
         data = JSON.parse(data).item;
+        console.log(data);
         var res = { topics: [], bestTopics: []};
         res.topics = data.topic;
         res.loadMoreID = data.last_id_current_page;

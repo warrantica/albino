@@ -62,12 +62,13 @@ module.exports = {
         last_id_current_page: loadMoreID,
         dataSend: { room: forumName, topic_type: {type: 0, default_type: 1} },
         thumbnailview: false,
-        current_page: 1
+        current_page: 2
       },
       headers: {'X-Requested-With': 'XMLHttpRequest'},
       dataType: 'text',
       success: function(data){
         data = JSON.parse(data).item;
+        console.log(data);
         var res = { topics: [], bestTopics: []};
         res.topics = data.topic;
         res.loadMoreID = data.last_id_current_page;
