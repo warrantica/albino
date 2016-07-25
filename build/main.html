@@ -43,14 +43,14 @@
       <div id="bestTopicList" :class="{ active: showBestTopics }">
         <best-topic-item v-for="topic in bestTopics"
                          :tid="topic.id">
-          {{ topic.title }}
+          {{ topic.disp_topic }}
         </best-topic-item>
       </div>
     </div>
     <div id="topicListHeader"><i class="ic headerIcon">schedule</i>กระทู้ล่าสุด</div>
     <div id="topicList">
       <topic-item v-for="topic in topics" :data="topic">
-        {{ topic.title }}
+        {{ topic.disp_topic }}
       </topic-item>
       <button class="loadMore sButton sAccentBg sElevation0h2"
               :data-tid="loadMoreId"

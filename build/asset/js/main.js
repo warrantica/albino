@@ -16341,24 +16341,24 @@ exports.default = {
 
   methods: {
     loadTopic: function loadTopic() {
-      this.$dispatch('loadTopic', this.data.id);
+      this.$dispatch('loadTopic', this.data._id);
     }
   },
 
   ready: function ready() {
-    this.commentIcon = +this.data.commentsNum === 0 ? 'chat_bubble_outline' : 'chat_bubble';
+    this.commentIcon = +this.data.comments === 0 ? 'chat_bubble_outline' : 'chat_bubble';
     $('time.timeago').timeago();
   },
 
 
   events: {
     'topicLoaded': function topicLoaded(topicId) {
-      this.isActive = topicId === this.data.id ? true : false;
+      this.isActive = topicId === this.data._id ? true : false;
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\"><slot _v-df29bfa0=\"\"></slot></div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    <span class=\"author\" _v-df29bfa0=\"\">{{ data.author }}</span> •\n    <time class=\"timeago\" :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time> •\n    <span class=\"commentsNum\" _v-df29bfa0=\"\">{{ data.commentsNum }}</span> <i class=\"ic\" _v-df29bfa0=\"\">{{ commentIcon }}</i>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\"><slot _v-df29bfa0=\"\"></slot></div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    <span class=\"author\" _v-df29bfa0=\"\">{{ data.author }}</span> •\n    <time class=\"timeago\" :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time> •\n    <span class=\"commentsNum\" _v-df29bfa0=\"\">{{ data.comments }}</span> <i class=\"ic\" _v-df29bfa0=\"\">{{ commentIcon }}</i>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16625,7 +16625,8 @@ let vm = new Vue({
         }
 
         this.topics.push(...data['topics']);
-        this.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
+        //this.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
+        this.loadMoreId = data.loadMoreID;
       });
     },
 
@@ -16711,7 +16712,7 @@ function convertTheirStupidDateTimeFormatToISO(utime){
 
 },{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/topicItem.vue":72,"./components/topicView.vue":73,"./pantipInterface.js":75,"./vars.js":76,"vue":64}],75:[function(require,module,exports){
 module.exports = {
-  loadTopics(forumName, loadMoreID=0, callback){
+  /*loadTopics2(forumName, loadMoreID=0, callback){
     if(forumName === 'all') forumName = '';
     var loadUrl = 'http://www.pantip.com/forum/' + forumName;
     if(loadMoreID !== 0){
@@ -16731,16 +16732,16 @@ module.exports = {
         var html = $(data, null).find('#show_topic_lists')[0];
         $(html).find('.post-item').each(function(i){
           var item = {};
-          item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-          item['title'] = $(this).find('.post-item-title a').text().trim();
+          item['_id'] = $(this).find('.post-item-title a').attr('href').substr(7);
+          item['disp_topic'] = $(this).find('.post-item-title a').text().trim();
           item['author'] = $(this).find('.by-name').text().trim();
           item['utime'] = $(this).find('.timestamp abbr').attr('data-utime');
           item['timeFull'] = $(this).find('.timestamp abbr').attr('title');
 
           if($(this).find('.post-item-status-i').length !== 0){
-            item['commentsNum'] = $(this).find('.post-item-status-i').first().text().trim();
+            item['comments'] = $(this).find('.post-item-status-i').first().text().trim();
           }else{
-            item['commentsNum'] = "0";
+            item['comments'] = "0";
           }
           topics.push(item);
         });
@@ -16756,6 +16757,33 @@ module.exports = {
 
         res['bestTopics'] = bestTopics;
         res['topics'] = topics;
+        callback(res);
+      },
+      error: function(){
+        console.log('loadTopicList ajax error.');
+      }
+    });
+  },*/
+
+  loadTopics(forumName, loadMoreID=0, callback){
+    if(forumName === 'all') forumName = '';
+    var loadUrl = 'http://pantip.com/forum/topic/ajax_json_all_topic_info_loadmore?t=' + Math.random();
+    $.ajax({
+      method: 'post',
+      url: loadUrl,
+      data: {
+        last_id_current_page: loadMoreID,
+        dataSend: { room: forumName, topic_type: {type: 0, default_type: 1} },
+        thumbnailview: false,
+        current_page: 1
+      },
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      dataType: 'text',
+      success: function(data){
+        data = JSON.parse(data).item;
+        var res = { topics: [], bestTopics: []};
+        res.topics = data.topic;
+        res.loadMoreID = data.last_id_current_page;
         callback(res);
       },
       error: function(){

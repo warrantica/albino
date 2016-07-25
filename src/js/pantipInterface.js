@@ -1,5 +1,5 @@
 module.exports = {
-  loadTopics(forumName, loadMoreID=0, callback){
+  /*loadTopics2(forumName, loadMoreID=0, callback){
     if(forumName === 'all') forumName = '';
     var loadUrl = 'http://www.pantip.com/forum/' + forumName;
     if(loadMoreID !== 0){
@@ -19,16 +19,16 @@ module.exports = {
         var html = $(data, null).find('#show_topic_lists')[0];
         $(html).find('.post-item').each(function(i){
           var item = {};
-          item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-          item['title'] = $(this).find('.post-item-title a').text().trim();
+          item['_id'] = $(this).find('.post-item-title a').attr('href').substr(7);
+          item['disp_topic'] = $(this).find('.post-item-title a').text().trim();
           item['author'] = $(this).find('.by-name').text().trim();
           item['utime'] = $(this).find('.timestamp abbr').attr('data-utime');
           item['timeFull'] = $(this).find('.timestamp abbr').attr('title');
 
           if($(this).find('.post-item-status-i').length !== 0){
-            item['commentsNum'] = $(this).find('.post-item-status-i').first().text().trim();
+            item['comments'] = $(this).find('.post-item-status-i').first().text().trim();
           }else{
-            item['commentsNum'] = "0";
+            item['comments'] = "0";
           }
           topics.push(item);
         });
@@ -44,6 +44,33 @@ module.exports = {
 
         res['bestTopics'] = bestTopics;
         res['topics'] = topics;
+        callback(res);
+      },
+      error: function(){
+        console.log('loadTopicList ajax error.');
+      }
+    });
+  },*/
+
+  loadTopics(forumName, loadMoreID=0, callback){
+    if(forumName === 'all') forumName = '';
+    var loadUrl = 'http://pantip.com/forum/topic/ajax_json_all_topic_info_loadmore?t=' + Math.random();
+    $.ajax({
+      method: 'post',
+      url: loadUrl,
+      data: {
+        last_id_current_page: loadMoreID,
+        dataSend: { room: forumName, topic_type: {type: 0, default_type: 1} },
+        thumbnailview: false,
+        current_page: 1
+      },
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      dataType: 'text',
+      success: function(data){
+        data = JSON.parse(data).item;
+        var res = { topics: [], bestTopics: []};
+        res.topics = data.topic;
+        res.loadMoreID = data.last_id_current_page;
         callback(res);
       },
       error: function(){

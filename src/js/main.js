@@ -162,7 +162,8 @@ let vm = new Vue({
         }
 
         this.topics.push(...data['topics']);
-        this.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
+        //this.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
+        this.loadMoreId = data.loadMoreID;
       });
     },
 
