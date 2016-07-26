@@ -16641,15 +16641,10 @@ let vm = new Vue({
 
       this.showBestTopics = false;
 
-      let topicPromise = new Promise((resolve, reject) => {
-        Pantip.loadTopic(topicId, data => resolve(data));
-      });
-
-      let commentPromise = new Promise((resolve, reject) => {
-        Pantip.loadComments(topicId, data => resolve(data));
-      });
-
-      Promise.all([topicPromise, commentPromise]).then((values) => {
+      Promise.all([
+        Pantip.loadTopic(topicId),
+        Pantip.loadComments(topicId)
+      ]).then(values => {
         console.log(values);
         this.currentTopic = topicId;
 
@@ -16672,6 +16667,7 @@ let vm = new Vue({
           }
         }, 500);
       });
+
     },
 
     refreshTopic(){
@@ -16810,82 +16806,87 @@ module.exports = {
     });
   },
 
-  loadTopic(topicID, callback){
-    $.ajax({
-      url: 'http://www.pantip.com/topic/' + topicID,
-      dataType: 'text',
-      success: function(data){
+  loadTopic(topicID){
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: 'http://www.pantip.com/topic/' + topicID,
+        dataType: 'text',
+        success: function(data){
 
-        data = data.replace(/src="\/images.*?"/g, 'src=""');
-        var html = $(data).find('.main-post-inner')[0];
-        var res = {};
+          data = data.replace(/src="\/images.*?"/g, 'src=""');
+          var html = $(data).find('.main-post-inner')[0];
+          var res = {};
 
-        res['author'] = $(html).find('.display-post-name').text();
-        res['title'] = $(html).find('.display-post-title').text();
-        res['content'] = $(html).find('.display-post-story').html();
-        res['utime'] = $(html).find('.display-post-timestamp abbr').attr('data-utime');
-        res['timeFull'] = $(html).find('.display-post-timestamp abbr').attr('title');
-        res['avatarSrc'] = $(html).find('.display-post-avatar img').attr('src');
+          res['author'] = $(html).find('.display-post-name').text();
+          res['title'] = $(html).find('.display-post-title').text();
+          res['content'] = $(html).find('.display-post-story').html();
+          res['utime'] = $(html).find('.display-post-timestamp abbr').attr('data-utime');
+          res['timeFull'] = $(html).find('.display-post-timestamp abbr').attr('title');
+          res['avatarSrc'] = $(html).find('.display-post-avatar img').attr('src');
 
-        //tags
-        res['tags'] = [];
-        $(html).find('.tag-item').each(function(i){
-          res['tags'][i] = $(this).text();
-        });
+          //tags
+          res['tags'] = [];
+          $(html).find('.tag-item').each(function(i){
+            res['tags'][i] = $(this).text();
+          });
 
-        //reactions
-        res['voteCount'] = parseInt($(html).find('.like-score').text());
-        res['emotionCount'] = {
-          sum: parseInt($(html).find('.emotion-score').text()),
-          like: parseInt($(html).find('.emotion-choice-score:eq(1)').text()),
-          laugh: parseInt($(html).find('.emotion-choice-score:eq(2)').text()),
-          love: parseInt($(html).find('.emotion-choice-score:eq(3)').text()),
-          impress: parseInt($(html).find('.emotion-choice-score:eq(4)').text()),
-          scary: parseInt($(html).find('.emotion-choice-score:eq(5)').text()),
-          surprised: parseInt($(html).find('.emotion-choice-score:eq(6)').text())
+          //reactions
+          res['voteCount'] = parseInt($(html).find('.like-score').text());
+          res['emotionCount'] = {
+            sum: parseInt($(html).find('.emotion-score').text()),
+            like: parseInt($(html).find('.emotion-choice-score:eq(1)').text()),
+            laugh: parseInt($(html).find('.emotion-choice-score:eq(2)').text()),
+            love: parseInt($(html).find('.emotion-choice-score:eq(3)').text()),
+            impress: parseInt($(html).find('.emotion-choice-score:eq(4)').text()),
+            scary: parseInt($(html).find('.emotion-choice-score:eq(5)').text()),
+            surprised: parseInt($(html).find('.emotion-choice-score:eq(6)').text())
+          }
+
+          //for sorting
+          res['emotions'] = [
+            {name:"like", count:res['emotionCount']['like']},
+            {name:"laugh", count:res['emotionCount']['laugh']},
+            {name:"love", count:res['emotionCount']['love']},
+            {name:"impress", count:res['emotionCount']['impress']},
+            {name:"scary", count:res['emotionCount']['scary']},
+            {name:"surprised", count:res['emotionCount']['surprised']}
+          ];
+          resolve(res)
+        },
+        error: function(){
+          console.log('loadTopicList ajax error.');
         }
-
-        //for sorting
-        res['emotions'] = [
-          {name:"like", count:res['emotionCount']['like']},
-          {name:"laugh", count:res['emotionCount']['laugh']},
-          {name:"love", count:res['emotionCount']['love']},
-          {name:"impress", count:res['emotionCount']['impress']},
-          {name:"scary", count:res['emotionCount']['scary']},
-          {name:"surprised", count:res['emotionCount']['surprised']}
-        ];
-        callback(res);
-      },
-      error: function(){
-        console.log('loadTopicList ajax error.');
-      }
+      });
     });
 
   },
 
-  loadComments(topicID, callback){
-    $.ajax({
-      type: 'GET',
-      cache: false,
-      url: 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&param=&type=1&time=' + Math.random(),
-      dataType: 'text',
-      headers: {'X-Requested-With': 'XMLHttpRequest'},
-      success: function(data){
-        dataJSON = JSON.parse(data);
-        var res = {}
-        if(dataJSON['count'] !== undefined){
-          res['count'] = dataJSON['count'];
-          res['comments'] = dataJSON['comments'];
-        }else{
-          res['count'] = 0;
-          res['comments'] = [];
+  loadComments(topicID){
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'GET',
+        cache: false,
+        url: 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&param=&type=1&time=' + Math.random(),
+        dataType: 'text',
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        success: function(data){
+          dataJSON = JSON.parse(data);
+          var res = {}
+          if(dataJSON['count'] !== undefined){
+            res['count'] = dataJSON['count'];
+            res['comments'] = dataJSON['comments'];
+          }else{
+            res['count'] = 0;
+            res['comments'] = [];
+          }
+          resolve(res);
+        },
+        error: function(){
+          console.log('loadComments ajax error.');
         }
-        callback(res);
-      },
-      error: function(){
-        console.log('loadComments ajax error.');
-      }
+      });
     });
+
   },
 
   loadMoreSubComments(last, cid, c, callback){

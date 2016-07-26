@@ -178,15 +178,10 @@ let vm = new Vue({
 
       this.showBestTopics = false;
 
-      let topicPromise = new Promise((resolve, reject) => {
-        Pantip.loadTopic(topicId, data => resolve(data));
-      });
-
-      let commentPromise = new Promise((resolve, reject) => {
-        Pantip.loadComments(topicId, data => resolve(data));
-      });
-
-      Promise.all([topicPromise, commentPromise]).then((values) => {
+      Promise.all([
+        Pantip.loadTopic(topicId),
+        Pantip.loadComments(topicId)
+      ]).then(values => {
         console.log(values);
         this.currentTopic = topicId;
 
@@ -209,6 +204,7 @@ let vm = new Vue({
           }
         }, 500);
       });
+
     },
 
     refreshTopic(){
