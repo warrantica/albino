@@ -187,6 +187,7 @@ let vm = new Vue({
       });
 
       Promise.all([topicPromise, commentPromise]).then((values) => {
+        console.log(values);
         this.currentTopic = topicId;
 
         values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);

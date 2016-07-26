@@ -16625,7 +16625,6 @@ let vm = new Vue({
         }
 
         this.topics.push(...data['topics']);
-        //this.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
         this.loadMoreId = data.loadMoreID;
       });
     },
@@ -16641,29 +16640,7 @@ let vm = new Vue({
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
       this.showBestTopics = false;
-/*
-      Pantip.loadTopic(topicId, data => {
-        this.currentTopic = topicId;
 
-        data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
-        this.$broadcast('loadTopicView', data);
-
-        $('#bellyTitle').text(data['title']);
-
-        //show FAB
-        let rightPane = document.getElementById('rightPane');
-        if(rightPane.offsetHeight < rightPane.scrollHeight){
-          $('#fab').addClass('enable');
-        }else{
-          $('#fab').removeClass('enable');
-        }
-      });
-
-      Pantip.loadComments(topicId, data => {
-        this.$broadcast('loadCommentView', data);
-        $('#rightPane').removeClass('wrapUp');
-        $('#rightPane .loading').removeClass('active');
-      });*/
       let topicPromise = new Promise((resolve, reject) => {
         Pantip.loadTopic(topicId, data => resolve(data));
       });
@@ -16673,6 +16650,7 @@ let vm = new Vue({
       });
 
       Promise.all([topicPromise, commentPromise]).then((values) => {
+        console.log(values);
         this.currentTopic = topicId;
 
         values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
@@ -16694,7 +16672,6 @@ let vm = new Vue({
           }
         }, 500);
       });
-
     },
 
     refreshTopic(){
