@@ -16041,7 +16041,7 @@ exports.default = {
     loadMoreSubComments: function loadMoreSubComments() {
       var _this = this;
 
-      Pantip.loadMoreSubComments(this.subData.last, this.subData.cid, this.subData.c, function (res) {
+      Pantip.loadMoreSubComments(this.subData.last, this.subData.cid, this.subData.c).then(function (res) {
         var _data$replies;
 
         (_data$replies = _this.data.replies).push.apply(_data$replies, (0, _toConsumableArray3.default)(res.replies));
@@ -16614,7 +16614,7 @@ let vm = new Vue({
         $('#leftPane .loading').addClass('active');
       }
 
-      Pantip.loadTopics(forumName, _loadMoreId, data => {
+      Pantip.loadTopics(forumName, _loadMoreId).then(data => {
         //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
@@ -16778,32 +16778,34 @@ module.exports = {
     });
   },*/
 
-  loadTopics(forumName, loadMoreID=0, callback){
+  loadTopics(forumName, loadMoreID=0){
     if(forumName === 'all') forumName = '';
     var loadUrl = 'http://pantip.com/forum/topic/ajax_json_all_topic_info_loadmore?t=' + Math.random();
-    $.ajax({
-      method: 'post',
-      url: loadUrl,
-      data: {
-        last_id_current_page: loadMoreID,
-        dataSend: { room: forumName, topic_type: {type: 0, default_type: 1} },
-        thumbnailview: false,
-        current_page: 2
-      },
-      headers: {'X-Requested-With': 'XMLHttpRequest'},
-      dataType: 'text',
-      success: function(data){
-        data = JSON.parse(data).item;
-        console.log(data);
-        var res = { topics: [], bestTopics: []};
-        res.topics = data.topic;
-        res.loadMoreID = data.last_id_current_page;
-        callback(res);
-      },
-      error: function(){
-        console.log('loadTopicList ajax error.');
-      }
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        method: 'post',
+        url: loadUrl,
+        data: {
+          last_id_current_page: loadMoreID,
+          dataSend: { room: forumName, topic_type: {type: 0, default_type: 1} },
+          thumbnailview: false,
+          current_page: 2
+        },
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        dataType: 'text',
+        success: function(data){
+          data = JSON.parse(data).item;
+          var res = { topics: [], bestTopics: []};
+          res.topics = data.topic;
+          res.loadMoreID = data.last_id_current_page;
+          resolve(res);
+        },
+        error: function(){
+          console.log('loadTopicList ajax error.');
+        }
+      });
     });
+
   },
 
   loadTopic(topicID){
@@ -16889,16 +16891,19 @@ module.exports = {
 
   },
 
-  loadMoreSubComments(last, cid, c, callback){
-    $.ajax({
-      type: 'GET',
-      headers: {'X-Requested-With': 'XMLHttpRequest'},
-      url:'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
-      success: function(data){
-        dataJSON = JSON.parse(data);
-        callback(dataJSON);
-      }
+  loadMoreSubComments(last, cid, c){
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'GET',
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        url:'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
+        success: function(data){
+          dataJSON = JSON.parse(data);
+          resolve(dataJSON);
+        }
+      });
     });
+
   }
 }
 

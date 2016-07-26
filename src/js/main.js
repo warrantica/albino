@@ -151,7 +151,7 @@ let vm = new Vue({
         $('#leftPane .loading').addClass('active');
       }
 
-      Pantip.loadTopics(forumName, _loadMoreId, data => {
+      Pantip.loadTopics(forumName, _loadMoreId).then(data => {
         //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');

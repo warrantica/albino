@@ -82,7 +82,7 @@
 
     methods: {
       loadMoreSubComments(){
-        Pantip.loadMoreSubComments(this.subData.last, this.subData.cid, this.subData.c, res=>{
+        Pantip.loadMoreSubComments(this.subData.last, this.subData.cid, this.subData.c).then(res=>{
           this.data.replies.push(...res.replies);
           this.subData.last += 5;
           if(this.subData.last >= this.subData.c) this.showLoadMoreSubButton = false;
