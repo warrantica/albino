@@ -162,7 +162,6 @@ let vm = new Vue({
         }
 
         this.topics.push(...data['topics']);
-        //this.loadMoreId = data['topics'][data['topics'].length - 1]['id'];
         this.loadMoreId = data.loadMoreID;
       });
     },
@@ -177,27 +176,37 @@ let vm = new Vue({
       $('#rightPane .loading').addClass('active');
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
-      Pantip.loadTopic(topicId, data => {
-        this.currentTopic = topicId;
+      this.showBestTopics = false;
 
-        data.utime = convertTheirStupidDateTimeFormatToISO(data.utime);
-        this.$broadcast('loadTopicView', data);
-
-        $('#bellyTitle').text(data['title']);
-
-        //show FAB
-        let rightPane = document.getElementById('rightPane');
-        if(rightPane.offsetHeight < rightPane.scrollHeight){
-          $('#fab').addClass('enable');
-        }else{
-          $('#fab').removeClass('enable');
-        }
+      let topicPromise = new Promise((resolve, reject) => {
+        Pantip.loadTopic(topicId, data => resolve(data));
       });
 
-      Pantip.loadComments(topicId, data => {
-        this.$broadcast('loadCommentView', data);
+      let commentPromise = new Promise((resolve, reject) => {
+        Pantip.loadComments(topicId, data => resolve(data));
+      });
+
+      Promise.all([topicPromise, commentPromise]).then((values) => {
+        this.currentTopic = topicId;
+
+        values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
+        this.$broadcast('loadTopicView', values[0]);
+        $('#bellyTitle').text(values[0]['title']);
+
+        this.$broadcast('loadCommentView', values[1]);
+
         $('#rightPane').removeClass('wrapUp');
         $('#rightPane .loading').removeClass('active');
+
+        //show FAB
+        window.setTimeout(() => {
+          let rightPane = document.getElementById('rightPane');
+          if(rightPane.offsetHeight < rightPane.scrollHeight){
+            $('#fab').addClass('enable');
+          }else{
+            $('#fab').removeClass('enable');
+          }
+        }, 500);
       });
     },
 

@@ -16640,6 +16640,8 @@ let vm = new Vue({
       $('#rightPane .loading').addClass('active');
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
+      this.showBestTopics = false;
+/*
       Pantip.loadTopic(topicId, data => {
         this.currentTopic = topicId;
 
@@ -16661,7 +16663,38 @@ let vm = new Vue({
         this.$broadcast('loadCommentView', data);
         $('#rightPane').removeClass('wrapUp');
         $('#rightPane .loading').removeClass('active');
+      });*/
+      let topicPromise = new Promise((resolve, reject) => {
+        Pantip.loadTopic(topicId, data => resolve(data));
       });
+
+      let commentPromise = new Promise((resolve, reject) => {
+        Pantip.loadComments(topicId, data => resolve(data));
+      });
+
+      Promise.all([topicPromise, commentPromise]).then((values) => {
+        this.currentTopic = topicId;
+
+        values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
+        this.$broadcast('loadTopicView', values[0]);
+        $('#bellyTitle').text(values[0]['title']);
+
+        this.$broadcast('loadCommentView', values[1]);
+
+        $('#rightPane').removeClass('wrapUp');
+        $('#rightPane .loading').removeClass('active');
+
+        //show FAB
+        window.setTimeout(() => {
+          let rightPane = document.getElementById('rightPane');
+          if(rightPane.offsetHeight < rightPane.scrollHeight){
+            $('#fab').addClass('enable');
+          }else{
+            $('#fab').removeClass('enable');
+          }
+        }, 500);
+      });
+
     },
 
     refreshTopic(){
