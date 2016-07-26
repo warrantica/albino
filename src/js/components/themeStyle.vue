@@ -12,7 +12,7 @@
 
     .sPrimaryText{ color: {{ theme.primary }}; }
 
-    .sAccentBg{
+    .sAccentBg, ::selection{
       background: {{ theme.accent }};
       color: {{ theme.textOnAccent }};
     }
