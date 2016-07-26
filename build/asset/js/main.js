@@ -15948,8 +15948,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   props: {
-    tid: String,
-    title: String,
+    data: {
+      _id: String,
+      disp_topic: String
+    },
     isActive: {
       type: Boolean,
       default: false
@@ -15958,18 +15960,18 @@ exports.default = {
 
   methods: {
     loadTopic: function loadTopic() {
-      this.$dispatch('loadTopic', this.tid);
+      this.$dispatch('loadTopic', this.data._id);
     }
   },
 
   events: {
     'topicLoaded': function topicLoaded(topicId) {
-      this.isActive = topicId === this.tid ? true : false;
+      this.isActive = topicId === this.data._id ? true : false;
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-868bbca8=\"\">\n  <div class=\"title\" _v-868bbca8=\"\"><slot _v-868bbca8=\"\"></slot></div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-868bbca8=\"\">\n  <div class=\"title\" _v-868bbca8=\"\">{{ data.disp_topic }}</div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16325,8 +16327,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
   props: {
     data: {
-      id: String,
-      title: String,
+      _id: String,
+      disp_topic: String,
       author: String,
       commentsNum: Number,
       utime: String,
@@ -16609,20 +16611,19 @@ let vm = new Vue({
     loadTopics(forumName, loadMore = false){
       let _loadMoreId = loadMore ? this.loadMoreId : 0;
       this.currentForum = forumName;
+      this.showBestTopics = false;
       if(!loadMore){
         $('#leftPane').addClass('wrapUp');
         $('#leftPane .loading').addClass('active');
+        this.topics = [];
+
+        Pantip.loadBestTopics(forumName).then(data => this.bestTopics = data);
       }
 
       Pantip.loadTopics(forumName, _loadMoreId).then(data => {
         //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
-
-        if(!loadMore){
-          this.topics = [];
-          this.bestTopics = data['bestTopics'];
-        }
 
         this.topics.push(...data['topics']);
         this.loadMoreId = data.loadMoreID;
@@ -16638,8 +16639,6 @@ let vm = new Vue({
       $('#rightPane').addClass('wrapUp');
       $('#rightPane .loading').addClass('active');
       $('#rightPane').animate({scrollTop:0}, "0.5s");
-
-      this.showBestTopics = false;
 
       Promise.all([
         Pantip.loadTopic(topicId),
@@ -16725,58 +16724,37 @@ chrome.storage.onChanged.addListener(changes => {
 
 },{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/topicItem.vue":72,"./components/topicView.vue":73,"./pantipInterface.js":75,"./vars.js":76,"vue":64}],75:[function(require,module,exports){
 module.exports = {
-  /*loadTopics2(forumName, loadMoreID=0, callback){
+  loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
     var loadUrl = 'http://www.pantip.com/forum/' + forumName;
-    if(loadMoreID !== 0){
-      loadUrl += '?tid=' + loadMoreID;
-    }
-    $.ajax({
-      url: loadUrl,
-      dataType: 'text',
-      success: function(data){
-        var res = {};
-        var topics = new Array();
-        var bestTopics = new Array();
 
-        data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
-        data = data.replace(/src=["'].*["']/g, 'src=""');
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: loadUrl,
+        dataType: 'text',
+        success: function(data){
+          let bestTopics = new Array();
 
-        var html = $(data, null).find('#show_topic_lists')[0];
-        $(html).find('.post-item').each(function(i){
-          var item = {};
-          item['_id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-          item['disp_topic'] = $(this).find('.post-item-title a').text().trim();
-          item['author'] = $(this).find('.by-name').text().trim();
-          item['utime'] = $(this).find('.timestamp abbr').attr('data-utime');
-          item['timeFull'] = $(this).find('.timestamp abbr').attr('title');
+          data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
+          data = data.replace(/src=["'].*["']/g, 'src=""');
+          let bestHtml = $(data).find('#item_pantip-best_room')[0];
 
-          if($(this).find('.post-item-status-i').length !== 0){
-            item['comments'] = $(this).find('.post-item-status-i').first().text().trim();
-          }else{
-            item['comments'] = "0";
-          }
-          topics.push(item);
-        });
+          $(bestHtml).find('.best-item').each(function(i){
+            let item = {};
+            item['_id'] = $(this).find('.post-item-title a').attr('href').substr(7);
+            item['disp_topic'] = $(this).find('.post-item-title a').text().trim();
 
-        var bestHtml = $(data).find('#item_pantip-best_room')[0];
-        $(bestHtml).find('.best-item').each(function(i){
-          var item = {};
-          item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-          item['title'] = $(this).find('.post-item-title a').text().trim();
-
-          bestTopics.push(item);
-        });
-
-        res['bestTopics'] = bestTopics;
-        res['topics'] = topics;
-        callback(res);
-      },
-      error: function(){
-        console.log('loadTopicList ajax error.');
-      }
+            bestTopics.push(item);
+          });
+          resolve(bestTopics);
+        },
+        error: function(){
+          console.log('loadTopicList ajax error.');
+        }
+      });
     });
-  },*/
+
+  },
 
   loadTopics(forumName, loadMoreID=0){
     if(forumName === 'all') forumName = '';
@@ -16795,7 +16773,7 @@ module.exports = {
         dataType: 'text',
         success: function(data){
           data = JSON.parse(data).item;
-          var res = { topics: [], bestTopics: []};
+          var res = { topics: [] };
           res.topics = data.topic;
           res.loadMoreID = data.last_id_current_page;
           resolve(res);

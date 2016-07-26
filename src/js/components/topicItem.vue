@@ -21,8 +21,8 @@
   export default {
     props: {
       data: {
-        id: String,
-        title: String,
+        _id: String,
+        disp_topic: String,
         author: String,
         commentsNum: Number,
         utime: String,

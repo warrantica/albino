@@ -1,56 +1,35 @@
 module.exports = {
-  /*loadTopics2(forumName, loadMoreID=0, callback){
+  loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
     var loadUrl = 'http://www.pantip.com/forum/' + forumName;
-    if(loadMoreID !== 0){
-      loadUrl += '?tid=' + loadMoreID;
-    }
-    $.ajax({
-      url: loadUrl,
-      dataType: 'text',
-      success: function(data){
-        var res = {};
-        var topics = new Array();
-        var bestTopics = new Array();
 
-        data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
-        data = data.replace(/src=["'].*["']/g, 'src=""');
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: loadUrl,
+        dataType: 'text',
+        success: function(data){
+          let bestTopics = new Array();
 
-        var html = $(data, null).find('#show_topic_lists')[0];
-        $(html).find('.post-item').each(function(i){
-          var item = {};
-          item['_id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-          item['disp_topic'] = $(this).find('.post-item-title a').text().trim();
-          item['author'] = $(this).find('.by-name').text().trim();
-          item['utime'] = $(this).find('.timestamp abbr').attr('data-utime');
-          item['timeFull'] = $(this).find('.timestamp abbr').attr('title');
+          data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
+          data = data.replace(/src=["'].*["']/g, 'src=""');
+          let bestHtml = $(data).find('#item_pantip-best_room')[0];
 
-          if($(this).find('.post-item-status-i').length !== 0){
-            item['comments'] = $(this).find('.post-item-status-i').first().text().trim();
-          }else{
-            item['comments'] = "0";
-          }
-          topics.push(item);
-        });
+          $(bestHtml).find('.best-item').each(function(i){
+            let item = {};
+            item['_id'] = $(this).find('.post-item-title a').attr('href').substr(7);
+            item['disp_topic'] = $(this).find('.post-item-title a').text().trim();
 
-        var bestHtml = $(data).find('#item_pantip-best_room')[0];
-        $(bestHtml).find('.best-item').each(function(i){
-          var item = {};
-          item['id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-          item['title'] = $(this).find('.post-item-title a').text().trim();
-
-          bestTopics.push(item);
-        });
-
-        res['bestTopics'] = bestTopics;
-        res['topics'] = topics;
-        callback(res);
-      },
-      error: function(){
-        console.log('loadTopicList ajax error.');
-      }
+            bestTopics.push(item);
+          });
+          resolve(bestTopics);
+        },
+        error: function(){
+          console.log('loadTopicList ajax error.');
+        }
+      });
     });
-  },*/
+
+  },
 
   loadTopics(forumName, loadMoreID=0){
     if(forumName === 'all') forumName = '';
@@ -69,7 +48,7 @@ module.exports = {
         dataType: 'text',
         success: function(data){
           data = JSON.parse(data).item;
-          var res = { topics: [], bestTopics: []};
+          var res = { topics: [] };
           res.topics = data.topic;
           res.loadMoreID = data.last_id_current_page;
           resolve(res);

@@ -146,20 +146,19 @@ let vm = new Vue({
     loadTopics(forumName, loadMore = false){
       let _loadMoreId = loadMore ? this.loadMoreId : 0;
       this.currentForum = forumName;
+      this.showBestTopics = false;
       if(!loadMore){
         $('#leftPane').addClass('wrapUp');
         $('#leftPane .loading').addClass('active');
+        this.topics = [];
+
+        Pantip.loadBestTopics(forumName).then(data => this.bestTopics = data);
       }
 
       Pantip.loadTopics(forumName, _loadMoreId).then(data => {
         //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
-
-        if(!loadMore){
-          this.topics = [];
-          this.bestTopics = data['bestTopics'];
-        }
 
         this.topics.push(...data['topics']);
         this.loadMoreId = data.loadMoreID;
@@ -175,8 +174,6 @@ let vm = new Vue({
       $('#rightPane').addClass('wrapUp');
       $('#rightPane .loading').addClass('active');
       $('#rightPane').animate({scrollTop:0}, "0.5s");
-
-      this.showBestTopics = false;
 
       Promise.all([
         Pantip.loadTopic(topicId),

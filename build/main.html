@@ -41,10 +41,7 @@
         <i class="ic headerIcon">thumb_up</i>กระทู้แนะนำ<i class="ic dropdown">expand_more</i>
       </div>
       <div id="bestTopicList" :class="{ active: showBestTopics }">
-        <best-topic-item v-for="topic in bestTopics"
-                         :tid="topic.id">
-          {{ topic.disp_topic }}
-        </best-topic-item>
+        <best-topic-item v-for="topic in bestTopics" :data="topic"></best-topic-item>
       </div>
     </div>
     <div id="topicListHeader"><i class="ic headerIcon">schedule</i>กระทู้ล่าสุด</div>

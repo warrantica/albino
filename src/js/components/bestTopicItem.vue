@@ -2,7 +2,7 @@
   <div class="topic sClickable"
        :class="{active: isActive}"
        @click="loadTopic">
-    <div class="title"><slot></slot></div>
+    <div class="title">{{ data.disp_topic }}</div>
   </div>
 </template>
 
@@ -13,8 +13,10 @@
 <script>
   export default {
     props: {
-      tid: String,
-      title: String,
+      data: {
+        _id: String,
+        disp_topic: String
+      },
       isActive: {
         type: Boolean,
         default: false
@@ -23,13 +25,13 @@
 
     methods: {
       loadTopic(){
-        this.$dispatch('loadTopic', this.tid);
+        this.$dispatch('loadTopic', this.data._id);
       }
     },
 
     events: {
       'topicLoaded': function(topicId){
-        this.isActive = topicId === this.tid ? true : false;
+        this.isActive = topicId === this.data._id ? true : false;
       }
     }
   }
