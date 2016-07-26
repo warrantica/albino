@@ -16710,6 +16710,13 @@ function convertTheirStupidDateTimeFormatToISO(utime){
   return y+'-'+m+'-'+d+'T'+t;
 }
 
+chrome.storage.onChanged.addListener(changes => {
+  console.log(changes);
+  if(changes.theme !== undefined){
+    vm.$broadcast('applyTheme', changes.theme.newValue);
+  }
+});
+
 },{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/topicItem.vue":72,"./components/topicView.vue":73,"./pantipInterface.js":75,"./vars.js":76,"vue":64}],75:[function(require,module,exports){
 module.exports = {
   /*loadTopics2(forumName, loadMoreID=0, callback){

@@ -246,3 +246,10 @@ function convertTheirStupidDateTimeFormatToISO(utime){
   let t = utime.substr(11, 8);
   return y+'-'+m+'-'+d+'T'+t;
 }
+
+chrome.storage.onChanged.addListener(changes => {
+  console.log(changes);
+  if(changes.theme !== undefined){
+    vm.$broadcast('applyTheme', changes.theme.newValue);
+  }
+});
