@@ -3,7 +3,7 @@
        :class="{active: isActive}"
        @click="loadTopic">
     <div class="type"></div>
-    <div class="title">{{ data.disp_topic }}</div>
+    <div class="title">{{{ data.disp_topic }}}</div>
     <div class="subtitle sSubtitle">
       {{ data.author }}
       &#149; <time :datetime="data.utime">{{ data.timeFull }}</time>
