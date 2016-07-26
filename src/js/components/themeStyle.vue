@@ -5,8 +5,6 @@
       border-bottom: 1px {{ theme.accent }} solid;
     }
 
-    .author.op{ border: 1px {{ theme.accent }} solid; }
-
     .sPrimaryBg{
       background: {{ theme.primary }};
       color: {{ theme.textOnPrimary }};
