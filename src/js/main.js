@@ -158,7 +158,7 @@ let vm = new Vue({
       }
 
       Pantip.loadTopics(forumName, _loadMoreId).then(data => {
-        console.log(data);
+        //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
@@ -249,10 +249,6 @@ let vm = new Vue({
     'loadTopic': function(topicId){
       this.$broadcast('topicLoaded', topicId);
       this.loadTopic(topicId);
-    },
-
-    'newComments': function(num){
-      console.log(num);
     }
   },
 
