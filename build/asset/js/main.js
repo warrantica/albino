@@ -16125,9 +16125,7 @@ exports.default = {
   events: {
     'loadCommentView': function loadCommentView(data) {
       this.comments = [];
-      if (data.count > 0) {
-        this.comments = data.comments;
-      }
+      if (data.count > 0) this.comments = data.comments;
     }
   }
 };
@@ -16585,6 +16583,8 @@ let vm = new Vue({
     bestTopics: [],
     topics: [],
     loadMoreId: 0,
+    topicRefreshIntervalId: '',
+    unreadComments: 0,
     test: ''
   }},
 
@@ -16656,6 +16656,17 @@ let vm = new Vue({
         $('#rightPane').removeClass('wrapUp');
         $('#rightPane .loading').removeClass('active');
 
+        //set up polling
+        this.unreadComments = 0;
+        window.clearInterval(this.topicRefreshIntervalId);
+        this.topicRefreshIntervalId =  window.setInterval(() => {
+          Pantip.loadComments(topicId).then(data => {
+            if(data.count >= values[1].count){
+              this.unreadComments = data.count - values[1].count;
+            }
+          });
+        }, 3000);
+
         //show FAB
         window.setTimeout(() => {
           let rightPane = document.getElementById('rightPane');
@@ -16674,9 +16685,6 @@ let vm = new Vue({
         let scroll = document.getElementById('rightPane').scrollTop;
         this.loadTopic(this.currentTopic).then(value =>{
           $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
-          /*window.setTimeout(() => {
-            $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
-          }, 500);*/
         });
       }
     },
@@ -16695,6 +16703,10 @@ let vm = new Vue({
     'loadTopic': function(topicId){
       this.$broadcast('topicLoaded', topicId);
       this.loadTopic(topicId);
+    },
+
+    'newComments': function(num){
+      console.log(num);
     }
   },
 

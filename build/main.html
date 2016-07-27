@@ -59,7 +59,10 @@
   <div id="bellyHead" class="sPrimaryBg sElevation1">
     <div id="bellyTitle"></div>
     <div id="bellyToolbar">
-      <i class="ic refreshButton sClickable" @click="refreshTopic">refresh</i>
+      <div class="refreshButtonContainer" @click="refreshTopic">
+        <i class="ic sClickable">refresh</i>
+        <div class="refreshBadge sAccentBg" v-show="unreadComments">{{ unreadComments }}</div>
+      </div>
       <i class="ic openInPantipButton sClickable" @click="openInPantip">open_in_new</i>
     </div>
   </div>

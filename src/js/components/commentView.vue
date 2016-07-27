@@ -23,9 +23,7 @@
     events: {
       'loadCommentView': function(data){
         this.comments = [];
-        if(data.count > 0){
-          this.comments = data.comments;
-        }
+        if(data.count > 0) this.comments = data.comments;
       }
     }
   }

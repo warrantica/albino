@@ -120,6 +120,8 @@ let vm = new Vue({
     bestTopics: [],
     topics: [],
     loadMoreId: 0,
+    topicRefreshIntervalId: '',
+    unreadComments: 0,
     test: ''
   }},
 
@@ -191,6 +193,17 @@ let vm = new Vue({
         $('#rightPane').removeClass('wrapUp');
         $('#rightPane .loading').removeClass('active');
 
+        //set up polling
+        this.unreadComments = 0;
+        window.clearInterval(this.topicRefreshIntervalId);
+        this.topicRefreshIntervalId =  window.setInterval(() => {
+          Pantip.loadComments(topicId).then(data => {
+            if(data.count >= values[1].count){
+              this.unreadComments = data.count - values[1].count;
+            }
+          });
+        }, 3000);
+
         //show FAB
         window.setTimeout(() => {
           let rightPane = document.getElementById('rightPane');
@@ -227,6 +240,10 @@ let vm = new Vue({
     'loadTopic': function(topicId){
       this.$broadcast('topicLoaded', topicId);
       this.loadTopic(topicId);
+    },
+
+    'newComments': function(num){
+      console.log(num);
     }
   },
 
