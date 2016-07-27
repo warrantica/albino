@@ -16584,8 +16584,7 @@ let vm = new Vue({
     topics: [],
     loadMoreId: 0,
     topicRefreshIntervalId: '',
-    unreadComments: 0,
-    test: ''
+    unreadComments: 0
   }},
 
   computed: {
@@ -16636,6 +16635,7 @@ let vm = new Vue({
     },
 
     loadTopic(topicId){
+      //pull down curtains
       $('#rightPane').addClass('wrapUp');
       $('#rightPane .loading').addClass('active');
       $('#rightPane').animate({scrollTop:0}, "0.5s");
@@ -16647,12 +16647,15 @@ let vm = new Vue({
         console.log(values);
         this.currentTopic = topicId;
 
+        //load topic
         values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
         this.$broadcast('loadTopicView', values[0]);
         $('#bellyTitle').text(values[0]['title']);
 
+        //load comments
         this.$broadcast('loadCommentView', values[1]);
 
+        //pull up curtains
         $('#rightPane').removeClass('wrapUp');
         $('#rightPane .loading').removeClass('active');
 
