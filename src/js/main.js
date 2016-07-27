@@ -175,7 +175,7 @@ let vm = new Vue({
       $('#rightPane .loading').addClass('active');
       $('#rightPane').animate({scrollTop:0}, "0.5s");
 
-      Promise.all([
+      return Promise.all([
         Pantip.loadTopic(topicId),
         Pantip.loadComments(topicId)
       ]).then(values => {
@@ -199,13 +199,18 @@ let vm = new Vue({
           }else{
             $('#fab').removeClass('enable');
           }
-        }, 500);
+        }, 50);
       });
 
     },
 
     refreshTopic(){
-      if(this.currentTopic !== 0) this.loadTopic(this.currentTopic);
+      if(this.currentTopic !== 0){
+        let scroll = document.getElementById('rightPane').scrollTop;
+        this.loadTopic(this.currentTopic).then(value =>{
+          $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
+        });
+      }
     },
 
     openInPantip(){
