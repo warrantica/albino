@@ -202,7 +202,7 @@ let vm = new Vue({
               this.unreadComments = data.count - values[1].count;
             }
           });
-        }, 3000);
+        }, 30000);
 
         //show FAB
         window.setTimeout(() => {
