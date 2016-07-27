@@ -46,7 +46,7 @@
     </div>
     <div id="topicListHeader"><i class="ic headerIcon">schedule</i>กระทู้ล่าสุด</div>
     <div id="topicList">
-      <topic-item v-for="topic in topics" :data="topic"></topic-item>
+      <topic-item v-for="topic in topics" :data.sync="topic"></topic-item>
       <button class="loadMore sButton sAccentBg sElevation0h2"
               :data-tid="loadMoreId"
               @click="loadMoreTopics">

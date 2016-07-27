@@ -1,6 +1,6 @@
 <template>
   <div class="topic sClickable"
-       :class="{active: isActive}"
+       :class="{active: data.isActive, top: data.isTop}"
        @click="loadTopic">
     <div class="type"></div>
     <div class="title">{{{ data.disp_topic }}}</div>
@@ -26,14 +26,18 @@
         author: String,
         commentsNum: Number,
         utime: String,
-        timeFull: String
+        timeFull: String,
+        isActive: {
+          type: Boolean,
+          default: false
+        },
+        isTop: {
+          type: Boolean,
+          default: false
+        }
       },
       commentIcon: String,
       voteIcon: String,
-      isActive: {
-        type: Boolean,
-        default: false
-      }
     },
 
     methods: {
@@ -48,7 +52,8 @@
 
     events: {
       'topicLoaded': function(topicId){
-        this.isActive = topicId === this.data._id ? true : false;
+        console.log("ID: " + this.data._id + " " + this.data.isActive);
+        this.data.isActive = (topicId === this.data._id) ? true : false;
       }
     }
   }

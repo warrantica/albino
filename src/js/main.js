@@ -120,6 +120,7 @@ let vm = new Vue({
     bestTopics: [],
     topics: [],
     loadMoreId: 0,
+    topTopicId: 0,
     topicRefreshIntervalId: '',
     unreadComments: 0
   }},
@@ -157,11 +158,16 @@ let vm = new Vue({
       }
 
       Pantip.loadTopics(forumName, _loadMoreId).then(data => {
-        //console.log(data);
+        console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
-        this.topics.push(...data['topics']);
+        for(let topic of data['topics']){
+          topic.isActive = topic._id === this.currentTopic;
+          topic.isTop = topic._id === this.topTopicId;
+          this.topics.push(topic);
+        }
+        this.topTopicId = this.topics[0]._id;
         this.loadMoreId = data.loadMoreID;
       });
     },

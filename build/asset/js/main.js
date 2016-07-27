@@ -16303,7 +16303,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, #forumSelect, #leftPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  #forumSelect li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic{ border-top: 1px {{ border }} solid; }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16330,14 +16330,18 @@ exports.default = {
       author: String,
       commentsNum: Number,
       utime: String,
-      timeFull: String
+      timeFull: String,
+      isActive: {
+        type: Boolean,
+        default: false
+      },
+      isTop: {
+        type: Boolean,
+        default: false
+      }
     },
     commentIcon: String,
-    voteIcon: String,
-    isActive: {
-      type: Boolean,
-      default: false
-    }
+    voteIcon: String
   },
 
   methods: {
@@ -16353,12 +16357,13 @@ exports.default = {
 
   events: {
     'topicLoaded': function topicLoaded(topicId) {
-      this.isActive = topicId === this.data._id ? true : false;
+      console.log("ID: " + this.data._id + " " + this.data.isActive);
+      this.data.isActive = topicId === this.data._id ? true : false;
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\">{{{ data.disp_topic }}}</div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    {{ data.author }}\n    • <time :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time>\n    <span v-show=\"data.comments\" _v-df29bfa0=\"\">• {{ data.comments }} <i class=\"ic\" _v-df29bfa0=\"\">chat_bubble</i></span>\n    <span v-show=\"data.votes\" _v-df29bfa0=\"\">• {{ data.votes }} <i class=\"ic\" _v-df29bfa0=\"\">add_box</i></span>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" :class=\"{active: data.isActive, top: data.isTop}\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\">{{{ data.disp_topic }}}</div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    {{ data.author }}\n    • <time :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time>\n    <span v-show=\"data.comments\" _v-df29bfa0=\"\">• {{ data.comments }} <i class=\"ic\" _v-df29bfa0=\"\">chat_bubble</i></span>\n    <span v-show=\"data.votes\" _v-df29bfa0=\"\">• {{ data.votes }} <i class=\"ic\" _v-df29bfa0=\"\">add_box</i></span>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16583,6 +16588,7 @@ let vm = new Vue({
     bestTopics: [],
     topics: [],
     loadMoreId: 0,
+    topTopicId: 0,
     topicRefreshIntervalId: '',
     unreadComments: 0
   }},
@@ -16620,11 +16626,16 @@ let vm = new Vue({
       }
 
       Pantip.loadTopics(forumName, _loadMoreId).then(data => {
-        //console.log(data);
+        console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
-        this.topics.push(...data['topics']);
+        for(let topic of data['topics']){
+          topic.isActive = topic._id === this.currentTopic;
+          topic.isTop = topic._id === this.topTopicId;
+          this.topics.push(topic);
+        }
+        this.topTopicId = this.topics[0]._id;
         this.loadMoreId = data.loadMoreID;
       });
     },

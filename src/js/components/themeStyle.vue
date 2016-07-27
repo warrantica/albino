@@ -38,6 +38,8 @@
     #sidebarHead, #bestTopicContainer, #rightPane .info{
       border-bottom: 1px {{ border }} solid;
     }
+
+    .top.topic{ border-top: 1px {{ border }} solid; }
   </style>
 </template>
 
