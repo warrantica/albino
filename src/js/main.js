@@ -183,7 +183,9 @@ let vm = new Vue({
       //pull down curtains
       $('#rightPane').addClass('wrapUp');
       $('#rightPane .loading').addClass('active');
-      $('#rightPane').animate({scrollTop:0}, "0.5s");
+
+      if(topicId !== this.currentTopic)
+        $('#rightPane').animate({scrollTop:0}, "0.5s");
 
       return Promise.all([
         Pantip.loadTopic(topicId),
