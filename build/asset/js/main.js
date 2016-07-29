@@ -16402,7 +16402,6 @@ exports.default = {
 
   events: {
     'topicLoaded': function topicLoaded(topicId) {
-      console.log("ID: " + this.data._id + " " + this.data.isActive);
       this.data.isActive = topicId === this.data._id ? true : false;
     }
   }
@@ -16704,7 +16703,7 @@ let vm = new Vue({
         Pantip.loadTopic(topicId),
         Pantip.loadComments(topicId)
       ]).then(values => {
-        console.log(values);
+        //console.log(values);
         this.currentTopic = topicId;
 
         //load topic

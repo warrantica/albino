@@ -191,7 +191,7 @@ let vm = new Vue({
         Pantip.loadTopic(topicId),
         Pantip.loadComments(topicId)
       ]).then(values => {
-        console.log(values);
+        //console.log(values);
         this.currentTopic = topicId;
 
         //load topic

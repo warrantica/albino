@@ -52,7 +52,6 @@
 
     events: {
       'topicLoaded': function(topicId){
-        console.log("ID: " + this.data._id + " " + this.data.isActive);
         this.data.isActive = (topicId === this.data._id) ? true : false;
       }
     }
