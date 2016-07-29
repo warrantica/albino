@@ -16109,7 +16109,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-691c7be0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../pantipInterface.js":75,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
+},{"../pantipInterface.js":76,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n")
 'use strict';
@@ -16314,7 +16314,52 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-667c7dec", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../vars.js":76,"vue":64,"vue-hot-reload-api":63}],72:[function(require,module,exports){
+},{"../vars.js":77,"vue":64,"vue-hot-reload-api":63}],72:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n.toolbarIcon[_v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[_v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  -webkit-transition: all .1s ease;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[_v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n")
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  props: {
+    icon: String,
+    label: String
+  },
+
+  data: function data() {
+    return {
+      offset: 0
+    };
+  },
+  ready: function ready() {
+    var center = this.$els.icon.offsetWidth / 2 - this.$els.label.offsetWidth / 2;
+    var dim = this.$els.label.getBoundingClientRect();
+    if (dim.right - center > document.body.offsetWidth) {
+      this.offset = dim.right - document.body.offsetWidth;
+    } else {
+      this.offset = center;
+    }
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"toolbarIcon sClickable\" v-el:icon=\"\" _v-74e5db62=\"\">\n  <i class=\"ic\" v-text=\"icon\" _v-74e5db62=\"\"></i>\n  <div class=\"label sPrimaryBg sElevation2\" v-text=\"label\" :style=\"{right:offset+'px'}\" v-el:label=\"\" _v-74e5db62=\"\"></div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n.toolbarIcon[_v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[_v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  -webkit-transition: all .1s ease;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[_v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-74e5db62", module.exports)
+  } else {
+    hotAPI.update("_v-74e5db62", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],73:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
@@ -16378,7 +16423,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-df29bfa0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],73:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],74:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.tag[_v-dcfa727c]{\n  padding: 15px 0 0 15px;\n}\n\n.tag .ic[_v-dcfa727c]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}\n")
 'use strict';
@@ -16465,7 +16510,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-dcfa727c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],74:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],75:[function(require,module,exports){
 //============================================================================
 //Browserify require stuff
 //============================================================================
@@ -16556,6 +16601,7 @@ $('#lightBox').on('click', function(e){
 
 ===========================================================================*/
 
+let toolbarIcon = require('./components/toolbarIcon.vue');
 let forumSelectItem = require('./components/forumSelectItem.vue');
 let bestTopicItem = require('./components/bestTopicItem.vue');
 let topicItem = require('./components/topicItem.vue');
@@ -16565,6 +16611,7 @@ let commentItem = require('./components/commentItem.vue');
 let reactionView = require('./components/reactionView.vue');
 let themeStyle = require('./components/themeStyle.vue');
 
+Vue.component('toolbarIcon', toolbarIcon);
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
 Vue.component('topicItem', topicItem);
@@ -16752,7 +16799,7 @@ chrome.storage.onChanged.addListener(changes => {
   }
 });
 
-},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/topicItem.vue":72,"./components/topicView.vue":73,"./pantipInterface.js":75,"./vars.js":76,"vue":64}],75:[function(require,module,exports){
+},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/toolbarIcon.vue":72,"./components/topicItem.vue":73,"./components/topicView.vue":74,"./pantipInterface.js":76,"./vars.js":77,"vue":64}],76:[function(require,module,exports){
 module.exports = {
   loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
@@ -16915,7 +16962,7 @@ module.exports = {
   }
 }
 
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 module.exports = {
   forumInfo: [
     { name: 'food',         label: 'ก้นครัว' },
@@ -17024,4 +17071,4 @@ module.exports = {
   }
 };
 
-},{}]},{},[74]);
+},{}]},{},[75]);

@@ -88,6 +88,7 @@ $('#lightBox').on('click', function(e){
 
 ===========================================================================*/
 
+let toolbarIcon = require('./components/toolbarIcon.vue');
 let forumSelectItem = require('./components/forumSelectItem.vue');
 let bestTopicItem = require('./components/bestTopicItem.vue');
 let topicItem = require('./components/topicItem.vue');
@@ -97,6 +98,7 @@ let commentItem = require('./components/commentItem.vue');
 let reactionView = require('./components/reactionView.vue');
 let themeStyle = require('./components/themeStyle.vue');
 
+Vue.component('toolbarIcon', toolbarIcon);
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
 Vue.component('topicItem', topicItem);

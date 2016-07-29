@@ -18,12 +18,13 @@
       <img src="asset/img/logo.png"/>
       <img src="asset/img/logoHover.png" class="logoHover"/>
     </div>
-    <div id="sidebarToolbar">
+    <div class="sidebarToolbar">
       <div id="forumSelector" class="sClickable" @click.stop="showDialogues.forumSelect = true">
         <span id="forumSelectorName">{{ forumDisplayName }}</span>
         <i class="ic">arrow_drop_down</i>
       </div>
-      <i class="ic refreshButton sClickable" @click="loadTopics(currentForum)">refresh</i>
+      <toolbar-icon icon="refresh" label="รีเฟรชรายชื่อกระทู้" @click="loadTopics(currentForum)"></toolbar-icon>
+      <toolbar-icon icon="more_vert" label="ตั้งค่า" @click="loadTopics(currentForum)"></toolbar-icon>
     </div>
     <ul id="forumSelect" class="sElevation2 sClickable"
         :class="{ active:showDialogues.forumSelect }">
@@ -60,10 +61,10 @@
     <div id="bellyTitle"></div>
     <div id="bellyToolbar">
       <div class="refreshButtonContainer" @click="refreshTopic">
-        <i class="ic sClickable">refresh</i>
+        <toolbar-icon icon="refresh" label="รีเฟรชกระทู้"></toolbar-icon>
         <div class="refreshBadge sAccentBg" v-show="unreadComments">{{ unreadComments }}</div>
       </div>
-      <i class="ic openInPantipButton sClickable" @click="openInPantip">open_in_new</i>
+      <toolbar-icon icon="open_in_new" label="เปิดใน Pantip.com" @click="openInPantip"></toolbar-icon>
     </div>
   </div>
   <div id="rightPane">
