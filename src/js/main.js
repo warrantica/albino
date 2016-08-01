@@ -117,7 +117,8 @@ let vm = new Vue({
     currentTopic: 0,
     showBestTopics: false,
     showDialogues: {
-      forumSelect: false
+      forumSelect: false,
+      overflow: false
     },
     bestTopics: [],
     topics: [],

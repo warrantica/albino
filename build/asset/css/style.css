@@ -107,23 +107,41 @@ a:link, a:visited{ text-decoration: none; }
   text-align: right;
 }
 
-#forumSelect{
+.dialogue{
   display: block;
   font-size: 14px;
   position: absolute;
+  -webkit-clip-path: circle(0px at 100% 0px);
+  z-index: 20;
+  transition: all .3s ease-in-out;
+
+}
+
+.dialogue.active{
+  -webkit-clip-path: circle(100% at 50% 50%);
+}
+
+#forumSelect{
   top: 10px;
   right: 70px;
   height: 90vh;
   overflow-y: scroll;
-  -webkit-clip-path: circle(0px at 100% 0px);
-  z-index: 20;
-  transition: all .3s ease-in-out;
   overflow: hidden;
 }
 
 #forumSelect.active{
-  -webkit-clip-path: circle(100% at 50% 50%);
   overflow: auto;
+}
+
+#overflow{
+  top: 10px;
+  right: 10px;
+}
+
+#overflow li{
+  line-height: 1;
+  display: block;
+  padding: 15px 20px;
 }
 
 #leftPane{

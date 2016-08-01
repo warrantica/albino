@@ -26,7 +26,7 @@
       color: {{ base.text }};
     }
 
-    #sidebarHead, #forumSelect, #leftPane,
+    #sidebarHead, .dialogue, #leftPane,
     .loading, .topic, #topicView, .comment, .emotionsInfo{
       background: {{ base.fore }};
     }

@@ -24,13 +24,18 @@
         <i class="ic">arrow_drop_down</i>
       </div>
       <toolbar-icon icon="refresh" label="รีเฟรชรายชื่อกระทู้" @click="loadTopics(currentForum)"></toolbar-icon>
-      <toolbar-icon icon="more_vert" label="ตั้งค่า" @click="loadTopics(currentForum)"></toolbar-icon>
+      <toolbar-icon icon="more_vert" label="อื่น ๆ" @click.stop="showDialogues.overflow = true"></toolbar-icon>
     </div>
-    <ul id="forumSelect" class="sElevation2 sClickable"
+    <ul id="forumSelect" class="dialogue sElevation2 sClickable"
         :class="{ active:showDialogues.forumSelect }">
       <forum-select-item v-for="forum in forums" :name="forum.name">
         {{ forum.label }}
       </forum-select-item>
+    </ul>
+    <ul id="overflow" class="dialogue sElevation2"
+        :class="{ active:showDialogues.overflow }">
+      <li>ตั้งค่า</li>
+      <li>เกี่ยวกับ Albino</li>
     </ul>
   </div>
   <div id="leftPane">
