@@ -16630,6 +16630,7 @@ let vm = new Vue({
   data(){ return{
     forums: Vars.forumInfo,
     currentForum: '',
+    currentTitle: '',
     currentTopic: 0,
     currentPage: 'tips',
     showBestTopics: false,
@@ -16715,7 +16716,7 @@ let vm = new Vue({
         //load topic
         values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
         this.$broadcast('loadTopicView', values[0]);
-        $('#bellyTitle').text(values[0]['title']);
+        this.currentTitle = values[0]['title'];
 
         //load comments
         this.$broadcast('loadCommentView', values[1]);
@@ -16758,6 +16759,7 @@ let vm = new Vue({
     },
 
     loadPage(name){
+      this.currentTitle = '';
       this.currentTopic = 0;
       window.clearInterval(this.topicRefreshIntervalId);
       this.unreadComments = 0;
