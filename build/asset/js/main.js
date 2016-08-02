@@ -16755,6 +16755,10 @@ let vm = new Vue({
     openInPantip(){
       if(this.currentTopic !== 0)
         window.open(`http://pantip.com/topic/${this.currentTopic}`, '_blank');
+    },
+
+    goToSettings(){
+      chrome.runtime.openOptionsPage();
     }
   },
 
