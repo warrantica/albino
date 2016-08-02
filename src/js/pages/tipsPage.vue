@@ -1,6 +1,9 @@
 <template>
   <div class="topicWrapper">
-    THIS IS TIPS
+    <h1>Welcome Page</h1>
+    <div class="content">
+      TODO: put some tips here.
+    </div>
   </div>
 </template>
 

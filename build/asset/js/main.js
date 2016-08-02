@@ -16840,7 +16840,7 @@ if (module.hot) {(function () {  module.hot.accept()
 },{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],77:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n")
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-25bb61da=\"\">\n  THIS IS TIPS\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-25bb61da=\"\">\n  <h1 _v-25bb61da=\"\">Welcome Page</h1>\n  <div class=\"content\" _v-25bb61da=\"\">\n    TODO: put some tips here.\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
