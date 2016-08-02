@@ -16759,6 +16759,8 @@ let vm = new Vue({
 
     loadPage(name){
       this.currentTopic = 0;
+      window.clearInterval(this.topicRefreshIntervalId);
+      this.unreadComments = 0;
       this.currentPage = name;
     },
 
@@ -16818,7 +16820,7 @@ chrome.storage.onChanged.addListener(changes => {
 },{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/toolbarIcon.vue":72,"./components/topicItem.vue":73,"./components/topicView.vue":74,"./pages/aboutPage.vue":76,"./pages/tipsPage.vue":77,"./pantipInterface.js":78,"./vars.js":79,"vue":64}],76:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n")
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-4451ee80=\"\">\n  <h1 _v-4451ee80=\"\">เกี่ยวกับ Albino</h1>\n  <div _v-4451ee80=\"\">\n    พัฒนาโดย @warrantica\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-4451ee80=\"\">\n  <h1 _v-4451ee80=\"\">เกี่ยวกับ Albino</h1>\n  <div class=\"content\" _v-4451ee80=\"\">\n    พัฒนาโดย <a href=\"http://twitter.com/warrantica\" target=\"_blank\" _v-4451ee80=\"\">@warrantica</a>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

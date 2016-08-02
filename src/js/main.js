@@ -247,6 +247,8 @@ let vm = new Vue({
 
     loadPage(name){
       this.currentTopic = 0;
+      window.clearInterval(this.topicRefreshIntervalId);
+      this.unreadComments = 0;
       this.currentPage = name;
     },
 
