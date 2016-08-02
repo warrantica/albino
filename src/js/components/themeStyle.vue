@@ -31,7 +31,7 @@
       background: {{ base.fore }};
     }
 
-    #forumSelect li:hover, .topic:hover, .topic.active{
+    .dialogue li:hover, .topic:hover, .topic.active{
       background: {{ base.hover }};
     }
 

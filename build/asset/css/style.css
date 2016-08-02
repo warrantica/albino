@@ -142,6 +142,7 @@ a:link, a:visited{ text-decoration: none; }
   line-height: 1;
   display: block;
   padding: 15px 20px;
+  transition: all .2s ease;
 }
 
 #leftPane{
