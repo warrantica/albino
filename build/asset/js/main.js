@@ -16109,7 +16109,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-691c7be0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../pantipInterface.js":76,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
+},{"../pantipInterface.js":78,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n")
 'use strict';
@@ -16314,7 +16314,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-667c7dec", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../vars.js":77,"vue":64,"vue-hot-reload-api":63}],72:[function(require,module,exports){
+},{"../vars.js":79,"vue":64,"vue-hot-reload-api":63}],72:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.toolbarIcon[_v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[_v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  -webkit-transition: all .1s ease;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[_v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n")
 "use strict";
@@ -16609,6 +16609,8 @@ let commentView = require('./components/commentView.vue');
 let commentItem = require('./components/commentItem.vue');
 let reactionView = require('./components/reactionView.vue');
 let themeStyle = require('./components/themeStyle.vue');
+let tipsPage = require('./pages/tipsPage.vue');
+let aboutPage = require('./pages/aboutPage.vue');
 
 Vue.component('toolbarIcon', toolbarIcon);
 Vue.component('forumSelectItem', forumSelectItem);
@@ -16619,6 +16621,8 @@ Vue.component('commentView', commentView);
 Vue.component('commentItem', commentItem);
 Vue.component('reactionView', reactionView);
 Vue.component('themeStyle', themeStyle);
+Vue.component('tips', tipsPage);
+Vue.component('about', aboutPage);
 
 let vm = new Vue({
   el: 'body',
@@ -16627,6 +16631,7 @@ let vm = new Vue({
     forums: Vars.forumInfo,
     currentForum: '',
     currentTopic: 0,
+    currentPage: 'tips',
     showBestTopics: false,
     showDialogues: {
       forumSelect: false,
@@ -16752,6 +16757,11 @@ let vm = new Vue({
       }
     },
 
+    loadPage(name){
+      this.currentTopic = 0;
+      this.currentPage = name;
+    },
+
     openInPantip(){
       if(this.currentTopic !== 0)
         window.open(`http://pantip.com/topic/${this.currentTopic}`, '_blank');
@@ -16805,7 +16815,43 @@ chrome.storage.onChanged.addListener(changes => {
   }
 });
 
-},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/toolbarIcon.vue":72,"./components/topicItem.vue":73,"./components/topicView.vue":74,"./pantipInterface.js":76,"./vars.js":77,"vue":64}],76:[function(require,module,exports){
+},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/themeStyle.vue":71,"./components/toolbarIcon.vue":72,"./components/topicItem.vue":73,"./components/topicView.vue":74,"./pages/aboutPage.vue":76,"./pages/tipsPage.vue":77,"./pantipInterface.js":78,"./vars.js":79,"vue":64}],76:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n")
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-4451ee80=\"\">\n  <h1 _v-4451ee80=\"\">เกี่ยวกับ Albino</h1>\n  <div _v-4451ee80=\"\">\n    พัฒนาโดย @warrantica\n  </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-4451ee80", module.exports)
+  } else {
+    hotAPI.update("_v-4451ee80", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],77:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n")
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-25bb61da=\"\">\n  THIS IS TIPS\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-25bb61da", module.exports)
+  } else {
+    hotAPI.update("_v-25bb61da", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],78:[function(require,module,exports){
 module.exports = {
   loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
@@ -16968,7 +17014,7 @@ module.exports = {
   }
 }
 
-},{}],77:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 module.exports = {
   forumInfo: [
     { name: 'food',         label: 'ก้นครัว' },

@@ -35,7 +35,7 @@
     <ul id="overflow" class="dialogue sElevation2"
         :class="{ active:showDialogues.overflow }">
       <li class="sClickable" @click="goToSettings">ตั้งค่า</a></li>
-      <li class="sClickable" @click="">เกี่ยวกับ Albino</li>
+      <li class="sClickable" @click="loadPage('about')">เกี่ยวกับ Albino</li>
     </ul>
   </div>
   <div id="leftPane">
@@ -75,9 +75,10 @@
   <div id="rightPane">
     <div class="loading sAccentText"><i class="ic">hourglass_full</i></div>
     <div id="topicView" class="sElevation1">
-      <topic-view :data="topicData"></topic-view>
+      <topic-view :data="topicData" v-show="currentTopic"></topic-view>
+      <component :is="currentPage" v-show="!currentTopic"></component>
     </div>
-    <comment-view></comment-view>
+    <comment-view v-show="currentTopic"></comment-view>
   </div>
   <div id="fab" class="disable sAccentBg sElevation4">
     <div class="topContainer sClickable"><i class="ic">expand_less</i></div>

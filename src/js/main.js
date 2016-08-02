@@ -97,6 +97,8 @@ let commentView = require('./components/commentView.vue');
 let commentItem = require('./components/commentItem.vue');
 let reactionView = require('./components/reactionView.vue');
 let themeStyle = require('./components/themeStyle.vue');
+let tipsPage = require('./pages/tipsPage.vue');
+let aboutPage = require('./pages/aboutPage.vue');
 
 Vue.component('toolbarIcon', toolbarIcon);
 Vue.component('forumSelectItem', forumSelectItem);
@@ -107,6 +109,8 @@ Vue.component('commentView', commentView);
 Vue.component('commentItem', commentItem);
 Vue.component('reactionView', reactionView);
 Vue.component('themeStyle', themeStyle);
+Vue.component('tips', tipsPage);
+Vue.component('about', aboutPage);
 
 let vm = new Vue({
   el: 'body',
@@ -115,6 +119,7 @@ let vm = new Vue({
     forums: Vars.forumInfo,
     currentForum: '',
     currentTopic: 0,
+    currentPage: 'tips',
     showBestTopics: false,
     showDialogues: {
       forumSelect: false,
@@ -238,6 +243,11 @@ let vm = new Vue({
           $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
         });
       }
+    },
+
+    loadPage(name){
+      this.currentTopic = 0;
+      this.currentPage = name;
     },
 
     openInPantip(){
