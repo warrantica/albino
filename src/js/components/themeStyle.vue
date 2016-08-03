@@ -26,7 +26,7 @@
       color: {{ base.text }};
     }
 
-    #sidebarHead, .dialogue, #leftPane, .searchPane,
+    #sidebarHead, .dialogue, #leftPane, .searchContainer, .searchResultList,
     .loading, .topic, #topicView, .comment, .emotionsInfo{
       background: {{ base.fore }};
     }

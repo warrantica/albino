@@ -68,6 +68,7 @@
       <toolbar-icon icon="search" label="ค้นหา" @click="doSearch"></toolbar-icon>
     </div>
     <div class="searchResultList">
+      <div class="loading sAccentText"><i class="ic">refresh</i></div>
       <search-result-item v-for="topic in searchResults" :data="topic"></search-result-item>
     </div>
   </div>

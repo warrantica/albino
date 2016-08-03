@@ -128,7 +128,7 @@ let vm = new Vue({
       forumSelect: false,
       overflow: false
     },
-    showSearch: true,
+    showSearch: false,
     bestTopics: [],
     topics: [],
     searchQuery: '',
@@ -193,9 +193,14 @@ let vm = new Vue({
 
     doSearch(){
       if(this.searchQuery === '') return false;
+
+      $('.searchResultList').addClass('wrapUp');
+      $('.searchResultList .loading').addClass('active');
       Pantip.search(this.searchQuery).then(data => {
-        console.log(data);
+        //console.log(data);
         this.searchResults = data;
+        $('.searchResultList').removeClass('wrapUp');
+        $('.searchResultList .loading').removeClass('active');
       });
     },
 

@@ -16338,7 +16338,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText, .result b{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, .dialogue, #leftPane, .searchPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  .dialogue li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic{ border-top: 1px {{ border }} solid; }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText, .result b{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, .dialogue, #leftPane, .searchContainer, .searchResultList,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  .dialogue li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic{ border-top: 1px {{ border }} solid; }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16677,7 +16677,7 @@ let vm = new Vue({
       forumSelect: false,
       overflow: false
     },
-    showSearch: true,
+    showSearch: false,
     bestTopics: [],
     topics: [],
     searchQuery: '',
@@ -16742,9 +16742,14 @@ let vm = new Vue({
 
     doSearch(){
       if(this.searchQuery === '') return false;
+
+      $('.searchResultList').addClass('wrapUp');
+      $('.searchResultList .loading').addClass('active');
       Pantip.search(this.searchQuery).then(data => {
-        console.log(data);
+        //console.log(data);
         this.searchResults = data;
+        $('.searchResultList').removeClass('wrapUp');
+        $('.searchResultList .loading').removeClass('active');
       });
     },
 

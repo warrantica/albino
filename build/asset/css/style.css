@@ -283,7 +283,14 @@ a:link, a:visited{ text-decoration: none; }
 
 .searchResultList{
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
+  position: relative; top: 0; left: 0;
+  -webkit-clip-path: circle(150% at 50% 55px);
+  transition: all .5s ease;
+}
+
+.searchResultList.wrapUp{
+  -webkit-clip-path: circle(15px at 50% 55px);
 }
 
 /*============================================================*/
