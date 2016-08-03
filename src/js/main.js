@@ -129,6 +129,7 @@ let vm = new Vue({
     showSearch: true,
     bestTopics: [],
     topics: [],
+    searchQuery: '',
     loadMoreId: 0,
     topTopicId: 0,
     topicRefreshIntervalId: '',
@@ -185,6 +186,13 @@ let vm = new Vue({
     loadMoreTopics(){
       this.loadTopics(this.currentForum, true);
       $('.topic.' + this.loadMoreId).addClass('beforeMore');
+    },
+
+    doSearch(){
+      if(this.searchQuery === '') return false;
+      Pantip.search(this.searchQuery).then(data => {
+        console.log(data);
+      });
     },
 
     loadTopic(topicId){

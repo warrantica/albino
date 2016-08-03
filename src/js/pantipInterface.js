@@ -61,6 +61,60 @@ module.exports = {
 
   },
 
+  search(query){
+    return new Promise((resolve, reject) => {
+      if(query === '') reject('Empty search string');
+      $.ajax({
+        type: 'GET',
+        url: 'http://search.pantip.com/ss?q=' + query,
+        success: function(data){
+          data = data.replace(/^[^]*(<td style="bo[^]*?<\/td>)[^]*$/, '$1');
+          let html = $(data).find('p')[0];
+          let htmlLines = html.innerHTML.split('\n');
+
+          let res = [];
+
+          for(let i=0; i<htmlLines.length; ++i){
+            if(htmlLines[i].endsWith(':&nbsp;')){
+              let comment_num = '0';
+              let content = '';
+              let author = '';
+
+              let topicHtml = $(htmlLines[i+1]);
+              let disp_topic = topicHtml.text().trim();
+              let topic_link = topicHtml.first().attr('href');
+
+              if(htmlLines[i+2].startsWith('<a')){
+                comment_num = $(htmlLines[i+2]).text().substr(1);
+                content = htmlLines[i+3];
+                author = htmlLines[i+4];
+              }else{
+                content = htmlLines[i+2];
+                author = htmlLines[i+3];
+              }
+              content = $(content).text();
+              author = author.replace(/^[^]*<strong>([^]*)<\/strong>[^]*$/, '$1');
+              res.push({ disp_topic, topic_link, comment_num, content, author });
+            }
+          }
+
+          resolve(res);
+        }
+      });
+    });
+  },
+
+  getLinkFromSearch(url){
+    let res = '';
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://search.pantip.com' + url, true);
+    xhr.onload = () => res = xhr.responseURL;
+    xhr.send(null);
+
+    xhr.close();
+    return res;
+  },
+
   loadTopic(topicID){
     return new Promise((resolve, reject) => {
       $.ajax({

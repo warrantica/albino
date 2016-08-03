@@ -64,8 +64,8 @@
   <div class="searchPane" v-show="showSearch">
     <div class="searchContainer">
       <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click="showSearch = false"></toolbar-icon>
-      <input class="searchBar" type="text" value="" placeholder="คำค้นหา...">
-      <toolbar-icon icon="search" label="ค้นหา" @click=""></toolbar-icon>
+      <input class="searchBar" type="text" v-model="searchQuery" placeholder="คำค้นหา..." @keyup.enter="doSearch">
+      <toolbar-icon icon="search" label="ค้นหา" @click="doSearch"></toolbar-icon>
     </div>
     <div class="searchResultList">
 
