@@ -285,6 +285,12 @@ let vm = new Vue({
     'loadTopic': function(topicId){
       this.$broadcast('topicLoaded', topicId);
       this.loadTopic(topicId);
+    },
+
+    'loadSearchResult': function(url){
+      Pantip.getTopicIdFromSearch(url).then(id => {
+        this.loadTopic(id);
+      });
     }
   },
 

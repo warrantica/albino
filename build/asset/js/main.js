@@ -16834,6 +16834,12 @@ let vm = new Vue({
     'loadTopic': function(topicId){
       this.$broadcast('topicLoaded', topicId);
       this.loadTopic(topicId);
+    },
+
+    'loadSearchResult': function(url){
+      Pantip.getTopicIdFromSearch(url).then(id => {
+        this.loadTopic(id);
+      });
     }
   },
 
@@ -17012,15 +17018,22 @@ module.exports = {
     });
   },
 
-  getLinkFromSearch(url){
-    let res = '';
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://search.pantip.com' + url, true);
-    xhr.onload = () => res = xhr.responseURL;
-    xhr.send(null);
+  getTopicIdFromSearch(url){
+    return new Promise((resolve, reject) => {
+      let res = '';
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', 'http://search.pantip.com' + url, true);
 
-    xhr.close();
-    return res;
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4 && xhr.status == 200){
+          res = xhr.responseURL.split('/');
+          resolve(res[res.length-1]);
+        }else if(xhr.readyState == 4){
+          reject('Error: getTopicIdFromSearch XHR failed');
+        }
+      }
+      xhr.send(null);
+    });
   },
 
   loadTopic(topicID){
