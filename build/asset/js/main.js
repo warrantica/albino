@@ -16638,6 +16638,7 @@ let vm = new Vue({
       forumSelect: false,
       overflow: false
     },
+    showSearch: false,
     bestTopics: [],
     topics: [],
     loadMoreId: 0,

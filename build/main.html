@@ -34,11 +34,12 @@
     </ul>
     <ul id="overflow" class="dialogue sElevation2"
         :class="{ active:showDialogues.overflow }">
+      <li class="sClickable" @click="showSearch = true">ค้นหา</a></li>
       <li class="sClickable" @click="goToSettings">ตั้งค่า</a></li>
       <li class="sClickable" @click="loadPage('about')">เกี่ยวกับ Albino</li>
     </ul>
   </div>
-  <div id="leftPane">
+  <div id="leftPane" v-show="!showSearch">
     <div class="loading sAccentText"><i class="ic">refresh</i></div>
     <div id="bestTopicContainer">
       <div id="bestTopicHeader" class="sClickable"
@@ -58,6 +59,16 @@
               @click="loadMoreTopics">
         โหลดกระทู้เพิ่ม
       </button>
+    </div>
+  </div>
+  <div id="searchPane" v-show="showSearch">
+    <div id="searchContainer">
+      <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click="showSearch = false"></toolbar-icon>
+      <input type="text" value="">
+      <toolbar-icon icon="search" label="ค้นหา" @click=""></toolbar-icon>
+    </div>
+    <div id="searchResultList">
+
     </div>
   </div>
 </div>
