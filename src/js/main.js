@@ -194,6 +194,7 @@ let vm = new Vue({
     doSearch(){
       if(this.searchQuery === '') return false;
       Pantip.search(this.searchQuery).then(data => {
+        console.log(data);
         this.searchResults = data;
       });
     },

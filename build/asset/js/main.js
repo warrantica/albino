@@ -16261,8 +16261,6 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"babel-runtime/core-js/get-iterator":2,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],71:[function(require,module,exports){
-var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n.result[_v-8640068c]{\n  \n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16286,22 +16284,18 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" @click=\"loadSearchResult\" _v-8640068c=\"\">\n  <div class=\"title\" _v-8640068c=\"\">{{{ data.disp_topic }}}</div>\n  <div class=\"result\" _v-8640068c=\"\">{{ data.content }}</div>\n  <div class=\"subtitle sSubtitle\" _v-8640068c=\"\">\n    โดย {{ data.author }}\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" @click=\"loadSearchResult\">\n  <div class=\"title\">{{{ data.disp_topic }}}</div>\n  <div class=\"result\">{{{ data.content }}}</div>\n  <div class=\"subtitle sSubtitle\">\n    โดย {{ data.author }}\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
-  module.hot.dispose(function () {
-    __vueify_insert__.cache["\n.result[_v-8640068c]{\n  \n}\n"] = false
-    document.head.removeChild(__vueify_style__)
-  })
   if (!module.hot.data) {
     hotAPI.createRecord("_v-8640068c", module.exports)
   } else {
     hotAPI.update("_v-8640068c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],72:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63}],72:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16344,7 +16338,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, .dialogue, #leftPane, .searchPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  .dialogue li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic{ border-top: 1px {{ border }} solid; }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText, .result b{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, .dialogue, #leftPane, .searchPane,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  .dialogue li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic{ border-top: 1px {{ border }} solid; }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16749,6 +16743,7 @@ let vm = new Vue({
     doSearch(){
       if(this.searchQuery === '') return false;
       Pantip.search(this.searchQuery).then(data => {
+        console.log(data);
         this.searchResults = data;
       });
     },
@@ -17005,7 +17000,7 @@ module.exports = {
                 content = htmlLines[i+2];
                 author = htmlLines[i+3];
               }
-              content = $(content).text();
+              content = $(content).html();
               author = author.replace(/^[^]*<strong>([^]*)<\/strong>[^]*$/, '$1');
               res.push({ disp_topic, topic_link, comment_num, content, author });
             }

@@ -1,18 +1,12 @@
 <template>
   <div class="topic sClickable" @click="loadSearchResult">
     <div class="title">{{{ data.disp_topic }}}</div>
-    <div class="result">{{ data.content }}</div>
+    <div class="result">{{{ data.content }}}</div>
     <div class="subtitle sSubtitle">
       โดย {{ data.author }}
     </div>
   </div>
 </template>
-
-<style scoped>
-  .result{
-    
-  }
-</style>
 
 <script>
   export default {

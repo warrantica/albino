@@ -17,7 +17,7 @@
       color: {{ theme.textOnAccent }};
     }
 
-    .sAccentText{ color: {{ theme.accent }}; }
+    .sAccentText, .result b{ color: {{ theme.accent }}; }
 
     .sSubtitle{ color: {{ base.subtitle }}; }
 

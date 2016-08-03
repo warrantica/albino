@@ -92,7 +92,7 @@ module.exports = {
                 content = htmlLines[i+2];
                 author = htmlLines[i+3];
               }
-              content = $(content).text();
+              content = $(content).html();
               author = author.replace(/^[^]*<strong>([^]*)<\/strong>[^]*$/, '$1');
               res.push({ disp_topic, topic_link, comment_num, content, author });
             }
