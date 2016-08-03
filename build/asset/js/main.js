@@ -16284,7 +16284,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" @click=\"loadSearchResult\">\n  <div class=\"title\">{{{ data.disp_topic }}}</div>\n  <div class=\"result\">{{{ data.content }}}</div>\n  <div class=\"subtitle sSubtitle\">\n    โดย {{ data.author }}\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sClickable\" @click=\"loadSearchResult\">\n  <div class=\"title\">{{{ data.disp_topic }}}</div>\n  <div class=\"subtitle sSubtitle\">คห. {{ data.comment_num }} โดย {{ data.author }}</div>\n  <div class=\"result sSubtitle\">{{{ data.content }}}</div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
