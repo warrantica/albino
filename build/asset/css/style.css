@@ -257,6 +257,25 @@ a:link, a:visited{ text-decoration: none; }
   margin: 10px auto;
 }
 
+.searchContainer{
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.searchContainer .toolbarIcon{
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+.searchBar{
+  flex: 1;
+  padding: 10px;
+  border: none;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
 /*============================================================*/
 
 #belly{

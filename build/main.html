@@ -61,13 +61,13 @@
       </button>
     </div>
   </div>
-  <div id="searchPane" v-show="showSearch">
-    <div id="searchContainer">
+  <div class="searchPane" v-show="showSearch">
+    <div class="searchContainer">
       <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click="showSearch = false"></toolbar-icon>
-      <input type="text" value="">
+      <input class="searchBar" type="text" value="" placeholder="คำค้นหา...">
       <toolbar-icon icon="search" label="ค้นหา" @click=""></toolbar-icon>
     </div>
-    <div id="searchResultList">
+    <div class="searchResultList">
 
     </div>
   </div>

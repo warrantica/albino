@@ -26,7 +26,7 @@
       color: {{ base.text }};
     }
 
-    #sidebarHead, .dialogue, #leftPane,
+    #sidebarHead, .dialogue, #leftPane, .searchPane,
     .loading, .topic, #topicView, .comment, .emotionsInfo{
       background: {{ base.fore }};
     }
@@ -35,7 +35,7 @@
       background: {{ base.hover }};
     }
 
-    #sidebarHead, #bestTopicContainer, #rightPane .info{
+    #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{
       border-bottom: 1px {{ border }} solid;
     }
 
