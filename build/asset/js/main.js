@@ -16338,6 +16338,8 @@ exports.default = {
     var dim = this.$els.label.getBoundingClientRect();
     if (dim.right - center > document.body.offsetWidth) {
       this.offset = dim.right - document.body.offsetWidth;
+    } else if (dim.right - dim.width <= 0) {
+      this.offset = this.$els.icon.offsetWidth - dim.width;
     } else {
       this.offset = center;
     }
@@ -16638,7 +16640,7 @@ let vm = new Vue({
       forumSelect: false,
       overflow: false
     },
-    showSearch: false,
+    showSearch: true,
     bestTopics: [],
     topics: [],
     loadMoreId: 0,

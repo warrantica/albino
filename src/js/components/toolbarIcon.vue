@@ -49,8 +49,10 @@
       let dim = this.$els.label.getBoundingClientRect();
       if(dim.right - center > document.body.offsetWidth){
         this.offset = dim.right - document.body.offsetWidth;
+      }else if(dim.right - dim.width <= 0){
+        this.offset = this.$els.icon.offsetWidth - dim.width;
       }else{
-        this.offset = center
+        this.offset = center;
       }
     }
   }

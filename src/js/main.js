@@ -126,7 +126,7 @@ let vm = new Vue({
       forumSelect: false,
       overflow: false
     },
-    showSearch: false,
+    showSearch: true,
     bestTopics: [],
     topics: [],
     loadMoreId: 0,
