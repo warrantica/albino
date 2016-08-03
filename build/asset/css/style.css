@@ -232,7 +232,7 @@ a:link, a:visited{ text-decoration: none; }
   transition: all .2s ease-in-out;
 }
 
-#leftPane .topic{
+.topic{
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
@@ -240,21 +240,27 @@ a:link, a:visited{ text-decoration: none; }
   transition: all .2s;
 }
 
-#leftPane .topic.lastTopic{
+.topic.lastTopic{
   border-top: 1px #e0e0e0 dashed;
 }
 
-#leftPane .topic .title{
+.topic .title{
   font-size: 16px;
 }
 
-#leftPane .subtitle .ic{
+.subtitle .ic{
   font-size: 11px;
   margin-bottom: 1px;
 }
 
-#leftPane .loadMore{
+.loadMore{
   margin: 10px auto;
+}
+
+.searchPane{
+  flex: 1;
+  display: flex;
+  flex-flow: column;
 }
 
 .searchContainer{
@@ -273,6 +279,11 @@ a:link, a:visited{ text-decoration: none; }
   padding: 10px;
   border: none;
   font-size: 16px;
+}
+
+.searchResultList{
+  flex: 1;
+  overflow-y: scroll;
 }
 
 /*============================================================*/

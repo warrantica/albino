@@ -92,6 +92,7 @@ let toolbarIcon = require('./components/toolbarIcon.vue');
 let forumSelectItem = require('./components/forumSelectItem.vue');
 let bestTopicItem = require('./components/bestTopicItem.vue');
 let topicItem = require('./components/topicItem.vue');
+let searchResultItem = require('./components/searchResultItem.vue');
 let topicView = require('./components/topicView.vue');
 let commentView = require('./components/commentView.vue');
 let commentItem = require('./components/commentItem.vue');
@@ -104,6 +105,7 @@ Vue.component('toolbarIcon', toolbarIcon);
 Vue.component('forumSelectItem', forumSelectItem);
 Vue.component('bestTopicItem', bestTopicItem);
 Vue.component('topicItem', topicItem);
+Vue.component('searchResultItem', searchResultItem);
 Vue.component('topicView', topicView);
 Vue.component('commentView', commentView);
 Vue.component('commentItem', commentItem);
@@ -130,6 +132,7 @@ let vm = new Vue({
     bestTopics: [],
     topics: [],
     searchQuery: '',
+    searchResults: [],
     loadMoreId: 0,
     topTopicId: 0,
     topicRefreshIntervalId: '',
@@ -191,7 +194,7 @@ let vm = new Vue({
     doSearch(){
       if(this.searchQuery === '') return false;
       Pantip.search(this.searchQuery).then(data => {
-        console.log(data);
+        this.searchResults = data;
       });
     },
 
