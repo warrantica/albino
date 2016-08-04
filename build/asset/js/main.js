@@ -16111,7 +16111,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"../pantipInterface.js":79,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-bottom: 10px;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[_v-6a342272]{\n  margin-bottom: 10px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n\n.commentsInfo[_v-6a342272]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsSort[_v-6a342272]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16138,13 +16138,13 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div class=\"commentsCount\" v-show=\"count\" _v-6a342272=\"\">\n    <i class=\"ic\" _v-6a342272=\"\">chat_bubble</i> {{ count }} ความเห็น\n  </div>\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div class=\"commentsInfo\" v-show=\"count\" _v-6a342272=\"\">\n    <div class=\"commentsCount sBackBg\" _v-6a342272=\"\">\n      <i class=\"ic\" _v-6a342272=\"\">chat_bubble</i> {{ count }} ความเห็น\n    </div>\n    <div class=\"commentsSort sBackBg\" _v-6a342272=\"\">\n      เรียงตาม: เวลาโพสต์\n    </div>\n  </div>\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-bottom: 10px;\n}\n"] = false
+    __vueify_insert__.cache["\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[_v-6a342272]{\n  margin-bottom: 10px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n\n.commentsInfo[_v-6a342272]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsSort[_v-6a342272]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -16346,7 +16346,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText, .result b{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  #sidebarHead, .dialogue, #leftPane, .searchContainer, .searchResultList,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  .dialogue li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic{ border-top: 1px {{ border }} solid; }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText, .result b{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  .sBackBg, #sidebar, #belly, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  .sForeBg, #sidebarHead, .dialogue, #leftPane, .searchContainer, .searchResultList,\n  .loading, .topic, #topicView, .comment, .emotionsInfo{\n    background: {{ base.fore }};\n  }\n\n  .dialogue li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic, .commentsInfo:before{\n    border-top: 1px {{ border }} solid;\n  }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

@@ -21,12 +21,12 @@
 
     .sSubtitle{ color: {{ base.subtitle }}; }
 
-    #sidebar, #belly, .sub.comment{
+    .sBackBg, #sidebar, #belly, .sub.comment{
       background: {{ base.back }};
       color: {{ base.text }};
     }
 
-    #sidebarHead, .dialogue, #leftPane, .searchContainer, .searchResultList,
+    .sForeBg, #sidebarHead, .dialogue, #leftPane, .searchContainer, .searchResultList,
     .loading, .topic, #topicView, .comment, .emotionsInfo{
       background: {{ base.fore }};
     }
@@ -39,7 +39,9 @@
       border-bottom: 1px {{ border }} solid;
     }
 
-    .top.topic{ border-top: 1px {{ border }} solid; }
+    .top.topic, .commentsInfo:before{
+      border-top: 1px {{ border }} solid;
+    }
   </style>
 </template>
 
