@@ -16111,7 +16111,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"../pantipInterface.js":79,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-bottom: 10px;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16138,13 +16138,13 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div _v-6a342272=\"\">\n    จำนวน: {{ count }}\n  </div>\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div class=\"commentsCount\" v-show=\"count\" _v-6a342272=\"\">\n    <i class=\"ic\" _v-6a342272=\"\">chat_bubble</i> {{ count }} ความเห็น\n  </div>\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n"] = false
+    __vueify_insert__.cache["\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-bottom: 10px;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {

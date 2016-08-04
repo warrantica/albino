@@ -1,7 +1,7 @@
 <template>
   <div id="commentsView">
-    <div>
-      จำนวน: {{ count }}
+    <div class="commentsCount" v-show="count">
+      <i class="ic">chat_bubble</i> {{ count }} ความเห็น
     </div>
     <comment-item v-for="comment in comments"
                   :data="comment">
@@ -14,6 +14,10 @@
     width: 100%;
     max-width: 560px;
     margin: 0 auto;
+  }
+
+  .commentsCount{
+    margin-bottom: 10px;
   }
 </style>
 
