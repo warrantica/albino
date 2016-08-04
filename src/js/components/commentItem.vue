@@ -1,5 +1,5 @@
 <template>
-  <div class="comment sElevation1" :class="{sub:sub}">
+  <div class="comment sForeBg sElevation1" :class="{sub:sub}">
     <div class="info">
       <img class="avatar sPrimaryBg" :src="data.user.avatar.medium" />
       <div class="author" :class="{op:data.owner_topic, sAccentBg:data.owner_topic}">{{ data.user.name }}</div>

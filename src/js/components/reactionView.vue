@@ -11,7 +11,7 @@
       </div>
       <div class="emotionCount">{{ data.emotionSum }}</div>
     </div>
-    <ul class="emotionsInfo sElevation2">
+    <ul class="emotionsInfo sForeBg sElevation2">
       <li><img src="asset/img/emotions/like.png"/><span>ถูกใจ {{ data.emotionCounts.like }}</span></li>
       <li><img src="asset/img/emotions/laugh.png"/><span>ขำกลิ้ง {{ data.emotionCounts.laugh }}</span></li>
       <li><img src="asset/img/emotions/love.png"/><span>หลงรัก {{ data.emotionCounts.love }}</span></li>

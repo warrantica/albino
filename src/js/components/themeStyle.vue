@@ -21,13 +21,12 @@
 
     .sSubtitle{ color: {{ base.subtitle }}; }
 
-    .sBackBg, #sidebar, #belly, .sub.comment{
+    .sBackBg, .sub.comment{
       background: {{ base.back }};
       color: {{ base.text }};
     }
 
-    .sForeBg, #sidebarHead, .dialogue, #leftPane, .searchContainer, .searchResultList,
-    .loading, .topic, #topicView, .comment, .emotionsInfo{
+    .sForeBg, .dialogue, .loading{
       background: {{ base.fore }};
     }
 

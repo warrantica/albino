@@ -12,8 +12,8 @@
 	 maximum-scale=1.0, user-scalable=0">
 </head>
 <body @click="dismissDialogues">
-<div id="sidebar" class="sElevation2">
-  <div id="sidebarHead">
+<div id="sidebar" class="sBackBg sElevation2">
+  <div id="sidebarHead" class="sForeBg">
     <div id="logo">
       <img src="asset/img/logo.png"/>
       <img src="asset/img/logoHover.png" class="logoHover"/>
@@ -39,7 +39,7 @@
       <li class="sClickable" @click="loadPage('about')">เกี่ยวกับ Albino</li>
     </ul>
   </div>
-  <div id="leftPane" v-show="!showSearch">
+  <div id="leftPane" class="sForeBg" v-show="!showSearch">
     <div class="loading sAccentText"><i class="ic">refresh</i></div>
     <div id="bestTopicContainer">
       <div id="bestTopicHeader" class="sClickable"
@@ -62,18 +62,18 @@
     </div>
   </div>
   <div class="searchPane" v-show="showSearch">
-    <div class="searchContainer">
+    <div class="searchContainer sForeBg">
       <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click="showSearch = false"></toolbar-icon>
       <input class="searchBar" type="text" v-model="searchQuery" placeholder="คำค้นหา..." @keyup.enter="doSearch">
       <toolbar-icon icon="search" label="ค้นหา" @click="doSearch"></toolbar-icon>
     </div>
-    <div class="searchResultList">
+    <div class="searchResultList sForeBg">
       <div class="loading sAccentText"><i class="ic">refresh</i></div>
       <search-result-item v-for="topic in searchResults" :data="topic"></search-result-item>
     </div>
   </div>
 </div>
-<div id="belly">
+<div id="belly" class="sBackBg">
   <div id="bellyHead" class="sPrimaryBg sElevation1">
     <div class="bellyTitle">{{ currentTitle }}</div>
     <div id="bellyToolbar">
@@ -86,7 +86,7 @@
   </div>
   <div id="rightPane">
     <div class="loading sAccentText"><i class="ic">hourglass_full</i></div>
-    <div id="topicView" class="sElevation1">
+    <div id="topicView" class="sForeBg sElevation1">
       <topic-view :data="topicData" v-show="currentTopic"></topic-view>
       <component :is="currentPage" v-show="!currentTopic"></component>
     </div>

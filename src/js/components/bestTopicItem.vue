@@ -1,5 +1,5 @@
 <template>
-  <div class="topic sClickable"
+  <div class="topic sForeBg sClickable"
        :class="{active: isActive}"
        @click="loadTopic">
     <div class="title">{{ data.disp_topic }}</div>

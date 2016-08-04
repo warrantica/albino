@@ -1,5 +1,5 @@
 <template>
-  <div class="topic sClickable"
+  <div class="topic sForeBg sClickable"
        :class="{active: data.isActive, top: data.isTop}"
        @click="loadTopic">
     <div class="type"></div>
