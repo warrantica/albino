@@ -14,8 +14,9 @@
 
   label{
     display: block;
-    padding: 10px;
+    padding: 5px 10px;
     transition: all .2s ease;
+    cursor: pointer;
   }
 
   .colorSample{
@@ -26,6 +27,7 @@
     border-radius: 50%;
     vertical-align: middle;
     position: relative; top: 0; left: 0;
+    transition: all .2s ease;
   }
 
   .baseColor{
@@ -51,6 +53,10 @@
 
   input:checked + label{
     background: #e3e3e3;
+  }
+
+  input:checked + label .colorSample{
+    transform: scale(1.2);
   }
 </style>
 
