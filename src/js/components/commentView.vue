@@ -5,7 +5,7 @@
         <i class="ic">chat_bubble</i> {{ count }} ความเห็น
       </div>
       <div class="commentsSort sBackBg">
-        เรียงตาม: เวลาโพสต์
+        เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
       </div>
     </div>
     <comment-item v-for="comment in comments"
@@ -44,6 +44,11 @@
     margin-left: 10px;
     padding: 0 10px;
     z-index: 2;
+  }
+
+  .commentsCount i{
+    font-size: 14px;
+    margin-bottom: 1px;
   }
 
   .commentsSort{
