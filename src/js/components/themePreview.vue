@@ -16,7 +16,7 @@
 </template>
 
 <style scoped>
-  div{ transition: background-color .2s ease; }
+  div{ transition: background-color .5s ease; }
 
   .themePreview{
     display: inline-block;

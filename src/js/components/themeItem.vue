@@ -55,8 +55,8 @@
     background: #e3e3e3;
   }
 
-  input:checked + label .colorSample{
-    transform: scale(1.2);
+  input:checked + label .colorSample, label:hover .colorSample{
+    transform: scale(1.1);
   }
 </style>
 
