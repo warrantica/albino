@@ -22,10 +22,10 @@
           </select>
         </div>
 
-        <div class="formGroup">
-          <h2>หน้าตา</h2>
-          <div class="themeSelect">
-            <label for="theme">ธีม:</label>
+        <h2>หน้าตา</h2>
+        <label for="theme">ธีม:</label>
+        <div class="formGroup col2">
+          <div class="themeSelect colItem">
             <theme-item v-for="theme in themes"
                         :name="theme.name"
                         :label="theme.label"
@@ -34,7 +34,9 @@
                         :base="theme.base">
             </theme-item>
           </div>
-          <theme-preview :theme-name.sync="options.theme"></theme-preview>
+          <div class="colItem">
+            <theme-preview :theme-name.sync="options.theme"></theme-preview>
+          </div>
         </div>
 
         <div class="buttonContainer">

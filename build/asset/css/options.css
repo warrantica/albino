@@ -74,10 +74,20 @@ button:active, button:focus{
   background: #CE93D8;
 }
 
+.col2{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+}
+
+.colItem{
+  flex: 1;
+}
+
 .themeSelect{
-  display: inline-block;
-  width: 50%;
-  vertical-align: top;
+  //display: inline-block;
+  //width: 50%;
+  //vertical-align: top;
 }
 
 .buttonContainer{

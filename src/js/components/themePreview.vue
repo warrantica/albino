@@ -19,11 +19,10 @@
   div{ transition: background-color .5s ease; }
 
   .themePreview{
-    display: inline-block;
-    width: 40%;
+    display: block;
+    width: 80%;
     height: 120px;
-    margin-left: 5%;
-    margin-top: 20px;
+    margin: 20px auto;
     vertical-align: top;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   }
