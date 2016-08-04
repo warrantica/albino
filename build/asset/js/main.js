@@ -16122,15 +16122,23 @@ exports.default = {
     comments: []
   },
 
+  data: function data() {
+    return {
+      count: 0
+    };
+  },
+
+
   events: {
     'loadCommentView': function loadCommentView(data) {
       this.comments = [];
+      this.count = data.count;
       if (data.count > 0) this.comments = data.comments;
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div _v-6a342272=\"\">\n    จำนวน: {{ count }}\n  </div>\n  <comment-item v-for=\"comment in comments\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
