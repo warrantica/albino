@@ -84,12 +84,6 @@ button:active, button:focus{
   flex: 1;
 }
 
-.themeSelect{
-  //display: inline-block;
-  //width: 50%;
-  //vertical-align: top;
-}
-
 .buttonContainer{
   width: 100%;
   max-width: 560px;
