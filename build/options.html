@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Albino - Options</title>
 
+    <link rel="stylesheet" href="asset/css/material-icons.css" >
     <link rel="stylesheet" href="asset/css/options.css" >
   </head>
   <body>
@@ -52,7 +53,14 @@
         </div>
 
         <div class="buttonContainer">
-          <button @click.prevent="saveOptions">เซฟ</button>
+          <button class="saveButton"
+                  :class="{'saveButton--success': this.saveButtonState == 'success'}"
+                  @click.prevent="saveOptions">
+            <div class="saveButton-success" v-show="saveButtonState == 'success'" transition="rotate">
+              <i class="ic">done</i>
+            </div>
+            <span class="saveButton-text">เซฟ</span>
+          </button>
         </div>
       </form>
     </div>

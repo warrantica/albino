@@ -69,10 +69,11 @@ button:hover{
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-button:active, button:focus{
-  outline: none;
-  background: #CE93D8;
+button:disabled:hover{
+  box-shadow: 0 0px 0px rgba(0,0,0,0.16), 0 0px 0px rgba(0,0,0,0.23);
 }
+
+button:active, button:focus{ outline: none; }
 
 .col2{
   display: flex;
@@ -96,3 +97,26 @@ button:active, button:focus{
   transform: translateX(-50%);
   box-shadow: 0 -3px 6px rgba(0,0,0,0.13);
 }
+
+.saveButton{ position: relative; }
+.saveButton:active, .saveButton:focus{ background: #CE93D8; }
+
+.saveButton--success{ background: #388e3c; }
+.saveButton--success:active, .saveButton--success:focus{ background: #388e3c; }
+
+.saveButton-success{
+  position: absolute; top: 50%; left: 50%;
+  transition: all .4s cubic-bezier(.8, -0.2, 0.2, 1.2);
+}
+
+.saveButton-success .ic{ margin: 0; }
+
+.saveButton-text{
+  opacity: 1;
+  transition: all .3s ease;
+}
+
+.saveButton--success .saveButton-text{ opacity: 0; }
+
+.rotate-transition{ transform: translateX(-50%) translateY(-50%) rotate(0deg) scale(1); }
+.rotate-enter, .rotate-leave{ transform: translateX(-50%) translateY(-50%) rotate(-180deg) scale(0); }

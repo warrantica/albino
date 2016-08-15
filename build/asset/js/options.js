@@ -15305,13 +15305,21 @@ let vm = new Vue({
     options: {
       defaultForum: 'all',
       theme: 'default'
-    }
+    },
+    saveButtonState: 'default'
   }},
 
   methods: {
     saveOptions(){
+      let saveButton = document.querySelector('.saveButton');
+      saveButton.disabled = true;
       chrome.storage.sync.set(this.options, () => {
         //Notify user
+        this.saveButtonState = 'success';
+        window.setTimeout(() => {
+          this.saveButtonState = 'default';
+          saveButton.disabled = false;
+        }, 3000);
         console.log("Options saved");
       });
     }
