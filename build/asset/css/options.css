@@ -119,4 +119,5 @@ button:active, button:focus{ outline: none; }
 .saveButton--success .saveButton-text{ opacity: 0; }
 
 .rotate-transition{ transform: translateX(-50%) translateY(-50%) rotate(0deg) scale(1); }
-.rotate-enter, .rotate-leave{ transform: translateX(-50%) translateY(-50%) rotate(-180deg) scale(0); }
+.rotate-enter{ transform: translateX(-50%) translateY(-50%) rotate(-180deg) scale(0); }
+.rotate-leave{ transform: translateX(-50%) translateY(-50%) rotate(180deg) scale(0); }
