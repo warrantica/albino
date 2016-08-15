@@ -15407,6 +15407,10 @@ module.exports = {
     name: 'andromeda', label: 'แอนโดรเมด้า',
     primary: '#e65b8b', accent: '#11984f', base: 'light',
     textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
+  }, {
+    name: 'plain', label: 'เส้นเล็กน้ำใส',
+    primary: '#ffffff', accent: '#ffffff', base: 'light',
+    textOnPrimary: '#333333', textOnAccent: '#333333'
   }],
 
   bases: [{
