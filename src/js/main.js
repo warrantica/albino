@@ -303,10 +303,13 @@ let vm = new Vue({
     //Get and apply options
     chrome.storage.sync.get({
       theme: 'default',
-      defaultForum: ''
+      defaultForum: '',
+      fontSize: '26'
     }, item => {
+      console.log(item);
       this.loadTopics(item.defaultForum);
       this.$broadcast('applyTheme', item.theme);
+      this.$broadcast('applyFont', item.fontSize, item.fontFace);
     });
   }
 });

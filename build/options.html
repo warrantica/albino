@@ -45,7 +45,7 @@
         <div class="formGroup col2">
           <div class="colItem">
             <label for="fontSize">ขนาด</label>
-            <select id="fontSize" class="" name="fontSize">
+            <select id="fontSize" class="" name="fontSize" v-model="options.fontSize">
               <option v-for="size in fontSizes" :value="size.value">{{ size.label }}</option>
             </select>
             <label for="fontFace">ฟอนต์</label>
@@ -54,7 +54,7 @@
             </select>
           </div>
           <div class="colItem">
-            <span :style="{ 'font-size': currentFontSize }">
+            <span class="fontPreview" :style="{ fontSize: options.fontSize + 'px' }">
               ตัวอย่าง
             </span>
           </div>

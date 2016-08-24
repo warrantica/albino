@@ -16326,6 +16326,10 @@ exports.default = {
         fore: '', back: '', hover: ''
       },
 
+      fontSize: { label: '', value: '' },
+
+      fontFace: { label: '', value: '' },
+
       border: 'rgba(255, 255, 255, 0.12)'
     };
   },
@@ -16342,11 +16346,16 @@ exports.default = {
         case 'dark':
           this.border = 'rgba(255, 255, 255, 0.13)';
       }
+    },
+
+    'applyFont': function applyFont(size, font) {
+      this.fontSize = size;
+      this.fontFace = font;
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText, .result b{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  .sBackBg, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  .sForeBg, .dialogue, .loading{\n    background: {{ base.fore }};\n  }\n\n  .dialogue li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic, .commentsInfo:before{\n    border-top: 1px {{ border }} solid;\n  }\n</style>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<style>\n  a:link, a:visited{\n    color: {{ theme.accent }};\n    border-bottom: 1px {{ theme.accent }} solid;\n  }\n\n  .sPrimaryBg{\n    background: {{ theme.primary }};\n    color: {{ theme.textOnPrimary }};\n  }\n\n  .sPrimaryText{ color: {{ theme.primary }}; }\n\n  .sAccentBg, ::selection{\n    background: {{ theme.accent }};\n    color: {{ theme.textOnAccent }};\n  }\n\n  .sAccentText, .result b{ color: {{ theme.accent }}; }\n\n  .sSubtitle{ color: {{ base.subtitle }}; }\n\n  .sBackBg, .sub.comment{\n    background: {{ base.back }};\n    color: {{ base.text }};\n  }\n\n  .sForeBg, .dialogue, .loading{\n    background: {{ base.fore }};\n  }\n\n  .dialogue li:hover, .topic:hover, .topic.active{\n    background: {{ base.hover }};\n  }\n\n  #sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{\n    border-bottom: 1px {{ border }} solid;\n  }\n\n  .top.topic, .commentsInfo:before{\n    border-top: 1px {{ border }} solid;\n  }\n\n  #rightPane .content{\n    font-size: {{ fontSize }}px;\n  }\n</style>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16860,10 +16869,13 @@ let vm = new Vue({
     //Get and apply options
     chrome.storage.sync.get({
       theme: 'default',
-      defaultForum: ''
+      defaultForum: '',
+      fontSize: '26'
     }, item => {
+      console.log(item);
       this.loadTopics(item.defaultForum);
       this.$broadcast('applyTheme', item.theme);
+      this.$broadcast('applyFont', item.fontSize, item.fontFace);
     });
   }
 });
@@ -17261,8 +17273,8 @@ module.exports = {
   },
 
   fontSizes: [
-    { label: 'จิ๋ว', value: '12' },
-    { label: 'เล็ก', value: '18' },
+    { label: 'จิ๋ว', value: '18' },
+    { label: 'เล็ก', value: '22' },
     { label: 'กลาง', value: '26' },
     { label: 'ใหญ่', value: '32' },
     { label: 'ยักษ์', value: '48' }

@@ -17,16 +17,11 @@ let vm = new Vue({
     fontFaces: Vars.fontFaces,
     options: {
       defaultForum: 'all',
-      theme: 'default'
+      theme: 'default',
+      fontSize: '26'
     },
     saveButtonState: 'default'
   }},
-
-  computed: {
-    currentFontSize: () => {
-      document.getElementById('fontSize').value;
-    }
-  },
 
   methods: {
     saveOptions(){

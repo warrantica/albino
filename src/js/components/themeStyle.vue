@@ -41,6 +41,10 @@
     .top.topic, .commentsInfo:before{
       border-top: 1px {{ border }} solid;
     }
+
+    #rightPane .content{
+      font-size: {{ fontSize }}px;
+    }
   </style>
 </template>
 
@@ -59,6 +63,10 @@
         fore: '', back: '', hover: ''
       },
 
+      fontSize: { label: '', value: '' },
+
+      fontFace: { label: '', value: '' },
+
       border: 'rgba(255, 255, 255, 0.12)'
     }},
 
@@ -72,6 +80,11 @@
             this.border = 'rgba(0, 0, 0, 0.13)'; break;
           case 'dark': this.border = 'rgba(255, 255, 255, 0.13)'
         }
+      },
+
+      'applyFont': function(size, font){
+        this.fontSize = size;
+        this.fontFace = font;
       }
     }
   }

@@ -110,8 +110,8 @@ module.exports = {
   },
 
   fontSizes: [
-    { label: 'จิ๋ว', value: '12' },
-    { label: 'เล็ก', value: '18' },
+    { label: 'จิ๋ว', value: '18' },
+    { label: 'เล็ก', value: '22' },
     { label: 'กลาง', value: '26' },
     { label: 'ใหญ่', value: '32' },
     { label: 'ยักษ์', value: '48' }
