@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'TH Sarabun New';
+  font-style: normal;
+  font-weight: 400;
+  src: local('TH Sarabun New'), url('../misc/THSarabunNew.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Kanit';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Kanit'), local('Kanit-Regular'), url('../misc/Kanit-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Taviraj';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Taviraj'), local('Taviraj-Regular'), url('../misc/Taviraj-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: material-icon;
+  font-style: normal;
+  font-weight: 400;
+	src: url('../misc/MaterialIcons-Regular.ttf')  format('truetype');
+}
+
+.ic{
+  font-family: material-icon;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  text-rendering: optimizeLegibility;
+	vertical-align: middle;
+	margin-bottom: 5px;
+}

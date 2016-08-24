@@ -119,8 +119,8 @@ module.exports = {
 
   fontFaces: [
     { label: 'สารบัญ', value: 'TH Sarabun New' },
-    { label: 'ดรอยด์ซานส์', value: 'DroidSans' },
-    { label: 'แปดกรกฎา', value: 'TKD 8 July' }
+    { label: 'คณิต', value: 'Kanit' },
+    { label: 'ทวิราช', value: 'Taviraj' }
   ],
 
   getFontSize(sizeLabel){

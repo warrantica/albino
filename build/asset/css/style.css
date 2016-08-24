@@ -386,7 +386,6 @@ a:link, a:visited{ text-decoration: none; }
 
 #rightPane .content{
   padding: 15px;
-  //font-family: "TH Sarabun New";
   line-height: 1.5;
   word-wrap: break-word;
 }
