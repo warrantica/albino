@@ -88,31 +88,18 @@ $('#lightBox').on('click', function(e){
 
 ===========================================================================*/
 
-let toolbarIcon = require('./components/toolbarIcon.vue');
-let forumSelectItem = require('./components/forumSelectItem.vue');
-let bestTopicItem = require('./components/bestTopicItem.vue');
-let topicItem = require('./components/topicItem.vue');
-let searchResultItem = require('./components/searchResultItem.vue');
-let topicView = require('./components/topicView.vue');
-let commentView = require('./components/commentView.vue');
-let commentItem = require('./components/commentItem.vue');
-let reactionView = require('./components/reactionView.vue');
-let themeStyle = require('./components/themeStyle.vue');
-let tipsPage = require('./pages/tipsPage.vue');
-let aboutPage = require('./pages/aboutPage.vue');
-
-Vue.component('toolbarIcon', toolbarIcon);
-Vue.component('forumSelectItem', forumSelectItem);
-Vue.component('bestTopicItem', bestTopicItem);
-Vue.component('topicItem', topicItem);
-Vue.component('searchResultItem', searchResultItem);
-Vue.component('topicView', topicView);
-Vue.component('commentView', commentView);
-Vue.component('commentItem', commentItem);
-Vue.component('reactionView', reactionView);
-Vue.component('themeStyle', themeStyle);
-Vue.component('tips', tipsPage);
-Vue.component('about', aboutPage);
+Vue.component('toolbarIcon', require('./components/toolbarIcon.vue'));
+Vue.component('forumSelectItem', require('./components/forumSelectItem.vue'));
+Vue.component('bestTopicItem', require('./components/bestTopicItem.vue'));
+Vue.component('topicItem', require('./components/topicItem.vue'));
+Vue.component('searchResultItem', require('./components/searchResultItem.vue'));
+Vue.component('topicView', require('./components/topicView.vue'));
+Vue.component('commentView', require('./components/commentView.vue'));
+Vue.component('commentItem', require('./components/commentItem.vue'));
+Vue.component('reactionView', require('./components/reactionView.vue'));
+Vue.component('themeStyle', require('./components/themeStyle.vue'));
+Vue.component('tips', require('./pages/tipsPage.vue'));
+Vue.component('about', require('./pages/aboutPage.vue'));
 
 let vm = new Vue({
   el: 'body',
