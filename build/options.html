@@ -46,21 +46,17 @@
           <div class="colItem">
             <label for="fontSize">ขนาด</label>
             <select id="fontSize" class="" name="fontSize">
-              <option value="xs">จิ๋ว</option>
-              <option value="s">เล็ก</option>
-              <option value="m">กลาง</option>
-              <option value="l">ใหญ่</option>
-              <option value="xl">ยักษ์</option>
+              <option v-for="size in fontSizes" :value="size.value">{{ size.label }}</option>
             </select>
             <label for="fontFace">ฟอนต์</label>
             <select id="fontFace" class="" name="fontFace">
-              <option value="Sarabun">Sarabun</option>
-              <option value="DroidSans">DroidSans</option>
-              <option value="TKD 8 July">TKD 8 July</option>
+              <option v-for="font in fontFaces" :value="font.value">{{ font.label }}</option>
             </select>
           </div>
           <div class="colItem">
-            ตัวอย่าง
+            <span :style="{ 'font-size': currentFontSize }">
+              ตัวอย่าง
+            </span>
           </div>
         </div>
 

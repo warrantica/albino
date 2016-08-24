@@ -13,12 +13,20 @@ let vm = new Vue({
   data(){ return {
     forums: Vars.forumInfo,
     themes: Vars.themes,
+    fontSizes: Vars.fontSizes,
+    fontFaces: Vars.fontFaces,
     options: {
       defaultForum: 'all',
       theme: 'default'
     },
     saveButtonState: 'default'
   }},
+
+  computed: {
+    currentFontSize: () => {
+      document.getElementById('fontSize').value;
+    }
+  },
 
   methods: {
     saveOptions(){

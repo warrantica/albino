@@ -107,5 +107,27 @@ module.exports = {
 
   getBase(baseName){
     return this.bases.find(base => base.name === baseName);
+  },
+
+  fontSizes: [
+    { label: 'จิ๋ว', value: '12' },
+    { label: 'เล็ก', value: '18' },
+    { label: 'กลาง', value: '26' },
+    { label: 'ใหญ่', value: '32' },
+    { label: 'ยักษ์', value: '48' }
+  ],
+
+  fontFaces: [
+    { label: 'สารบัญ', value: 'TH Sarabun New' },
+    { label: 'ดรอยด์ซานส์', value: 'DroidSans' },
+    { label: 'แปดกรกฎา', value: 'TKD 8 July' }
+  ],
+
+  getFontSize(sizeLabel){
+    return this.fontSizes.find(size => size.label === sizeLabel);
+  },
+
+  getFontFace(fontName){
+    return this.fontFaces.find(font => font.label === fontName);
   }
 };
