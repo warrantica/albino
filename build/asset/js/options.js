@@ -15307,7 +15307,8 @@ let vm = new Vue({
     options: {
       defaultForum: 'all',
       theme: 'default',
-      fontSize: '26'
+      fontSize: '26',
+      fontFace: 'TH Sarabun New'
     },
     saveButtonState: 'default'
   }},

@@ -44,6 +44,7 @@
 
     #rightPane .content{
       font-size: {{ fontSize }}px;
+      font-family: "{{ fontFace }}";
     }
   </style>
 </template>

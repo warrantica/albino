@@ -304,7 +304,8 @@ let vm = new Vue({
     chrome.storage.sync.get({
       theme: 'default',
       defaultForum: '',
-      fontSize: '26'
+      fontSize: '26',
+      fontFace: 'TH Sarabun New'
     }, item => {
       console.log(item);
       this.loadTopics(item.defaultForum);

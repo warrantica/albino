@@ -49,12 +49,13 @@
               <option v-for="size in fontSizes" :value="size.value">{{ size.label }}</option>
             </select>
             <label for="fontFace">ฟอนต์</label>
-            <select id="fontFace" class="" name="fontFace">
+            <select id="fontFace" class="" name="fontFace" v-model="options.fontFace">
               <option v-for="font in fontFaces" :value="font.value">{{ font.label }}</option>
             </select>
           </div>
           <div class="colItem">
-            <span class="fontPreview" :style="{ fontSize: options.fontSize + 'px' }">
+            <span class="fontPreview"
+                  :style="{ fontSize: options.fontSize + 'px', fontFamily: options.fontFace }">
               ตัวอย่าง
             </span>
           </div>
