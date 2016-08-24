@@ -16860,7 +16860,6 @@ let vm = new Vue({
       fontSize: '26',
       fontFace: 'TH Sarabun New'
     }, item => {
-      console.log(item);
       this.loadTopics(item.defaultForum);
       this.$broadcast('applyTheme', item.theme);
       this.$broadcast('applyFont', item.fontSize, item.fontFace);
