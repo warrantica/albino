@@ -44,12 +44,39 @@
         <h3>ตัวหนังสือ</h3>
         <div class="formGroup col2">
           <div class="colItem">
-            ขนาด<br>
-            ฟอนต์
+            <label for="fontSize">ขนาด</label>
+            <select id="fontSize" class="" name="fontSize">
+              <option value="xs">จิ๋ว</option>
+              <option value="s">เล็ก</option>
+              <option value="m">กลาง</option>
+              <option value="l">ใหญ่</option>
+              <option value="xl">ยักษ์</option>
+            </select>
+            <label for="fontFace">ฟอนต์</label>
+            <select id="fontFace" class="" name="fontFace">
+              <option value="Sarabun">Sarabun</option>
+              <option value="DroidSans">DroidSans</option>
+              <option value="TKD 8 July">TKD 8 July</option>
+            </select>
           </div>
           <div class="colItem">
             ตัวอย่าง
           </div>
+        </div>
+
+        <h3>การจัดวาง</h3>
+        <div class="formGroup">
+          <label for="commentsPerPage">จำนวนความเห็นต่อหน้า</label>
+          <select id="commentsPerPage" class="" name="commentsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select>
         </div>
 
         <div class="buttonContainer">
