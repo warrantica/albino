@@ -129,6 +129,8 @@
           }else{
             this.currentComments = this.comments;
           }
+
+          this.currentPage = 0;
         });
       }
     }

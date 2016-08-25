@@ -16167,6 +16167,8 @@ exports.default = {
         } else {
           _this.currentComments = _this.comments;
         }
+
+        _this.currentPage = 0;
       });
     }
   }
