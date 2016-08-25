@@ -19,7 +19,8 @@ let vm = new Vue({
       defaultForum: 'all',
       theme: 'default',
       fontSize: '26',
-      fontFace: 'TH Sarabun New'
+      fontFace: 'TH Sarabun New',
+      commentsPerPage: '10'
     },
     saveButtonState: 'default'
   }},
