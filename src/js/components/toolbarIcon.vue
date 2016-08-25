@@ -1,10 +1,11 @@
 <template>
-  <div class="toolbarIcon sClickable" v-el:icon>
-    <i class="ic" v-text="icon"></i>
+  <div class="toolbarIcon" v-el:icon>
+    <i class="ic sClickable" v-text="icon"></i>
     <div class="label sPrimaryBg sElevation2"
          v-text="label"
          :style="{right:offset+'px'}"
-         v-el:label></div>
+         v-el:label
+         @click.stop=""></div>
   </div>
 </template>
 
@@ -24,6 +25,7 @@
     bottom: -27px;
     white-space: nowrap;
     opacity: 0;
+    cursor: default;
     transition: all .1s ease;
   }
 

@@ -16368,7 +16368,7 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"../vars.js":80,"vue":64,"vue-hot-reload-api":63}],73:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n.toolbarIcon[_v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[_v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  -webkit-transition: all .1s ease;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[_v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n")
+var __vueify_style__ = __vueify_insert__.insert("\n.toolbarIcon[_v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[_v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  -webkit-transition: all .1s ease;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[_v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n")
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16398,13 +16398,13 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"toolbarIcon sClickable\" v-el:icon=\"\" _v-74e5db62=\"\">\n  <i class=\"ic\" v-text=\"icon\" _v-74e5db62=\"\"></i>\n  <div class=\"label sPrimaryBg sElevation2\" v-text=\"label\" :style=\"{right:offset+'px'}\" v-el:label=\"\" _v-74e5db62=\"\"></div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"toolbarIcon\" v-el:icon=\"\" _v-74e5db62=\"\">\n  <i class=\"ic sClickable\" v-text=\"icon\" _v-74e5db62=\"\"></i>\n  <div class=\"label sPrimaryBg sElevation2\" v-text=\"label\" :style=\"{right:offset+'px'}\" v-el:label=\"\" @click.stop=\"\" _v-74e5db62=\"\"></div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n.toolbarIcon[_v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[_v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  -webkit-transition: all .1s ease;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[_v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n"] = false
+    __vueify_insert__.cache["\n.toolbarIcon[_v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[_v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  -webkit-transition: all .1s ease;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[_v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
