@@ -8,7 +8,17 @@
         เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
       </div>
     </div>
-    <comment-item v-for="comment in comments"
+    <div class="pagination">
+      <i class="ic sClickable" @click="goToPage(currentPage-1)">chevron_left</i>
+      <span class="page sClickable"
+            v-for="page in totalPages"
+            :class="{ sAccentBg: page==currentPage, current: page==currentPage }"
+            @click="goToPage(page)">
+        {{ page+1 }}
+      </span>
+      <i class="ic sClickable" @click="goToPage(currentPage+1)">chevron_right</i>
+    </div>
+    <comment-item v-for="comment in currentComments"
                   :data="comment">
     </comment-item>
   </div>
@@ -56,6 +66,21 @@
     padding: 0 10px;
     z-index: 2;
   }
+
+  .pagination{
+    width: 100%;
+    text-align: center;
+  }
+
+  .page{
+    display: inline-block;
+    width: 18px;
+    line-height: 18px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 50%;
+    transition: all .2s ease;
+  }
 </style>
 
 <script>
@@ -65,14 +90,46 @@
     },
 
     data(){ return {
-      count: 0
+      count: 0,
+      commentsPerPage: 5,
+      currentPage: 0,
+      currentComments: []
     }},
+
+    computed: {
+      totalPages(){
+        return Math.ceil(this.count/this.commentsPerPage);
+      }
+    },
+
+    methods: {
+      goToPage(pageNumber){
+        if(pageNumber < 0 || pageNumber >= this.totalPages) return false;
+
+        this.currentComments = [];
+        let start = pageNumber*this.commentsPerPage;
+        this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+        this.currentPage = pageNumber;
+      }
+    },
 
     events: {
       'loadCommentView': function(data){
-        this.comments = [];
-        this.count = data.count;
-        if(data.count > 0) this.comments = data.comments;
+        //get commentsPerPage from options
+        chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
+          //do stuff that needs commentsPerPage value in callback
+          this.commentsPerPage = parseInt(item.commentsPerPage);
+
+          this.comments = [];
+          this.count = data.count;
+          if(data.count > 0) this.comments = data.comments;
+
+          if(this.commentsPerPage < this.count){
+            this.currentComments = this.comments.slice(0, this.commentsPerPage);
+          }else{
+            this.currentComments = this.comments;
+          }
+        });
       }
     }
   }

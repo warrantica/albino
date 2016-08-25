@@ -30,7 +30,7 @@
       background: {{ base.fore }};
     }
 
-    .dialogue li:hover, .topic:hover, .topic.active{
+    .dialogue li:hover, .topic:hover, .topic.active, .page:not(.current):hover{
       background: {{ base.hover }};
     }
 
