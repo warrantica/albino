@@ -16028,6 +16028,7 @@ exports.default = {
 
   data: function data() {
     return {
+      commentNumber: '',
       topEmotions: [],
       showLoadMoreSubButton: false,
       subData: {
@@ -16055,9 +16056,11 @@ exports.default = {
 
   ready: function ready() {
     //comment number
+    this.commentNumber = this.data.comment_no;
     if (this.sub) {
-      this.data.comment_no = this.data.comment_no + '-' + this.data.reply_no;
-    } else if (this.data.reply_count > 5) {
+      this.commentNumber += '-' + this.data.reply_no;
+    } else if (this.data.reply_count > this.data.replies.length) {
+      this.subData.last = this.data.replies.length;
       this.subData.cid = this.data._id;
       this.subData.c = this.data.reply_count;
       this.showLoadMoreSubButton = true;
@@ -16094,7 +16097,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"comment sForeBg sElevation1\" :class=\"{sub:sub}\" _v-691c7be0=\"\">\n  <div class=\"info\" _v-691c7be0=\"\">\n    <img class=\"avatar sPrimaryBg\" :src=\"data.user.avatar.medium\" _v-691c7be0=\"\">\n    <div class=\"author\" :class=\"{op:data.owner_topic, sAccentBg:data.owner_topic}\" _v-691c7be0=\"\">{{ data.user.name }}</div>\n    <div class=\"time sSubtitle\" _v-691c7be0=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-691c7be0=\"\">{{ data.data_addrtitle }}</time>\n    </div>\n    <div class=\"numContainer sSubtitle\" _v-691c7be0=\"\">#{{ data.comment_no }}</div>\n  </div>\n  <div class=\"content\" _v-691c7be0=\"\">{{{ data.message }}}</div>\n  <reaction-view _v-691c7be0=\"\"></reaction-view>\n  <div class=\"subContainer\" v-if=\"data.reply_count\" _v-691c7be0=\"\">\n    <comment-item v-for=\"reply in data.replies\" :data=\"reply\" sub=\"\" _v-691c7be0=\"\">\n    </comment-item>\n    <button class=\"loadMoreSubComments sButton sElevation0h2 sAccentBg\" v-show=\"showLoadMoreSubButton\" @click=\"loadMoreSubComments\" _v-691c7be0=\"\">\n      โหลดความเห็นย่อยเพิ่ม\n    </button>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"comment sForeBg sElevation1\" :class=\"{sub:sub}\" _v-691c7be0=\"\">\n  <div class=\"info\" _v-691c7be0=\"\">\n    <img class=\"avatar sPrimaryBg\" :src=\"data.user.avatar.medium\" _v-691c7be0=\"\">\n    <div class=\"author\" :class=\"{op:data.owner_topic, sAccentBg:data.owner_topic}\" _v-691c7be0=\"\">{{ data.user.name }}</div>\n    <div class=\"time sSubtitle\" _v-691c7be0=\"\">\n      <time class=\"timeago\" :datetime=\"data.utime\" _v-691c7be0=\"\">{{ data.data_addrtitle }}</time>\n    </div>\n    <div class=\"numContainer sSubtitle\" _v-691c7be0=\"\">#{{ commentNumber }}</div>\n  </div>\n  <div class=\"content\" _v-691c7be0=\"\">{{{ data.message }}}</div>\n  <reaction-view _v-691c7be0=\"\"></reaction-view>\n  <div class=\"subContainer\" v-if=\"data.reply_count\" _v-691c7be0=\"\">\n    <comment-item v-for=\"reply in data.replies\" :data=\"reply\" sub=\"\" _v-691c7be0=\"\">\n    </comment-item>\n    <button class=\"loadMoreSubComments sButton sElevation0h2 sAccentBg\" v-show=\"showLoadMoreSubButton\" @click=\"loadMoreSubComments\" _v-691c7be0=\"\">\n      โหลดความเห็นย่อยเพิ่ม\n    </button>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16145,6 +16148,7 @@ exports.default = {
       this.currentComments = [];
       var start = pageNumber * this.commentsPerPage;
       this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+      console.log(this.currentComments);
       this.currentPage = pageNumber;
     }
   },

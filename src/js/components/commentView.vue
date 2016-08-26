@@ -113,6 +113,7 @@
         this.currentComments = [];
         let start = pageNumber*this.commentsPerPage;
         this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+        console.log(this.currentComments);
         this.currentPage = pageNumber;
       }
     },

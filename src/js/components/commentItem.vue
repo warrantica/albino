@@ -6,7 +6,7 @@
       <div class="time sSubtitle">
         <time class="timeago" :datetime="data.utime">{{ data.data_addrtitle }}</time>
       </div>
-      <div class="numContainer sSubtitle">#{{ data.comment_no }}</div>
+      <div class="numContainer sSubtitle">#{{ commentNumber }}</div>
     </div>
     <div class="content">{{{ data.message }}}</div>
     <reaction-view></reaction-view>
@@ -71,6 +71,7 @@
     },
 
     data(){ return {
+      commentNumber: '',
       topEmotions: [],
       showLoadMoreSubButton: false,
       subData: {
@@ -92,9 +93,11 @@
 
     ready(){
       //comment number
+      this.commentNumber = this.data.comment_no;
       if(this.sub){
-        this.data.comment_no = this.data.comment_no + '-' + this.data.reply_no;
-      }else if(this.data.reply_count > 5){
+        this.commentNumber += '-' + this.data.reply_no;
+      }else if(this.data.reply_count > this.data.replies.length){
+        this.subData.last = this.data.replies.length;
         this.subData.cid = this.data._id;
         this.subData.c = this.data.reply_count;
         this.showLoadMoreSubButton = true;
