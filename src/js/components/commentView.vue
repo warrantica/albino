@@ -19,6 +19,7 @@
       <i class="ic sClickable" @click="goToPage(currentPage+1)">chevron_right</i>
     </div>
     <comment-item v-for="comment in currentComments"
+                  transition="fade"
                   :data="comment">
     </comment-item>
   </div>
@@ -81,6 +82,9 @@
     border-radius: 50%;
     transition: all .2s ease;
   }
+
+  .fade-transition{ opacity:1; transition: all .3s ease; }
+  .fade-enter, .fade-leave{ opacity: 0; }
 </style>
 
 <script>
