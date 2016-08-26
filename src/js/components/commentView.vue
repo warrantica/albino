@@ -119,7 +119,7 @@
     },
 
     events: {
-      'loadCommentView': function(data){
+      'loadCommentView': function(data, isRefresh){
         //get commentsPerPage from options
         chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
           //do stuff that needs commentsPerPage value in callback
@@ -130,12 +130,17 @@
           if(data.count > 0) this.comments = data.comments;
 
           if(this.commentsPerPage < this.count){
-            this.currentComments = this.comments.slice(0, this.commentsPerPage);
+            if(isRefresh){
+              let start = this.currentPage*this.commentsPerPage;
+              this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+            }else{
+              this.currentPage = 0;
+              this.currentComments = this.comments.slice(0, this.commentsPerPage);
+            }
           }else{
+            this.currentPage = 0;
             this.currentComments = this.comments;
           }
-
-          this.currentPage = 0;
         });
       }
     }

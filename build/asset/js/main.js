@@ -16154,7 +16154,7 @@ exports.default = {
   },
 
   events: {
-    'loadCommentView': function loadCommentView(data) {
+    'loadCommentView': function loadCommentView(data, isRefresh) {
       var _this = this;
 
       //get commentsPerPage from options
@@ -16167,12 +16167,17 @@ exports.default = {
         if (data.count > 0) _this.comments = data.comments;
 
         if (_this.commentsPerPage < _this.count) {
-          _this.currentComments = _this.comments.slice(0, _this.commentsPerPage);
+          if (isRefresh) {
+            var start = _this.currentPage * _this.commentsPerPage;
+            _this.currentComments = _this.comments.slice(start, start + _this.commentsPerPage);
+          } else {
+            _this.currentPage = 0;
+            _this.currentComments = _this.comments.slice(0, _this.commentsPerPage);
+          }
         } else {
+          _this.currentPage = 0;
           _this.currentComments = _this.comments;
         }
-
-        _this.currentPage = 0;
       });
     }
   }
@@ -16810,7 +16815,6 @@ let vm = new Vue({
         Pantip.loadComments(topicId)
       ]).then(values => {
         //console.log(values);
-        this.currentTopic = topicId;
 
         //load topic
         values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
@@ -16818,11 +16822,14 @@ let vm = new Vue({
         this.currentTitle = values[0]['title'];
 
         //load comments
-        this.$broadcast('loadCommentView', values[1]);
+        this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
 
         //pull up curtains
         $('#rightPane').removeClass('wrapUp');
         $('#rightPane .loading').removeClass('active');
+
+        //set current topic
+        this.currentTopic = topicId;
 
         //set up polling
         this.unreadComments = 0;

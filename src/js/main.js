@@ -204,7 +204,6 @@ let vm = new Vue({
         Pantip.loadComments(topicId)
       ]).then(values => {
         //console.log(values);
-        this.currentTopic = topicId;
 
         //load topic
         values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
@@ -212,11 +211,14 @@ let vm = new Vue({
         this.currentTitle = values[0]['title'];
 
         //load comments
-        this.$broadcast('loadCommentView', values[1]);
+        this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
 
         //pull up curtains
         $('#rightPane').removeClass('wrapUp');
         $('#rightPane .loading').removeClass('active');
+
+        //set current topic
+        this.currentTopic = topicId;
 
         //set up polling
         this.unreadComments = 0;
