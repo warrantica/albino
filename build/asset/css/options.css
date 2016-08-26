@@ -123,5 +123,10 @@ button:active, button:focus{ outline: none; }
 .rotate-leave{ transform: translateX(-50%) translateY(-50%) rotate(180deg) scale(0); }
 
 .fontPreview{
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  background: #fafafa;
   transition: all .2s ease;
 }
