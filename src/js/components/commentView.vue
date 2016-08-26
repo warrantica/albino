@@ -8,7 +8,7 @@
         เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
       </div>
     </div>
-    <div class="pagination">
+    <div class="pagination" v-show="totalPages > 1">
       <i class="ic sClickable" @click="goToPage(currentPage-1)">chevron_left</i>
       <span class="page sClickable"
             v-for="page in totalPages"
