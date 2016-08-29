@@ -211,6 +211,7 @@ let vm = new Vue({
         this.currentTitle = values[0]['title'];
 
         //load comments
+        values[1].tid = topicId;
         this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
 
         //pull up curtains

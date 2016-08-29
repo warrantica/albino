@@ -177,12 +177,15 @@ module.exports = {
 
   },
 
-  loadComments(topicID){
+  loadComments(topicID, page=0){
     return new Promise((resolve, reject) => {
+      let url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=1&time=' + Math.random() + '&param=';
+      if(page !== 0) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
+
       $.ajax({
         type: 'GET',
         cache: false,
-        url: 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&param=&type=1&time=' + Math.random(),
+        url: url,
         dataType: 'text',
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         success: function(data){

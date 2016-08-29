@@ -22,6 +22,9 @@
                   transition="fade"
                   :data="comment">
     </comment-item>
+    <div v-show="!currentComments.length">
+      <i class="ic">hourglass_full</i> loading...
+    </div>
   </div>
 </template>
 
@@ -88,16 +91,19 @@
 </style>
 
 <script>
+  let Pantip = require('../pantipInterface.js');
   export default {
     props: {
       comments: []
     },
 
     data(){ return {
+      topicId: 0,
       count: 0,
       commentsPerPage: 5,
       currentPage: 0,
-      currentComments: []
+      currentComments: [],
+      loadedPage: 1
     }},
 
     computed: {
@@ -113,8 +119,22 @@
         this.currentComments = [];
         let start = pageNumber*this.commentsPerPage;
         this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-        console.log(this.currentComments);
         this.currentPage = pageNumber;
+
+        if(this.currentComments.length === 0){
+          this.loadMoreComments(pageNumber);
+        }
+      },
+
+      loadMoreComments(pageNumber){
+        let start = pageNumber*this.commentsPerPage;
+        Pantip.loadComments(this.topicId, ++this.loadedPage).then(data => {
+          this.comments.push(...data.comments);
+          this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+
+          //DANGER!?
+          if(this.currentComments.length === 0) this.loadMoreComments(pageNumber);
+        });
       }
     },
 
@@ -126,6 +146,7 @@
           this.commentsPerPage = parseInt(item.commentsPerPage);
 
           this.comments = [];
+          this.topicId = data.tid;
           this.count = data.count;
           if(data.count > 0) this.comments = data.comments;
 

@@ -16120,6 +16120,14 @@ var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Pantip = require('../pantipInterface.js');
 exports.default = {
   props: {
     comments: []
@@ -16127,10 +16135,12 @@ exports.default = {
 
   data: function data() {
     return {
+      topicId: 0,
       count: 0,
       commentsPerPage: 5,
       currentPage: 0,
-      currentComments: []
+      currentComments: [],
+      loadedPage: 1
     };
   },
 
@@ -16148,42 +16158,60 @@ exports.default = {
       this.currentComments = [];
       var start = pageNumber * this.commentsPerPage;
       this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-      console.log(this.currentComments);
       this.currentPage = pageNumber;
+
+      if (this.currentComments.length === 0) {
+        this.loadMoreComments(pageNumber);
+      }
+    },
+    loadMoreComments: function loadMoreComments(pageNumber) {
+      var _this = this;
+
+      var start = pageNumber * this.commentsPerPage;
+      Pantip.loadComments(this.topicId, ++this.loadedPage).then(function (data) {
+        var _comments;
+
+        (_comments = _this.comments).push.apply(_comments, (0, _toConsumableArray3.default)(data.comments));
+        _this.currentComments = _this.comments.slice(start, start + _this.commentsPerPage);
+
+        //DANGER!?
+        if (_this.currentComments.length === 0) _this.loadMoreComments(pageNumber);
+      });
     }
   },
 
   events: {
     'loadCommentView': function loadCommentView(data, isRefresh) {
-      var _this = this;
+      var _this2 = this;
 
       //get commentsPerPage from options
       chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
         //do stuff that needs commentsPerPage value in callback
-        _this.commentsPerPage = parseInt(item.commentsPerPage);
+        _this2.commentsPerPage = parseInt(item.commentsPerPage);
 
-        _this.comments = [];
-        _this.count = data.count;
-        if (data.count > 0) _this.comments = data.comments;
+        _this2.comments = [];
+        _this2.topicId = data.tid;
+        _this2.count = data.count;
+        if (data.count > 0) _this2.comments = data.comments;
 
-        if (_this.commentsPerPage < _this.count) {
+        if (_this2.commentsPerPage < _this2.count) {
           if (isRefresh) {
-            var start = _this.currentPage * _this.commentsPerPage;
-            _this.currentComments = _this.comments.slice(start, start + _this.commentsPerPage);
+            var start = _this2.currentPage * _this2.commentsPerPage;
+            _this2.currentComments = _this2.comments.slice(start, start + _this2.commentsPerPage);
           } else {
-            _this.currentPage = 0;
-            _this.currentComments = _this.comments.slice(0, _this.commentsPerPage);
+            _this2.currentPage = 0;
+            _this2.currentComments = _this2.comments.slice(0, _this2.commentsPerPage);
           }
         } else {
-          _this.currentPage = 0;
-          _this.currentComments = _this.comments;
+          _this2.currentPage = 0;
+          _this2.currentComments = _this2.comments;
         }
       });
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div class=\"commentsInfo\" v-show=\"count\" _v-6a342272=\"\">\n    <div class=\"commentsCount sBackBg\" _v-6a342272=\"\">\n      <i class=\"ic\" _v-6a342272=\"\">chat_bubble</i> {{ count }} ความเห็น\n    </div>\n    <div class=\"commentsSort sBackBg\" _v-6a342272=\"\">\n      เรียงตาม: เวลาโพสต์ <i class=\"ic\" _v-6a342272=\"\">arrow_drop_down</i>\n    </div>\n  </div>\n  <div class=\"pagination\" v-show=\"totalPages > 1\" _v-6a342272=\"\">\n    <i class=\"ic sClickable\" @click=\"goToPage(currentPage-1)\" _v-6a342272=\"\">chevron_left</i>\n    <span class=\"page sClickable\" v-for=\"page in totalPages\" :class=\"{ sAccentBg: page==currentPage, current: page==currentPage }\" @click=\"goToPage(page)\" _v-6a342272=\"\">\n      {{ page+1 }}\n    </span>\n    <i class=\"ic sClickable\" @click=\"goToPage(currentPage+1)\" _v-6a342272=\"\">chevron_right</i>\n  </div>\n  <comment-item v-for=\"comment in currentComments\" transition=\"fade\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div class=\"commentsInfo\" v-show=\"count\" _v-6a342272=\"\">\n    <div class=\"commentsCount sBackBg\" _v-6a342272=\"\">\n      <i class=\"ic\" _v-6a342272=\"\">chat_bubble</i> {{ count }} ความเห็น\n    </div>\n    <div class=\"commentsSort sBackBg\" _v-6a342272=\"\">\n      เรียงตาม: เวลาโพสต์ <i class=\"ic\" _v-6a342272=\"\">arrow_drop_down</i>\n    </div>\n  </div>\n  <div class=\"pagination\" v-show=\"totalPages > 1\" _v-6a342272=\"\">\n    <i class=\"ic sClickable\" @click=\"goToPage(currentPage-1)\" _v-6a342272=\"\">chevron_left</i>\n    <span class=\"page sClickable\" v-for=\"page in totalPages\" :class=\"{ sAccentBg: page==currentPage, current: page==currentPage }\" @click=\"goToPage(page)\" _v-6a342272=\"\">\n      {{ page+1 }}\n    </span>\n    <i class=\"ic sClickable\" @click=\"goToPage(currentPage+1)\" _v-6a342272=\"\">chevron_right</i>\n  </div>\n  <comment-item v-for=\"comment in currentComments\" transition=\"fade\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n  <div v-show=\"!currentComments.length\" _v-6a342272=\"\">\n    <i class=\"ic\" _v-6a342272=\"\">hourglass_full</i> loading...\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16198,7 +16226,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-6a342272", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],69:[function(require,module,exports){
+},{"../pantipInterface.js":79,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],69:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\nli[_v-41c115fe]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n  -webkit-transition: .2s all ease-in-out;\n  transition: .2s all ease-in-out;\n}\n\nimg[_v-41c115fe]{\n  height: 36px;\n  margin-right: 15px;\n}\n\nspan[_v-41c115fe]{\n  vertical-align: top;\n  display: inline-block;\n}\n")
 'use strict';
@@ -16822,6 +16850,7 @@ let vm = new Vue({
         this.currentTitle = values[0]['title'];
 
         //load comments
+        values[1].tid = topicId;
         this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
 
         //pull up curtains
@@ -17150,12 +17179,15 @@ module.exports = {
 
   },
 
-  loadComments(topicID){
+  loadComments(topicID, page=0){
     return new Promise((resolve, reject) => {
+      let url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=1&time=' + Math.random() + '&param=';
+      if(page !== 0) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
+
       $.ajax({
         type: 'GET',
         cache: false,
-        url: 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&param=&type=1&time=' + Math.random(),
+        url: url,
         dataType: 'text',
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         success: function(data){
