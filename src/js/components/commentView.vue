@@ -22,7 +22,7 @@
                   transition="fade"
                   :data="comment">
     </comment-item>
-    <div v-show="!currentComments.length">
+    <div v-show="count && !currentComments.length">
       <i class="ic">hourglass_full</i> loading...
     </div>
   </div>
