@@ -119,6 +119,7 @@ let vm = new Vue({
     bestTopics: [],
     topics: [],
     searchQuery: '',
+    searchQueryString: '',
     searchResults: [],
     loadMoreId: 0,
     topTopicId: 0,
@@ -186,8 +187,18 @@ let vm = new Vue({
       Pantip.search(this.searchQuery).then(data => {
         //console.log(data);
         this.searchResults = data.results;
+        this.searchQueryString = data.queryString;
         $('.searchResultList').removeClass('wrapUp');
         $('.searchResultList .loading').removeClass('active');
+      });
+    },
+
+    loadMoreSearchResults(){
+      Pantip.search(this.searchQuery,
+        this.searchResults.length,
+        this.searchQueryString).then(data => {
+
+        this.searchResults.push(...data.results);
       });
     },
 
