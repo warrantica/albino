@@ -17085,7 +17085,8 @@ module.exports = {
         type: 'GET',
         url: url,
         success: function(data){
-          resData = data.replace(/^[^]*(<td style="bo[^]*?<\/td>)[^]*$/, '$1');
+          let queryString = data.replace(/^[^]*&y=([^]*?)"[^]*$/, '$1');
+          let resData = data.replace(/^[^]*(<td style="bo[^]*?<\/td>)[^]*$/, '$1');
           let htmlLines = $(resData).find('p')[0].innerHTML.split('\n');
 
           let res = [];
@@ -17113,10 +17114,6 @@ module.exports = {
               res.push({ disp_topic, topic_link, comment_num, content, author });
             }
           }
-
-          let queryString = data.replace(/^[^]*&y=([^]*?)"[^]*$/, '$1');
-
-          console.log(queryString);
 
           resolve({
             results: res,
