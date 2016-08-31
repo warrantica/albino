@@ -71,7 +71,8 @@
       <div class="loading sAccentText"><i class="ic">refresh</i></div>
       <search-result-item v-for="topic in searchResults" :data="topic"></search-result-item>
       <button class="loadMore sButton sAccentBg sElevation0h2"
-              @click="loadMoreSearchResults">
+              @click="loadMoreSearchResults"
+              v-show="searchResults.length">
         โหลดกระทู้เพิ่ม
       </button>
     </div>
