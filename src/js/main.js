@@ -185,7 +185,7 @@ let vm = new Vue({
       $('.searchResultList .loading').addClass('active');
       Pantip.search(this.searchQuery).then(data => {
         //console.log(data);
-        this.searchResults = data;
+        this.searchResults = data.results;
         $('.searchResultList').removeClass('wrapUp');
         $('.searchResultList .loading').removeClass('active');
       });

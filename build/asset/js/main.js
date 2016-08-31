@@ -16824,7 +16824,7 @@ let vm = new Vue({
       $('.searchResultList .loading').addClass('active');
       Pantip.search(this.searchQuery).then(data => {
         //console.log(data);
-        this.searchResults = data;
+        this.searchResults = data.results;
         $('.searchResultList').removeClass('wrapUp');
         $('.searchResultList .loading').removeClass('active');
       });
@@ -17063,16 +17063,19 @@ module.exports = {
 
   },
 
-  search(query){
+  search(query, f='', queryString=''){
     return new Promise((resolve, reject) => {
       if(query === '') reject('Empty search string');
+
+      let url = 'http://search.pantip.com/ss?q=' + query;
+      if(queryString !== '') url += '&f=' + f + '&y=' + queryString;
+
       $.ajax({
         type: 'GET',
-        url: 'http://search.pantip.com/ss?q=' + query,
+        url: url,
         success: function(data){
-          data = data.replace(/^[^]*(<td style="bo[^]*?<\/td>)[^]*$/, '$1');
-          let html = $(data).find('p')[0];
-          let htmlLines = html.innerHTML.split('\n');
+          resData = data.replace(/^[^]*(<td style="bo[^]*?<\/td>)[^]*$/, '$1');
+          let htmlLines = $(resData).find('p')[0].innerHTML.split('\n');
 
           let res = [];
 
@@ -17100,7 +17103,14 @@ module.exports = {
             }
           }
 
-          resolve(res);
+          let queryString = data.replace(/^[^]*&y=([^]*?)"[^]*$/, '$1');
+
+          console.log(queryString);
+
+          resolve({
+            results: res,
+            queryString: queryString
+          });
         }
       });
     });
