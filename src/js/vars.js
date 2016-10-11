@@ -39,7 +39,7 @@ module.exports = {
 
   themes: [{
     name: 'default', label: 'เผือก (default)',
-    primary: '#9C27B0', accent: '#FF5252', base: 'light',
+    primary: '#9C27B0', accent: '#F01F41', base: 'light',
     textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
   }, {
     name: 'pantip', label: 'ต้นตำรับ',
