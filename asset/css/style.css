@@ -48,5 +48,47 @@ body{
 .logo-pantip{ font-weight: 700; }
 
 .hero{
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 20px;
   color: white;
+}
+
+.hero-slogan{
+  font-size: 6rem;
+  line-height: 1.5;
+}
+
+.hero-info{
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.hero-screenshot{
+  width: 60%;
+  margin-right: 20px;
+}
+
+.hero-screenshotImage{
+  display: block;
+  max-width: 100%;
+  background: white;
+  border-radius: 2px;
+}
+
+.hero-rightPane{ flex: 1; }
+
+.hero-description{
+  font-size: 1.6rem;
+}
+
+.hero-download{
+  display: inline-block;
+  background: #f01f41;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-size: 2rem;
+  border-radius: 2px;
 }
