@@ -1,32 +1,51 @@
 module.exports = {
   loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
-    var loadUrl = 'http://www.pantip.com/forum/' + forumName;
+    var loadUrl = 'http://m.pantip.com/forum/' + forumName;
 
     return new Promise((resolve, reject) => {
-      $.ajax({
-        url: loadUrl,
-        dataType: 'text',
-        success: function(data){
-          let bestTopics = new Array();
+      chrome.cookies.set({
+        url: 'http://m.pantip.com',
+        domain: '.pantip.com',
+        name: 'mobilerun',
+        value: '1'
+      }, () => {
+        $.ajax({
+          url: loadUrl,
+          dataType: 'text',
+          success: function(data){
+            let bestTopics = new Array();
 
-          data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
-          data = data.replace(/src=["'].*["']/g, 'src=""');
-          let bestHtml = $(data).find('#item_pantip-best_room')[0];
+            data = data.replace(/^[^]*<!-- .columns -->([^]*)<p>[^]*$/, '$1');
+            //console.log(data);
 
-          $(bestHtml).find('.best-item').each(function(i){
-            let item = {};
-            item['_id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-            item['disp_topic'] = $(this).find('.post-item-title a').text().trim();
+            $(data).find('.m-thumb').each(function(i){
+              let item = {};
+              item['_id'] = $(this).find('a').attr('href').substr(7);
 
-            bestTopics.push(item);
-          });
-          resolve(bestTopics);
-        },
-        error: function(){
-          console.log('loadTopicList ajax error.');
-        }
+              item['disp_topic'] = $(this).find('.subject').text().trim();
+              //Note: "author" is misspelled in Pantip's source code
+              item['author'] = $(this).find('.auther').text().trim();
+
+              let img = $(this).find('img');
+              item['cover_img'] = img.length ? img.attr('src') : '';
+
+              bestTopics.push(item);
+            });
+            chrome.cookies.remove({
+              url: 'http://m.pantip.com',
+              name: 'mobilerun'
+            }, () => resolve(bestTopics));
+          },
+          error: function(){
+            chrome.cookies.remove({
+              url: 'http://m.pantip.com',
+              name: 'mobilerun'
+            }, () => console.log('loadTopicList ajax error.'));
+          }
+        });
       });
+
     });
 
   },

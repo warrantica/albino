@@ -15964,6 +15964,12 @@ exports.default = {
     }
   },
 
+  computed: {
+    thumbnail: function thumbnail() {
+      return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
+    }
+  },
+
   events: {
     'topicLoaded': function topicLoaded(topicId) {
       this.isActive = topicId === this.data._id ? true : false;
@@ -15971,7 +15977,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sForeBg sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-868bbca8=\"\">\n  <div class=\"title\" _v-868bbca8=\"\">{{ data.disp_topic }}</div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sForeBg sClickable\" :class=\"{active: isActive}\" @click=\"loadTopic\" _v-868bbca8=\"\">\n  <div class=\"topic-thumbnail\" _v-868bbca8=\"\">\n    <img class=\"topic-thumbnailImage\" :src=\"thumbnail\" _v-868bbca8=\"\">\n  </div>\n  <div class=\"topic-text\" _v-868bbca8=\"\">\n    <div class=\"topic-title\" _v-868bbca8=\"\">{{{ data.disp_topic }}}</div>\n    <div class=\"topic-subtitle sSubtitle\" _v-868bbca8=\"\">\n      {{ data.author }}\n    </div>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -16800,7 +16806,7 @@ let vm = new Vue({
       }
 
       Pantip.loadTopics(forumName, _loadMoreId).then(data => {
-        console.log(data);
+        //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
@@ -16808,7 +16814,6 @@ let vm = new Vue({
           topic.isActive = topic._id === this.currentTopic;
           topic.isTop = topic._id === this.topTopicId;
           this.topics.push(topic);
-          console.log(topic._id + ': ' + topic.cover_img);
         }
         this.topTopicId = this.topics[0]._id;
         this.loadMoreId = data.loadMoreID;
@@ -17016,32 +17021,51 @@ if (module.hot) {(function () {  module.hot.accept()
 module.exports = {
   loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
-    var loadUrl = 'http://www.pantip.com/forum/' + forumName;
+    var loadUrl = 'http://m.pantip.com/forum/' + forumName;
 
     return new Promise((resolve, reject) => {
-      $.ajax({
-        url: loadUrl,
-        dataType: 'text',
-        success: function(data){
-          let bestTopics = new Array();
+      chrome.cookies.set({
+        url: 'http://m.pantip.com',
+        domain: '.pantip.com',
+        name: 'mobilerun',
+        value: '1'
+      }, () => {
+        $.ajax({
+          url: loadUrl,
+          dataType: 'text',
+          success: function(data){
+            let bestTopics = new Array();
 
-          data = data.replace(/^[^]*<!-- ### start Index ### -->([^]*)<!-- ### end Index ### -->[^]*$/, '$1');
-          data = data.replace(/src=["'].*["']/g, 'src=""');
-          let bestHtml = $(data).find('#item_pantip-best_room')[0];
+            data = data.replace(/^[^]*<!-- .columns -->([^]*)<p>[^]*$/, '$1');
+            //console.log(data);
 
-          $(bestHtml).find('.best-item').each(function(i){
-            let item = {};
-            item['_id'] = $(this).find('.post-item-title a').attr('href').substr(7);
-            item['disp_topic'] = $(this).find('.post-item-title a').text().trim();
+            $(data).find('.m-thumb').each(function(i){
+              let item = {};
+              item['_id'] = $(this).find('a').attr('href').substr(7);
 
-            bestTopics.push(item);
-          });
-          resolve(bestTopics);
-        },
-        error: function(){
-          console.log('loadTopicList ajax error.');
-        }
+              item['disp_topic'] = $(this).find('.subject').text().trim();
+              //Note: "author" is misspelled in Pantip's source code
+              item['author'] = $(this).find('.auther').text().trim();
+
+              let img = $(this).find('img');
+              item['cover_img'] = img.length ? img.attr('src') : '';
+
+              bestTopics.push(item);
+            });
+            chrome.cookies.remove({
+              url: 'http://m.pantip.com',
+              name: 'mobilerun'
+            }, () => resolve(bestTopics));
+          },
+          error: function(){
+            chrome.cookies.remove({
+              url: 'http://m.pantip.com',
+              name: 'mobilerun'
+            }, () => console.log('loadTopicList ajax error.'));
+          }
+        });
       });
+
     });
 
   },

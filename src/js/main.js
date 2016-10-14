@@ -160,7 +160,7 @@ let vm = new Vue({
       }
 
       Pantip.loadTopics(forumName, _loadMoreId).then(data => {
-        console.log(data);
+        //console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
@@ -168,7 +168,6 @@ let vm = new Vue({
           topic.isActive = topic._id === this.currentTopic;
           topic.isTop = topic._id === this.topTopicId;
           this.topics.push(topic);
-          console.log(topic._id + ': ' + topic.cover_img);
         }
         this.topTopicId = this.topics[0]._id;
         this.loadMoreId = data.loadMoreID;
