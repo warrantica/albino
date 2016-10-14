@@ -2,20 +2,20 @@
   <div class="topic sForeBg sClickable"
        :class="{active: data.isActive, top: data.isTop}"
        @click="loadTopic">
-    <div class="type"></div>
-    <div class="title">{{{ data.disp_topic }}}</div>
-    <div class="subtitle sSubtitle">
-      {{ data.author }}
-      &#149; <time :datetime="data.utime">{{ data.timeFull }}</time>
-      <span v-show="data.comments">&#149; {{ data.comments }} <i class="ic">chat_bubble</i></span>
-      <span v-show="data.votes">&#149; {{ data.votes }} <i class="ic">add_box</i></span>
+    <div class="topic-thumbnail">
+      <img class="topic-thumbnailImage" :src="thumbnail" />
+    </div>
+    <div class="topic-text">
+      <div class="topic-title">{{{ data.disp_topic }}}</div>
+      <div class="topic-subtitle sSubtitle">
+        {{ data.author }}
+        &#149; <time :datetime="data.utime">{{ data.timeFull }}</time>
+        <span v-show="data.comments">&#149; {{ data.comments }} <i class="ic">chat_bubble</i></span>
+        <span v-show="data.votes">&#149; {{ data.votes }} <i class="ic">add_box</i></span>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>
 
 <script>
   export default {
@@ -23,6 +23,7 @@
       data: {
         _id: String,
         disp_topic: String,
+        cover_img: String,
         author: String,
         commentsNum: Number,
         utime: String,
@@ -43,6 +44,12 @@
     methods: {
       loadTopic(){
         this.$dispatch('loadTopic', this.data._id);
+      }
+    },
+
+    computed: {
+      thumbnail(){
+        return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
       }
     },
 

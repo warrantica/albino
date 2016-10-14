@@ -233,6 +233,8 @@ a:link, a:visited{ text-decoration: none; }
 }
 
 .topic{
+  display: flex;
+  flex-flow: row nowrap;
   box-sizing: border-box;
   width: 100%;
   padding: 10px;
@@ -244,11 +246,28 @@ a:link, a:visited{ text-decoration: none; }
   border-top: 1px #e0e0e0 dashed;
 }
 
-.topic .title{
+.topic-thumbnail{
+  margin-right: 10px;
+  width: 48px;
+  height: 48px;
+}
+
+.topic-thumbnailImage{
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.topic-text{
+  flex: 1;
+}
+
+.topic-title{
   font-size: 16px;
 }
 
-.subtitle .ic{
+.topic-subtitle .ic{
   font-size: 11px;
   margin-bottom: 1px;
 }

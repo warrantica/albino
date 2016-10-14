@@ -16487,8 +16487,6 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],74:[function(require,module,exports){
-var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16499,6 +16497,7 @@ exports.default = {
     data: {
       _id: String,
       disp_topic: String,
+      cover_img: String,
       author: String,
       commentsNum: Number,
       utime: String,
@@ -16522,6 +16521,12 @@ exports.default = {
     }
   },
 
+  computed: {
+    thumbnail: function thumbnail() {
+      return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
+    }
+  },
+
   ready: function ready() {
     $('time').timeago();
   },
@@ -16534,22 +16539,18 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sForeBg sClickable\" :class=\"{active: data.isActive, top: data.isTop}\" @click=\"loadTopic\" _v-df29bfa0=\"\">\n  <div class=\"type\" _v-df29bfa0=\"\"></div>\n  <div class=\"title\" _v-df29bfa0=\"\">{{{ data.disp_topic }}}</div>\n  <div class=\"subtitle sSubtitle\" _v-df29bfa0=\"\">\n    {{ data.author }}\n    • <time :datetime=\"data.utime\" _v-df29bfa0=\"\">{{ data.timeFull }}</time>\n    <span v-show=\"data.comments\" _v-df29bfa0=\"\">• {{ data.comments }} <i class=\"ic\" _v-df29bfa0=\"\">chat_bubble</i></span>\n    <span v-show=\"data.votes\" _v-df29bfa0=\"\">• {{ data.votes }} <i class=\"ic\" _v-df29bfa0=\"\">add_box</i></span>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topic sForeBg sClickable\" :class=\"{active: data.isActive, top: data.isTop}\" @click=\"loadTopic\">\n  <div class=\"topic-thumbnail\">\n    <img class=\"topic-thumbnailImage\" :src=\"thumbnail\">\n  </div>\n  <div class=\"topic-text\">\n    <div class=\"topic-title\">{{{ data.disp_topic }}}</div>\n    <div class=\"topic-subtitle sSubtitle\">\n      {{ data.author }}\n      • <time :datetime=\"data.utime\">{{ data.timeFull }}</time>\n      <span v-show=\"data.comments\">• {{ data.comments }} <i class=\"ic\">chat_bubble</i></span>\n      <span v-show=\"data.votes\">• {{ data.votes }} <i class=\"ic\">add_box</i></span>\n    </div>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
-  module.hot.dispose(function () {
-    __vueify_insert__.cache["\n\n"] = false
-    document.head.removeChild(__vueify_style__)
-  })
   if (!module.hot.data) {
     hotAPI.createRecord("_v-df29bfa0", module.exports)
   } else {
     hotAPI.update("_v-df29bfa0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],75:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63}],75:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.tag[_v-dcfa727c]{\n  padding: 15px 0 0 15px;\n}\n\n.tag .ic[_v-dcfa727c]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}\n")
 'use strict';
@@ -16799,7 +16800,7 @@ let vm = new Vue({
       }
 
       Pantip.loadTopics(forumName, _loadMoreId).then(data => {
-        //console.log(data);
+        console.log(data);
         $('#leftPane').removeClass('wrapUp');
         $('#leftPane .loading').removeClass('active');
 
@@ -16807,6 +16808,7 @@ let vm = new Vue({
           topic.isActive = topic._id === this.currentTopic;
           topic.isTop = topic._id === this.topTopicId;
           this.topics.push(topic);
+          console.log(topic._id + ': ' + topic.cover_img);
         }
         this.topTopicId = this.topics[0]._id;
         this.loadMoreId = data.loadMoreID;
