@@ -5888,7 +5888,7 @@ exports.insert = function (css) {
 }
 
 },{}],5:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("input[data-v-2]{ display: none; }\n\nlabel[data-v-2]{\n  display: block;\n  padding: 5px 10px;\n  transition: all .2s ease;\n  cursor: pointer;\n}\n\n.colorSample[data-v-2]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  vertical-align: middle;\n  position: relative; top: 0; left: 0;\n  transition: all .2s ease;\n}\n\n.baseColor[data-v-2]{\n  width: 26px;\n  height: 13px;\n  border-radius: 0 0 26px 26px;\n  margin: 16px 0 0 3px;\n}\n\n.accentSample[data-v-2]{\n  position: absolute;\n  bottom: 0; right: 0;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n}\n\n.labelText[data-v-2]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[data-v-2]{\n  background: #e3e3e3;\n}\n\ninput:checked + label .colorSample[data-v-2], label:hover .colorSample[data-v-2]{\n  transform: scale(1.1);\n}")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("input[data-v-1]{ display: none; }\n\nlabel[data-v-1]{\n  display: block;\n  padding: 5px 10px;\n  transition: all .2s ease;\n  cursor: pointer;\n}\n\n.colorSample[data-v-1]{\n  display: inline-block;\n  margin-right: 10px;\n  width: 32px;\n  height: 32px;\n  border-radius: 50%;\n  vertical-align: middle;\n  position: relative; top: 0; left: 0;\n  transition: all .2s ease;\n}\n\n.baseColor[data-v-1]{\n  width: 26px;\n  height: 13px;\n  border-radius: 0 0 26px 26px;\n  margin: 16px 0 0 3px;\n}\n\n.accentSample[data-v-1]{\n  position: absolute;\n  bottom: 0; right: 0;\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n}\n\n.labelText[data-v-1]{\n  display: inline-block;\n  font-size: 16px;\n  vertical-align: middle;\n}\n\ninput:checked + label[data-v-1]{\n  background: #e3e3e3;\n}\n\ninput:checked + label .colorSample[data-v-1], label:hover .colorSample[data-v-1]{\n  transform: scale(1.1);\n}")
 ;(function(){
 'use strict';
 
@@ -5929,20 +5929,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{staticClass:"themeItem"},[_h('input',{directives:[{name:"model",rawName:"v-model",value:($parent.options.theme),expression:"$parent.options.theme"}],attrs:{"type":"radio","name":"theme","id":name},domProps:{"value":name,"checked":_q($parent.options.theme,name)},on:{"change":function($event){$parent.options.theme=name}}})," ",_h('label',{attrs:{"for":name}},[_h('div',{staticClass:"colorSample",style:({background:primary})},[_h('div',{staticClass:"baseColor",style:({background:baseData.fore})})," ",_h('div',{staticClass:"accentSample",style:({background:accent})})])," ",_h('div',{staticClass:"labelText"},[_s(label)])])])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-2"
+__vue__options__._scopeId = "data-v-1"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2", __vue__options__)
+    hotAPI.createRecord("data-v-1", __vue__options__)
   } else {
-    hotAPI.reload("data-v-2", __vue__options__)
+    hotAPI.reload("data-v-1", __vue__options__)
   }
 })()}
 },{"../vars.js":8,"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],6:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("div[data-v-1]{ transition: background-color .5s ease; }\n\n.themePreview[data-v-1]{\n  display: block;\n  width: 80%;\n  height: 120px;\n  margin: 20px auto;\n  vertical-align: top;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n}\n\n.container[data-v-1]{\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-flow: row nowrap;\n  position: relative; top: 0; left: 0;\n}\n\n.sidebar[data-v-1]{\n  display: inline-block;\n  width: 30%;\n}\n\n.belly[data-v-1]{\n  flex: 1;\n}\n\n.header[data-v-1]{\n  height: 20px;\n  padding: 0 2px;\n  color: #fff;\n  font-size: 10px;\n  line-height: 20px;\n}\n\n.content[data-v-1]{\n  width: 50%;\n  height: 60px;\n  margin: 5px auto 0 auto;\n}\n\n.fab[data-v-1]{\n  width: 18px;\n  height: 18px;\n  border-radius: 50%;\n  position: absolute;\n  bottom: 5px; right: 5px;\n}")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("div[data-v-2]{ transition: background-color .5s ease; }\n\n.themePreview[data-v-2]{\n  display: block;\n  width: 80%;\n  height: 120px;\n  margin: 20px auto;\n  vertical-align: top;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n}\n\n.container[data-v-2]{\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-flow: row nowrap;\n  position: relative; top: 0; left: 0;\n}\n\n.sidebar[data-v-2]{\n  display: inline-block;\n  width: 30%;\n}\n\n.belly[data-v-2]{\n  flex: 1;\n}\n\n.header[data-v-2]{\n  height: 20px;\n  padding: 0 2px;\n  color: #fff;\n  font-size: 10px;\n  line-height: 20px;\n}\n\n.content[data-v-2]{\n  width: 50%;\n  height: 60px;\n  margin: 5px auto 0 auto;\n}\n\n.fab[data-v-2]{\n  width: 18px;\n  height: 18px;\n  border-radius: 50%;\n  position: absolute;\n  bottom: 5px; right: 5px;\n}")
 ;(function(){
 'use strict';
 
@@ -5976,16 +5976,16 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{staticClass:"themePreview"},[_h('div',{staticClass:"container"},[_h('div',{staticClass:"sidebar",style:({background:base.fore})})," ",_h('div',{staticClass:"belly",style:({background:base.back})},[_h('div',{staticClass:"header",style:({background:theme.primary, color:theme.textOnPrimary})},["\n          ตัวอย่างหัวข้อกระทู้\n        "])," ",_h('div',{staticClass:"content",style:({background:base.fore})})," ",_h('div',{staticClass:"fab",style:({background:theme.accent})})])])])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-1"
+__vue__options__._scopeId = "data-v-2"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1", __vue__options__)
+    hotAPI.createRecord("data-v-2", __vue__options__)
   } else {
-    hotAPI.reload("data-v-1", __vue__options__)
+    hotAPI.reload("data-v-2", __vue__options__)
   }
 })()}
 },{"../vars.js":8,"vue":3,"vue-hot-reload-api":2,"vueify/lib/insert-css":4}],7:[function(require,module,exports){
