@@ -24,10 +24,6 @@
       data: {
         _id: String,
         disp_topic: String
-      },
-      isActive: {
-        type: Boolean,
-        default: false
       }
     },
 
@@ -38,14 +34,10 @@
     },
 
     computed: {
+      isActive(){ return this.data._id === this.$store.state.currentTopic },
+
       thumbnail(){
         return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
-      }
-    },
-
-    events: {
-      'topicLoaded': function(topicId){
-        this.isActive = topicId === this.data._id ? true : false;
       }
     }
   }

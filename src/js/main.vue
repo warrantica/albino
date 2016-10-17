@@ -105,7 +105,7 @@ export default {
   data(){ return{
     forums: Vars.forumInfo,
     currentForum: '',
-    currentTitle: '',
+    //currentTitle: '',
     //currentTopic: 0,
     currentPage: 'tips',
     //showBestTopics: false,
@@ -123,7 +123,7 @@ export default {
     topTopicId: 0,
     topicRefreshIntervalId: '',
     unreadComments: 0,
-    topicData: {}
+    //topicData: {}
   }},
 
   computed: {
@@ -203,74 +203,20 @@ export default {
       });
     },
 
-    loadTopic(topicId){
-      //pull down curtains
-      $('#rightPane').addClass('wrapUp');
-      $('#rightPane .loading').addClass('active');
-
-      if(topicId !== this.currentTopic)
-        $('#rightPane').animate({scrollTop:0}, "0.5s");
-
-      return Promise.all([
-        Pantip.loadTopic(topicId),
-        Pantip.loadComments(topicId)
-      ]).then(values => {
-        //console.log(values);
-
-        //load topic
-        values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
-        //this.$broadcast('loadTopicView', values[0]);
-        this.$store.dispatch('loadTopic', values[0]);
-        this.currentTitle = values[0]['title'];
-
-        //load comments
-        values[1].tid = topicId;
-        this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
-
-        //pull up curtains
-        $('#rightPane').removeClass('wrapUp');
-        $('#rightPane .loading').removeClass('active');
-
-        //set current topic
-        this.currentTopic = topicId;
-
-        //set up polling
-        this.unreadComments = 0;
-        window.clearInterval(this.topicRefreshIntervalId);
-        this.topicRefreshIntervalId =  window.setInterval(() => {
-          Pantip.loadComments(topicId).then(data => {
-            if(data.count >= values[1].count){
-              this.unreadComments = data.count - values[1].count;
-            }
-          });
-        }, 30000);
-
-        //show FAB
-        window.setTimeout(() => {
-          let rightPane = document.getElementById('rightPane');
-          if(rightPane.offsetHeight < rightPane.scrollHeight){
-            $('#fab').addClass('enable');
-          }else{
-            $('#fab').removeClass('enable');
-          }
-        }, 50);
-      });
-
-    },
-
     refreshTopic(){
-      if(this.currentTopic !== 0){
+      if(this.$store.state.currentTopic !== 0){
         let scroll = document.getElementById('rightPane').scrollTop;
-        this.loadTopic(this.currentTopic).then(value =>{
+
+        this.$store.dispatch('loadTopicFromId', this.$store.state.currentTopic).then(value =>{
           $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
         });
       }
     },
 
     loadPage(name){
-      this.currentTitle = '';
-      this.currentTopic = 0;
-      window.clearInterval(this.topicRefreshIntervalId);
+      this.$store.state.topicTitle = '';
+      this.$store.state.currentTopic = 0;
+      window.clearInterval(this.$store.state.topicRefreshIntervalId);
       this.unreadComments = 0;
       this.currentPage = name;
     },
@@ -288,11 +234,6 @@ export default {
   events: {
     'loadForum': function(forum){
       this.loadTopics(forum);
-    },
-
-    'loadTopic': function(topicId){
-      //this.$broadcast('topicLoaded', topicId);
-      this.loadTopic(topicId);
     },
 
     'loadSearchResult': function(url){

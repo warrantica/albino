@@ -1,6 +1,6 @@
 <template>
   <div class="topic sForeBg sClickable"
-       :class="{active: data.isActive, top: data.isTop}"
+       :class="{active: isActive, top: data.isTop}"
        @click="loadTopic">
     <div class="topic-thumbnail">
       <img class="topic-thumbnailImage" :src="thumbnail" />
@@ -28,10 +28,6 @@
         commentsNum: Number,
         utime: String,
         timeFull: String,
-        isActive: {
-          type: Boolean,
-          default: false
-        },
         isTop: {
           type: Boolean,
           default: false
@@ -49,6 +45,8 @@
     },
 
     computed: {
+      isActive(){ return this.data._id === this.$store.state.currentTopic },
+
       thumbnail(){
         return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
       }
@@ -56,12 +54,6 @@
 
     mounted(){
       $('time').timeago();
-    },
-
-    events: {
-      'topicLoaded': function(topicId){
-        this.data.isActive = (topicId === this.data._id) ? true : false;
-      }
     }
   }
 </script>
