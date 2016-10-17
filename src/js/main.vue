@@ -31,11 +31,11 @@
         <div class="loading sAccentText"><i class="ic">refresh</i></div>
         <div id="bestTopicContainer">
           <div id="bestTopicHeader" class="sClickable"
-               :class="{ active: showBestTopics }"
-               @click="showBestTopics = !showBestTopics">
+               :class="{ active: $store.state.showBestTopics }"
+               @click="$store.commit('toggleBestTopics')">
             <i class="ic headerIcon">thumb_up</i>กระทู้แนะนำ<i class="ic dropdown">expand_more</i>
           </div>
-          <div id="bestTopicList" :class="{ active: showBestTopics }">
+          <div id="bestTopicList" :class="{ active: $store.state.showBestTopics }">
             <best-topic-item v-for="topic in bestTopics" :data="topic"></best-topic-item>
           </div>
         </div>
@@ -100,217 +100,219 @@
 let Vars = require('./vars.js');
 let Pantip = require('./pantipInterface.js');
 
-  export default {
+export default {
 
+  data(){ return{
+    forums: Vars.forumInfo,
+    currentForum: '',
+    currentTitle: '',
+    //currentTopic: 0,
+    currentPage: 'tips',
+    //showBestTopics: false,
+    showDialogues: {
+      forumSelect: false,
+      overflow: false
+    },
+    showSearch: false,
+    bestTopics: [],
+    topics: [],
+    searchQuery: '',
+    searchQueryString: '',
+    searchResults: [],
+    loadMoreId: 0,
+    topTopicId: 0,
+    topicRefreshIntervalId: '',
+    unreadComments: 0,
+    topicData: {}
+  }},
 
-    data(){ return{
-      forums: Vars.forumInfo,
-      currentForum: '',
-      currentTitle: '',
-      currentTopic: 0,
-      currentPage: 'tips',
-      showBestTopics: false,
-      showDialogues: {
-        forumSelect: false,
-        overflow: false
-      },
-      showSearch: false,
-      bestTopics: [],
-      topics: [],
-      searchQuery: '',
-      searchQueryString: '',
-      searchResults: [],
-      loadMoreId: 0,
-      topTopicId: 0,
-      topicRefreshIntervalId: '',
-      unreadComments: 0
-    }},
+  computed: {
+    currentTopic(){ return this.$store.state.currentTopic },
 
-    computed: {
-      forumDisplayName(){
-        if(this.currentForum !== ''){
-          for(let forum of this.forums)
-            if(forum.name === this.currentForum) return forum.label;
-        }else{
-          return 'เลือกห้อง';
+    forumDisplayName(){
+      if(this.currentForum !== ''){
+        for(let forum of this.forums)
+          if(forum.name === this.currentForum) return forum.label;
+      }else{
+        return 'เลือกห้อง';
+      }
+    }
+  },
+
+  methods: {
+    dismissDialogues(){
+      for(let key in this.showDialogues){
+        if(this.showDialogues.hasOwnProperty(key)){
+          this.showDialogues[key] = false;
         }
       }
     },
 
-    methods: {
-      dismissDialogues(){
-        for(let key in this.showDialogues){
-          if(this.showDialogues.hasOwnProperty(key)){
-            this.showDialogues[key] = false;
-          }
+    loadTopics(forumName, loadMore = false){
+      let _loadMoreId = loadMore ? this.loadMoreId : 0;
+      this.currentForum = forumName;
+      this.showBestTopics = false;
+      if(!loadMore){
+        $('#leftPane').addClass('wrapUp');
+        $('#leftPane .loading').addClass('active');
+        this.topics = [];
+
+        Pantip.loadBestTopics(forumName).then(data => this.bestTopics = data);
+      }
+
+      Pantip.loadTopics(forumName, _loadMoreId).then(data => {
+        //console.log(data);
+        $('#leftPane').removeClass('wrapUp');
+        $('#leftPane .loading').removeClass('active');
+
+        for(let topic of data['topics']){
+          topic.isActive = topic._id === this.currentTopic;
+          topic.isTop = topic._id === this.topTopicId;
+          this.topics.push(topic);
         }
-      },
+        this.topTopicId = this.topics[0]._id;
+        this.loadMoreId = data.loadMoreID;
+      });
+    },
 
-      loadTopics(forumName, loadMore = false){
-        let _loadMoreId = loadMore ? this.loadMoreId : 0;
-        this.currentForum = forumName;
-        this.showBestTopics = false;
-        if(!loadMore){
-          $('#leftPane').addClass('wrapUp');
-          $('#leftPane .loading').addClass('active');
-          this.topics = [];
+    loadMoreTopics(){
+      this.loadTopics(this.currentForum, true);
+      $('.topic.' + this.loadMoreId).addClass('beforeMore');
+    },
 
-          Pantip.loadBestTopics(forumName).then(data => this.bestTopics = data);
-        }
+    doSearch(){
+      if(this.searchQuery === '') return false;
 
-        Pantip.loadTopics(forumName, _loadMoreId).then(data => {
-          //console.log(data);
-          $('#leftPane').removeClass('wrapUp');
-          $('#leftPane .loading').removeClass('active');
+      $('.searchResultList').addClass('wrapUp');
+      $('.searchResultList .loading').addClass('active');
+      Pantip.search(this.searchQuery).then(data => {
+        //console.log(data);
+        this.searchResults = data.results;
+        this.searchQueryString = data.queryString;
+        $('.searchResultList').removeClass('wrapUp');
+        $('.searchResultList .loading').removeClass('active');
+      });
+    },
 
-          for(let topic of data['topics']){
-            topic.isActive = topic._id === this.currentTopic;
-            topic.isTop = topic._id === this.topTopicId;
-            this.topics.push(topic);
-          }
-          this.topTopicId = this.topics[0]._id;
-          this.loadMoreId = data.loadMoreID;
-        });
-      },
+    loadMoreSearchResults(){
+      Pantip.search(this.searchQuery,
+        this.searchResults.length,
+        this.searchQueryString).then(data => {
 
-      loadMoreTopics(){
-        this.loadTopics(this.currentForum, true);
-        $('.topic.' + this.loadMoreId).addClass('beforeMore');
-      },
+        this.searchResults.push(...data.results);
+      });
+    },
 
-      doSearch(){
-        if(this.searchQuery === '') return false;
+    loadTopic(topicId){
+      //pull down curtains
+      $('#rightPane').addClass('wrapUp');
+      $('#rightPane .loading').addClass('active');
 
-        $('.searchResultList').addClass('wrapUp');
-        $('.searchResultList .loading').addClass('active');
-        Pantip.search(this.searchQuery).then(data => {
-          //console.log(data);
-          this.searchResults = data.results;
-          this.searchQueryString = data.queryString;
-          $('.searchResultList').removeClass('wrapUp');
-          $('.searchResultList .loading').removeClass('active');
-        });
-      },
+      if(topicId !== this.currentTopic)
+        $('#rightPane').animate({scrollTop:0}, "0.5s");
 
-      loadMoreSearchResults(){
-        Pantip.search(this.searchQuery,
-          this.searchResults.length,
-          this.searchQueryString).then(data => {
+      return Promise.all([
+        Pantip.loadTopic(topicId),
+        Pantip.loadComments(topicId)
+      ]).then(values => {
+        //console.log(values);
 
-          this.searchResults.push(...data.results);
-        });
-      },
+        //load topic
+        values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
+        this.$broadcast('loadTopicView', values[0]);
+        this.currentTitle = values[0]['title'];
 
-      loadTopic(topicId){
-        //pull down curtains
-        $('#rightPane').addClass('wrapUp');
-        $('#rightPane .loading').addClass('active');
+        //load comments
+        values[1].tid = topicId;
+        this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
 
-        if(topicId !== this.currentTopic)
-          $('#rightPane').animate({scrollTop:0}, "0.5s");
+        //pull up curtains
+        $('#rightPane').removeClass('wrapUp');
+        $('#rightPane .loading').removeClass('active');
 
-        return Promise.all([
-          Pantip.loadTopic(topicId),
-          Pantip.loadComments(topicId)
-        ]).then(values => {
-          //console.log(values);
+        //set current topic
+        this.currentTopic = topicId;
 
-          //load topic
-          values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
-          this.$broadcast('loadTopicView', values[0]);
-          this.currentTitle = values[0]['title'];
-
-          //load comments
-          values[1].tid = topicId;
-          this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
-
-          //pull up curtains
-          $('#rightPane').removeClass('wrapUp');
-          $('#rightPane .loading').removeClass('active');
-
-          //set current topic
-          this.currentTopic = topicId;
-
-          //set up polling
-          this.unreadComments = 0;
-          window.clearInterval(this.topicRefreshIntervalId);
-          this.topicRefreshIntervalId =  window.setInterval(() => {
-            Pantip.loadComments(topicId).then(data => {
-              if(data.count >= values[1].count){
-                this.unreadComments = data.count - values[1].count;
-              }
-            });
-          }, 30000);
-
-          //show FAB
-          window.setTimeout(() => {
-            let rightPane = document.getElementById('rightPane');
-            if(rightPane.offsetHeight < rightPane.scrollHeight){
-              $('#fab').addClass('enable');
-            }else{
-              $('#fab').removeClass('enable');
-            }
-          }, 50);
-        });
-
-      },
-
-      refreshTopic(){
-        if(this.currentTopic !== 0){
-          let scroll = document.getElementById('rightPane').scrollTop;
-          this.loadTopic(this.currentTopic).then(value =>{
-            $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
-          });
-        }
-      },
-
-      loadPage(name){
-        this.currentTitle = '';
-        this.currentTopic = 0;
-        window.clearInterval(this.topicRefreshIntervalId);
+        //set up polling
         this.unreadComments = 0;
-        this.currentPage = name;
-      },
+        window.clearInterval(this.topicRefreshIntervalId);
+        this.topicRefreshIntervalId =  window.setInterval(() => {
+          Pantip.loadComments(topicId).then(data => {
+            if(data.count >= values[1].count){
+              this.unreadComments = data.count - values[1].count;
+            }
+          });
+        }, 30000);
 
-      openInPantip(){
-        if(this.currentTopic !== 0)
-          window.open(`http://pantip.com/topic/${this.currentTopic}`, '_blank');
-      },
+        //show FAB
+        window.setTimeout(() => {
+          let rightPane = document.getElementById('rightPane');
+          if(rightPane.offsetHeight < rightPane.scrollHeight){
+            $('#fab').addClass('enable');
+          }else{
+            $('#fab').removeClass('enable');
+          }
+        }, 50);
+      });
 
-      goToSettings(){
-        chrome.runtime.openOptionsPage();
-      }
     },
 
-    events: {
-      'loadForum': function(forum){
-        this.loadTopics(forum);
-      },
-
-      'loadTopic': function(topicId){
-        this.$broadcast('topicLoaded', topicId);
-        this.loadTopic(topicId);
-      },
-
-      'loadSearchResult': function(url){
-        Pantip.getTopicIdFromSearch(url).then(id => {
-          this.loadTopic(id);
+    refreshTopic(){
+      if(this.currentTopic !== 0){
+        let scroll = document.getElementById('rightPane').scrollTop;
+        this.loadTopic(this.currentTopic).then(value =>{
+          $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
         });
       }
     },
 
-    mounted(){
-      //Get and apply options
-      chrome.storage.sync.get({
-        theme: 'default',
-        defaultForum: '',
-        fontSize: '26',
-        fontFace: 'TH Sarabun New'
-      }, item => {
-        this.loadTopics(item.defaultForum);
-        //this.$broadcast('applyTheme', item.theme);
-        //this.$broadcast('applyFont', item.fontSize, item.fontFace);
+    loadPage(name){
+      this.currentTitle = '';
+      this.currentTopic = 0;
+      window.clearInterval(this.topicRefreshIntervalId);
+      this.unreadComments = 0;
+      this.currentPage = name;
+    },
+
+    openInPantip(){
+      if(this.currentTopic !== 0)
+        window.open(`http://pantip.com/topic/${this.currentTopic}`, '_blank');
+    },
+
+    goToSettings(){
+      chrome.runtime.openOptionsPage();
+    }
+  },
+
+  events: {
+    'loadForum': function(forum){
+      this.loadTopics(forum);
+    },
+
+    'loadTopic': function(topicId){
+      this.$broadcast('topicLoaded', topicId);
+      this.loadTopic(topicId);
+    },
+
+    'loadSearchResult': function(url){
+      Pantip.getTopicIdFromSearch(url).then(id => {
+        this.loadTopic(id);
       });
     }
+  },
+
+  mounted(){
+    //Get and apply options
+    chrome.storage.sync.get({
+      theme: 'default',
+      defaultForum: '',
+      fontSize: '26',
+      fontFace: 'TH Sarabun New'
+    }, item => {
+      this.loadTopics(item.defaultForum);
+      //this.$broadcast('applyTheme', item.theme);
+      //this.$broadcast('applyFont', item.fontSize, item.fontFace);
+    });
   }
+}
 </script>

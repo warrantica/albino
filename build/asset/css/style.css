@@ -25,6 +25,8 @@ html, body{
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
+  height: 100%;
+  overflow: hidden;
 }
 
 a:link, a:visited{ text-decoration: none; }

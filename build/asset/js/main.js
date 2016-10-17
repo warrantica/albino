@@ -7220,6 +7220,535 @@ exports.insert = function (css) {
 }
 
 },{}],81:[function(require,module,exports){
+/**
+ * vuex v2.0.0
+ * (c) 2016 Evan You
+ * @license MIT
+ */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.Vuex = factory());
+}(this, (function () { 'use strict';
+
+var devtoolHook =
+  typeof window !== 'undefined' &&
+  window.__VUE_DEVTOOLS_GLOBAL_HOOK__
+
+function devtoolPlugin (store) {
+  if (!devtoolHook) { return }
+
+  store._devtoolHook = devtoolHook
+
+  devtoolHook.emit('vuex:init', store)
+
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState)
+  })
+
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state)
+  })
+}
+
+function applyMixin (Vue) {
+  var version = Number(Vue.version.split('.')[0])
+
+  if (version >= 2) {
+    var usesInit = Vue.config._lifecycleHooks.indexOf('init') > -1
+    Vue.mixin(usesInit ? { init: vuexInit } : { beforeCreate: vuexInit })
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
+
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit
+      _init.call(this, options)
+    }
+  }
+
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+  function vuexInit () {
+    var options = this.$options
+    // store injection
+    if (options.store) {
+      this.$store = options.store
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store
+    }
+  }
+}
+
+function mapState (states) {
+  var res = {}
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState () {
+      return typeof val === 'function'
+        ? val.call(this, this.$store.state, this.$store.getters)
+        : this.$store.state[val]
+    }
+  })
+  return res
+}
+
+function mapMutations (mutations) {
+  var res = {}
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      return this.$store.commit.apply(this.$store, [val].concat(args))
+    }
+  })
+  return res
+}
+
+function mapGetters (getters) {
+  var res = {}
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedGetter () {
+      if (!(val in this.$store.getters)) {
+        console.error(("[vuex] unknown getter: " + val))
+      }
+      return this.$store.getters[val]
+    }
+  })
+  return res
+}
+
+function mapActions (actions) {
+  var res = {}
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      return this.$store.dispatch.apply(this.$store, [val].concat(args))
+    }
+  })
+  return res
+}
+
+function normalizeMap (map) {
+  return Array.isArray(map)
+    ? map.map(function (key) { return ({ key: key, val: key }); })
+    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+var Vue // bind on install
+
+var Store = function Store (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  assert(Vue, "must call Vue.use(Vuex) before creating a store instance.")
+  assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.")
+
+  var state = options.state; if ( state === void 0 ) state = {};
+  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
+  var strict = options.strict; if ( strict === void 0 ) strict = false;
+
+  // store internal state
+  this._options = options
+  this._committing = false
+  this._actions = Object.create(null)
+  this._mutations = Object.create(null)
+  this._wrappedGetters = Object.create(null)
+  this._runtimeModules = Object.create(null)
+  this._subscribers = []
+  this._watcherVM = new Vue()
+
+    // bind commit and dispatch to self
+  var store = this
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+    }
+    this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  }
+
+  // strict mode
+  this.strict = strict
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  installModule(this, state, [], options)
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+  resetStoreVM(this, state)
+
+  // apply plugins
+  plugins.concat(devtoolPlugin).forEach(function (plugin) { return plugin(this$1); })
+};
+
+var prototypeAccessors = { state: {} };
+
+prototypeAccessors.state.get = function () {
+  return this._vm.state
+};
+
+prototypeAccessors.state.set = function (v) {
+  assert(false, "Use store.replaceState() to explicit replace store state.")
+};
+
+Store.prototype.commit = function commit (type, payload, options) {
+    var this$1 = this;
+
+  // check object-style commit
+  if (isObject(type) && type.type) {
+    options = payload
+    payload = type
+    type = type.type
+  }
+  var mutation = { type: type, payload: payload }
+  var entry = this._mutations[type]
+  if (!entry) {
+    console.error(("[vuex] unknown mutation type: " + type))
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload)
+    })
+  })
+  if (!options || !options.silent) {
+    this._subscribers.forEach(function (sub) { return sub(mutation, this$1.state); })
+  }
+};
+
+Store.prototype.dispatch = function dispatch (type, payload) {
+  // check object-style dispatch
+  if (isObject(type) && type.type) {
+    payload = type
+    type = type.type
+  }
+  var entry = this._actions[type]
+  if (!entry) {
+    console.error(("[vuex] unknown action type: " + type))
+    return
+  }
+  return entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload)
+};
+
+Store.prototype.subscribe = function subscribe (fn) {
+  var subs = this._subscribers
+  if (subs.indexOf(fn) < 0) {
+    subs.push(fn)
+  }
+  return function () {
+    var i = subs.indexOf(fn)
+    if (i > -1) {
+      subs.splice(i, 1)
+    }
+  }
+};
+
+Store.prototype.watch = function watch (getter, cb, options) {
+    var this$1 = this;
+
+  assert(typeof getter === 'function', "store.watch only accepts a function.")
+  return this._watcherVM.$watch(function () { return getter(this$1.state); }, cb, options)
+};
+
+Store.prototype.replaceState = function replaceState (state) {
+    var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm.state = state
+  })
+};
+
+Store.prototype.registerModule = function registerModule (path, module) {
+  if (typeof path === 'string') { path = [path] }
+  assert(Array.isArray(path), "module path must be a string or an Array.")
+  this._runtimeModules[path.join('.')] = module
+  installModule(this, this.state, path, module)
+  // reset store to update getters...
+  resetStoreVM(this, this.state)
+};
+
+Store.prototype.unregisterModule = function unregisterModule (path) {
+    var this$1 = this;
+
+  if (typeof path === 'string') { path = [path] }
+  assert(Array.isArray(path), "module path must be a string or an Array.")
+    delete this._runtimeModules[path.join('.')]
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1))
+    Vue.delete(parentState, path[path.length - 1])
+  })
+  resetStore(this)
+};
+
+Store.prototype.hotUpdate = function hotUpdate (newOptions) {
+  updateModule(this._options, newOptions)
+  resetStore(this)
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing
+  this._committing = true
+  fn()
+  this._committing = committing
+};
+
+Object.defineProperties( Store.prototype, prototypeAccessors );
+
+function updateModule (targetModule, newModule) {
+  if (newModule.actions) {
+    targetModule.actions = newModule.actions
+  }
+  if (newModule.mutations) {
+    targetModule.mutations = newModule.mutations
+  }
+  if (newModule.getters) {
+    targetModule.getters = newModule.getters
+  }
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!(targetModule.modules && targetModule.modules[key])) {
+        console.warn(
+          "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
+          'manual reload is needed'
+        )
+        return
+      }
+      updateModule(targetModule.modules[key], newModule.modules[key])
+    }
+  }
+}
+
+function resetStore (store) {
+  store._actions = Object.create(null)
+  store._mutations = Object.create(null)
+  store._wrappedGetters = Object.create(null)
+  var state = store.state
+  // init root module
+  installModule(store, state, [], store._options, true)
+  // init all runtime modules
+  Object.keys(store._runtimeModules).forEach(function (key) {
+    installModule(store, state, key.split('.'), store._runtimeModules[key], true)
+  })
+  // reset vm
+  resetStoreVM(store, state)
+}
+
+function resetStoreVM (store, state) {
+  var oldVm = store._vm
+
+  // bind store public getters
+  store.getters = {}
+  var wrappedGetters = store._wrappedGetters
+  var computed = {}
+  Object.keys(wrappedGetters).forEach(function (key) {
+    var fn = wrappedGetters[key]
+    // use computed to leverage its lazy-caching mechanism
+    computed[key] = function () { return fn(store); }
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; }
+    })
+  })
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent
+  Vue.config.silent = true
+  store._vm = new Vue({
+    data: { state: state },
+    computed: computed
+  })
+  Vue.config.silent = silent
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store)
+  }
+
+  if (oldVm) {
+    // dispatch changes in all subscribed watchers
+    // to force getter re-evaluation.
+    store._withCommit(function () {
+      oldVm.state = null
+    })
+    Vue.nextTick(function () { return oldVm.$destroy(); })
+  }
+}
+
+function installModule (store, rootState, path, module, hot) {
+  var isRoot = !path.length
+  var state = module.state;
+  var actions = module.actions;
+  var mutations = module.mutations;
+  var getters = module.getters;
+  var modules = module.modules;
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1))
+    var moduleName = path[path.length - 1]
+    store._withCommit(function () {
+      Vue.set(parentState, moduleName, state || {})
+    })
+  }
+
+  if (mutations) {
+    Object.keys(mutations).forEach(function (key) {
+      registerMutation(store, key, mutations[key], path)
+    })
+  }
+
+  if (actions) {
+    Object.keys(actions).forEach(function (key) {
+      registerAction(store, key, actions[key], path)
+    })
+  }
+
+  if (getters) {
+    wrapGetters(store, getters, path)
+  }
+
+  if (modules) {
+    Object.keys(modules).forEach(function (key) {
+      installModule(store, rootState, path.concat(key), modules[key], hot)
+    })
+  }
+}
+
+function registerMutation (store, type, handler, path) {
+  if ( path === void 0 ) path = [];
+
+  var entry = store._mutations[type] || (store._mutations[type] = [])
+  entry.push(function wrappedMutationHandler (payload) {
+    handler(getNestedState(store.state, path), payload)
+  })
+}
+
+function registerAction (store, type, handler, path) {
+  if ( path === void 0 ) path = [];
+
+  var entry = store._actions[type] || (store._actions[type] = [])
+  var dispatch = store.dispatch;
+  var commit = store.commit;
+  entry.push(function wrappedActionHandler (payload, cb) {
+    var res = handler({
+      dispatch: dispatch,
+      commit: commit,
+      getters: store.getters,
+      state: getNestedState(store.state, path),
+      rootState: store.state
+    }, payload, cb)
+    if (!isPromise(res)) {
+      res = Promise.resolve(res)
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err)
+        throw err
+      })
+    } else {
+      return res
+    }
+  })
+}
+
+function wrapGetters (store, moduleGetters, modulePath) {
+  Object.keys(moduleGetters).forEach(function (getterKey) {
+    var rawGetter = moduleGetters[getterKey]
+    if (store._wrappedGetters[getterKey]) {
+      console.error(("[vuex] duplicate getter key: " + getterKey))
+      return
+    }
+    store._wrappedGetters[getterKey] = function wrappedGetter (store) {
+      return rawGetter(
+        getNestedState(store.state, modulePath), // local state
+        store.getters, // getters
+        store.state // root state
+      )
+    }
+  })
+}
+
+function enableStrictMode (store) {
+  store._vm.$watch('state', function () {
+    assert(store._committing, "Do not mutate vuex store state outside mutation handlers.")
+  }, { deep: true, sync: true })
+}
+
+function getNestedState (state, path) {
+  return path.length
+    ? path.reduce(function (state, key) { return state[key]; }, state)
+    : state
+}
+
+function install (_Vue) {
+  if (Vue) {
+    console.error(
+      '[vuex] already installed. Vue.use(Vuex) should be called only once.'
+    )
+    return
+  }
+  Vue = _Vue
+  applyMixin(Vue)
+}
+
+// auto install in dist mode
+if (typeof window !== 'undefined' && window.Vue) {
+  install(window.Vue)
+}
+
+var index = {
+  Store: Store,
+  install: install,
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions
+}
+
+return index;
+
+})));
+},{}],82:[function(require,module,exports){
 ;(function(){
 'use strict';
 
@@ -7273,8 +7802,8 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-2", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78}],82:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".comment[data-v-8]{\n  width: 100%;\n  box-sizing: border-box;\n  margin: 20px 0;\n  border-radius: 2px;\n}\n\n.subContainer[data-v-8]{\n  padding-bottom: 1px;\n}\n\n.sub.comment[data-v-8]{\n  width: calc(100% - 10px);\n  margin-left: 10px;\n  box-shadow: none;\n}\n\n.sub.comment[data-v-8]:first-child{\n  margin-top: 0;\n}")
+},{"vue":79,"vue-hot-reload-api":78}],83:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".comment[data-v-9]{\n  width: 100%;\n  box-sizing: border-box;\n  margin: 20px 0;\n  border-radius: 2px;\n}\n\n.subContainer[data-v-9]{\n  padding-bottom: 1px;\n}\n\n.sub.comment[data-v-9]{\n  width: calc(100% - 10px);\n  margin-left: 10px;\n  box-shadow: none;\n}\n\n.sub.comment[data-v-9]:first-child{\n  margin-top: 0;\n}")
 ;(function(){
 'use strict';
 
@@ -7383,19 +7912,19 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{staticClass:"comment sForeBg sElevation1",class:{sub:sub}},[_h('div',{staticClass:"info"},[_h('img',{staticClass:"avatar sPrimaryBg",attrs:{"src":data.user.avatar.medium}})," ",_h('div',{staticClass:"author",class:{op:data.owner_topic, sAccentBg:data.owner_topic}},[_s(data.user.name)])," ",_h('div',{staticClass:"time sSubtitle"},[_h('time',{staticClass:"timeago",attrs:{"datetime":data.utime}},[_s(data.data_addrtitle)])])," ",_h('div',{staticClass:"numContainer sSubtitle"},["#"+_s(commentNumber)])])," ",_h('div',{staticClass:"content",domProps:{"innerHTML":_s(data.message)}})," ",_h('reaction-view')," ",(data.reply_count)?_h('div',{staticClass:"subContainer"},[_l((data.replies),function(reply){return _h('comment-item',{attrs:{"data":reply,"sub":""}})})," ",_h('button',{directives:[{name:"show",rawName:"v-show",value:(showLoadMoreSubButton),expression:"showLoadMoreSubButton"}],staticClass:"loadMoreSubComments sButton sElevation0h2 sAccentBg",on:{"click":loadMoreSubComments}},["\n      โหลดความเห็นย่อยเพิ่ม\n    "])]):_e()])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-8"
+__vue__options__._scopeId = "data-v-9"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-8", __vue__options__)
+    hotAPI.createRecord("data-v-9", __vue__options__)
   } else {
-    hotAPI.reload("data-v-8", __vue__options__)
+    hotAPI.reload("data-v-9", __vue__options__)
   }
 })()}
-},{"../pantipInterface.js":95,"babel-runtime/helpers/toConsumableArray":4,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],83:[function(require,module,exports){
+},{"../pantipInterface.js":96,"babel-runtime/helpers/toConsumableArray":4,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],84:[function(require,module,exports){
 var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("#commentsView[data-v-7]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[data-v-7]{\n  margin-bottom: 10px;\n  position: relative;\n  display: flex;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.commentsInfo[data-v-7]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[data-v-7]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsCount i[data-v-7]{\n  font-size: 14px;\n  margin-bottom: 1px;\n}\n\n.commentsSort[data-v-7]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.fade-enter-active[data-v-7], .fade-leave-active[data-v-7]{ opacity:1; transition: all .3s ease; }\n.fade-enter[data-v-7], .fade-leave-active[data-v-7]{ opacity: 0; }")
 ;(function(){
 'use strict';
@@ -7518,7 +8047,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-7", __vue__options__)
   }
 })()}
-},{"../pantipInterface.js":95,"babel-runtime/helpers/toConsumableArray":4,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],84:[function(require,module,exports){
+},{"../pantipInterface.js":96,"babel-runtime/helpers/toConsumableArray":4,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],85:[function(require,module,exports){
 var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("li[data-v-3]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n  transition: .2s all ease-in-out;\n}\n\nimg[data-v-3]{\n  height: 36px;\n  margin-right: 15px;\n}\n\nspan[data-v-3]{\n  vertical-align: top;\n  display: inline-block;\n}")
 ;(function(){
 'use strict';
@@ -7555,8 +8084,8 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-3", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],85:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".pagination[data-v-9]{\n  width: 100%;\n  text-align: center;\n}\n\n.page[data-v-9]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  transition: all .2s ease;\n}")
+},{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],86:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".pagination[data-v-8]{\n  width: 100%;\n  text-align: center;\n}\n\n.page[data-v-8]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  transition: all .2s ease;\n}")
 ;(function(){
 'use strict';
 
@@ -7605,19 +8134,19 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{directives:[{name:"show",rawName:"v-show",value:(totalPages > 1),expression:"totalPages > 1"}],staticClass:"pagination"},[_h('i',{staticClass:"ic sClickable",on:{"click":function($event){goToPage(currentPage-1)}}},["chevron_left"])," ",_l((totalPages),function(page){return _h('span',{staticClass:"page sClickable",class:{ sAccentBg: page==currentPage, current: page==currentPage },on:{"click":function($event){goToPage(page)}}},["\r\n    "+_s(page+1)+"\r\n  "])})," ",_h('i',{staticClass:"ic sClickable",on:{"click":function($event){goToPage(currentPage+1)}}},["chevron_right"])])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-9"
+__vue__options__._scopeId = "data-v-8"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-9", __vue__options__)
+    hotAPI.createRecord("data-v-8", __vue__options__)
   } else {
-    hotAPI.reload("data-v-9", __vue__options__)
+    hotAPI.reload("data-v-8", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],86:[function(require,module,exports){
+},{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],87:[function(require,module,exports){
 var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".reactions[data-v-11]{\n  padding: 0 15px 15px 15px;\n  line-height: 28px;\n  position: relative; top: 0; left: 0;\n}\n\n.vote[data-v-11]{\n  display: inline-block;\n  margin-right: 10px;\n  height: 28px;\n  vertical-align: top;\n}\n\n.emotions[data-v-11], .emotionIcons[data-v-11]{\n  display: inline-block;\n  height: 28px;\n}\n\n.emotionIcons img[data-v-11]{\n  width: 18px;\n  height: auto;\n  margin-bottom: 5px;\n}\n\n.emotionIcons img[data-v-11]:first-child{\n  width: 28px;\n  margin-bottom: 0;\n}\n\n.emotionCount[data-v-11]{\n  display: inline-block;\n  vertical-align: top;\n}\n\n.emotionsInfo[data-v-11]{\n  position: absolute;\n  top: -40px;\n  left: 10px;\n  padding: 10px 10px 0 10px;\n  -webkit-clip-path: circle(0 at 80px 100%);\n  transition: all .15s ease-in-out;\n}\n\n.emotions:hover + .emotionsInfo[data-v-11]{\n  -webkit-clip-path: circle(100% at 50% 50%);\n}\n\n.emotionsInfo li[data-v-11]{\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  margin-right: 10px;\n}\n\n.emotionsInfo img[data-v-11]{\n  width: 18px;\n  margin-right: 5px;\n}\n\n.emotionsInfo span[data-v-11]{\n  vertical-align: top;\n}")
 ;(function(){
 'use strict';
@@ -7699,7 +8228,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-11", __vue__options__)
   }
 })()}
-},{"babel-runtime/core-js/get-iterator":2,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],87:[function(require,module,exports){
+},{"babel-runtime/core-js/get-iterator":2,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],88:[function(require,module,exports){
 ;(function(){
 'use strict';
 
@@ -7734,12 +8263,12 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6", __vue__options__)
+    hotAPI.createRecord("data-v-4", __vue__options__)
   } else {
-    hotAPI.reload("data-v-6", __vue__options__)
+    hotAPI.reload("data-v-4", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78}],88:[function(require,module,exports){
+},{"vue":79,"vue-hot-reload-api":78}],89:[function(require,module,exports){
 var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".toolbarIcon[data-v-1]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[data-v-1]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[data-v-1]{\n  bottom: -30px;\n  opacity: 1;\n}")
 ;(function(){
 "use strict";
@@ -7788,7 +8317,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-1", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],89:[function(require,module,exports){
+},{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],90:[function(require,module,exports){
 ;(function(){
 'use strict';
 
@@ -7852,13 +8381,13 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4", __vue__options__)
+    hotAPI.createRecord("data-v-5", __vue__options__)
   } else {
-    hotAPI.reload("data-v-4", __vue__options__)
+    hotAPI.reload("data-v-5", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78}],90:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".tag[data-v-5]{\n  padding: 15px 0 0 15px;\n}\n\n.tag .ic[data-v-5]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}")
+},{"vue":79,"vue-hot-reload-api":78}],91:[function(require,module,exports){
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".tag[data-v-6]{\n  padding: 15px 0 0 15px;\n}\n\n.tag .ic[data-v-6]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}")
 ;(function(){
 'use strict';
 
@@ -7929,24 +8458,28 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{staticClass:"topicWrapper"},[_h('h1',[_s(data.title)])," ",_h('div',{staticClass:"info"},[_h('img',{staticClass:"avatar sPrimaryBg",attrs:{"src":data.avatarSrc}})," ",_h('div',{staticClass:"author op sAccentBg"},[_s(data.author)])," ",_h('div',{staticClass:"time sSubtitle"},[_h('time',{staticClass:"timeago",attrs:{"datetime":data.utime}},[_s(data.timeFull)])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(data.tags),expression:"data.tags"}],staticClass:"tag sSubtitle"},[_m(0)," "+_s(data.tags)])," ",_h('div',{staticClass:"content",domProps:{"innerHTML":_s(data.content)}})," ",_h('reaction-view')])}}
 __vue__options__.staticRenderFns = [function(){with(this){return _h('i',{staticClass:"ic"},["label"])}}]
-__vue__options__._scopeId = "data-v-5"
+__vue__options__._scopeId = "data-v-6"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5", __vue__options__)
+    hotAPI.createRecord("data-v-6", __vue__options__)
   } else {
-    hotAPI.reload("data-v-5", __vue__options__)
+    hotAPI.reload("data-v-6", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],91:[function(require,module,exports){
+},{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],92:[function(require,module,exports){
 //============================================================================
 //Browserify require stuff
 //============================================================================
 
 let Vue = require('vue');
+let Vuex = require('vuex');
+
+Vue.use(Vuex);
+
 let Vars = require('./vars.js');
 let Pantip = require('./pantipInterface.js');
 
@@ -8019,6 +8552,23 @@ $('#lightBox').on('click', function(e){
   $('#rightPane .img-in-post').removeClass('inLightBox');
 });
 
+//============================================================================
+//Vuex
+//============================================================================
+
+let store = new Vuex.Store({
+  state: {
+    showBestTopics: false,
+    currentTopic: 0
+  },
+
+  mutations: {
+    toggleBestTopics(state){
+      state.showBestTopics = ! state.showBestTopics;
+    }
+  }
+});
+
 /*===========================================================================
 
         V888     888
@@ -8046,9 +8596,12 @@ Vue.component('reactionView', require('./components/reactionView.vue'));
 Vue.component('tips', require('./pages/tipsPage.vue'));
 Vue.component('about', require('./pages/aboutPage.vue'));
 
-let eventHub = new Vue();
+let App = require('./main.vue');
 
-let vm = new Vue(require('./main.vue')).$mount('#app');
+let vm = new Vue({
+  store,
+  render: h => h(App)
+}).$mount('#app');
 
 //============================================================================
 //Utility function stuff
@@ -8070,7 +8623,7 @@ chrome.storage.onChanged.addListener(changes => {
   }
 });
 
-},{"./components/bestTopicItem.vue":81,"./components/commentItem.vue":82,"./components/commentView.vue":83,"./components/forumSelectItem.vue":84,"./components/pagination.vue":85,"./components/reactionView.vue":86,"./components/searchResultItem.vue":87,"./components/toolbarIcon.vue":88,"./components/topicItem.vue":89,"./components/topicView.vue":90,"./main.vue":92,"./pages/aboutPage.vue":93,"./pages/tipsPage.vue":94,"./pantipInterface.js":95,"./vars.js":96,"vue":79}],92:[function(require,module,exports){
+},{"./components/bestTopicItem.vue":82,"./components/commentItem.vue":83,"./components/commentView.vue":84,"./components/forumSelectItem.vue":85,"./components/pagination.vue":86,"./components/reactionView.vue":87,"./components/searchResultItem.vue":88,"./components/toolbarIcon.vue":89,"./components/topicItem.vue":90,"./components/topicView.vue":91,"./main.vue":93,"./pages/aboutPage.vue":94,"./pages/tipsPage.vue":95,"./pantipInterface.js":96,"./vars.js":97,"vue":79,"vuex":81}],93:[function(require,module,exports){
 ;(function(){
 'use strict';
 
@@ -8101,9 +8654,9 @@ exports.default = {
       forums: Vars.forumInfo,
       currentForum: '',
       currentTitle: '',
-      currentTopic: 0,
+
       currentPage: 'tips',
-      showBestTopics: false,
+
       showDialogues: {
         forumSelect: false,
         overflow: false
@@ -8117,12 +8670,16 @@ exports.default = {
       loadMoreId: 0,
       topTopicId: 0,
       topicRefreshIntervalId: '',
-      unreadComments: 0
+      unreadComments: 0,
+      topicData: {}
     };
   },
 
 
   computed: {
+    currentTopic: function currentTopic() {
+      return this.$store.state.currentTopic;
+    },
     forumDisplayName: function forumDisplayName() {
       if (this.currentForum !== '') {
         var _iteratorNormalCompletion = true;
@@ -8347,7 +8904,7 @@ exports.default = {
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function(){with(this){return _h('div',{attrs:{"id":"app"}},[_h('div',{staticClass:"sBackBg sElevation2",attrs:{"id":"sidebar"}},[_h('div',{staticClass:"sForeBg",attrs:{"id":"sidebarHead"}},[_m(0)," ",_h('div',{staticClass:"sidebarToolbar"},[_h('div',{staticClass:"sClickable",attrs:{"id":"forumSelector"},on:{"click":function($event){$event.stopPropagation();showDialogues.forumSelect = true}}},[_h('span',{attrs:{"id":"forumSelectorName"}},[_s(forumDisplayName)])," ",_m(1)])," ",_h('toolbar-icon',{attrs:{"icon":"refresh","label":"รีเฟรชรายชื่อกระทู้"},on:{"click":function($event){loadTopics(currentForum)}}})," ",_h('toolbar-icon',{attrs:{"icon":"more_vert","label":"อื่น ๆ"},on:{"click":function($event){$event.stopPropagation();showDialogues.overflow = true}}})])," ",_h('ul',{staticClass:"dialogue sElevation2 sClickable",class:{ active:showDialogues.forumSelect },attrs:{"id":"forumSelect"}},[_l((forums),function(forum){return _h('forum-select-item',{attrs:{"name":forum.name}},["\n          "+_s(forum.label)+"\n        "])})])," ",_h('ul',{staticClass:"dialogue sElevation2",class:{ active:showDialogues.overflow },attrs:{"id":"overflow"}},[_h('li',{staticClass:"sClickable",on:{"click":function($event){showSearch = true}}},["ค้นหา"])," ",_h('li',{staticClass:"sClickable",on:{"click":goToSettings}},["ตั้งค่า"])," ",_h('li',{staticClass:"sClickable",on:{"click":function($event){loadPage('about')}}},["เกี่ยวกับ Albino"])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(!showSearch),expression:"!showSearch"}],staticClass:"sForeBg",attrs:{"id":"leftPane"}},[_m(2)," ",_h('div',{attrs:{"id":"bestTopicContainer"}},[_h('div',{staticClass:"sClickable",class:{ active: showBestTopics },attrs:{"id":"bestTopicHeader"},on:{"click":function($event){showBestTopics = !showBestTopics}}},[_m(3),"กระทู้แนะนำ",_m(4)])," ",_h('div',{class:{ active: showBestTopics },attrs:{"id":"bestTopicList"}},[_l((bestTopics),function(topic){return _h('best-topic-item',{attrs:{"data":topic}})})])])," ",_m(5)," ",_h('div',{attrs:{"id":"topicList"}},[_l((topics),function(topic){return _h('topic-item',{attrs:{"data":topic}})})," ",_h('button',{staticClass:"loadMore sButton sAccentBg sElevation0h2",attrs:{"data-tid":loadMoreId},on:{"click":loadMoreTopics}},["\n          โหลดกระทู้เพิ่ม\n        "])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(showSearch),expression:"showSearch"}],staticClass:"searchPane"},[_h('div',{staticClass:"searchContainer sForeBg"},[_h('toolbar-icon',{attrs:{"icon":"arrow_back","label":"กลับไปหน้ารายชื่อกระทู้"},on:{"click":function($event){showSearch = false}}})," ",_h('input',{directives:[{name:"model",rawName:"v-model",value:(searchQuery),expression:"searchQuery"}],staticClass:"searchBar",attrs:{"type":"text","placeholder":"คำค้นหา..."},domProps:{"value":_s(searchQuery)},on:{"keyup":function($event){if($event.keyCode!==13)return;doSearch($event)},"input":function($event){if($event.target.composing)return;searchQuery=$event.target.value}}})," ",_h('toolbar-icon',{attrs:{"icon":"search","label":"ค้นหา"},on:{"click":doSearch}})])," ",_h('div',{staticClass:"searchResultList sForeBg"},[_m(6)," ",_l((searchResults),function(topic){return _h('search-result-item',{attrs:{"data":topic}})})," ",_h('button',{directives:[{name:"show",rawName:"v-show",value:(searchResults.length),expression:"searchResults.length"}],staticClass:"loadMore sButton sAccentBg sElevation0h2",on:{"click":loadMoreSearchResults}},["\n          โหลดกระทู้เพิ่ม\n        "])])])])," ",_h('div',{staticClass:"sBackBg",attrs:{"id":"belly"}},[_h('div',{staticClass:"sPrimaryBg sElevation1",attrs:{"id":"bellyHead"}},[_h('div',{staticClass:"bellyTitle"},[_s(currentTitle)])," ",_h('div',{attrs:{"id":"bellyToolbar"}},[_h('div',{staticClass:"refreshButtonContainer",on:{"click":refreshTopic}},[_h('toolbar-icon',{attrs:{"icon":"refresh","label":"รีเฟรชกระทู้"}})," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(unreadComments),expression:"unreadComments"}],staticClass:"refreshBadge sAccentBg"},[_s(unreadComments)])])," ",_h('toolbar-icon',{attrs:{"icon":"open_in_new","label":"เปิดใน Pantip.com"},on:{"click":openInPantip}})])])," ",_h('div',{attrs:{"id":"rightPane"}},[_m(7)," ",_h('div',{staticClass:"sForeBg sElevation1",attrs:{"id":"topicView"}},[_h('topic-view',{directives:[{name:"show",rawName:"v-show",value:(currentTopic),expression:"currentTopic"}],attrs:{"data":topicData}})," ",_h(currentPage,{directives:[{name:"show",rawName:"v-show",value:(!currentTopic),expression:"!currentTopic"}],tag:"component"})])," ",_h('comment-view',{directives:[{name:"show",rawName:"v-show",value:(currentTopic),expression:"currentTopic"}]})])," ",_m(8)])," ",_m(9)])}}
+__vue__options__.render = function(){with(this){return _h('div',{attrs:{"id":"app"}},[_h('div',{staticClass:"sBackBg sElevation2",attrs:{"id":"sidebar"}},[_h('div',{staticClass:"sForeBg",attrs:{"id":"sidebarHead"}},[_m(0)," ",_h('div',{staticClass:"sidebarToolbar"},[_h('div',{staticClass:"sClickable",attrs:{"id":"forumSelector"},on:{"click":function($event){$event.stopPropagation();showDialogues.forumSelect = true}}},[_h('span',{attrs:{"id":"forumSelectorName"}},[_s(forumDisplayName)])," ",_m(1)])," ",_h('toolbar-icon',{attrs:{"icon":"refresh","label":"รีเฟรชรายชื่อกระทู้"},on:{"click":function($event){loadTopics(currentForum)}}})," ",_h('toolbar-icon',{attrs:{"icon":"more_vert","label":"อื่น ๆ"},on:{"click":function($event){$event.stopPropagation();showDialogues.overflow = true}}})])," ",_h('ul',{staticClass:"dialogue sElevation2 sClickable",class:{ active:showDialogues.forumSelect },attrs:{"id":"forumSelect"}},[_l((forums),function(forum){return _h('forum-select-item',{attrs:{"name":forum.name}},["\n          "+_s(forum.label)+"\n        "])})])," ",_h('ul',{staticClass:"dialogue sElevation2",class:{ active:showDialogues.overflow },attrs:{"id":"overflow"}},[_h('li',{staticClass:"sClickable",on:{"click":function($event){showSearch = true}}},["ค้นหา"])," ",_h('li',{staticClass:"sClickable",on:{"click":goToSettings}},["ตั้งค่า"])," ",_h('li',{staticClass:"sClickable",on:{"click":function($event){loadPage('about')}}},["เกี่ยวกับ Albino"])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(!showSearch),expression:"!showSearch"}],staticClass:"sForeBg",attrs:{"id":"leftPane"}},[_m(2)," ",_h('div',{attrs:{"id":"bestTopicContainer"}},[_h('div',{staticClass:"sClickable",class:{ active: $store.state.showBestTopics },attrs:{"id":"bestTopicHeader"},on:{"click":function($event){$store.commit('toggleBestTopics')}}},[_m(3),"กระทู้แนะนำ",_m(4)])," ",_h('div',{class:{ active: $store.state.showBestTopics },attrs:{"id":"bestTopicList"}},[_l((bestTopics),function(topic){return _h('best-topic-item',{attrs:{"data":topic}})})])])," ",_m(5)," ",_h('div',{attrs:{"id":"topicList"}},[_l((topics),function(topic){return _h('topic-item',{attrs:{"data":topic}})})," ",_h('button',{staticClass:"loadMore sButton sAccentBg sElevation0h2",attrs:{"data-tid":loadMoreId},on:{"click":loadMoreTopics}},["\n          โหลดกระทู้เพิ่ม\n        "])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(showSearch),expression:"showSearch"}],staticClass:"searchPane"},[_h('div',{staticClass:"searchContainer sForeBg"},[_h('toolbar-icon',{attrs:{"icon":"arrow_back","label":"กลับไปหน้ารายชื่อกระทู้"},on:{"click":function($event){showSearch = false}}})," ",_h('input',{directives:[{name:"model",rawName:"v-model",value:(searchQuery),expression:"searchQuery"}],staticClass:"searchBar",attrs:{"type":"text","placeholder":"คำค้นหา..."},domProps:{"value":_s(searchQuery)},on:{"keyup":function($event){if($event.keyCode!==13)return;doSearch($event)},"input":function($event){if($event.target.composing)return;searchQuery=$event.target.value}}})," ",_h('toolbar-icon',{attrs:{"icon":"search","label":"ค้นหา"},on:{"click":doSearch}})])," ",_h('div',{staticClass:"searchResultList sForeBg"},[_m(6)," ",_l((searchResults),function(topic){return _h('search-result-item',{attrs:{"data":topic}})})," ",_h('button',{directives:[{name:"show",rawName:"v-show",value:(searchResults.length),expression:"searchResults.length"}],staticClass:"loadMore sButton sAccentBg sElevation0h2",on:{"click":loadMoreSearchResults}},["\n          โหลดกระทู้เพิ่ม\n        "])])])])," ",_h('div',{staticClass:"sBackBg",attrs:{"id":"belly"}},[_h('div',{staticClass:"sPrimaryBg sElevation1",attrs:{"id":"bellyHead"}},[_h('div',{staticClass:"bellyTitle"},[_s(currentTitle)])," ",_h('div',{attrs:{"id":"bellyToolbar"}},[_h('div',{staticClass:"refreshButtonContainer",on:{"click":refreshTopic}},[_h('toolbar-icon',{attrs:{"icon":"refresh","label":"รีเฟรชกระทู้"}})," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(unreadComments),expression:"unreadComments"}],staticClass:"refreshBadge sAccentBg"},[_s(unreadComments)])])," ",_h('toolbar-icon',{attrs:{"icon":"open_in_new","label":"เปิดใน Pantip.com"},on:{"click":openInPantip}})])])," ",_h('div',{attrs:{"id":"rightPane"}},[_m(7)," ",_h('div',{staticClass:"sForeBg sElevation1",attrs:{"id":"topicView"}},[_h('topic-view',{directives:[{name:"show",rawName:"v-show",value:(currentTopic),expression:"currentTopic"}],attrs:{"data":topicData}})," ",_h(currentPage,{directives:[{name:"show",rawName:"v-show",value:(!currentTopic),expression:"!currentTopic"}],tag:"component"})])," ",_h('comment-view',{directives:[{name:"show",rawName:"v-show",value:(currentTopic),expression:"currentTopic"}]})])," ",_m(8)])," ",_m(9)])}}
 __vue__options__.staticRenderFns = [function(){with(this){return _h('div',{attrs:{"id":"logo"}},[_h('img',{attrs:{"src":"asset/img/logo.png"}})," ",_h('img',{staticClass:"logoHover",attrs:{"src":"asset/img/logoHover.png"}})])}},function(){with(this){return _h('i',{staticClass:"ic"},["arrow_drop_down"])}},function(){with(this){return _h('div',{staticClass:"loading sAccentText"},[_h('i',{staticClass:"ic"},["refresh"])])}},function(){with(this){return _h('i',{staticClass:"ic headerIcon"},["thumb_up"])}},function(){with(this){return _h('i',{staticClass:"ic dropdown"},["expand_more"])}},function(){with(this){return _h('div',{attrs:{"id":"topicListHeader"}},[_h('i',{staticClass:"ic headerIcon"},["schedule"]),"กระทู้ล่าสุด"])}},function(){with(this){return _h('div',{staticClass:"loading sAccentText"},[_h('i',{staticClass:"ic"},["refresh"])])}},function(){with(this){return _h('div',{staticClass:"loading sAccentText"},[_h('i',{staticClass:"ic"},["hourglass_full"])])}},function(){with(this){return _h('div',{staticClass:"disable sAccentBg sElevation4",attrs:{"id":"fab"}},[_h('div',{staticClass:"topContainer sClickable"},[_h('i',{staticClass:"ic"},["expand_less"])])," ",_h('div',{staticClass:"bottomContainer sClickable"},[_h('i',{staticClass:"ic"},["expand_more"])])])}},function(){with(this){return _h('div',{staticClass:"sClickable",attrs:{"id":"lightBox"}},[_h('img',{attrs:{"src":""}})])}}]
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -8359,7 +8916,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-12", __vue__options__)
   }
 })()}
-},{"./pantipInterface.js":95,"./vars.js":96,"babel-runtime/core-js/get-iterator":2,"babel-runtime/core-js/promise":3,"babel-runtime/helpers/toConsumableArray":4,"vue":79,"vue-hot-reload-api":78}],93:[function(require,module,exports){
+},{"./pantipInterface.js":96,"./vars.js":97,"babel-runtime/core-js/get-iterator":2,"babel-runtime/core-js/promise":3,"babel-runtime/helpers/toConsumableArray":4,"vue":79,"vue-hot-reload-api":78}],94:[function(require,module,exports){
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _m(0)}}
@@ -8375,7 +8932,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-13", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78}],94:[function(require,module,exports){
+},{"vue":79,"vue-hot-reload-api":78}],95:[function(require,module,exports){
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _m(0)}}
@@ -8391,7 +8948,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.reload("data-v-10", __vue__options__)
   }
 })()}
-},{"vue":79,"vue-hot-reload-api":78}],95:[function(require,module,exports){
+},{"vue":79,"vue-hot-reload-api":78}],96:[function(require,module,exports){
 module.exports = {
   loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
@@ -8644,7 +9201,7 @@ module.exports = {
   }
 }
 
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 module.exports = {
   forumInfo: [
     { name: 'food',         label: 'ก้นครัว' },
@@ -8779,4 +9336,4 @@ module.exports = {
   }
 };
 
-},{}]},{},[91]);
+},{}]},{},[92]);

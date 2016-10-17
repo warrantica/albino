@@ -3,6 +3,10 @@
 //============================================================================
 
 let Vue = require('vue');
+let Vuex = require('vuex');
+
+Vue.use(Vuex);
+
 let Vars = require('./vars.js');
 let Pantip = require('./pantipInterface.js');
 
@@ -75,6 +79,23 @@ $('#lightBox').on('click', function(e){
   $('#rightPane .img-in-post').removeClass('inLightBox');
 });
 
+//============================================================================
+//Vuex
+//============================================================================
+
+let store = new Vuex.Store({
+  state: {
+    showBestTopics: false,
+    currentTopic: 0
+  },
+
+  mutations: {
+    toggleBestTopics(state){
+      state.showBestTopics = ! state.showBestTopics;
+    }
+  }
+});
+
 /*===========================================================================
 
         V888     888
@@ -102,9 +123,12 @@ Vue.component('reactionView', require('./components/reactionView.vue'));
 Vue.component('tips', require('./pages/tipsPage.vue'));
 Vue.component('about', require('./pages/aboutPage.vue'));
 
-let eventHub = new Vue();
+let App = require('./main.vue');
 
-let vm = new Vue(require('./main.vue')).$mount('#app');
+let vm = new Vue({
+  store,
+  render: h => h(App)
+}).$mount('#app');
 
 //============================================================================
 //Utility function stuff
