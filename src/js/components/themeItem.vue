@@ -1,12 +1,14 @@
 <template>
-  <input type="radio" name="theme" :id="name" :value="name" v-model="$parent.options.theme">
-  <label :for="name">
-    <div class="colorSample" :style="{background:primary}">
-      <div class="baseColor" :style="{background:baseData.fore}"></div>
-      <div class="accentSample" :style="{background:accent}"></div>
-    </div>
-    <div class="labelText">{{ label }}</div>
-  </label>
+  <div class="themeItem">
+    <input type="radio" name="theme" :id="name" :value="name" v-model="$parent.options.theme">
+    <label :for="name">
+      <div class="colorSample" :style="{background:primary}">
+        <div class="baseColor" :style="{background:baseData.fore}"></div>
+        <div class="accentSample" :style="{background:accent}"></div>
+      </div>
+      <div class="labelText">{{ label }}</div>
+    </label>
+  </div>
 </template>
 
 <style scoped>
