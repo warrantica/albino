@@ -80,7 +80,7 @@
           emotionCounts: data.emotionCount,
           emotionSortable: data.emotions
         };
-        this.$broadcast('loadReaction', reactionData);
+        //this.$broadcast('loadReaction', reactionData);
         $('time.timeago').timeago();
       }
     }

@@ -68,7 +68,7 @@
     </div>
     <div id="belly" class="sBackBg">
       <div id="bellyHead" class="sPrimaryBg sElevation1">
-        <div class="bellyTitle">{{ currentTitle }}</div>
+        <div class="bellyTitle" v-text="$store.state.topicTitle"></div>
         <div id="bellyToolbar">
           <div class="refreshButtonContainer" @click="refreshTopic">
             <toolbar-icon icon="refresh" label="รีเฟรชกระทู้"></toolbar-icon>
@@ -80,8 +80,8 @@
       <div id="rightPane">
         <div class="loading sAccentText"><i class="ic">hourglass_full</i></div>
         <div id="topicView" class="sForeBg sElevation1">
-          <topic-view :data="topicData" v-show="currentTopic"></topic-view>
-          <component :is="currentPage" v-show="!currentTopic"></component>
+          <topic-view :data="$store.state.topicData" v-show="currentTopic != 0"></topic-view>
+          <component :is="currentPage" v-show="currentTopic == 0"></component>
         </div>
         <comment-view v-show="currentTopic"></comment-view>
       </div>
@@ -219,7 +219,8 @@ export default {
 
         //load topic
         values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
-        this.$broadcast('loadTopicView', values[0]);
+        //this.$broadcast('loadTopicView', values[0]);
+        this.$store.dispatch('loadTopic', values[0]);
         this.currentTitle = values[0]['title'];
 
         //load comments
@@ -290,7 +291,7 @@ export default {
     },
 
     'loadTopic': function(topicId){
-      this.$broadcast('topicLoaded', topicId);
+      //this.$broadcast('topicLoaded', topicId);
       this.loadTopic(topicId);
     },
 

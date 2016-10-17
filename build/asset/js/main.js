@@ -7769,7 +7769,7 @@ exports.default = {
 
   methods: {
     loadTopic: function loadTopic() {
-      this.$dispatch('loadTopic', this.data._id);
+      this.$store.dispatch('loadTopicFromId', this.data._id);
     }
   },
 
@@ -7791,19 +7791,19 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{staticClass:"topic sForeBg sClickable",class:{active: isActive},on:{"click":loadTopic}},[_h('div',{staticClass:"topic-thumbnail"},[_h('img',{staticClass:"topic-thumbnailImage",attrs:{"src":thumbnail}})])," ",_h('div',{staticClass:"topic-text"},[_h('div',{staticClass:"topic-title",domProps:{"innerHTML":_s(data.disp_topic)}})," ",_h('div',{staticClass:"topic-subtitle sSubtitle"},["\n      "+_s(data.author)+"\n    "])])])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-2"
+__vue__options__._scopeId = "data-v-1"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2", __vue__options__)
+    hotAPI.createRecord("data-v-1", __vue__options__)
   } else {
-    hotAPI.reload("data-v-2", __vue__options__)
+    hotAPI.reload("data-v-1", __vue__options__)
   }
 })()}
 },{"vue":79,"vue-hot-reload-api":78}],83:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".comment[data-v-9]{\n  width: 100%;\n  box-sizing: border-box;\n  margin: 20px 0;\n  border-radius: 2px;\n}\n\n.subContainer[data-v-9]{\n  padding-bottom: 1px;\n}\n\n.sub.comment[data-v-9]{\n  width: calc(100% - 10px);\n  margin-left: 10px;\n  box-shadow: none;\n}\n\n.sub.comment[data-v-9]:first-child{\n  margin-top: 0;\n}")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".comment[data-v-10]{\n  width: 100%;\n  box-sizing: border-box;\n  margin: 20px 0;\n  border-radius: 2px;\n}\n\n.subContainer[data-v-10]{\n  padding-bottom: 1px;\n}\n\n.sub.comment[data-v-10]{\n  width: calc(100% - 10px);\n  margin-left: 10px;\n  box-shadow: none;\n}\n\n.sub.comment[data-v-10]:first-child{\n  margin-top: 0;\n}")
 ;(function(){
 'use strict';
 
@@ -7912,20 +7912,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{staticClass:"comment sForeBg sElevation1",class:{sub:sub}},[_h('div',{staticClass:"info"},[_h('img',{staticClass:"avatar sPrimaryBg",attrs:{"src":data.user.avatar.medium}})," ",_h('div',{staticClass:"author",class:{op:data.owner_topic, sAccentBg:data.owner_topic}},[_s(data.user.name)])," ",_h('div',{staticClass:"time sSubtitle"},[_h('time',{staticClass:"timeago",attrs:{"datetime":data.utime}},[_s(data.data_addrtitle)])])," ",_h('div',{staticClass:"numContainer sSubtitle"},["#"+_s(commentNumber)])])," ",_h('div',{staticClass:"content",domProps:{"innerHTML":_s(data.message)}})," ",_h('reaction-view')," ",(data.reply_count)?_h('div',{staticClass:"subContainer"},[_l((data.replies),function(reply){return _h('comment-item',{attrs:{"data":reply,"sub":""}})})," ",_h('button',{directives:[{name:"show",rawName:"v-show",value:(showLoadMoreSubButton),expression:"showLoadMoreSubButton"}],staticClass:"loadMoreSubComments sButton sElevation0h2 sAccentBg",on:{"click":loadMoreSubComments}},["\n      โหลดความเห็นย่อยเพิ่ม\n    "])]):_e()])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-9"
+__vue__options__._scopeId = "data-v-10"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-9", __vue__options__)
+    hotAPI.createRecord("data-v-10", __vue__options__)
   } else {
-    hotAPI.reload("data-v-9", __vue__options__)
+    hotAPI.reload("data-v-10", __vue__options__)
   }
 })()}
 },{"../pantipInterface.js":96,"babel-runtime/helpers/toConsumableArray":4,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],84:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("#commentsView[data-v-7]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[data-v-7]{\n  margin-bottom: 10px;\n  position: relative;\n  display: flex;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.commentsInfo[data-v-7]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[data-v-7]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsCount i[data-v-7]{\n  font-size: 14px;\n  margin-bottom: 1px;\n}\n\n.commentsSort[data-v-7]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.fade-enter-active[data-v-7], .fade-leave-active[data-v-7]{ opacity:1; transition: all .3s ease; }\n.fade-enter[data-v-7], .fade-leave-active[data-v-7]{ opacity: 0; }")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("#commentsView[data-v-8]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[data-v-8]{\n  margin-bottom: 10px;\n  position: relative;\n  display: flex;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.commentsInfo[data-v-8]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[data-v-8]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsCount i[data-v-8]{\n  font-size: 14px;\n  margin-bottom: 1px;\n}\n\n.commentsSort[data-v-8]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.fade-enter-active[data-v-8], .fade-leave-active[data-v-8]{ opacity:1; transition: all .3s ease; }\n.fade-enter[data-v-8], .fade-leave-active[data-v-8]{ opacity: 0; }")
 ;(function(){
 'use strict';
 
@@ -8035,20 +8035,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{attrs:{"id":"commentsView"}},[_h('div',{directives:[{name:"show",rawName:"v-show",value:(count),expression:"count"}],staticClass:"commentsInfo"},[_h('div',{staticClass:"commentsCount sBackBg"},[_m(0)," "+_s(count)+" ความเห็น\n    "])," ",_m(1)])," ",_h('pagination',{attrs:{"comments-per-page":commentsPerPage}})," ",_h('transition',{attrs:{"name":"fade"}},[_l((currentComments),function(comment){return _h('comment-item',{attrs:{"data":comment}})})])," ",_h('pagination',{attrs:{"comments-per-page":commentsPerPage}})," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(count && !currentComments.length),expression:"count && !currentComments.length"}]},[_m(2)," loading...\n  "])])}}
 __vue__options__.staticRenderFns = [function(){with(this){return _h('i',{staticClass:"ic"},["chat_bubble"])}},function(){with(this){return _h('div',{staticClass:"commentsSort sBackBg"},["\n      เรียงตาม: เวลาโพสต์ ",_h('i',{staticClass:"ic"},["arrow_drop_down"])])}},function(){with(this){return _h('i',{staticClass:"ic"},["hourglass_full"])}}]
-__vue__options__._scopeId = "data-v-7"
+__vue__options__._scopeId = "data-v-8"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7", __vue__options__)
+    hotAPI.createRecord("data-v-8", __vue__options__)
   } else {
-    hotAPI.reload("data-v-7", __vue__options__)
+    hotAPI.reload("data-v-8", __vue__options__)
   }
 })()}
 },{"../pantipInterface.js":96,"babel-runtime/helpers/toConsumableArray":4,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],85:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("li[data-v-3]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n  transition: .2s all ease-in-out;\n}\n\nimg[data-v-3]{\n  height: 36px;\n  margin-right: 15px;\n}\n\nspan[data-v-3]{\n  vertical-align: top;\n  display: inline-block;\n}")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert("li[data-v-2]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n  transition: .2s all ease-in-out;\n}\n\nimg[data-v-2]{\n  height: 36px;\n  margin-right: 15px;\n}\n\nspan[data-v-2]{\n  vertical-align: top;\n  display: inline-block;\n}")
 ;(function(){
 'use strict';
 
@@ -8072,20 +8072,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('li',{on:{"click":loadForum}},[_h('img',{attrs:{"src":'asset/forumIcon/'+name+'.png'}})," ",_h('span',[_t("default")])])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-3"
+__vue__options__._scopeId = "data-v-2"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3", __vue__options__)
+    hotAPI.createRecord("data-v-2", __vue__options__)
   } else {
-    hotAPI.reload("data-v-3", __vue__options__)
+    hotAPI.reload("data-v-2", __vue__options__)
   }
 })()}
 },{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],86:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".pagination[data-v-8]{\n  width: 100%;\n  text-align: center;\n}\n\n.page[data-v-8]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  transition: all .2s ease;\n}")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".pagination[data-v-5]{\n  width: 100%;\n  text-align: center;\n}\n\n.page[data-v-5]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  transition: all .2s ease;\n}")
 ;(function(){
 'use strict';
 
@@ -8134,20 +8134,20 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{directives:[{name:"show",rawName:"v-show",value:(totalPages > 1),expression:"totalPages > 1"}],staticClass:"pagination"},[_h('i',{staticClass:"ic sClickable",on:{"click":function($event){goToPage(currentPage-1)}}},["chevron_left"])," ",_l((totalPages),function(page){return _h('span',{staticClass:"page sClickable",class:{ sAccentBg: page==currentPage, current: page==currentPage },on:{"click":function($event){goToPage(page)}}},["\r\n    "+_s(page+1)+"\r\n  "])})," ",_h('i',{staticClass:"ic sClickable",on:{"click":function($event){goToPage(currentPage+1)}}},["chevron_right"])])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-8"
+__vue__options__._scopeId = "data-v-5"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-8", __vue__options__)
+    hotAPI.createRecord("data-v-5", __vue__options__)
   } else {
-    hotAPI.reload("data-v-8", __vue__options__)
+    hotAPI.reload("data-v-5", __vue__options__)
   }
 })()}
 },{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],87:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".reactions[data-v-11]{\n  padding: 0 15px 15px 15px;\n  line-height: 28px;\n  position: relative; top: 0; left: 0;\n}\n\n.vote[data-v-11]{\n  display: inline-block;\n  margin-right: 10px;\n  height: 28px;\n  vertical-align: top;\n}\n\n.emotions[data-v-11], .emotionIcons[data-v-11]{\n  display: inline-block;\n  height: 28px;\n}\n\n.emotionIcons img[data-v-11]{\n  width: 18px;\n  height: auto;\n  margin-bottom: 5px;\n}\n\n.emotionIcons img[data-v-11]:first-child{\n  width: 28px;\n  margin-bottom: 0;\n}\n\n.emotionCount[data-v-11]{\n  display: inline-block;\n  vertical-align: top;\n}\n\n.emotionsInfo[data-v-11]{\n  position: absolute;\n  top: -40px;\n  left: 10px;\n  padding: 10px 10px 0 10px;\n  -webkit-clip-path: circle(0 at 80px 100%);\n  transition: all .15s ease-in-out;\n}\n\n.emotions:hover + .emotionsInfo[data-v-11]{\n  -webkit-clip-path: circle(100% at 50% 50%);\n}\n\n.emotionsInfo li[data-v-11]{\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  margin-right: 10px;\n}\n\n.emotionsInfo img[data-v-11]{\n  width: 18px;\n  margin-right: 5px;\n}\n\n.emotionsInfo span[data-v-11]{\n  vertical-align: top;\n}")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".reactions[data-v-9]{\n  padding: 0 15px 15px 15px;\n  line-height: 28px;\n  position: relative; top: 0; left: 0;\n}\n\n.vote[data-v-9]{\n  display: inline-block;\n  margin-right: 10px;\n  height: 28px;\n  vertical-align: top;\n}\n\n.emotions[data-v-9], .emotionIcons[data-v-9]{\n  display: inline-block;\n  height: 28px;\n}\n\n.emotionIcons img[data-v-9]{\n  width: 18px;\n  height: auto;\n  margin-bottom: 5px;\n}\n\n.emotionIcons img[data-v-9]:first-child{\n  width: 28px;\n  margin-bottom: 0;\n}\n\n.emotionCount[data-v-9]{\n  display: inline-block;\n  vertical-align: top;\n}\n\n.emotionsInfo[data-v-9]{\n  position: absolute;\n  top: -40px;\n  left: 10px;\n  padding: 10px 10px 0 10px;\n  -webkit-clip-path: circle(0 at 80px 100%);\n  transition: all .15s ease-in-out;\n}\n\n.emotions:hover + .emotionsInfo[data-v-9]{\n  -webkit-clip-path: circle(100% at 50% 50%);\n}\n\n.emotionsInfo li[data-v-9]{\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  margin-right: 10px;\n}\n\n.emotionsInfo img[data-v-9]{\n  width: 18px;\n  margin-right: 5px;\n}\n\n.emotionsInfo span[data-v-9]{\n  vertical-align: top;\n}")
 ;(function(){
 'use strict';
 
@@ -8216,16 +8216,16 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{directives:[{name:"show",rawName:"v-show",value:(data.voteSum || data.emotionSum),expression:"data.voteSum || data.emotionSum"}],staticClass:"reactions"},[_h('div',{directives:[{name:"show",rawName:"v-show",value:(data.voteSum),expression:"data.voteSum"}],staticClass:"vote"},[_m(0),_s(data.voteSum)+"\n  "])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(data.emotionSum),expression:"data.emotionSum"}],staticClass:"emotions"},[_h('div',{staticClass:"emotionIcons"},[(topEmotions[0])?_h('img',{attrs:{"src":'asset/img/emotions/' + topEmotions[0].name + '.png'}}):_e()," ",(topEmotions[1])?_h('img',{attrs:{"src":'asset/img/emotions/' + topEmotions[1].name + '.png'}}):_e()," ",(topEmotions[2])?_h('img',{attrs:{"src":'asset/img/emotions/' + topEmotions[2].name + '.png'}}):_e()])," ",_h('div',{staticClass:"emotionCount"},[_s(data.emotionSum)])])," ",_h('ul',{staticClass:"emotionsInfo sForeBg sElevation2"},[_h('li',[_m(1),_h('span',["ถูกใจ "+_s(data.emotionCounts.like)])])," ",_h('li',[_m(2),_h('span',["ขำกลิ้ง "+_s(data.emotionCounts.laugh)])])," ",_h('li',[_m(3),_h('span',["หลงรัก "+_s(data.emotionCounts.love)])])," ",_h('li',[_m(4),_h('span',["ซึ้ง "+_s(data.emotionCounts.impress)])])," ",_h('li',[_m(5),_h('span',["สยอง "+_s(data.emotionCounts.scary)])])," ",_h('li',[_m(6),_h('span',["ทึ่ง "+_s(data.emotionCounts.surprised)])])])])}}
 __vue__options__.staticRenderFns = [function(){with(this){return _h('i',{staticClass:"ic"},["add_box"])}},function(){with(this){return _h('img',{attrs:{"src":"asset/img/emotions/like.png"}})}},function(){with(this){return _h('img',{attrs:{"src":"asset/img/emotions/laugh.png"}})}},function(){with(this){return _h('img',{attrs:{"src":"asset/img/emotions/love.png"}})}},function(){with(this){return _h('img',{attrs:{"src":"asset/img/emotions/impress.png"}})}},function(){with(this){return _h('img',{attrs:{"src":"asset/img/emotions/scary.png"}})}},function(){with(this){return _h('img',{attrs:{"src":"asset/img/emotions/surprised.png"}})}}]
-__vue__options__._scopeId = "data-v-11"
+__vue__options__._scopeId = "data-v-9"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-11", __vue__options__)
+    hotAPI.createRecord("data-v-9", __vue__options__)
   } else {
-    hotAPI.reload("data-v-11", __vue__options__)
+    hotAPI.reload("data-v-9", __vue__options__)
   }
 })()}
 },{"babel-runtime/core-js/get-iterator":2,"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],88:[function(require,module,exports){
@@ -8263,13 +8263,13 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4", __vue__options__)
+    hotAPI.createRecord("data-v-7", __vue__options__)
   } else {
-    hotAPI.reload("data-v-4", __vue__options__)
+    hotAPI.reload("data-v-7", __vue__options__)
   }
 })()}
 },{"vue":79,"vue-hot-reload-api":78}],89:[function(require,module,exports){
-var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".toolbarIcon[data-v-1]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[data-v-1]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[data-v-1]{\n  bottom: -30px;\n  opacity: 1;\n}")
+var __vueify_style_dispose__ = require("vueify/lib/insert-css").insert(".toolbarIcon[data-v-4]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[data-v-4]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[data-v-4]{\n  bottom: -30px;\n  opacity: 1;\n}")
 ;(function(){
 "use strict";
 
@@ -8305,16 +8305,16 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _h('div',{ref:"icon",staticClass:"toolbarIcon"},[_h('i',{staticClass:"ic sClickable",domProps:{"textContent":_s(icon)}})," ",_h('div',{ref:"label",staticClass:"label sPrimaryBg sElevation2",style:({right:offset+'px'}),domProps:{"textContent":_s(label)},on:{"click":function($event){$event.stopPropagation();}}})])}}
 __vue__options__.staticRenderFns = []
-__vue__options__._scopeId = "data-v-1"
+__vue__options__._scopeId = "data-v-4"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   module.hot.dispose(__vueify_style_dispose__)
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1", __vue__options__)
+    hotAPI.createRecord("data-v-4", __vue__options__)
   } else {
-    hotAPI.reload("data-v-1", __vue__options__)
+    hotAPI.reload("data-v-4", __vue__options__)
   }
 })()}
 },{"vue":79,"vue-hot-reload-api":78,"vueify/lib/insert-css":80}],90:[function(require,module,exports){
@@ -8349,7 +8349,7 @@ exports.default = {
 
   methods: {
     loadTopic: function loadTopic() {
-      this.$dispatch('loadTopic', this.data._id);
+      this.$store.dispatch('loadTopicFromId', this.data._id);
     }
   },
 
@@ -8381,9 +8381,9 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5", __vue__options__)
+    hotAPI.createRecord("data-v-3", __vue__options__)
   } else {
-    hotAPI.reload("data-v-5", __vue__options__)
+    hotAPI.reload("data-v-3", __vue__options__)
   }
 })()}
 },{"vue":79,"vue-hot-reload-api":78}],91:[function(require,module,exports){
@@ -8447,7 +8447,7 @@ exports.default = {
         emotionCounts: data.emotionCount,
         emotionSortable: data.emotions
       };
-      this.$broadcast('loadReaction', reactionData);
+
       $('time.timeago').timeago();
     }
   }
@@ -8559,12 +8559,110 @@ $('#lightBox').on('click', function(e){
 let store = new Vuex.Store({
   state: {
     showBestTopics: false,
-    currentTopic: 0
+    currentTopic: 0,
+    topicTitle: '',
+    topicData: {},
+    topicRefreshIntervalId: 0
   },
 
   mutations: {
     toggleBestTopics(state){
       state.showBestTopics = ! state.showBestTopics;
+    },
+
+    setTopicTitle(state, title){
+      state.topicTitle = title;
+    }
+  },
+
+  actions: {
+    loadTopicFromId({ dispatch, commit, state }, topicId){
+      //pull down curtains
+      $('#rightPane').addClass('wrapUp');
+      $('#rightPane .loading').addClass('active');
+
+      if(topicId !== this.currentTopic)
+        $('#rightPane').animate({scrollTop:0}, "0.5s");
+
+      return Promise.all([
+        Pantip.loadTopic(topicId),
+        Pantip.loadComments(topicId)
+      ]).then(values => {
+        //console.log(values);
+
+        //load topic
+        values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
+        //this.$broadcast('loadTopicView', values[0]);
+        dispatch('loadTopic', values[0]);
+        commit('setTopicTitle', values[0]['title']);
+
+        //load comments
+        values[1].tid = topicId;
+        //this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
+
+        //pull up curtains
+        $('#rightPane').removeClass('wrapUp');
+        $('#rightPane .loading').removeClass('active');
+
+        //set current topic
+        state.currentTopic = topicId;
+
+        //set up polling
+        //this.unreadComments = 0;
+        window.clearInterval(this.topicRefreshIntervalId);
+        this.topicRefreshIntervalId =  window.setInterval(() => {
+          Pantip.loadComments(topicId).then(data => {
+            if(data.count >= values[1].count){
+              this.unreadComments = data.count - values[1].count;
+            }
+          });
+        }, 30000);
+
+        //show FAB
+        window.setTimeout(() => {
+          let rightPane = document.getElementById('rightPane');
+          if(rightPane.offsetHeight < rightPane.scrollHeight){
+            $('#fab').addClass('enable');
+          }else{
+            $('#fab').removeClass('enable');
+          }
+        }, 50);
+      });
+    },
+
+
+    loadTopic({ commit, state }, data){
+      //sanitising content
+      let content = $('<div>').append(data.content);
+      //no eval for you!
+      $(content).find('script').remove();
+      $(content).find('.review-section').remove();
+      $(content).find('.edit-history').remove();
+      //no polls for you!
+      $(content).find('.q-poll').remove();
+      $(content).find('.button-container').remove();
+      data.content = content.html();
+
+      //avatar
+      if(data.avatarSrc === ''){
+        //unknown avatar
+        data.avatarSrc = 'asset/img/default_avatar.png';
+      }
+
+      //tags
+      if(data.tags.length > 0) data.tags = data.tags.join(', ');
+
+      state.topicData = data;
+
+      //reactions
+      let reactionData = {
+        voteSum: data.voteCount,
+        emotionSum: data.emotionCount.sum,
+        emotionCounts: data.emotionCount,
+        emotionSortable: data.emotions
+      };
+      //this.$broadcast('loadReaction', reactionData);
+      $('time.timeago').timeago();
     }
   }
 });
@@ -8810,7 +8908,8 @@ exports.default = {
 
       return _promise2.default.all([Pantip.loadTopic(topicId), Pantip.loadComments(topicId)]).then(function (values) {
         values[0].utime = convertTheirStupidDateTimeFormatToISO(values[0].utime);
-        _this4.$broadcast('loadTopicView', values[0]);
+
+        _this4.$store.dispatch('loadTopic', values[0]);
         _this4.currentTitle = values[0]['title'];
 
         values[1].tid = topicId;
@@ -8874,7 +8973,6 @@ exports.default = {
     },
 
     'loadTopic': function loadTopic(topicId) {
-      this.$broadcast('topicLoaded', topicId);
       this.loadTopic(topicId);
     },
 
@@ -8904,7 +9002,7 @@ exports.default = {
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function(){with(this){return _h('div',{attrs:{"id":"app"}},[_h('div',{staticClass:"sBackBg sElevation2",attrs:{"id":"sidebar"}},[_h('div',{staticClass:"sForeBg",attrs:{"id":"sidebarHead"}},[_m(0)," ",_h('div',{staticClass:"sidebarToolbar"},[_h('div',{staticClass:"sClickable",attrs:{"id":"forumSelector"},on:{"click":function($event){$event.stopPropagation();showDialogues.forumSelect = true}}},[_h('span',{attrs:{"id":"forumSelectorName"}},[_s(forumDisplayName)])," ",_m(1)])," ",_h('toolbar-icon',{attrs:{"icon":"refresh","label":"รีเฟรชรายชื่อกระทู้"},on:{"click":function($event){loadTopics(currentForum)}}})," ",_h('toolbar-icon',{attrs:{"icon":"more_vert","label":"อื่น ๆ"},on:{"click":function($event){$event.stopPropagation();showDialogues.overflow = true}}})])," ",_h('ul',{staticClass:"dialogue sElevation2 sClickable",class:{ active:showDialogues.forumSelect },attrs:{"id":"forumSelect"}},[_l((forums),function(forum){return _h('forum-select-item',{attrs:{"name":forum.name}},["\n          "+_s(forum.label)+"\n        "])})])," ",_h('ul',{staticClass:"dialogue sElevation2",class:{ active:showDialogues.overflow },attrs:{"id":"overflow"}},[_h('li',{staticClass:"sClickable",on:{"click":function($event){showSearch = true}}},["ค้นหา"])," ",_h('li',{staticClass:"sClickable",on:{"click":goToSettings}},["ตั้งค่า"])," ",_h('li',{staticClass:"sClickable",on:{"click":function($event){loadPage('about')}}},["เกี่ยวกับ Albino"])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(!showSearch),expression:"!showSearch"}],staticClass:"sForeBg",attrs:{"id":"leftPane"}},[_m(2)," ",_h('div',{attrs:{"id":"bestTopicContainer"}},[_h('div',{staticClass:"sClickable",class:{ active: $store.state.showBestTopics },attrs:{"id":"bestTopicHeader"},on:{"click":function($event){$store.commit('toggleBestTopics')}}},[_m(3),"กระทู้แนะนำ",_m(4)])," ",_h('div',{class:{ active: $store.state.showBestTopics },attrs:{"id":"bestTopicList"}},[_l((bestTopics),function(topic){return _h('best-topic-item',{attrs:{"data":topic}})})])])," ",_m(5)," ",_h('div',{attrs:{"id":"topicList"}},[_l((topics),function(topic){return _h('topic-item',{attrs:{"data":topic}})})," ",_h('button',{staticClass:"loadMore sButton sAccentBg sElevation0h2",attrs:{"data-tid":loadMoreId},on:{"click":loadMoreTopics}},["\n          โหลดกระทู้เพิ่ม\n        "])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(showSearch),expression:"showSearch"}],staticClass:"searchPane"},[_h('div',{staticClass:"searchContainer sForeBg"},[_h('toolbar-icon',{attrs:{"icon":"arrow_back","label":"กลับไปหน้ารายชื่อกระทู้"},on:{"click":function($event){showSearch = false}}})," ",_h('input',{directives:[{name:"model",rawName:"v-model",value:(searchQuery),expression:"searchQuery"}],staticClass:"searchBar",attrs:{"type":"text","placeholder":"คำค้นหา..."},domProps:{"value":_s(searchQuery)},on:{"keyup":function($event){if($event.keyCode!==13)return;doSearch($event)},"input":function($event){if($event.target.composing)return;searchQuery=$event.target.value}}})," ",_h('toolbar-icon',{attrs:{"icon":"search","label":"ค้นหา"},on:{"click":doSearch}})])," ",_h('div',{staticClass:"searchResultList sForeBg"},[_m(6)," ",_l((searchResults),function(topic){return _h('search-result-item',{attrs:{"data":topic}})})," ",_h('button',{directives:[{name:"show",rawName:"v-show",value:(searchResults.length),expression:"searchResults.length"}],staticClass:"loadMore sButton sAccentBg sElevation0h2",on:{"click":loadMoreSearchResults}},["\n          โหลดกระทู้เพิ่ม\n        "])])])])," ",_h('div',{staticClass:"sBackBg",attrs:{"id":"belly"}},[_h('div',{staticClass:"sPrimaryBg sElevation1",attrs:{"id":"bellyHead"}},[_h('div',{staticClass:"bellyTitle"},[_s(currentTitle)])," ",_h('div',{attrs:{"id":"bellyToolbar"}},[_h('div',{staticClass:"refreshButtonContainer",on:{"click":refreshTopic}},[_h('toolbar-icon',{attrs:{"icon":"refresh","label":"รีเฟรชกระทู้"}})," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(unreadComments),expression:"unreadComments"}],staticClass:"refreshBadge sAccentBg"},[_s(unreadComments)])])," ",_h('toolbar-icon',{attrs:{"icon":"open_in_new","label":"เปิดใน Pantip.com"},on:{"click":openInPantip}})])])," ",_h('div',{attrs:{"id":"rightPane"}},[_m(7)," ",_h('div',{staticClass:"sForeBg sElevation1",attrs:{"id":"topicView"}},[_h('topic-view',{directives:[{name:"show",rawName:"v-show",value:(currentTopic),expression:"currentTopic"}],attrs:{"data":topicData}})," ",_h(currentPage,{directives:[{name:"show",rawName:"v-show",value:(!currentTopic),expression:"!currentTopic"}],tag:"component"})])," ",_h('comment-view',{directives:[{name:"show",rawName:"v-show",value:(currentTopic),expression:"currentTopic"}]})])," ",_m(8)])," ",_m(9)])}}
+__vue__options__.render = function(){with(this){return _h('div',{attrs:{"id":"app"}},[_h('div',{staticClass:"sBackBg sElevation2",attrs:{"id":"sidebar"}},[_h('div',{staticClass:"sForeBg",attrs:{"id":"sidebarHead"}},[_m(0)," ",_h('div',{staticClass:"sidebarToolbar"},[_h('div',{staticClass:"sClickable",attrs:{"id":"forumSelector"},on:{"click":function($event){$event.stopPropagation();showDialogues.forumSelect = true}}},[_h('span',{attrs:{"id":"forumSelectorName"}},[_s(forumDisplayName)])," ",_m(1)])," ",_h('toolbar-icon',{attrs:{"icon":"refresh","label":"รีเฟรชรายชื่อกระทู้"},on:{"click":function($event){loadTopics(currentForum)}}})," ",_h('toolbar-icon',{attrs:{"icon":"more_vert","label":"อื่น ๆ"},on:{"click":function($event){$event.stopPropagation();showDialogues.overflow = true}}})])," ",_h('ul',{staticClass:"dialogue sElevation2 sClickable",class:{ active:showDialogues.forumSelect },attrs:{"id":"forumSelect"}},[_l((forums),function(forum){return _h('forum-select-item',{attrs:{"name":forum.name}},["\n          "+_s(forum.label)+"\n        "])})])," ",_h('ul',{staticClass:"dialogue sElevation2",class:{ active:showDialogues.overflow },attrs:{"id":"overflow"}},[_h('li',{staticClass:"sClickable",on:{"click":function($event){showSearch = true}}},["ค้นหา"])," ",_h('li',{staticClass:"sClickable",on:{"click":goToSettings}},["ตั้งค่า"])," ",_h('li',{staticClass:"sClickable",on:{"click":function($event){loadPage('about')}}},["เกี่ยวกับ Albino"])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(!showSearch),expression:"!showSearch"}],staticClass:"sForeBg",attrs:{"id":"leftPane"}},[_m(2)," ",_h('div',{attrs:{"id":"bestTopicContainer"}},[_h('div',{staticClass:"sClickable",class:{ active: $store.state.showBestTopics },attrs:{"id":"bestTopicHeader"},on:{"click":function($event){$store.commit('toggleBestTopics')}}},[_m(3),"กระทู้แนะนำ",_m(4)])," ",_h('div',{class:{ active: $store.state.showBestTopics },attrs:{"id":"bestTopicList"}},[_l((bestTopics),function(topic){return _h('best-topic-item',{attrs:{"data":topic}})})])])," ",_m(5)," ",_h('div',{attrs:{"id":"topicList"}},[_l((topics),function(topic){return _h('topic-item',{attrs:{"data":topic}})})," ",_h('button',{staticClass:"loadMore sButton sAccentBg sElevation0h2",attrs:{"data-tid":loadMoreId},on:{"click":loadMoreTopics}},["\n          โหลดกระทู้เพิ่ม\n        "])])])," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(showSearch),expression:"showSearch"}],staticClass:"searchPane"},[_h('div',{staticClass:"searchContainer sForeBg"},[_h('toolbar-icon',{attrs:{"icon":"arrow_back","label":"กลับไปหน้ารายชื่อกระทู้"},on:{"click":function($event){showSearch = false}}})," ",_h('input',{directives:[{name:"model",rawName:"v-model",value:(searchQuery),expression:"searchQuery"}],staticClass:"searchBar",attrs:{"type":"text","placeholder":"คำค้นหา..."},domProps:{"value":_s(searchQuery)},on:{"keyup":function($event){if($event.keyCode!==13)return;doSearch($event)},"input":function($event){if($event.target.composing)return;searchQuery=$event.target.value}}})," ",_h('toolbar-icon',{attrs:{"icon":"search","label":"ค้นหา"},on:{"click":doSearch}})])," ",_h('div',{staticClass:"searchResultList sForeBg"},[_m(6)," ",_l((searchResults),function(topic){return _h('search-result-item',{attrs:{"data":topic}})})," ",_h('button',{directives:[{name:"show",rawName:"v-show",value:(searchResults.length),expression:"searchResults.length"}],staticClass:"loadMore sButton sAccentBg sElevation0h2",on:{"click":loadMoreSearchResults}},["\n          โหลดกระทู้เพิ่ม\n        "])])])])," ",_h('div',{staticClass:"sBackBg",attrs:{"id":"belly"}},[_h('div',{staticClass:"sPrimaryBg sElevation1",attrs:{"id":"bellyHead"}},[_h('div',{staticClass:"bellyTitle",domProps:{"textContent":_s($store.state.topicTitle)}})," ",_h('div',{attrs:{"id":"bellyToolbar"}},[_h('div',{staticClass:"refreshButtonContainer",on:{"click":refreshTopic}},[_h('toolbar-icon',{attrs:{"icon":"refresh","label":"รีเฟรชกระทู้"}})," ",_h('div',{directives:[{name:"show",rawName:"v-show",value:(unreadComments),expression:"unreadComments"}],staticClass:"refreshBadge sAccentBg"},[_s(unreadComments)])])," ",_h('toolbar-icon',{attrs:{"icon":"open_in_new","label":"เปิดใน Pantip.com"},on:{"click":openInPantip}})])])," ",_h('div',{attrs:{"id":"rightPane"}},[_m(7)," ",_h('div',{staticClass:"sForeBg sElevation1",attrs:{"id":"topicView"}},[_h('topic-view',{directives:[{name:"show",rawName:"v-show",value:(currentTopic != 0),expression:"currentTopic != 0"}],attrs:{"data":$store.state.topicData}})," ",_h(currentPage,{directives:[{name:"show",rawName:"v-show",value:(currentTopic == 0),expression:"currentTopic == 0"}],tag:"component"})])," ",_h('comment-view',{directives:[{name:"show",rawName:"v-show",value:(currentTopic),expression:"currentTopic"}]})])," ",_m(8)])," ",_m(9)])}}
 __vue__options__.staticRenderFns = [function(){with(this){return _h('div',{attrs:{"id":"logo"}},[_h('img',{attrs:{"src":"asset/img/logo.png"}})," ",_h('img',{staticClass:"logoHover",attrs:{"src":"asset/img/logoHover.png"}})])}},function(){with(this){return _h('i',{staticClass:"ic"},["arrow_drop_down"])}},function(){with(this){return _h('div',{staticClass:"loading sAccentText"},[_h('i',{staticClass:"ic"},["refresh"])])}},function(){with(this){return _h('i',{staticClass:"ic headerIcon"},["thumb_up"])}},function(){with(this){return _h('i',{staticClass:"ic dropdown"},["expand_more"])}},function(){with(this){return _h('div',{attrs:{"id":"topicListHeader"}},[_h('i',{staticClass:"ic headerIcon"},["schedule"]),"กระทู้ล่าสุด"])}},function(){with(this){return _h('div',{staticClass:"loading sAccentText"},[_h('i',{staticClass:"ic"},["refresh"])])}},function(){with(this){return _h('div',{staticClass:"loading sAccentText"},[_h('i',{staticClass:"ic"},["hourglass_full"])])}},function(){with(this){return _h('div',{staticClass:"disable sAccentBg sElevation4",attrs:{"id":"fab"}},[_h('div',{staticClass:"topContainer sClickable"},[_h('i',{staticClass:"ic"},["expand_less"])])," ",_h('div',{staticClass:"bottomContainer sClickable"},[_h('i',{staticClass:"ic"},["expand_more"])])])}},function(){with(this){return _h('div',{staticClass:"sClickable",attrs:{"id":"lightBox"}},[_h('img',{attrs:{"src":""}})])}}]
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -8937,15 +9035,15 @@ var __vue__options__ = (typeof module.exports === "function"? module.exports.opt
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
 __vue__options__.render = function(){with(this){return _m(0)}}
 __vue__options__.staticRenderFns = [function(){with(this){return _h('div',{staticClass:"topicWrapper"},[_h('h1',["Welcome Page"])," ",_h('div',{staticClass:"content"},["\n    TODO: put some tips here.\n  "])])}}]
-__vue__options__._scopeId = "data-v-10"
+__vue__options__._scopeId = "data-v-11"
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-10", __vue__options__)
+    hotAPI.createRecord("data-v-11", __vue__options__)
   } else {
-    hotAPI.reload("data-v-10", __vue__options__)
+    hotAPI.reload("data-v-11", __vue__options__)
   }
 })()}
 },{"vue":79,"vue-hot-reload-api":78}],96:[function(require,module,exports){

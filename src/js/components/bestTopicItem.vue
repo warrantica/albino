@@ -33,7 +33,7 @@
 
     methods: {
       loadTopic(){
-        this.$dispatch('loadTopic', this.data._id);
+        this.$store.dispatch('loadTopicFromId', this.data._id);
       }
     },
 
