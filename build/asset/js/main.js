@@ -16118,9 +16118,9 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-691c7be0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../pantipInterface.js":79,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
+},{"../pantipInterface.js":80,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],68:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
-var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[_v-6a342272]{\n  margin-bottom: 10px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n\n.commentsInfo[_v-6a342272]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsCount i[_v-6a342272]{\n  font-size: 14px;\n  margin-bottom: 1px;\n}\n\n.commentsSort[_v-6a342272]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.pagination[_v-6a342272]{\n  width: 100%;\n  text-align: center;\n}\n\n.page[_v-6a342272]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n\n.fade-transition[_v-6a342272]{ opacity:1; -webkit-transition: all .3s ease; transition: all .3s ease; }\n.fade-enter[_v-6a342272], .fade-leave[_v-6a342272]{ opacity: 0; }\n")
+var __vueify_style__ = __vueify_insert__.insert("\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[_v-6a342272]{\n  margin-bottom: 10px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n\n.commentsInfo[_v-6a342272]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsCount i[_v-6a342272]{\n  font-size: 14px;\n  margin-bottom: 1px;\n}\n\n.commentsSort[_v-6a342272]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.fade-transition[_v-6a342272]{ opacity:1; -webkit-transition: all .3s ease; transition: all .3s ease; }\n.fade-enter[_v-6a342272], .fade-leave[_v-6a342272]{ opacity: 0; }\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16158,18 +16158,6 @@ exports.default = {
   },
 
   methods: {
-    goToPage: function goToPage(pageNumber) {
-      if (pageNumber < 0 || pageNumber >= this.totalPages) return false;
-
-      this.currentComments = [];
-      var start = pageNumber * this.commentsPerPage;
-      this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-      this.currentPage = pageNumber;
-
-      if (this.currentComments.length === 0) {
-        this.loadMoreComments(pageNumber);
-      }
-    },
     loadMoreComments: function loadMoreComments(pageNumber) {
       var _this = this;
 
@@ -16193,6 +16181,7 @@ exports.default = {
       //get commentsPerPage from options
       chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
         //do stuff that needs commentsPerPage value in callback
+        _this2.$broadcast('setCount', data.count);
         _this2.commentsPerPage = parseInt(item.commentsPerPage);
 
         _this2.comments = [];
@@ -16204,8 +16193,10 @@ exports.default = {
           if (isRefresh) {
             var start = _this2.currentPage * _this2.commentsPerPage;
             _this2.currentComments = _this2.comments.slice(start, start + _this2.commentsPerPage);
+            _this2.$broadcast('setCurrentPage', _this2.currentPage);
           } else {
             _this2.currentPage = 0;
+            _this2.$broadcast('setCurrentPage', 0);
             _this2.currentComments = _this2.comments.slice(0, _this2.commentsPerPage);
           }
         } else {
@@ -16213,17 +16204,36 @@ exports.default = {
           _this2.currentComments = _this2.comments;
         }
       });
+    },
+    'goToPage': function goToPage(pageNumber) {
+      if (pageNumber < 0 || pageNumber >= this.totalPages) return false;
+
+      this.currentComments = [];
+      var start = pageNumber * this.commentsPerPage;
+      this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+      this.currentPage = pageNumber;
+
+      this.$broadcast('setCurrentPage', pageNumber);
+
+      if (this.currentComments.length === 0) {
+        this.loadMoreComments(pageNumber);
+      }
+
+      var scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
+      $('#rightPane').stop().animate({
+        scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
+      }, "0.5s");
     }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div class=\"commentsInfo\" v-show=\"count\" _v-6a342272=\"\">\n    <div class=\"commentsCount sBackBg\" _v-6a342272=\"\">\n      <i class=\"ic\" _v-6a342272=\"\">chat_bubble</i> {{ count }} ความเห็น\n    </div>\n    <div class=\"commentsSort sBackBg\" _v-6a342272=\"\">\n      เรียงตาม: เวลาโพสต์ <i class=\"ic\" _v-6a342272=\"\">arrow_drop_down</i>\n    </div>\n  </div>\n  <div class=\"pagination\" v-show=\"totalPages > 1\" _v-6a342272=\"\">\n    <i class=\"ic sClickable\" @click=\"goToPage(currentPage-1)\" _v-6a342272=\"\">chevron_left</i>\n    <span class=\"page sClickable\" v-for=\"page in totalPages\" :class=\"{ sAccentBg: page==currentPage, current: page==currentPage }\" @click=\"goToPage(page)\" _v-6a342272=\"\">\n      {{ page+1 }}\n    </span>\n    <i class=\"ic sClickable\" @click=\"goToPage(currentPage+1)\" _v-6a342272=\"\">chevron_right</i>\n  </div>\n  <comment-item v-for=\"comment in currentComments\" transition=\"fade\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n  <div v-show=\"count &amp;&amp; !currentComments.length\" _v-6a342272=\"\">\n    <i class=\"ic\" _v-6a342272=\"\">hourglass_full</i> loading...\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"commentsView\" _v-6a342272=\"\">\n  <div class=\"commentsInfo\" v-show=\"count\" _v-6a342272=\"\">\n    <div class=\"commentsCount sBackBg\" _v-6a342272=\"\">\n      <i class=\"ic\" _v-6a342272=\"\">chat_bubble</i> {{ count }} ความเห็น\n    </div>\n    <div class=\"commentsSort sBackBg\" _v-6a342272=\"\">\n      เรียงตาม: เวลาโพสต์ <i class=\"ic\" _v-6a342272=\"\">arrow_drop_down</i>\n    </div>\n  </div>\n  <pagination :comments-per-page=\"commentsPerPage\" _v-6a342272=\"\"></pagination>\n  <comment-item v-for=\"comment in currentComments\" transition=\"fade\" :data=\"comment\" _v-6a342272=\"\">\n  </comment-item>\n  <pagination :comments-per-page=\"commentsPerPage\" _v-6a342272=\"\"></pagination>\n  <div v-show=\"count &amp;&amp; !currentComments.length\" _v-6a342272=\"\">\n    <i class=\"ic\" _v-6a342272=\"\">hourglass_full</i> loading...\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   module.hot.dispose(function () {
-    __vueify_insert__.cache["\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[_v-6a342272]{\n  margin-bottom: 10px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n\n.commentsInfo[_v-6a342272]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsCount i[_v-6a342272]{\n  font-size: 14px;\n  margin-bottom: 1px;\n}\n\n.commentsSort[_v-6a342272]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.pagination[_v-6a342272]{\n  width: 100%;\n  text-align: center;\n}\n\n.page[_v-6a342272]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n\n.fade-transition[_v-6a342272]{ opacity:1; -webkit-transition: all .3s ease; transition: all .3s ease; }\n.fade-enter[_v-6a342272], .fade-leave[_v-6a342272]{ opacity: 0; }\n"] = false
+    __vueify_insert__.cache["\n#commentsView[_v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n\n.commentsInfo[_v-6a342272]{\n  margin-bottom: 10px;\n  position: relative;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-flow: row nowrap;\n      flex-flow: row nowrap;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n\n.commentsInfo[_v-6a342272]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n\n.commentsCount[_v-6a342272]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.commentsCount i[_v-6a342272]{\n  font-size: 14px;\n  margin-bottom: 1px;\n}\n\n.commentsSort[_v-6a342272]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n\n.fade-transition[_v-6a342272]{ opacity:1; -webkit-transition: all .3s ease; transition: all .3s ease; }\n.fade-enter[_v-6a342272], .fade-leave[_v-6a342272]{ opacity: 0; }\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -16232,7 +16242,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-6a342272", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../pantipInterface.js":79,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],69:[function(require,module,exports){
+},{"../pantipInterface.js":80,"babel-runtime/helpers/toConsumableArray":3,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],69:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\nli[_v-41c115fe]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n  -webkit-transition: .2s all ease-in-out;\n  transition: .2s all ease-in-out;\n}\n\nimg[_v-41c115fe]{\n  height: 36px;\n  margin-right: 15px;\n}\n\nspan[_v-41c115fe]{\n  vertical-align: top;\n  display: inline-block;\n}\n")
 'use strict';
@@ -16268,6 +16278,66 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],70:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n.pagination[_v-35dabb88]{\n  width: 100%;\n  text-align: center;\n}\n\n.page[_v-35dabb88]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  props: {
+    commentsPerPage: Number
+  },
+
+  data: function data() {
+    return {
+      count: 0,
+      currentPage: 0,
+      loadedPage: 1
+    };
+  },
+
+
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.count / this.commentsPerPage);
+    }
+  },
+
+  methods: {
+    goToPage: function goToPage(pageNumber) {
+      this.currentPage = pageNumber;
+      this.$dispatch('goToPage', pageNumber);
+    }
+  },
+
+  events: {
+    'setCount': function setCount(count) {
+      this.count = count;
+    },
+    'setCurrentPage': function setCurrentPage(pageNumber) {
+      this.currentPage = pageNumber;
+    }
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"pagination\" v-show=\"totalPages > 1\" _v-35dabb88=\"\">\n  <i class=\"ic sClickable\" @click=\"goToPage(currentPage-1)\" _v-35dabb88=\"\">chevron_left</i>\n  <span class=\"page sClickable\" v-for=\"page in totalPages\" :class=\"{ sAccentBg: page==currentPage, current: page==currentPage }\" @click=\"goToPage(page)\" _v-35dabb88=\"\">\n    {{ page+1 }}\n  </span>\n  <i class=\"ic sClickable\" @click=\"goToPage(currentPage+1)\" _v-35dabb88=\"\">chevron_right</i>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n.pagination[_v-35dabb88]{\n  width: 100%;\n  text-align: center;\n}\n\n.page[_v-35dabb88]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  -webkit-transition: all .2s ease;\n  transition: all .2s ease;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-35dabb88", module.exports)
+  } else {
+    hotAPI.update("_v-35dabb88", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],71:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.reactions[_v-58c21290]{\n  padding: 0 15px 15px 15px;\n  line-height: 28px;\n  position: relative; top: 0; left: 0;\n}\n\n.vote[_v-58c21290]{\n  display: inline-block;\n  margin-right: 10px;\n  height: 28px;\n  vertical-align: top;\n}\n\n.emotions[_v-58c21290], .emotionIcons[_v-58c21290]{\n  display: inline-block;\n  height: 28px;\n}\n\n.emotionIcons img[_v-58c21290]{\n  width: 18px;\n  height: auto;\n  margin-bottom: 5px;\n}\n\n.emotionIcons img[_v-58c21290]:first-child{\n  width: 28px;\n  margin-bottom: 0;\n}\n\n.emotionCount[_v-58c21290]{\n  display: inline-block;\n  vertical-align: top;\n}\n\n.emotionsInfo[_v-58c21290]{\n  position: absolute;\n  top: -40px;\n  left: 10px;\n  padding: 10px 10px 0 10px;\n  -webkit-clip-path: circle(0 at 80px 100%);\n  -webkit-transition: all .15s ease-in-out;\n  transition: all .15s ease-in-out;\n}\n\n.emotions:hover + .emotionsInfo[_v-58c21290]{\n  -webkit-clip-path: circle(100% at 50% 50%);\n}\n\n.emotionsInfo li[_v-58c21290]{\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  margin-right: 10px;\n}\n\n.emotionsInfo img[_v-58c21290]{\n  width: 18px;\n  margin-right: 5px;\n}\n\n.emotionsInfo span[_v-58c21290]{\n  vertical-align: top;\n}\n")
 'use strict';
@@ -16347,7 +16417,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-58c21290", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"babel-runtime/core-js/get-iterator":2,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],71:[function(require,module,exports){
+},{"babel-runtime/core-js/get-iterator":2,"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],72:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16382,7 +16452,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-8640068c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63}],72:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63}],73:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16445,7 +16515,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-667c7dec", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../vars.js":80,"vue":64,"vue-hot-reload-api":63}],73:[function(require,module,exports){
+},{"../vars.js":81,"vue":64,"vue-hot-reload-api":63}],74:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.toolbarIcon[_v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n\n.label[_v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  -webkit-transition: all .1s ease;\n  transition: all .1s ease;\n}\n\n.ic:hover + .label[_v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n")
 "use strict";
@@ -16492,7 +16562,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-74e5db62", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],74:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],75:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16556,7 +16626,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-df29bfa0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63}],75:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63}],76:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.tag[_v-dcfa727c]{\n  padding: 15px 0 0 15px;\n}\n\n.tag .ic[_v-dcfa727c]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}\n")
 'use strict';
@@ -16643,7 +16713,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-dcfa727c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],76:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],77:[function(require,module,exports){
 //============================================================================
 //Browserify require stuff
 //============================================================================
@@ -16741,6 +16811,7 @@ Vue.component('topicItem', require('./components/topicItem.vue'));
 Vue.component('searchResultItem', require('./components/searchResultItem.vue'));
 Vue.component('topicView', require('./components/topicView.vue'));
 Vue.component('commentView', require('./components/commentView.vue'));
+Vue.component('pagination', require('./components/pagination.vue'));
 Vue.component('commentItem', require('./components/commentItem.vue'));
 Vue.component('reactionView', require('./components/reactionView.vue'));
 Vue.component('themeStyle', require('./components/themeStyle.vue'));
@@ -16981,7 +17052,7 @@ chrome.storage.onChanged.addListener(changes => {
   }
 });
 
-},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/reactionView.vue":70,"./components/searchResultItem.vue":71,"./components/themeStyle.vue":72,"./components/toolbarIcon.vue":73,"./components/topicItem.vue":74,"./components/topicView.vue":75,"./pages/aboutPage.vue":77,"./pages/tipsPage.vue":78,"./pantipInterface.js":79,"./vars.js":80,"vue":64}],77:[function(require,module,exports){
+},{"./components/bestTopicItem.vue":66,"./components/commentItem.vue":67,"./components/commentView.vue":68,"./components/forumSelectItem.vue":69,"./components/pagination.vue":70,"./components/reactionView.vue":71,"./components/searchResultItem.vue":72,"./components/themeStyle.vue":73,"./components/toolbarIcon.vue":74,"./components/topicItem.vue":75,"./components/topicView.vue":76,"./pages/aboutPage.vue":78,"./pages/tipsPage.vue":79,"./pantipInterface.js":80,"./vars.js":81,"vue":64}],78:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n")
 ;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-4451ee80=\"\">\n  <h1 _v-4451ee80=\"\">เกี่ยวกับ Albino</h1>\n  <div class=\"content\" _v-4451ee80=\"\">\n    <p _v-4451ee80=\"\">\n      Albino เวอร์ชั่น 0.99-beta2<br _v-4451ee80=\"\">\n      ดูข้อมูลเพิ่มเติมได้ที่<a href=\"http://warrantica.github.io/albino\" target=\"_blank\" _v-4451ee80=\"\">เว็บไซต์</a>\n      ติดต่อทีมงานผ่านทวิตเตอร์ <a href=\"http://twitter.com/albino_reader\" target=\"_blank\" _v-4451ee80=\"\">@Albino_Reader</a>\n    </p>\n    <p _v-4451ee80=\"\">\n      พัฒนาโดย <a href=\"http://twitter.com/warrantica\" target=\"_blank\" _v-4451ee80=\"\">@warrantica</a>\n    </p>\n    <p _v-4451ee80=\"\">\n      Albino คือ open-source software ภายใต้\n      <a href=\"https://github.com/warrantica/albino/blob/master/LICENSE\" target=\"_blank\" _v-4451ee80=\"\">GNU General Public License</a>\n      นักพัฒนาหรือบุคคลทั่วไปสามารถเข้าไปดู source code หรือร่วมพัฒนา Albino ได้ที่\n      <a href=\"https://github.com/warrantica/albino\" target=\"_blank\" _v-4451ee80=\"\">Github</a>\n    </p>\n  </div>\n</div>\n"
@@ -16999,7 +17070,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-4451ee80", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],78:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],79:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n")
 ;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"topicWrapper\" _v-25bb61da=\"\">\n  <h1 _v-25bb61da=\"\">Welcome Page</h1>\n  <div class=\"content\" _v-25bb61da=\"\">\n    TODO: put some tips here.\n  </div>\n</div>\n"
@@ -17017,7 +17088,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-25bb61da", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],79:[function(require,module,exports){
+},{"vue":64,"vue-hot-reload-api":63,"vueify/lib/insert-css":65}],80:[function(require,module,exports){
 module.exports = {
   loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
@@ -17270,7 +17341,7 @@ module.exports = {
   }
 }
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 module.exports = {
   forumInfo: [
     { name: 'food',         label: 'ก้นครัว' },
@@ -17405,4 +17476,4 @@ module.exports = {
   }
 };
 
-},{}]},{},[76]);
+},{}]},{},[77]);

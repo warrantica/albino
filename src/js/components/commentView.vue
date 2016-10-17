@@ -8,20 +8,12 @@
         เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
       </div>
     </div>
-    <div class="pagination" v-show="totalPages > 1">
-      <i class="ic sClickable" @click="goToPage(currentPage-1)">chevron_left</i>
-      <span class="page sClickable"
-            v-for="page in totalPages"
-            :class="{ sAccentBg: page==currentPage, current: page==currentPage }"
-            @click="goToPage(page)">
-        {{ page+1 }}
-      </span>
-      <i class="ic sClickable" @click="goToPage(currentPage+1)">chevron_right</i>
-    </div>
+    <pagination :comments-per-page="commentsPerPage"></pagination>
     <comment-item v-for="comment in currentComments"
                   transition="fade"
                   :data="comment">
     </comment-item>
+    <pagination :comments-per-page="commentsPerPage"></pagination>
     <div v-show="count && !currentComments.length">
       <i class="ic">hourglass_full</i> loading...
     </div>
@@ -71,21 +63,6 @@
     z-index: 2;
   }
 
-  .pagination{
-    width: 100%;
-    text-align: center;
-  }
-
-  .page{
-    display: inline-block;
-    width: 18px;
-    line-height: 18px;
-    padding: 5px;
-    margin: 5px;
-    border-radius: 50%;
-    transition: all .2s ease;
-  }
-
   .fade-transition{ opacity:1; transition: all .3s ease; }
   .fade-enter, .fade-leave{ opacity: 0; }
 </style>
@@ -113,19 +90,6 @@
     },
 
     methods: {
-      goToPage(pageNumber){
-        if(pageNumber < 0 || pageNumber >= this.totalPages) return false;
-
-        this.currentComments = [];
-        let start = pageNumber*this.commentsPerPage;
-        this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-        this.currentPage = pageNumber;
-
-        if(this.currentComments.length === 0){
-          this.loadMoreComments(pageNumber);
-        }
-      },
-
       loadMoreComments(pageNumber){
         let start = pageNumber*this.commentsPerPage;
         Pantip.loadComments(this.topicId, ++this.loadedPage).then(data => {
@@ -139,10 +103,11 @@
     },
 
     events: {
-      'loadCommentView': function(data, isRefresh){
+      'loadCommentView'(data, isRefresh){
         //get commentsPerPage from options
         chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
           //do stuff that needs commentsPerPage value in callback
+          this.$broadcast('setCount', data.count);
           this.commentsPerPage = parseInt(item.commentsPerPage);
 
           this.comments = [];
@@ -154,8 +119,10 @@
             if(isRefresh){
               let start = this.currentPage*this.commentsPerPage;
               this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+              this.$broadcast('setCurrentPage', this.currentPage);
             }else{
               this.currentPage = 0;
+              this.$broadcast('setCurrentPage', 0);
               this.currentComments = this.comments.slice(0, this.commentsPerPage);
             }
           }else{
@@ -163,6 +130,26 @@
             this.currentComments = this.comments;
           }
         });
+      },
+
+      'goToPage'(pageNumber){
+        if(pageNumber < 0 || pageNumber >= this.totalPages) return false;
+
+        this.currentComments = [];
+        let start = pageNumber*this.commentsPerPage;
+        this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+        this.currentPage = pageNumber;
+
+        this.$broadcast('setCurrentPage', pageNumber);
+
+        if(this.currentComments.length === 0){
+          this.loadMoreComments(pageNumber);
+        }
+
+        let scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
+        $('#rightPane').stop().animate({
+          scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
+        }, "0.5s");
       }
     }
   }

@@ -95,6 +95,7 @@ Vue.component('topicItem', require('./components/topicItem.vue'));
 Vue.component('searchResultItem', require('./components/searchResultItem.vue'));
 Vue.component('topicView', require('./components/topicView.vue'));
 Vue.component('commentView', require('./components/commentView.vue'));
+Vue.component('pagination', require('./components/pagination.vue'));
 Vue.component('commentItem', require('./components/commentItem.vue'));
 Vue.component('reactionView', require('./components/reactionView.vue'));
 Vue.component('themeStyle', require('./components/themeStyle.vue'));
