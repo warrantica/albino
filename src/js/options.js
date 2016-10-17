@@ -41,7 +41,7 @@ let vm = new Vue({
     }
   },
 
-  ready(){
+  mounted(){
     //restore options
     chrome.storage.sync.get(this.options, item => this.options = item);
   }

@@ -6,7 +6,7 @@
       <img class="topic-thumbnailImage" :src="thumbnail" />
     </div>
     <div class="topic-text">
-      <div class="topic-title">{{{ data.disp_topic }}}</div>
+      <div class="topic-title" v-html="data.disp_topic"></div>
       <div class="topic-subtitle sSubtitle">
         {{ data.author }}
         &#149; <time :datetime="data.utime">{{ data.timeFull }}</time>
@@ -53,7 +53,7 @@
       }
     },
 
-    ready(){
+    mounted(){
       $('time').timeago();
     },
 

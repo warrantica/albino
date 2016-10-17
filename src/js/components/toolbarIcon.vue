@@ -1,10 +1,10 @@
 <template>
-  <div class="toolbarIcon" v-el:icon>
+  <div class="toolbarIcon" ref="icon">
     <i class="ic sClickable" v-text="icon"></i>
     <div class="label sPrimaryBg sElevation2"
          v-text="label"
          :style="{right:offset+'px'}"
-         v-el:label
+         ref="label"
          @click.stop=""></div>
   </div>
 </template>
@@ -46,13 +46,13 @@
       offset: 0
     }},
 
-    ready(){
-      let center = (this.$els.icon.offsetWidth / 2) - (this.$els.label.offsetWidth / 2);
-      let dim = this.$els.label.getBoundingClientRect();
+    mounted(){
+      let center = (this.$refs.icon.offsetWidth / 2) - (this.$refs.label.offsetWidth / 2);
+      let dim = this.$refs.label.getBoundingClientRect();
       if(dim.right - center > document.body.offsetWidth){
         this.offset = dim.right - document.body.offsetWidth;
       }else if(dim.right - dim.width <= 0){
-        this.offset = this.$els.icon.offsetWidth - dim.width;
+        this.offset = this.$refs.icon.offsetWidth - dim.width;
       }else{
         this.offset = center;
       }

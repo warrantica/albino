@@ -8,7 +8,7 @@
       </div>
       <div class="numContainer sSubtitle">#{{ commentNumber }}</div>
     </div>
-    <div class="content">{{{ data.message }}}</div>
+    <div class="content" v-html="data.message"></div>
     <reaction-view></reaction-view>
     <div class="subContainer" v-if="data.reply_count">
       <comment-item v-for="reply in data.replies"
@@ -91,7 +91,7 @@
       }
     },
 
-    ready(){
+    mounted(){
       //comment number
       this.commentNumber = this.data.comment_no;
       if(this.sub){

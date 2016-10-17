@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="tag sSubtitle" v-show="data.tags"><i class="ic">label</i> {{ data.tags }}</div>
-    <div class="content">{{{ data.content }}}</div>
+    <div class="content" v-html="data.content"></div>
     <reaction-view></reaction-view>
   </div>
 </template>

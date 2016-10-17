@@ -1,8 +1,8 @@
 <template>
   <div class="topic sClickable" @click="loadSearchResult">
-    <div class="title">{{{ data.disp_topic }}}</div>
+    <div class="title" v-html="data.disp_topic"></div>
     <div class="subtitle sSubtitle">คห. {{ data.comment_num }} โดย {{ data.author }}</div>
-    <div class="result sSubtitle">{{{ data.content }}}</div>
+    <div class="result sSubtitle" v-html="data.content"></div>
   </div>
 </template>
 

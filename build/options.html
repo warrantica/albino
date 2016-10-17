@@ -78,9 +78,11 @@
           <button class="saveButton"
                   :class="{'saveButton--success': this.saveButtonState == 'success'}"
                   @click.prevent="saveOptions">
-            <div class="saveButton-success" v-show="saveButtonState == 'success'" transition="rotate">
-              <i class="ic">done</i>
-            </div>
+            <transition name="rotate">
+              <div class="saveButton-success" v-show="saveButtonState == 'success'">
+                <i class="ic">done</i>
+              </div>
+            </transition>
             <span class="saveButton-text">เซฟ</span>
           </button>
         </div>

@@ -82,7 +82,7 @@
       }
     }},
 
-    ready(){
+    mounted(){
       this.baseData = Vars.getBase(this.base);
     }
   }

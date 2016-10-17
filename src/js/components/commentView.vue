@@ -9,10 +9,12 @@
       </div>
     </div>
     <pagination :comments-per-page="commentsPerPage"></pagination>
-    <comment-item v-for="comment in currentComments"
-                  transition="fade"
-                  :data="comment">
-    </comment-item>
+
+    <transition name="fade">
+      <comment-item v-for="comment in currentComments" :data="comment">
+      </comment-item>
+    </transition>
+
     <pagination :comments-per-page="commentsPerPage"></pagination>
     <div v-show="count && !currentComments.length">
       <i class="ic">hourglass_full</i> loading...
@@ -63,8 +65,8 @@
     z-index: 2;
   }
 
-  .fade-transition{ opacity:1; transition: all .3s ease; }
-  .fade-enter, .fade-leave{ opacity: 0; }
+  .fade-enter-active, .fade-leave-active{ opacity:1; transition: all .3s ease; }
+  .fade-enter, .fade-leave-active{ opacity: 0; }
 </style>
 
 <script>

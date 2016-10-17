@@ -1,0 +1,48 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'build' ]
+2 info using npm@3.9.5
+3 info using node@v6.2.2
+4 verbose run-script [ 'prebuild', 'build', 'postbuild' ]
+5 info lifecycle Albino@0.99.2~prebuild: Albino@0.99.2
+6 silly lifecycle Albino@0.99.2~prebuild: no script for prebuild, continuing
+7 info lifecycle Albino@0.99.2~build: Albino@0.99.2
+8 verbose lifecycle Albino@0.99.2~build: unsafe-perm in lifecycle true
+9 verbose lifecycle Albino@0.99.2~build: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\sites\albino\albino\node_modules\.bin;C:\Program Files\nodejs;C:\Users\Warr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Warr\bin;C:\Program Files\Broadcom\Broadcom 802.11 Network Adapter\Driver;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Livestreamer;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\wamp\bin\php\php5.6.19;C:\ProgramData\ComposerSetup\bin;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Users\Warr\AppData\Local\atom\bin;C:\Users\Warr\AppData\Roaming\Composer\vendor\bin;C:\Users\Warr\AppData\Roaming\npm;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+10 verbose lifecycle Albino@0.99.2~build: CWD: C:\sites\albino\albino
+11 silly lifecycle Albino@0.99.2~build: Args: [ '/d /s /c', 'npm run build:main && npm run build:options' ]
+12 silly lifecycle Albino@0.99.2~build: Returned: code: 1  signal: null
+13 info lifecycle Albino@0.99.2~build: Failed to exec build script
+14 verbose stack Error: Albino@0.99.2 build: `npm run build:main && npm run build:options`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:245:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:24:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:852:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:215:5)
+15 verbose pkgid Albino@0.99.2
+16 verbose cwd C:\sites\albino\albino
+17 error Windows_NT 10.0.14393
+18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "build"
+19 error node v6.2.2
+20 error npm  v3.9.5
+21 error code ELIFECYCLE
+22 error Albino@0.99.2 build: `npm run build:main && npm run build:options`
+22 error Exit status 1
+23 error Failed at the Albino@0.99.2 build script 'npm run build:main && npm run build:options'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the Albino package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     npm run build:main && npm run build:options
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs Albino
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls Albino
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]

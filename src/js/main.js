@@ -301,7 +301,7 @@ let vm = new Vue({
     }
   },
 
-  ready(){
+  mounted(){
     //Get and apply options
     chrome.storage.sync.get({
       theme: 'default',
