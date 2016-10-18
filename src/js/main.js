@@ -7,6 +7,8 @@ let Vuex = require('vuex');
 
 Vue.use(Vuex);
 
+Vue.config.devtools = false;
+
 import Vars from './vars';
 import Pantip from './pantipInterface';
 import Helper from './helpers';
@@ -105,7 +107,6 @@ Vue.component('commentView', require('./components/commentView.vue'));
 Vue.component('pagination', require('./components/pagination.vue'));
 Vue.component('commentItem', require('./components/commentItem.vue'));
 Vue.component('reactionView', require('./components/reactionView.vue'));
-//Vue.component('themeStyle', require('./components/themeStyle.vue'));
 Vue.component('tips', require('./pages/tipsPage.vue'));
 Vue.component('about', require('./pages/aboutPage.vue'));
 

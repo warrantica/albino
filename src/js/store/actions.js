@@ -14,8 +14,7 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
   ]).then(values => {
     //console.log(values);
 
-    values[0].utime = Helper.convertTheirStupidDateTimeFormatToISO(values[0].utime);
-    // dispatch('loadTopic', values[0]);
+    values[0].utime = Helper.convertTimeFormatToISO(values[0].utime);
     commit('setTopicTitle', values[0]['title']);
     commit('setTopicId', topicId);
 

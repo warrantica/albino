@@ -1,0 +1,63 @@
+:root{
+  --primary: #9C27B0;
+  --accent: #F01F41;
+  --text-on-primary: #FFFFFF;
+  --text-on-accent: #FFFFFF;
+
+  --text: #212121;
+  --subtitle: #888888;
+  --fore: #FFFFFF;
+  --back: #EAEAEA;
+  --hover: #DEDEDE;
+  --border: rgba(0, 0, 0, 0.12);
+
+  --font-face: 'TH Sarabun New';
+  --font-size: 26px;
+}
+
+a:link, a:visited{
+  color: var(--accent);
+  border-bottom: 1px var(--accent) solid;
+}
+
+.sPrimaryBg{
+  background: var(--primary);
+  color: var(--text-on-primary);
+}
+
+.sPrimaryText{ color: var(--primary); }
+
+.sAccentBg, ::selection{
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.sAccentText, .result b{ color: var(--accent); }
+
+.sSubtitle{ color: var(--subtitle); }
+
+.sBackBg, .sub.comment{
+  background: var(--back);
+  color: var(--text);
+}
+
+.sForeBg, .dialogue, .loading{
+  background: var(--fore);
+}
+
+.dialogue li:hover, .topic:hover, .topic.active, .page:not(.current):hover{
+  background: var(--hover);
+}
+
+#sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{
+  border-bottom: 1px var(--border) solid;
+}
+
+.top.topic, .commentsInfo:before{
+  border-top: 1px var(--border) solid;
+}
+
+#rightPane .content{
+  font-size: var(--font-size);
+  font-family: var(--font-face);
+}

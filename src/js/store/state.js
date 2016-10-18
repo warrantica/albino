@@ -1,9 +1,12 @@
 export const state = {
   showBestTopics: false,
+
   topicId: 0,
   topicTitle: '',
   topicData: {},
-  
+
+  comments: [],
+
   topicRefreshIntervalId: 0,
   unreadComments: 0
 }

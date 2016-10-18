@@ -4,8 +4,7 @@
     <div class="label sPrimaryBg sElevation2"
          v-text="label"
          :style="{right:offset+'px'}"
-         ref="label"
-         @click.stop=""></div>
+         ref="label"></div>
   </div>
 </template>
 

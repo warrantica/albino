@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click.stop="dismissDialogues">
     <div id="sidebar" class="sBackBg sElevation2">
       <div id="sidebarHead" class="sForeBg">
         <div id="logo">
@@ -11,8 +11,8 @@
             <span id="forumSelectorName">{{ forumDisplayName }}</span>
             <i class="ic">arrow_drop_down</i>
           </div>
-          <toolbar-icon icon="refresh" label="รีเฟรชรายชื่อกระทู้" @click="loadTopics(currentForum)"></toolbar-icon>
-          <toolbar-icon icon="more_vert" label="อื่น ๆ" @click.stop="showDialogues.overflow = true"></toolbar-icon>
+          <toolbar-icon icon="refresh" label="รีเฟรชรายชื่อกระทู้" @click.native="loadTopics(currentForum)"></toolbar-icon>
+          <toolbar-icon icon="more_vert" label="อื่น ๆ" @click.native.stop="showDialogues.overflow = true"></toolbar-icon>
         </div>
         <ul id="forumSelect" class="dialogue sElevation2 sClickable"
             :class="{ active:showDialogues.forumSelect }">
@@ -51,9 +51,9 @@
       </div>
       <div class="searchPane" v-show="showSearch">
         <div class="searchContainer sForeBg">
-          <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click="showSearch = false"></toolbar-icon>
+          <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click.native="showSearch = false"></toolbar-icon>
           <input class="searchBar" type="text" v-model="searchQuery" placeholder="คำค้นหา..." @keyup.enter="doSearch">
-          <toolbar-icon icon="search" label="ค้นหา" @click="doSearch"></toolbar-icon>
+          <toolbar-icon icon="search" label="ค้นหา" @click.native="doSearch"></toolbar-icon>
         </div>
         <div class="searchResultList sForeBg">
           <div class="loading sAccentText"><i class="ic">refresh</i></div>
@@ -70,20 +70,20 @@
       <div id="bellyHead" class="sPrimaryBg sElevation1">
         <div class="bellyTitle" v-text="$store.state.topicTitle"></div>
         <div id="bellyToolbar">
-          <div class="refreshButtonContainer" @click="refreshTopic">
+          <div class="refreshButtonContainer" @click.native="refreshTopic">
             <toolbar-icon icon="refresh" label="รีเฟรชกระทู้"></toolbar-icon>
             <div class="refreshBadge sAccentBg" v-show="unreadComments">{{ unreadComments }}</div>
           </div>
-          <toolbar-icon icon="open_in_new" label="เปิดใน Pantip.com" @click="openInPantip"></toolbar-icon>
+          <toolbar-icon icon="open_in_new" label="เปิดใน Pantip.com" @click.native="openInPantip"></toolbar-icon>
         </div>
       </div>
       <div id="rightPane">
         <div class="loading sAccentText"><i class="ic">hourglass_full</i></div>
         <div id="topicView" class="sForeBg sElevation1">
-          <topic-view :data="$store.state.topicData" v-show="currentTopic != 0"></topic-view>
-          <component :is="currentPage" v-show="currentTopic == 0"></component>
+          <topic-view :data="$store.state.topicData" v-show="topicId != 0"></topic-view>
+          <component :is="currentPage" v-show="topicId == 0"></component>
         </div>
-        <comment-view v-show="currentTopic"></comment-view>
+        <comment-view v-show="topicId"></comment-view>
       </div>
       <div id="fab" class="disable sAccentBg sElevation4">
         <div class="topContainer sClickable"><i class="ic">expand_less</i></div>
@@ -97,16 +97,15 @@
 </template>
 
 <script>
-let Vars = require('./vars.js');
-let Pantip = require('./pantipInterface.js');
+import Vars from './vars';
+import Pantip from './pantipInterface';
+import Helper from './helpers';
 
 export default {
 
   data(){ return{
     forums: Vars.forumInfo,
     currentForum: '',
-    //currentTitle: '',
-    //currentTopic: 0,
     currentPage: 'tips',
     //showBestTopics: false,
     showDialogues: {
@@ -127,7 +126,7 @@ export default {
   }},
 
   computed: {
-    currentTopic(){ return this.$store.state.currentTopic },
+    topicId(){ return this.$store.state.topicId },
 
     forumDisplayName(){
       if(this.currentForum !== ''){
@@ -166,7 +165,7 @@ export default {
         $('#leftPane .loading').removeClass('active');
 
         for(let topic of data['topics']){
-          topic.isActive = topic._id === this.currentTopic;
+          topic.isActive = topic._id === this.topicId;
           topic.isTop = topic._id === this.topTopicId;
           this.topics.push(topic);
         }
@@ -204,10 +203,10 @@ export default {
     },
 
     refreshTopic(){
-      if(this.$store.state.currentTopic !== 0){
+      if(this.topicId !== 0){
         let scroll = document.getElementById('rightPane').scrollTop;
 
-        this.$store.dispatch('loadTopic', this.$store.state.currentTopic).then(value =>{
+        this.$store.dispatch('loadTopic', this.topicId).then(value =>{
           $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
         });
       }
@@ -215,15 +214,15 @@ export default {
 
     loadPage(name){
       this.$store.state.topicTitle = '';
-      this.$store.state.currentTopic = 0;
+      this.topicId = 0;
       window.clearInterval(this.$store.state.topicRefreshIntervalId);
-      this.unreadComments = 0;
+      this.$store.state.unreadComments = 0;
       this.currentPage = name;
     },
 
     openInPantip(){
-      if(this.currentTopic !== 0)
-        window.open(`http://pantip.com/topic/${this.currentTopic}`, '_blank');
+      if(this.$state.store.topicId !== 0)
+        window.open(`http://pantip.com/topic/${this.$state.store.topicId}`, '_blank');
     },
 
     goToSettings(){
@@ -252,8 +251,7 @@ export default {
       fontFace: 'TH Sarabun New'
     }, item => {
       this.loadTopics(item.defaultForum);
-      //this.$broadcast('applyTheme', item.theme);
-      //this.$broadcast('applyFont', item.fontSize, item.fontFace);
+      Helper.applyTheme(item.theme, item.fontSize, item.fontFace);
     });
   }
 }

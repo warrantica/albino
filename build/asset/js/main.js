@@ -77,6 +77,8 @@
 
 	Vue.use(Vuex);
 
+	Vue.config.devtools = false;
+
 	//============================================================================
 	//Event binding stuff
 	//============================================================================
@@ -169,7 +171,6 @@
 	Vue.component('pagination', __webpack_require__(46));
 	Vue.component('commentItem', __webpack_require__(51));
 	Vue.component('reactionView', __webpack_require__(56));
-	//Vue.component('themeStyle', require('./components/themeStyle.vue'));
 	Vue.component('tips', __webpack_require__(61));
 	Vue.component('about', __webpack_require__(65));
 
@@ -544,12 +545,43 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
+	var _vars = __webpack_require__(1);
+
+	var _vars2 = _interopRequireDefault(_vars);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	module.exports = {
-	  convertTheirStupidDateTimeFormatToISO: function convertTheirStupidDateTimeFormatToISO(utime) {
+	  applyTheme: function applyTheme(themeName, fontSize, fontFace) {
+	    var elementStyle = document.documentElement.style;
+
+	    //apply colors
+	    var theme = _vars2.default.getTheme(themeName);
+	    var base = _vars2.default.getBase(theme.base);
+
+	    var border = base.brightness === 'light' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)';
+
+	    elementStyle.setProperty('--primary', theme.primary);
+	    elementStyle.setProperty('--accent', theme.accent);
+	    elementStyle.setProperty('--text-on-primary', theme.textOnPrimary);
+	    elementStyle.setProperty('--text-on-accent', theme.textOnAccent);
+
+	    elementStyle.setProperty('--text', base.text);
+	    elementStyle.setProperty('--subtitle', base.subtitle);
+	    elementStyle.setProperty('--fore', base.fore);
+	    elementStyle.setProperty('--back', base.back);
+	    elementStyle.setProperty('--hover', base.hover);
+	    elementStyle.setProperty('--border', border);
+
+	    //apply font
+	    elementStyle.setProperty('--font-face', fontFace);
+	    elementStyle.setProperty('--font-size', fontSize + 'px');
+	  },
+	  convertTimeFormatToISO: function convertTimeFormatToISO(utime) {
 	    //utime format: mm/dd/yyyy hh:mm:ss
 	    var y = utime.substr(6, 4);
 	    var m = utime.substr(0, 2);
@@ -6975,9 +7007,12 @@
 	});
 	var state = exports.state = {
 	  showBestTopics: false,
+
 	  topicId: 0,
 	  topicTitle: '',
 	  topicData: {},
+
+	  comments: [],
 
 	  topicRefreshIntervalId: 0,
 	  unreadComments: 0
@@ -7038,8 +7073,7 @@
 	  return Promise.all([_pantipInterface2.default.loadTopic(topicId), _pantipInterface2.default.loadComments(topicId)]).then(function (values) {
 	    //console.log(values);
 
-	    values[0].utime = _helpers2.default.convertTheirStupidDateTimeFormatToISO(values[0].utime);
-	    // dispatch('loadTopic', values[0]);
+	    values[0].utime = _helpers2.default.convertTimeFormatToISO(values[0].utime);
 	    commit('setTopicTitle', values[0]['title']);
 	    commit('setTopicId', topicId);
 
@@ -7137,117 +7171,124 @@
 	  value: true
 	});
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	var _vars = __webpack_require__(1);
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	var _vars2 = _interopRequireDefault(_vars);
 
-	var Vars = __webpack_require__(1);
-	var Pantip = __webpack_require__(2);
+	var _pantipInterface = __webpack_require__(2);
+
+	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
+
+	var _helpers = __webpack_require__(3);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	exports.default = {
 	  data: function data() {
 	    return {
-	      forums: Vars.forumInfo,
+	      forums: _vars2.default.forumInfo,
 	      currentForum: '',
-	      //currentTitle: '',
-	      //currentTopic: 0,
 	      currentPage: 'tips',
 	      //showBestTopics: false,
 	      showDialogues: {
@@ -7269,8 +7310,8 @@
 
 
 	  computed: {
-	    currentTopic: function currentTopic() {
-	      return this.$store.state.currentTopic;
+	    topicId: function topicId() {
+	      return this.$store.state.topicId;
 	    },
 	    forumDisplayName: function forumDisplayName() {
 	      if (this.currentForum !== '') {
@@ -7325,12 +7366,12 @@
 	        $('#leftPane .loading').addClass('active');
 	        this.topics = [];
 
-	        Pantip.loadBestTopics(forumName).then(function (data) {
+	        _pantipInterface2.default.loadBestTopics(forumName).then(function (data) {
 	          return _this.bestTopics = data;
 	        });
 	      }
 
-	      Pantip.loadTopics(forumName, _loadMoreId).then(function (data) {
+	      _pantipInterface2.default.loadTopics(forumName, _loadMoreId).then(function (data) {
 	        //console.log(data);
 	        $('#leftPane').removeClass('wrapUp');
 	        $('#leftPane .loading').removeClass('active');
@@ -7343,7 +7384,7 @@
 	          for (var _iterator2 = data['topics'][Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	            var topic = _step2.value;
 
-	            topic.isActive = topic._id === _this.currentTopic;
+	            topic.isActive = topic._id === _this.topicId;
 	            topic.isTop = topic._id === _this.topTopicId;
 	            _this.topics.push(topic);
 	          }
@@ -7377,7 +7418,7 @@
 
 	      $('.searchResultList').addClass('wrapUp');
 	      $('.searchResultList .loading').addClass('active');
-	      Pantip.search(this.searchQuery).then(function (data) {
+	      _pantipInterface2.default.search(this.searchQuery).then(function (data) {
 	        //console.log(data);
 	        _this2.searchResults = data.results;
 	        _this2.searchQueryString = data.queryString;
@@ -7388,7 +7429,7 @@
 	    loadMoreSearchResults: function loadMoreSearchResults() {
 	      var _this3 = this;
 
-	      Pantip.search(this.searchQuery, this.searchResults.length, this.searchQueryString).then(function (data) {
+	      _pantipInterface2.default.search(this.searchQuery, this.searchResults.length, this.searchQueryString).then(function (data) {
 	        var _searchResults;
 
 	        (_searchResults = _this3.searchResults).push.apply(_searchResults, _toConsumableArray(data.results));
@@ -7397,11 +7438,11 @@
 	    refreshTopic: function refreshTopic() {
 	      var _this4 = this;
 
-	      if (this.$store.state.currentTopic !== 0) {
+	      if (this.topicId !== 0) {
 	        (function () {
 	          var scroll = document.getElementById('rightPane').scrollTop;
 
-	          _this4.$store.dispatch('loadTopic', _this4.$store.state.currentTopic).then(function (value) {
+	          _this4.$store.dispatch('loadTopic', _this4.topicId).then(function (value) {
 	            $('#rightPane').stop().animate({ scrollTop: scroll }, "0.5s");
 	          });
 	        })();
@@ -7409,13 +7450,13 @@
 	    },
 	    loadPage: function loadPage(name) {
 	      this.$store.state.topicTitle = '';
-	      this.$store.state.currentTopic = 0;
+	      this.topicId = 0;
 	      window.clearInterval(this.$store.state.topicRefreshIntervalId);
-	      this.unreadComments = 0;
+	      this.$store.state.unreadComments = 0;
 	      this.currentPage = name;
 	    },
 	    openInPantip: function openInPantip() {
-	      if (this.currentTopic !== 0) window.open('http://pantip.com/topic/' + this.currentTopic, '_blank');
+	      if (this.$state.store.topicId !== 0) window.open('http://pantip.com/topic/' + this.$state.store.topicId, '_blank');
 	    },
 	    goToSettings: function goToSettings() {
 	      chrome.runtime.openOptionsPage();
@@ -7430,7 +7471,7 @@
 	    'loadSearchResult': function loadSearchResult(url) {
 	      var _this5 = this;
 
-	      Pantip.getTopicIdFromSearch(url).then(function (id) {
+	      _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
 	        _this5.loadTopic(id);
 	      });
 	    }
@@ -7447,8 +7488,7 @@
 	      fontFace: 'TH Sarabun New'
 	    }, function (item) {
 	      _this6.loadTopics(item.defaultForum);
-	      //this.$broadcast('applyTheme', item.theme);
-	      //this.$broadcast('applyFont', item.fontSize, item.fontFace);
+	      _helpers2.default.applyTheme(item.theme, item.fontSize, item.fontFace);
 	    });
 	  }
 	};
@@ -7461,6 +7501,12 @@
 	  return _h('div', {
 	    attrs: {
 	      "id": "app"
+	    },
+	    on: {
+	      "click": function($event) {
+	        $event.stopPropagation();
+	        dismissDialogues($event)
+	      }
 	    }
 	  }, [_h('div', {
 	    staticClass: "sBackBg sElevation2",
@@ -7494,7 +7540,7 @@
 	      "icon": "refresh",
 	      "label": "รีเฟรชรายชื่อกระทู้"
 	    },
-	    on: {
+	    nativeOn: {
 	      "click": function($event) {
 	        loadTopics(currentForum)
 	      }
@@ -7504,7 +7550,7 @@
 	      "icon": "more_vert",
 	      "label": "อื่น ๆ"
 	    },
-	    on: {
+	    nativeOn: {
 	      "click": function($event) {
 	        $event.stopPropagation();
 	        showDialogues.overflow = true
@@ -7625,7 +7671,7 @@
 	      "icon": "arrow_back",
 	      "label": "กลับไปหน้ารายชื่อกระทู้"
 	    },
-	    on: {
+	    nativeOn: {
 	      "click": function($event) {
 	        showSearch = false
 	      }
@@ -7660,8 +7706,10 @@
 	      "icon": "search",
 	      "label": "ค้นหา"
 	    },
-	    on: {
-	      "click": doSearch
+	    nativeOn: {
+	      "click": function($event) {
+	        doSearch($event)
+	      }
 	    }
 	  })]), " ", _h('div', {
 	    staticClass: "searchResultList sForeBg"
@@ -7703,8 +7751,10 @@
 	    }
 	  }, [_h('div', {
 	    staticClass: "refreshButtonContainer",
-	    on: {
-	      "click": refreshTopic
+	    nativeOn: {
+	      "click": function($event) {
+	        refreshTopic($event)
+	      }
 	    }
 	  }, [_h('toolbar-icon', {
 	    attrs: {
@@ -7724,8 +7774,10 @@
 	      "icon": "open_in_new",
 	      "label": "เปิดใน Pantip.com"
 	    },
-	    on: {
-	      "click": openInPantip
+	    nativeOn: {
+	      "click": function($event) {
+	        openInPantip($event)
+	      }
 	    }
 	  })])]), " ", _h('div', {
 	    attrs: {
@@ -7740,8 +7792,8 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (currentTopic != 0),
-	      expression: "currentTopic != 0"
+	      value: (topicId != 0),
+	      expression: "topicId != 0"
 	    }],
 	    attrs: {
 	      "data": $store.state.topicData
@@ -7750,16 +7802,16 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (currentTopic == 0),
-	      expression: "currentTopic == 0"
+	      value: (topicId == 0),
+	      expression: "topicId == 0"
 	    }],
 	    tag: "component"
 	  })]), " ", _h('comment-view', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (currentTopic),
-	      expression: "currentTopic"
+	      value: (topicId),
+	      expression: "topicId"
 	    }]
 	  })]), " ", _m(8)]), " ", _m(9)])
 	}},staticRenderFns: [function (){with(this) {
@@ -8259,7 +8311,6 @@
 	//
 	//
 	//
-	//
 
 	exports.default = {
 	  props: {
@@ -8306,11 +8357,6 @@
 	    }),
 	    domProps: {
 	      "textContent": _s(label)
-	    },
-	    on: {
-	      "click": function($event) {
-	        $event.stopPropagation();
-	      }
 	    }
 	  })])
 	}},staticRenderFns: []}
@@ -9914,7 +9960,7 @@
 	      },
 	      emotionSortable: [{ name: "impress", count: this.data.emotion.impress.count }, { name: "laugh", count: this.data.emotion.laugh.count }, { name: "like", count: this.data.emotion.like.count }, { name: "love", count: this.data.emotion.love.count }, { name: "scary", count: this.data.emotion.scary.count }, { name: "surprised", count: this.data.emotion.surprised.count }]
 	    };
-	    this.$broadcast('loadReaction', reactionData);
+	    //load reaction
 	  },
 
 
