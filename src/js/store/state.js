@@ -6,6 +6,10 @@ export const state = {
   topicData: {},
 
   comments: [],
+  shownComments: [],
+  totalComments: 0,
+  commentsPerPage: 5,
+  commentPage: 0,
 
   topicRefreshIntervalId: 0,
   unreadComments: 0
@@ -22,6 +26,22 @@ export const mutations = {
 
   setTopicId(state, id){
     state.topicId = id;
+  },
+
+  setTotalComments(state, number){
+    state.totalComments = number;
+  },
+
+  setCommentsPerPage(state, number){
+    state.commentsPerPage = number;
+  },
+
+  setCommentPage(state, page){
+    state.commentPage = page;
+  },
+
+  resetShownComments(state){
+    state.shownComments = [];
   },
 
   resetUnreadComments(state){ state.unreadComments = 0 },

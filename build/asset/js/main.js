@@ -7004,6 +7004,10 @@
 	  topicData: {},
 
 	  comments: [],
+	  shownComments: [],
+	  totalComments: 0,
+	  commentsPerPage: 5,
+	  commentPage: 0,
 
 	  topicRefreshIntervalId: 0,
 	  unreadComments: 0
@@ -7018,6 +7022,15 @@
 	  },
 	  setTopicId: function setTopicId(state, id) {
 	    state.topicId = id;
+	  },
+	  setTotalComments: function setTotalComments(state, number) {
+	    state.totalComments = number;
+	  },
+	  setCommentsPerPage: function setCommentsPerPage(state, number) {
+	    state.commentsPerPage = number;
+	  },
+	  setCommentPage: function setCommentPage(state, page) {
+	    state.commentPage = page;
 	  },
 	  resetUnreadComments: function resetUnreadComments(state) {
 	    state.unreadComments = 0;
@@ -7036,7 +7049,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.loadTopic = undefined;
+	exports.loadComments = exports.loadTopic = undefined;
 
 	var _vars = __webpack_require__(1);
 
@@ -7090,8 +7103,9 @@
 	    $('time.timeago').timeago();
 
 	    //load comments
-	    values[1].tid = topicId;
+	    //values[1].tid = topicId;
 	    //this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
+	    dispatch('loadComments', values[1], topicId === state.topicId);
 
 	    _helpers2.default.setRightPaneCurtains(true);
 	    _helpers2.default.showFAB();
@@ -7106,6 +7120,47 @@
 	        }
 	      });
 	    }, 30000);
+	  });
+	};
+
+	var loadComments = exports.loadComments = function loadComments(_ref2, data) {
+	  var dispatch = _ref2.dispatch;
+	  var commit = _ref2.commit;
+	  var state = _ref2.state;
+	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+	  //get commentsPerPage from options
+	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
+	    //do stuff that needs commentsPerPage value in callback
+	    commit('setTotalComments', data.count);
+	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
+
+	    console.log(state.commentsPerPage);
+
+	    var comments = [];
+	    //this.comments = [];
+	    //this.topicId = data.tid;
+	    //this.count = data.count;
+	    //if(state.totalComments > 0) this.comments = data.comments;
+	    if (state.totalComments > 0) state.comments = data.comments;
+
+	    if (state.commentsPerPage < state.totalComments) {
+	      /*if(isRefresh){
+	        //state.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+	        //this.$broadcast('setCurrentPage', this.currentPage);
+	      }else{
+	        //this.currentPage = 0;
+	        //this.currentComments = this.comments.slice(0, this.commentsPerPage);
+	      }*/
+
+	      var start = isRefresh ? state.commentPage * state.commentsPerPage : 0;
+	      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+	    } else {
+	      //this.currentPage = 0;
+	      //this.currentComments = this.comments;
+	      commit('setCommentPage', 0);
+	      state.shownComments = state.comments;
+	    }
 	  });
 	};
 
@@ -9387,36 +9442,33 @@
 	  },
 
 	  events: {
-	    'loadCommentView': function loadCommentView(data, isRefresh) {
-	      var _this2 = this;
-
+	    /*'loadCommentView'(data, isRefresh){
 	      //get commentsPerPage from options
-	      chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
+	      chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
 	        //do stuff that needs commentsPerPage value in callback
-	        _this2.$broadcast('setCount', data.count);
-	        _this2.commentsPerPage = parseInt(item.commentsPerPage);
-
-	        _this2.comments = [];
-	        _this2.topicId = data.tid;
-	        _this2.count = data.count;
-	        if (data.count > 0) _this2.comments = data.comments;
-
-	        if (_this2.commentsPerPage < _this2.count) {
-	          if (isRefresh) {
-	            var start = _this2.currentPage * _this2.commentsPerPage;
-	            _this2.currentComments = _this2.comments.slice(start, start + _this2.commentsPerPage);
-	            _this2.$broadcast('setCurrentPage', _this2.currentPage);
-	          } else {
-	            _this2.currentPage = 0;
-	            _this2.$broadcast('setCurrentPage', 0);
-	            _this2.currentComments = _this2.comments.slice(0, _this2.commentsPerPage);
+	        //this.$broadcast('setCount', data.count);
+	        this.commentsPerPage = parseInt(item.commentsPerPage);
+	         this.comments = [];
+	        this.topicId = data.tid;
+	        this.count = data.count;
+	        if(data.count > 0) this.comments = data.comments;
+	         if(this.commentsPerPage < this.count){
+	          if(isRefresh){
+	            let start = this.currentPage*this.commentsPerPage;
+	            this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
+	            this.$broadcast('setCurrentPage', this.currentPage);
+	          }else{
+	            this.currentPage = 0;
+	            this.$broadcast('setCurrentPage', 0);
+	            this.currentComments = this.comments.slice(0, this.commentsPerPage);
 	          }
-	        } else {
-	          _this2.currentPage = 0;
-	          _this2.currentComments = _this2.comments;
+	        }else{
+	          this.currentPage = 0;
+	          this.currentComments = this.comments;
 	        }
 	      });
-	    },
+	    },*/
+
 	    'goToPage': function goToPage(pageNumber) {
 	      if (pageNumber < 0 || pageNumber >= this.totalPages) return false;
 
@@ -9452,21 +9504,21 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (count),
-	      expression: "count"
+	      value: ($store.state.totalComments),
+	      expression: "$store.state.totalComments"
 	    }],
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
 	    staticClass: "commentsCount sBackBg"
 	  }, [_m(0), " " + _s(count) + " ความเห็น\n    "]), " ", _m(1)]), " ", _h('pagination', {
 	    attrs: {
-	      "comments-per-page": commentsPerPage
+	      "comments-per-page": $store.state.commentsPerPage
 	    }
 	  }), " ", _h('transition', {
 	    attrs: {
 	      "name": "fade"
 	    }
-	  }, [_l((currentComments), function(comment) {
+	  }, [_l(($store.state.shownComments), function(comment) {
 	    return _h('comment-item', {
 	      attrs: {
 	        "data": comment
@@ -9474,14 +9526,14 @@
 	    })
 	  })]), " ", _h('pagination', {
 	    attrs: {
-	      "comments-per-page": commentsPerPage
+	      "comments-per-page": $store.state.commentsPerPage
 	    }
 	  }), " ", _h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (count && !currentComments.length),
-	      expression: "count && !currentComments.length"
+	      value: ($store.state.totalComments && !$store.state.shownComments.length),
+	      expression: "$store.state.totalComments && !$store.state.shownComments.length"
 	    }]
 	  }, [_m(2), " loading...\n  "])])
 	}},staticRenderFns: [function (){with(this) {

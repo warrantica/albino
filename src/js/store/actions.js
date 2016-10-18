@@ -40,8 +40,10 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
     $('time.timeago').timeago();
 
     //load comments
-    values[1].tid = topicId;
+    //values[1].tid = topicId;
     //this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
+    dispatch('loadComments', values[1], topicId === state.topicId);
+
 
     Helper.setRightPaneCurtains(true);
     Helper.showFAB();
@@ -56,5 +58,25 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
         }
       });
     }, 30000);
+  });
+}
+
+export const loadComments = ({ dispatch, commit, state }, data, isRefresh = false) => {
+  //get commentsPerPage from options
+  chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
+    //do stuff that needs commentsPerPage value in callback
+    commit('setTotalComments', data.count);
+    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
+
+    commit('resetShownComments');
+    if(state.totalComments > 0) state.comments = data.comments;
+
+    if(state.commentsPerPage < state.totalComments){
+      let start = isRefresh ? state.commentPage*state.commentsPerPage : 0;
+      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+    }else{
+      commit('setCommentPage', 0);
+      state.shownComments = state.comments;
+    }
   });
 }

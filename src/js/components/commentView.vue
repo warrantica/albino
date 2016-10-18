@@ -1,6 +1,6 @@
 <template>
   <div id="commentsView">
-    <div class="commentsInfo" v-show="count">
+    <div class="commentsInfo" v-show="$store.state.totalComments">
       <div class="commentsCount sBackBg">
         <i class="ic">chat_bubble</i> {{ count }} ความเห็น
       </div>
@@ -8,15 +8,15 @@
         เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
       </div>
     </div>
-    <pagination :comments-per-page="commentsPerPage"></pagination>
+    <pagination :comments-per-page="$store.state.commentsPerPage"></pagination>
 
     <transition name="fade">
-      <comment-item v-for="comment in currentComments" :data="comment">
+      <comment-item v-for="comment in $store.state.shownComments" :data="comment">
       </comment-item>
     </transition>
 
-    <pagination :comments-per-page="commentsPerPage"></pagination>
-    <div v-show="count && !currentComments.length">
+    <pagination :comments-per-page="$store.state.commentsPerPage"></pagination>
+    <div v-show="$store.state.totalComments && !$store.state.shownComments.length">
       <i class="ic">hourglass_full</i> loading...
     </div>
   </div>
@@ -105,11 +105,11 @@
     },
 
     events: {
-      'loadCommentView'(data, isRefresh){
+      /*'loadCommentView'(data, isRefresh){
         //get commentsPerPage from options
         chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
           //do stuff that needs commentsPerPage value in callback
-          this.$broadcast('setCount', data.count);
+          //this.$broadcast('setCount', data.count);
           this.commentsPerPage = parseInt(item.commentsPerPage);
 
           this.comments = [];
@@ -132,7 +132,7 @@
             this.currentComments = this.comments;
           }
         });
-      },
+      },*/
 
       'goToPage'(pageNumber){
         if(pageNumber < 0 || pageNumber >= this.totalPages) return false;
