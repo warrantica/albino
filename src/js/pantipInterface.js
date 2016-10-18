@@ -1,7 +1,7 @@
 module.exports = {
   loadBestTopics(forumName){
     if(forumName === 'all') forumName = '';
-    var loadUrl = 'http://m.pantip.com/forum/' + forumName;
+    let loadUrl = 'http://m.pantip.com/forum/' + forumName;
 
     return new Promise((resolve, reject) => {
       chrome.cookies.set({
@@ -52,7 +52,7 @@ module.exports = {
 
   loadTopics(forumName, loadMoreID=0){
     if(forumName === 'all') forumName = '';
-    var loadUrl = 'http://pantip.com/forum/topic/ajax_json_all_topic_info_loadmore?t=' + Math.random();
+    let loadUrl = 'http://pantip.com/forum/topic/ajax_json_all_topic_info_loadmore?t=' + Math.random();
     return new Promise((resolve, reject) => {
       $.ajax({
         method: 'post',
@@ -67,7 +67,7 @@ module.exports = {
         dataType: 'text',
         success: function(data){
           data = JSON.parse(data).item;
-          var res = { topics: [] };
+          let res = { topics: [] };
           res.topics = data.topic;
           res.loadMoreID = data.last_id_current_page;
           resolve(res);
@@ -156,8 +156,8 @@ module.exports = {
         success: function(data){
 
           data = data.replace(/src="\/images.*?"/g, 'src=""');
-          var html = $(data).find('.main-post-inner')[0];
-          var res = {};
+          let html = $(data).find('.main-post-inner')[0];
+          let res = {};
 
           res['author'] = $(html).find('.display-post-name').text();
           res['title'] = $(html).find('.display-post-title').text();
@@ -215,8 +215,8 @@ module.exports = {
         dataType: 'text',
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         success: function(data){
-          dataJSON = JSON.parse(data);
-          var res = {}
+          let dataJSON = JSON.parse(data);
+          let res = {}
           if(dataJSON['count'] !== undefined){
             res['count'] = dataJSON['count'];
             res['comments'] = dataJSON['comments'];
