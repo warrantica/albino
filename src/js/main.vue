@@ -207,7 +207,7 @@ export default {
       if(this.$store.state.currentTopic !== 0){
         let scroll = document.getElementById('rightPane').scrollTop;
 
-        this.$store.dispatch('loadTopicFromId', this.$store.state.currentTopic).then(value =>{
+        this.$store.dispatch('loadTopic', this.$store.state.currentTopic).then(value =>{
           $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
         });
       }

@@ -29,12 +29,12 @@
 
     methods: {
       loadTopic(){
-        this.$store.dispatch('loadTopicFromId', this.data._id);
+        this.$store.dispatch('loadTopic', this.data._id);
       }
     },
 
     computed: {
-      isActive(){ return this.data._id === this.$store.state.currentTopic },
+      isActive(){ return this.data._id === this.$store.state.topicId },
 
       thumbnail(){
         return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';

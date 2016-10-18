@@ -109,7 +109,7 @@ Vue.component('reactionView', require('./components/reactionView.vue'));
 Vue.component('tips', require('./pages/tipsPage.vue'));
 Vue.component('about', require('./pages/aboutPage.vue'));
 
-let App = require('./main.vue');
+import App from './main.vue';
 
 let vm = new Vue({
   store,
@@ -119,16 +119,7 @@ let vm = new Vue({
 //============================================================================
 //Utility function stuff
 //============================================================================
-/*
-function convertTheirStupidDateTimeFormatToISO(utime){
-  //utime format: mm/dd/yyyy hh:mm:ss
-  let y = utime.substr(6, 4);
-  let m = utime.substr(0, 2);
-  let d = utime.substr(3, 2);
-  let t = utime.substr(11, 8);
-  return y+'-'+m+'-'+d+'T'+t;
-}
-*/
+
 chrome.storage.onChanged.addListener(changes => {
   console.log(changes);
   if(changes.theme !== undefined){
