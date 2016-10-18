@@ -3,7 +3,7 @@
     <h1>เกี่ยวกับ Albino</h1>
     <div class="content">
       <p>
-        Albino เวอร์ชั่น 0.99-beta2<br>
+        Albino เวอร์ชั่น 0.99-beta3<br>
         ดูข้อมูลเพิ่มเติมได้ที่<a href="http://warrantica.github.io/albino" target="_blank">เว็บไซต์</a>
         ติดต่อทีมงานผ่านทวิตเตอร์ <a href="http://twitter.com/albino_reader" target="_blank">@Albino_Reader</a>
       </p>
