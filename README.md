@@ -24,11 +24,23 @@ npm install
 ```
 This will create a `node_modules` directory, containing vueify, babel and their dependencies.
 
+**Note: As of beta 3 and later, Albino uses webpack + vue-loader instead of browserify. Do this instead:**
+- Install webpack
+```bash
+npm install -g webpack
+```
+
 ### Actually Building the Thing
 - Run
 ```
 npm run build
 ```
 This will run browserify and vueify.
+
+**Note: As of beta 3 and later, Albino uses webpack + vue-loader instead of browserify. Do this instead:**
+- Run
+```bash
+webpack
+```
 
 - check the `/build/` directory.
