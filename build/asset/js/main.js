@@ -7032,6 +7032,9 @@
 	  setCommentPage: function setCommentPage(state, page) {
 	    state.commentPage = page;
 	  },
+	  resetShownComments: function resetShownComments(state) {
+	    state.shownComments = [];
+	  },
 	  resetUnreadComments: function resetUnreadComments(state) {
 	    state.unreadComments = 0;
 	  },
@@ -7135,29 +7138,13 @@
 	    commit('setTotalComments', data.count);
 	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
 
-	    console.log(state.commentsPerPage);
-
-	    var comments = [];
-	    //this.comments = [];
-	    //this.topicId = data.tid;
-	    //this.count = data.count;
-	    //if(state.totalComments > 0) this.comments = data.comments;
+	    commit('resetShownComments');
 	    if (state.totalComments > 0) state.comments = data.comments;
 
 	    if (state.commentsPerPage < state.totalComments) {
-	      /*if(isRefresh){
-	        //state.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-	        //this.$broadcast('setCurrentPage', this.currentPage);
-	      }else{
-	        //this.currentPage = 0;
-	        //this.currentComments = this.comments.slice(0, this.commentsPerPage);
-	      }*/
-
 	      var start = isRefresh ? state.commentPage * state.commentsPerPage : 0;
 	      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
 	    } else {
-	      //this.currentPage = 0;
-	      //this.currentComments = this.comments;
 	      commit('setCommentPage', 0);
 	      state.shownComments = state.comments;
 	    }
