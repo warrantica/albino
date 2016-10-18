@@ -1,6 +1,6 @@
 {
   "name": "Albino for Pantip",
-  "version": "0.99.2",
+  "version": "0.99.3",
   "manifest_version": 2,
   "description": "Third party Pantip client.",
   "icons": {
