@@ -1,5 +1,5 @@
 //============================================================================
-//Browserify require stuff
+// Require stuff
 //============================================================================
 
 let Vue = require('vue');
@@ -82,18 +82,9 @@ $('#lightBox').on('click', function(e){
   $('#rightPane .img-in-post').removeClass('inLightBox');
 });
 
-/*===========================================================================
-
-        V888     888
-        888     888
-        888     888
-        Y88b   d88P 888  888  .d88b.
-         Y88b d88P  888  888 d8P  Y8b
-          Y88o88P   888  888 88888888
-           Y888P    Y88b 888 Y8b.
-            Y8P      "Y88888  "Y8888
-
-===========================================================================*/
+//============================================================================
+// Vue Stuff
+//============================================================================
 
 import store from './store';
 
@@ -124,6 +115,6 @@ let vm = new Vue({
 chrome.storage.onChanged.addListener(changes => {
   console.log(changes);
   if(changes.theme !== undefined){
-    vm.$broadcast('applyTheme', changes.theme.newValue);
+    Helper.applyTheme(changes.theme.newValue, '', '');
   }
 });

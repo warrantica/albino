@@ -26,8 +26,8 @@ module.exports = {
     elementStyle.setProperty('--border', border);
 
     //apply font
-    elementStyle.setProperty('--font-face', fontFace);
-    elementStyle.setProperty('--font-size', fontSize + 'px');
+    if(fontFace) elementStyle.setProperty('--font-face', fontFace);
+    if(fontSize) elementStyle.setProperty('--font-size', fontSize + 'px');
 
   },
 

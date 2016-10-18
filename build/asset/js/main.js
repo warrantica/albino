@@ -69,7 +69,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//============================================================================
-	//Browserify require stuff
+	// Require stuff
 	//============================================================================
 
 	var Vue = __webpack_require__(5);
@@ -148,18 +148,9 @@
 	  $('#rightPane .img-in-post').removeClass('inLightBox');
 	});
 
-	/*===========================================================================
-
-	        V888     888
-	        888     888
-	        888     888
-	        Y88b   d88P 888  888  .d88b.
-	         Y88b d88P  888  888 d8P  Y8b
-	          Y88o88P   888  888 88888888
-	           Y888P    Y88b 888 Y8b.
-	            Y8P      "Y88888  "Y8888
-
-	===========================================================================*/
+	//============================================================================
+	// Vue Stuff
+	//============================================================================
 
 	Vue.component('toolbarIcon', __webpack_require__(13));
 	Vue.component('forumSelectItem', __webpack_require__(20));
@@ -188,7 +179,7 @@
 	chrome.storage.onChanged.addListener(function (changes) {
 	  console.log(changes);
 	  if (changes.theme !== undefined) {
-	    vm.$broadcast('applyTheme', changes.theme.newValue);
+	    _helpers2.default.applyTheme(changes.theme.newValue, '', '');
 	  }
 	});
 
@@ -578,8 +569,8 @@
 	    elementStyle.setProperty('--border', border);
 
 	    //apply font
-	    elementStyle.setProperty('--font-face', fontFace);
-	    elementStyle.setProperty('--font-size', fontSize + 'px');
+	    if (fontFace) elementStyle.setProperty('--font-face', fontFace);
+	    if (fontSize) elementStyle.setProperty('--font-size', fontSize + 'px');
 	  },
 	  convertTimeFormatToISO: function convertTimeFormatToISO(utime) {
 	    //utime format: mm/dd/yyyy hh:mm:ss
