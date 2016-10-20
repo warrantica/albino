@@ -7210,7 +7210,6 @@
 
 	  //get commentsPerPage from options
 	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
-	    console.log("i'm here now");
 	    //do stuff that needs commentsPerPage value in callback
 	    commit('setTotalComments', data.count);
 	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
@@ -7224,6 +7223,7 @@
 	    } else {
 	      commit('setCommentPage', 0);
 	      state.shownComments = state.comments;
+	      //console.log(state.shownComments);
 	    }
 	  });
 	};
@@ -9455,33 +9455,6 @@
 	  },
 
 	  events: {
-	    /*'loadCommentView'(data, isRefresh){
-	      //get commentsPerPage from options
-	      chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
-	        //do stuff that needs commentsPerPage value in callback
-	        //this.$broadcast('setCount', data.count);
-	        this.commentsPerPage = parseInt(item.commentsPerPage);
-	         this.comments = [];
-	        this.topicId = data.tid;
-	        this.count = data.count;
-	        if(data.count > 0) this.comments = data.comments;
-	         if(this.commentsPerPage < this.count){
-	          if(isRefresh){
-	            let start = this.currentPage*this.commentsPerPage;
-	            this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-	            this.$broadcast('setCurrentPage', this.currentPage);
-	          }else{
-	            this.currentPage = 0;
-	            this.$broadcast('setCurrentPage', 0);
-	            this.currentComments = this.comments.slice(0, this.commentsPerPage);
-	          }
-	        }else{
-	          this.currentPage = 0;
-	          this.currentComments = this.comments;
-	        }
-	      });
-	    },*/
-
 	    'goToPage': function goToPage(pageNumber) {
 	      if (pageNumber < 0 || pageNumber >= this.totalPages) return false;
 
@@ -9961,7 +9934,8 @@
 	        last: 5,
 	        cid: '',
 	        c: 0
-	      }
+	      },
+	      reactionData: {}
 	    };
 	  },
 
@@ -9999,7 +9973,7 @@
 	    }
 
 	    //reactions
-	    var reactionData = {
+	    this.reactionData = {
 	      voteSum: this.data.good_bad_vote.point,
 	      emotionSum: this.data.emotion.sum,
 	      emotionCounts: {
@@ -10059,7 +10033,11 @@
 	    domProps: {
 	      "innerHTML": _s(data.message)
 	    }
-	  }), " ", " ", (data.reply_count) ? _h('div', {
+	  }), " ", _h('reaction-view', {
+	    attrs: {
+	      "data": reactionData
+	    }
+	  }), " ", (data.reply_count) ? _h('div', {
 	    staticClass: "subContainer"
 	  }, [_l((data.replies), function(reply) {
 	    return _h('comment-item', {

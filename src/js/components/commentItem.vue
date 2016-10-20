@@ -9,7 +9,7 @@
       <div class="numContainer sSubtitle">#{{ commentNumber }}</div>
     </div>
     <div class="content" v-html="data.message"></div>
-    <!-- <reaction-view></reaction-view> -->
+    <reaction-view :data="reactionData"></reaction-view>
     <div class="subContainer" v-if="data.reply_count">
       <comment-item v-for="reply in data.replies"
                     :data="reply" sub>
@@ -78,7 +78,8 @@ export default {
       last: 5,
       cid: '',
       c: 0
-    }
+    },
+    reactionData: {}
   }},
 
   methods: {
@@ -110,7 +111,7 @@ export default {
     }
 
     //reactions
-    let reactionData = {
+    this.reactionData = {
       voteSum: this.data.good_bad_vote.point,
       emotionSum: this.data.emotion.sum,
       emotionCounts: {

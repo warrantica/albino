@@ -94,7 +94,6 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
 export const loadComments = ({ dispatch, commit, state }, data, isRefresh = false) => {
   //get commentsPerPage from options
   chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
-    console.log("i'm here now");
     //do stuff that needs commentsPerPage value in callback
     commit('setTotalComments', data.count);
     commit('setCommentsPerPage', parseInt(item.commentsPerPage));
@@ -108,6 +107,7 @@ export const loadComments = ({ dispatch, commit, state }, data, isRefresh = fals
     }else{
       commit('setCommentPage', 0);
       state.shownComments = state.comments;
+      //console.log(state.shownComments);
     }
   });
 }
