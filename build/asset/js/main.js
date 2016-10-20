@@ -7103,7 +7103,6 @@
 	    //this.$broadcast('loadReaction', reactionData);
 
 	    state.topicData = values[0];
-	    console.log(state.topicData);
 	    $('time.timeago').timeago();
 
 	    //load comments
@@ -7133,6 +7132,7 @@
 
 	  //get commentsPerPage from options
 	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
+	    console.log("i'm here now");
 	    //do stuff that needs commentsPerPage value in callback
 	    commit('setTotalComments', data.count);
 	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
@@ -9387,8 +9387,6 @@
 	//
 	//
 	//
-	//
-	//
 
 	var Pantip = __webpack_require__(2);
 	exports.default = {
@@ -9504,17 +9502,13 @@
 	    attrs: {
 	      "comments-per-page": $store.state.commentsPerPage
 	    }
-	  }), " ", _h('transition-group', {
-	    attrs: {
-	      "name": "fade"
-	    }
-	  }, [_l(($store.state.shownComments), function(comment) {
+	  }), " ", _l(($store.state.shownComments), function(comment) {
 	    return _h('comment-item', {
 	      attrs: {
 	        "data": comment
 	      }
 	    })
-	  })]), " ", _h('pagination', {
+	  }), " ", _h('pagination', {
 	    attrs: {
 	      "comments-per-page": $store.state.commentsPerPage
 	    }

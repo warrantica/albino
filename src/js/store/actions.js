@@ -37,7 +37,6 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
     //this.$broadcast('loadReaction', reactionData);
 
     state.topicData = values[0];
-    console.log(state.topicData);
     $('time.timeago').timeago();
 
     //load comments
@@ -63,6 +62,7 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
 export const loadComments = ({ dispatch, commit, state }, data, isRefresh = false) => {
   //get commentsPerPage from options
   chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
+    console.log("i'm here now");
     //do stuff that needs commentsPerPage value in callback
     commit('setTotalComments', data.count);
     commit('setCommentsPerPage', parseInt(item.commentsPerPage));
