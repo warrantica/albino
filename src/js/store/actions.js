@@ -27,16 +27,17 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
     //tags
     if(values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
 
-    state.topicData = values[0];
-
     //reactions
-    let reactionData = {
+    values[0].reactionData = {
       voteSum: values[0].voteCount,
       emotionSum: values[0].emotionCount.sum,
       emotionCounts: values[0].emotionCount,
       emotionSortable: values[0].emotions
     };
     //this.$broadcast('loadReaction', reactionData);
+
+    state.topicData = values[0];
+    console.log(state.topicData);
     $('time.timeago').timeago();
 
     //load comments

@@ -88,27 +88,30 @@
 </style>
 
 <script>
-  export default {
-    data(){ return {
-      data: {
+export default {
+  props: {
+    data: {
+      type: Object,
+      default(){ return {
         voteSum: 0,
         emotionSum: 0,
         emotionCounts: {},
         emotionSortable: []
-      },
-      topEmotions: []
-    }},
+      }}
+    }
+  },
 
-    events: {
-      'loadReaction': function(data){
-        this.topEmotions = [];
-        data.emotionSortable.sort((a,b) => (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0));
-        for(let emotion of data.emotionSortable){
-          if(emotion.count > 0) this.topEmotions.push(emotion);
-        }
-
-        this.data = data;
+  computed: {
+    topEmotions(){
+      let topEmotions = [];
+      if(this.data === undefined) return [];
+      this.data.emotionSortable.sort((a,b) => (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0));
+      for(let emotion of this.data.emotionSortable){
+        if(emotion.count > 0) topEmotions.push(emotion);
       }
+
+      return topEmotions;
     }
   }
+}
 </script>

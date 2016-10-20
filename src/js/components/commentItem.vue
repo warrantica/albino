@@ -9,7 +9,7 @@
       <div class="numContainer sSubtitle">#{{ commentNumber }}</div>
     </div>
     <div class="content" v-html="data.message"></div>
-    <reaction-view></reaction-view>
+    <!-- <reaction-view></reaction-view> -->
     <div class="subContainer" v-if="data.reply_count">
       <comment-item v-for="reply in data.replies"
                     :data="reply" sub>

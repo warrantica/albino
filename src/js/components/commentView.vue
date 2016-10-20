@@ -10,10 +10,10 @@
     </div>
     <pagination :comments-per-page="$store.state.commentsPerPage"></pagination>
 
-    <transition name="fade">
+    <transition-group name="fade">
       <comment-item v-for="comment in $store.state.shownComments" :data="comment">
       </comment-item>
-    </transition>
+    </transition-group>
 
     <pagination :comments-per-page="$store.state.commentsPerPage"></pagination>
     <div v-show="$store.state.totalComments && !$store.state.shownComments.length">

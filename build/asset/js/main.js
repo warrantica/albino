@@ -7093,21 +7093,20 @@
 	    //tags
 	    if (values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
 
-	    state.topicData = values[0];
-
 	    //reactions
-	    var reactionData = {
+	    values[0].reactionData = {
 	      voteSum: values[0].voteCount,
 	      emotionSum: values[0].emotionCount.sum,
 	      emotionCounts: values[0].emotionCount,
 	      emotionSortable: values[0].emotions
 	    };
 	    //this.$broadcast('loadReaction', reactionData);
+
+	    state.topicData = values[0];
+	    console.log(state.topicData);
 	    $('time.timeago').timeago();
 
 	    //load comments
-	    //values[1].tid = topicId;
-	    //this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
 	    dispatch('loadComments', values[1], topicId === state.topicId);
 
 	    _helpers2.default.setRightPaneCurtains(true);
@@ -9203,7 +9202,11 @@
 	    domProps: {
 	      "innerHTML": _s(data.content)
 	    }
-	  }), " ", _h('reaction-view')])
+	  }), " ", _h('reaction-view', {
+	    attrs: {
+	      "data": data.reactionData
+	    }
+	  })])
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('i', {
 	    staticClass: "ic"
@@ -9501,7 +9504,7 @@
 	    attrs: {
 	      "comments-per-page": $store.state.commentsPerPage
 	    }
-	  }), " ", _h('transition', {
+	  }), " ", _h('transition-group', {
 	    attrs: {
 	      "name": "fade"
 	    }
@@ -10037,7 +10040,7 @@
 	    domProps: {
 	      "innerHTML": _s(data.message)
 	    }
-	  }), " ", _h('reaction-view'), " ", (data.reply_count) ? _h('div', {
+	  }), " ", " ", (data.reply_count) ? _h('div', {
 	    staticClass: "subContainer"
 	  }, [_l((data.replies), function(reply) {
 	    return _h('comment-item', {
@@ -10157,7 +10160,7 @@
 /* 59 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -10253,23 +10256,25 @@
 	//
 
 	exports.default = {
-	  data: function data() {
-	    return {
-	      data: {
-	        voteSum: 0,
-	        emotionSum: 0,
-	        emotionCounts: {},
-	        emotionSortable: []
-	      },
-	      topEmotions: []
-	    };
+	  props: {
+	    data: {
+	      type: Object,
+	      default: function _default() {
+	        return {
+	          voteSum: 0,
+	          emotionSum: 0,
+	          emotionCounts: {},
+	          emotionSortable: []
+	        };
+	      }
+	    }
 	  },
 
-
-	  events: {
-	    'loadReaction': function loadReaction(data) {
-	      this.topEmotions = [];
-	      data.emotionSortable.sort(function (a, b) {
+	  computed: {
+	    topEmotions: function topEmotions() {
+	      var topEmotions = [];
+	      if (this.data === undefined) return [];
+	      this.data.emotionSortable.sort(function (a, b) {
 	        return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
 	      });
 	      var _iteratorNormalCompletion = true;
@@ -10277,10 +10282,10 @@
 	      var _iteratorError = undefined;
 
 	      try {
-	        for (var _iterator = data.emotionSortable[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        for (var _iterator = this.data.emotionSortable[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	          var emotion = _step.value;
 
-	          if (emotion.count > 0) this.topEmotions.push(emotion);
+	          if (emotion.count > 0) topEmotions.push(emotion);
 	        }
 	      } catch (err) {
 	        _didIteratorError = true;
@@ -10297,7 +10302,7 @@
 	        }
 	      }
 
-	      this.data = data;
+	      return topEmotions;
 	    }
 	  }
 	};
@@ -10597,7 +10602,7 @@
 	    staticClass: "topicWrapper"
 	  }, [_h('h1', ["เกี่ยวกับ Albino"]), " ", _h('div', {
 	    staticClass: "content"
-	  }, [_h('p', ["\n      Albino เวอร์ชั่น 0.99-beta2", _h('br'), "\n      ดูข้อมูลเพิ่มเติมได้ที่", _h('a', {
+	  }, [_h('p', ["\n      Albino เวอร์ชั่น 0.99-beta3", _h('br'), "\n      ดูข้อมูลเพิ่มเติมได้ที่", _h('a', {
 	    attrs: {
 	      "href": "http://warrantica.github.io/albino",
 	      "target": "_blank"
