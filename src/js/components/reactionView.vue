@@ -1,5 +1,5 @@
 <template>
-  <div class="reactions" v-show="data.voteSum || data.emotionSum">
+  <div class="reactions" v-if="data.voteSum || data.emotionSum">
     <div class="vote" v-show="data.voteSum">
       <i class="ic">add_box</i>{{ data.voteSum }}
     </div>
@@ -105,6 +105,7 @@ export default {
     topEmotions(){
       let topEmotions = [];
       if(this.data === undefined) return [];
+      if(this.data.emotionSortable === undefined) return [];
       this.data.emotionSortable.sort((a,b) => (a.count>b.count) ? -1 : ((a.count<b.count) ? 1 : 0));
       for(let emotion of this.data.emotionSortable){
         if(emotion.count > 0) topEmotions.push(emotion);

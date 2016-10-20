@@ -17,8 +17,6 @@ export const loadTopics = ({ dispatch, commit, state }, payload) => {
     Pantip.loadBestTopics(payload.forumName).then(data => state.bestTopics = data);
   }
 
-  console.log(payload.loadMore, _loadMoreId, state.loadMoreId);
-
   Pantip.loadTopics(payload.forumName, _loadMoreId).then(data => {
     //console.log(data);
     $('#leftPane').removeClass('wrapUp');
@@ -66,7 +64,6 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
       emotionCounts: values[0].emotionCount,
       emotionSortable: values[0].emotions
     };
-    //this.$broadcast('loadReaction', reactionData);
 
     state.topicData = values[0];
     $('time.timeago').timeago();
@@ -97,8 +94,17 @@ export const loadComments = ({ dispatch, commit, state }, data, isRefresh = fals
     //do stuff that needs commentsPerPage value in callback
     commit('setTotalComments', data.count);
     commit('setCommentsPerPage', parseInt(item.commentsPerPage));
-
     commit('resetShownComments');
+
+    data.comments.forEach((element, index, array) => {
+      array[index] = Helper.vetComment(element);
+      if(element.reply_count > 0){
+        element.replies.forEach((subElement, subIndex, subArray) => {
+          subArray[subIndex] = Helper.vetComment(subElement, true);
+        });
+      }
+    });
+
     if(state.totalComments > 0) state.comments = data.comments;
 
     if(state.commentsPerPage < state.totalComments){
@@ -107,7 +113,7 @@ export const loadComments = ({ dispatch, commit, state }, data, isRefresh = fals
     }else{
       commit('setCommentPage', 0);
       state.shownComments = state.comments;
-      //console.log(state.shownComments);
     }
+
   });
 }

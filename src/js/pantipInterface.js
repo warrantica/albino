@@ -66,7 +66,6 @@ module.exports = {
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         dataType: 'text',
         success: function(data){
-          console.log(JSON.parse(data));
           data = JSON.parse(data).item;
           let res = { topics: [] };
           res.topics = data.topic;
@@ -156,7 +155,7 @@ module.exports = {
         dataType: 'text',
         success: function(data){
 
-          data = data.replace(/src="\/images.*?"/g, 'src=""');
+          data = data.replace(/src="\/.*?"/g, 'src=""');
           let html = $(data).find('.main-post-inner')[0];
           let res = {};
 
@@ -242,7 +241,7 @@ module.exports = {
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         url:'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
         success: function(data){
-          dataJSON = JSON.parse(data);
+          let dataJSON = JSON.parse(data);
           resolve(dataJSON);
         }
       });

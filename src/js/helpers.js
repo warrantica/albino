@@ -71,5 +71,50 @@ module.exports = {
         $('#fab').removeClass('enable');
       }
     }, 50);
+  },
+
+  vetComment(comment, isSub = false){
+    comment.commentNumber = comment.comment_no;
+    if(isSub){
+      comment.commentNumber += '-' + comment.reply_no;
+    }else if(comment.reply_count > comment.replies.length){
+      comment.subData = {
+        last: comment.replies.length,
+        cid: comment._id,
+        c: comment.reply_count
+      };
+      
+      comment.showLoadMoreSubButton = true;
+    }
+
+    //avatar
+    if(comment.user.avatar.medium.substr(-9, 9) === '38x38.png'){
+      //unknown avatar
+      comment.user.avatar.medium = 'asset/img/default_avatar.png';
+    }
+
+    //reactions
+    comment.reactionData = {
+      voteSum: comment.good_bad_vote.point,
+      emotionSum: comment.emotion.sum,
+      emotionCounts: {
+        impress: comment.emotion.impress.count,
+        laugh: comment.emotion.laugh.count,
+        like: comment.emotion.like.count,
+        love: comment.emotion.love.count,
+        scary: comment.emotion.scary.count,
+        surprised: comment.emotion.surprised.count,
+      },
+      emotionSortable: [
+        {name:"impress", count:comment.emotion.impress.count},
+        {name:"laugh", count:comment.emotion.laugh.count},
+        {name:"like", count:comment.emotion.like.count},
+        {name:"love", count:comment.emotion.love.count},
+        {name:"scary", count:comment.emotion.scary.count},
+        {name:"surprised", count:comment.emotion.surprised.count}
+      ]
+    };
+
+    return comment;
   }
 }

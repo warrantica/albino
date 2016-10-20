@@ -361,7 +361,6 @@
 	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
 	        dataType: 'text',
 	        success: function success(data) {
-	          console.log(JSON.parse(data));
 	          data = JSON.parse(data).item;
 	          var res = { topics: [] };
 	          res.topics = data.topic;
@@ -450,7 +449,7 @@
 	        dataType: 'text',
 	        success: function success(data) {
 
-	          data = data.replace(/src="\/images.*?"/g, 'src=""');
+	          data = data.replace(/src="\/.*?"/g, 'src=""');
 	          var html = $(data).find('.main-post-inner')[0];
 	          var res = {};
 
@@ -527,7 +526,7 @@
 	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
 	        url: 'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
 	        success: function success(data) {
-	          dataJSON = JSON.parse(data);
+	          var dataJSON = JSON.parse(data);
 	          resolve(dataJSON);
 	        }
 	      });
@@ -610,6 +609,45 @@
 	        $('#fab').removeClass('enable');
 	      }
 	    }, 50);
+	  },
+	  vetComment: function vetComment(comment) {
+	    var isSub = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+	    comment.commentNumber = comment.comment_no;
+	    if (isSub) {
+	      comment.commentNumber += '-' + comment.reply_no;
+	    } else if (comment.reply_count > comment.replies.length) {
+	      comment.subData = {
+	        last: comment.replies.length,
+	        cid: comment._id,
+	        c: comment.reply_count
+	      };
+
+	      comment.showLoadMoreSubButton = true;
+	    }
+
+	    //avatar
+	    if (comment.user.avatar.medium.substr(-9, 9) === '38x38.png') {
+	      //unknown avatar
+	      comment.user.avatar.medium = 'asset/img/default_avatar.png';
+	    }
+
+	    //reactions
+	    comment.reactionData = {
+	      voteSum: comment.good_bad_vote.point,
+	      emotionSum: comment.emotion.sum,
+	      emotionCounts: {
+	        impress: comment.emotion.impress.count,
+	        laugh: comment.emotion.laugh.count,
+	        like: comment.emotion.like.count,
+	        love: comment.emotion.love.count,
+	        scary: comment.emotion.scary.count,
+	        surprised: comment.emotion.surprised.count
+	      },
+	      emotionSortable: [{ name: "impress", count: comment.emotion.impress.count }, { name: "laugh", count: comment.emotion.laugh.count }, { name: "like", count: comment.emotion.like.count }, { name: "love", count: comment.emotion.love.count }, { name: "scary", count: comment.emotion.scary.count }, { name: "surprised", count: comment.emotion.surprised.count }]
+	    };
+
+	    return comment;
 	  }
 	};
 
@@ -7107,8 +7145,6 @@
 	    });
 	  }
 
-	  console.log(payload.loadMore, _loadMoreId, state.loadMoreId);
-
 	  _pantipInterface2.default.loadTopics(payload.forumName, _loadMoreId).then(function (data) {
 	    //console.log(data);
 	    $('#leftPane').removeClass('wrapUp');
@@ -7178,7 +7214,6 @@
 	      emotionCounts: values[0].emotionCount,
 	      emotionSortable: values[0].emotions
 	    };
-	    //this.$broadcast('loadReaction', reactionData);
 
 	    state.topicData = values[0];
 	    $('time.timeago').timeago();
@@ -7213,8 +7248,17 @@
 	    //do stuff that needs commentsPerPage value in callback
 	    commit('setTotalComments', data.count);
 	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
-
 	    commit('resetShownComments');
+
+	    data.comments.forEach(function (element, index, array) {
+	      array[index] = _helpers2.default.vetComment(element);
+	      if (element.reply_count > 0) {
+	        element.replies.forEach(function (subElement, subIndex, subArray) {
+	          subArray[subIndex] = _helpers2.default.vetComment(subElement, true);
+	        });
+	      }
+	    });
+
 	    if (state.totalComments > 0) state.comments = data.comments;
 
 	    if (state.commentsPerPage < state.totalComments) {
@@ -7223,7 +7267,6 @@
 	    } else {
 	      commit('setCommentPage', 0);
 	      state.shownComments = state.comments;
-	      //console.log(state.shownComments);
 	    }
 	  });
 	};
@@ -9421,11 +9464,6 @@
 
 	  data: function data() {
 	    return {
-	      topicId: 0,
-	      count: 0,
-	      commentsPerPage: 5,
-	      currentPage: 0,
-	      currentComments: [],
 	      loadedPage: 1
 	    };
 	  },
@@ -9496,7 +9534,7 @@
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
 	    staticClass: "commentsCount sBackBg"
-	  }, [_m(0), " " + _s(count) + " ความเห็น\n    "]), " ", _m(1)]), " ", _h('pagination', {
+	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\n    "]), " ", _m(1)]), " ", _h('pagination', {
 	    attrs: {
 	      "comments-per-page": $store.state.commentsPerPage
 	    }
@@ -9849,7 +9887,15 @@
 	  value: true
 	});
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	var _pantipInterface = __webpack_require__(2);
+
+	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
+
+	var _helpers = __webpack_require__(3);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//
 	//
@@ -9900,10 +9946,7 @@
 	//
 	//
 
-	var Pantip = __webpack_require__(2);
 	exports.default = {
-	  name: 'comment-item',
-
 	  props: {
 	    data: {
 	      type: Object,
@@ -9914,7 +9957,12 @@
 	          utime: '',
 	          timeFull: '',
 	          message: '',
-	          replies: []
+	          replies: [],
+	          user: {},
+	          commentNumber: 0,
+	          subData: {},
+	          showLoadMoreSubButton: false,
+	          reactionData: {}
 	        };
 	      }
 	    },
@@ -9925,74 +9973,22 @@
 	    }
 	  },
 
-	  data: function data() {
-	    return {
-	      commentNumber: '',
-	      topEmotions: [],
-	      showLoadMoreSubButton: false,
-	      subData: {
-	        last: 5,
-	        cid: '',
-	        c: 0
-	      },
-	      reactionData: {}
-	    };
-	  },
-
-
 	  methods: {
 	    loadMoreSubComments: function loadMoreSubComments() {
 	      var _this = this;
 
-	      Pantip.loadMoreSubComments(this.subData.last, this.subData.cid, this.subData.c).then(function (res) {
-	        var _data$replies;
+	      _pantipInterface2.default.loadMoreSubComments(this.data.subData.last, this.data.subData.cid, this.data.subData.c).then(function (res) {
 
-	        (_data$replies = _this.data.replies).push.apply(_data$replies, _toConsumableArray(res.replies));
-	        _this.subData.last += 5;
-	        if (_this.subData.last >= _this.subData.c) _this.showLoadMoreSubButton = false;
+	        //this.data.replies.push(...res.replies);
+	        res.replies.forEach(function (element, index, array) {
+	          _this.data.replies.push(_helpers2.default.vetComment(element, true));
+	        });
+
+	        _this.data.subData.last += 5;
+	        //if(this.subData.last >= this.subData.c) this.showLoadMoreSubButton = false;
+
+	        _this.data.showLoadMoreSubButton = _this.data.subData.last < _this.data.subData.c;
 	      });
-	    }
-	  },
-
-	  mounted: function mounted() {
-	    //comment number
-	    this.commentNumber = this.data.comment_no;
-	    if (this.sub) {
-	      this.commentNumber += '-' + this.data.reply_no;
-	    } else if (this.data.reply_count > this.data.replies.length) {
-	      this.subData.last = this.data.replies.length;
-	      this.subData.cid = this.data._id;
-	      this.subData.c = this.data.reply_count;
-	      this.showLoadMoreSubButton = true;
-	    }
-
-	    //avatar
-	    if (this.data.user.avatar.medium.substr(-9, 9) === '38x38.png') {
-	      //unknown avatar
-	      this.data.user.avatar.medium = 'asset/img/default_avatar.png';
-	    }
-
-	    //reactions
-	    this.reactionData = {
-	      voteSum: this.data.good_bad_vote.point,
-	      emotionSum: this.data.emotion.sum,
-	      emotionCounts: {
-	        impress: this.data.emotion.impress.count,
-	        laugh: this.data.emotion.laugh.count,
-	        like: this.data.emotion.like.count,
-	        love: this.data.emotion.love.count,
-	        scary: this.data.emotion.scary.count,
-	        surprised: this.data.emotion.surprised.count
-	      },
-	      emotionSortable: [{ name: "impress", count: this.data.emotion.impress.count }, { name: "laugh", count: this.data.emotion.laugh.count }, { name: "like", count: this.data.emotion.like.count }, { name: "love", count: this.data.emotion.love.count }, { name: "scary", count: this.data.emotion.scary.count }, { name: "surprised", count: this.data.emotion.surprised.count }]
-	    };
-	    //load reaction
-	  },
-
-
-	  events: {
-	    'loadReaction': function loadReaction(data) {
-	      //empty event handler to stop propagation from parent comment call
 	    }
 	  }
 	};
@@ -10028,14 +10024,14 @@
 	    }
 	  }, [_s(data.data_addrtitle)])]), " ", _h('div', {
 	    staticClass: "numContainer sSubtitle"
-	  }, ["#" + _s(commentNumber)])]), " ", _h('div', {
+	  }, ["#" + _s(data.commentNumber)])]), " ", _h('div', {
 	    staticClass: "content",
 	    domProps: {
 	      "innerHTML": _s(data.message)
 	    }
 	  }), " ", _h('reaction-view', {
 	    attrs: {
-	      "data": reactionData
+	      "data": data.reactionData
 	    }
 	  }), " ", (data.reply_count) ? _h('div', {
 	    staticClass: "subContainer"
@@ -10050,8 +10046,8 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (showLoadMoreSubButton),
-	      expression: "showLoadMoreSubButton"
+	      value: (data.showLoadMoreSubButton),
+	      expression: "data.showLoadMoreSubButton"
 	    }],
 	    staticClass: "loadMoreSubComments sButton sElevation0h2 sAccentBg",
 	    on: {
@@ -10271,6 +10267,7 @@
 	    topEmotions: function topEmotions() {
 	      var topEmotions = [];
 	      if (this.data === undefined) return [];
+	      if (this.data.emotionSortable === undefined) return [];
 	      this.data.emotionSortable.sort(function (a, b) {
 	        return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
 	      });
@@ -10309,13 +10306,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
-	  return _h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (data.voteSum || data.emotionSum),
-	      expression: "data.voteSum || data.emotionSum"
-	    }],
+	  return (data.voteSum || data.emotionSum) ? _h('div', {
 	    staticClass: "reactions"
 	  }, [_h('div', {
 	    directives: [{
@@ -10351,7 +10342,7 @@
 	    staticClass: "emotionCount"
 	  }, [_s(data.emotionSum)])]), " ", _h('ul', {
 	    staticClass: "emotionsInfo sForeBg sElevation2"
-	  }, [_h('li', [_m(1), _h('span', ["ถูกใจ " + _s(data.emotionCounts.like)])]), " ", _h('li', [_m(2), _h('span', ["ขำกลิ้ง " + _s(data.emotionCounts.laugh)])]), " ", _h('li', [_m(3), _h('span', ["หลงรัก " + _s(data.emotionCounts.love)])]), " ", _h('li', [_m(4), _h('span', ["ซึ้ง " + _s(data.emotionCounts.impress)])]), " ", _h('li', [_m(5), _h('span', ["สยอง " + _s(data.emotionCounts.scary)])]), " ", _h('li', [_m(6), _h('span', ["ทึ่ง " + _s(data.emotionCounts.surprised)])])])])
+	  }, [_h('li', [_m(1), _h('span', ["ถูกใจ " + _s(data.emotionCounts.like)])]), " ", _h('li', [_m(2), _h('span', ["ขำกลิ้ง " + _s(data.emotionCounts.laugh)])]), " ", _h('li', [_m(3), _h('span', ["หลงรัก " + _s(data.emotionCounts.love)])]), " ", _h('li', [_m(4), _h('span', ["ซึ้ง " + _s(data.emotionCounts.impress)])]), " ", _h('li', [_m(5), _h('span', ["สยอง " + _s(data.emotionCounts.scary)])]), " ", _h('li', [_m(6), _h('span', ["ทึ่ง " + _s(data.emotionCounts.surprised)])])])]) : _e()
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('i', {
 	    staticClass: "ic"

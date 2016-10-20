@@ -2,7 +2,7 @@
   <div id="commentsView">
     <div class="commentsInfo" v-show="$store.state.totalComments">
       <div class="commentsCount sBackBg">
-        <i class="ic">chat_bubble</i> {{ count }} ความเห็น
+        <i class="ic">chat_bubble</i> {{ $store.state.totalComments }} ความเห็น
       </div>
       <div class="commentsSort sBackBg">
         เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
@@ -75,11 +75,6 @@
     },
 
     data(){ return {
-      topicId: 0,
-      count: 0,
-      commentsPerPage: 5,
-      currentPage: 0,
-      currentComments: [],
       loadedPage: 1
     }},
 

@@ -6,16 +6,16 @@
       <div class="time sSubtitle">
         <time class="timeago" :datetime="data.utime">{{ data.data_addrtitle }}</time>
       </div>
-      <div class="numContainer sSubtitle">#{{ commentNumber }}</div>
+      <div class="numContainer sSubtitle">#{{ data.commentNumber }}</div>
     </div>
     <div class="content" v-html="data.message"></div>
-    <reaction-view :data="reactionData"></reaction-view>
+    <reaction-view :data="data.reactionData"></reaction-view>
     <div class="subContainer" v-if="data.reply_count">
       <comment-item v-for="reply in data.replies"
                     :data="reply" sub>
       </comment-item>
       <button class="loadMoreSubComments sButton sElevation0h2 sAccentBg"
-              v-show="showLoadMoreSubButton"
+              v-show="data.showLoadMoreSubButton"
               @click="loadMoreSubComments">
         โหลดความเห็นย่อยเพิ่ม
       </button>
@@ -47,10 +47,10 @@
 </style>
 
 <script>
-let Pantip = require('../pantipInterface.js');
-export default {
-  name: 'comment-item',
+import Pantip from '../pantipInterface';
+import Helper from '../helpers';
 
+export default {
   props: {
     data: {
       type: Object,
@@ -60,7 +60,12 @@ export default {
         utime: '',
         timeFull: '',
         message: '',
-        replies: []
+        replies: [],
+        user: {},
+        commentNumber: 0,
+        subData: {},
+        showLoadMoreSubButton: false,
+        reactionData: {}
       }}
     },
 
@@ -70,73 +75,16 @@ export default {
     }
   },
 
-  data(){ return {
-    commentNumber: '',
-    topEmotions: [],
-    showLoadMoreSubButton: false,
-    subData: {
-      last: 5,
-      cid: '',
-      c: 0
-    },
-    reactionData: {}
-  }},
-
   methods: {
     loadMoreSubComments(){
-      Pantip.loadMoreSubComments(this.subData.last, this.subData.cid, this.subData.c).then(res=>{
-        this.data.replies.push(...res.replies);
-        this.subData.last += 5;
-        if(this.subData.last >= this.subData.c) this.showLoadMoreSubButton = false;
+      Pantip.loadMoreSubComments(this.data.subData.last, this.data.subData.cid, this.data.subData.c).then(res=>{
+        res.replies.forEach((element, index, array) => {
+          this.data.replies.push(Helper.vetComment(element, true));
+        })
+
+        this.data.subData.last += 5;
+        this.data.showLoadMoreSubButton = this.data.subData.last < this.data.subData.c;
       });
-    }
-  },
-
-  mounted(){
-    //comment number
-    this.commentNumber = this.data.comment_no;
-    if(this.sub){
-      this.commentNumber += '-' + this.data.reply_no;
-    }else if(this.data.reply_count > this.data.replies.length){
-      this.subData.last = this.data.replies.length;
-      this.subData.cid = this.data._id;
-      this.subData.c = this.data.reply_count;
-      this.showLoadMoreSubButton = true;
-    }
-
-    //avatar
-    if(this.data.user.avatar.medium.substr(-9, 9) === '38x38.png'){
-      //unknown avatar
-      this.data.user.avatar.medium = 'asset/img/default_avatar.png';
-    }
-
-    //reactions
-    this.reactionData = {
-      voteSum: this.data.good_bad_vote.point,
-      emotionSum: this.data.emotion.sum,
-      emotionCounts: {
-        impress: this.data.emotion.impress.count,
-        laugh: this.data.emotion.laugh.count,
-        like: this.data.emotion.like.count,
-        love: this.data.emotion.love.count,
-        scary: this.data.emotion.scary.count,
-        surprised: this.data.emotion.surprised.count,
-      },
-      emotionSortable: [
-        {name:"impress", count:this.data.emotion.impress.count},
-        {name:"laugh", count:this.data.emotion.laugh.count},
-        {name:"like", count:this.data.emotion.like.count},
-        {name:"love", count:this.data.emotion.love.count},
-        {name:"scary", count:this.data.emotion.scary.count},
-        {name:"surprised", count:this.data.emotion.surprised.count}
-      ]
-    };
-    //load reaction
-  },
-
-  events: {
-    'loadReaction': function(data){
-      //empty event handler to stop propagation from parent comment call
     }
   }
 }
