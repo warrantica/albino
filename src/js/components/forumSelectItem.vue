@@ -32,7 +32,8 @@
 
     methods: {
       loadForum(){
-        this.$dispatch('loadForum', this.name);
+        //this.$dispatch('loadForum', this.name);
+        this.$store.dispatch('loadTopics', {forumName: this.name});
       }
     }
   }

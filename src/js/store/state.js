@@ -1,6 +1,12 @@
 export const state = {
   showBestTopics: false,
 
+  forumName: '',
+  topics: [],
+  bestTopics: [],
+  loadMoreId: 0,
+  topTopicId: 0,
+
   topicId: 0,
   topicTitle: '',
   topicData: {},
@@ -19,6 +25,14 @@ export const mutations = {
   toggleBestTopics(state){
     state.showBestTopics = ! state.showBestTopics;
   },
+
+  hideBestTopics(state){ state.showBestTopics = false },
+
+  setForumName(state, name){ state.forumName = name },
+
+  resetTopics(state){ state.topics = [] },
+
+  addToTopics(state, topic){ state.topics.push(topic) },
 
   setTopicTitle(state, title){
     state.topicTitle = title;

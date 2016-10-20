@@ -66,6 +66,7 @@ module.exports = {
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         dataType: 'text',
         success: function(data){
+          console.log(JSON.parse(data));
           data = JSON.parse(data).item;
           let res = { topics: [] };
           res.topics = data.topic;

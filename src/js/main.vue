@@ -11,7 +11,7 @@
             <span id="forumSelectorName">{{ forumDisplayName }}</span>
             <i class="ic">arrow_drop_down</i>
           </div>
-          <toolbar-icon icon="refresh" label="รีเฟรชรายชื่อกระทู้" @click.native="loadTopics(currentForum)"></toolbar-icon>
+          <toolbar-icon icon="refresh" label="รีเฟรชรายชื่อกระทู้" @click.native="refreshTopics"></toolbar-icon>
           <toolbar-icon icon="more_vert" label="อื่น ๆ" @click.native.stop="showDialogues.overflow = true"></toolbar-icon>
         </div>
         <ul id="forumSelect" class="dialogue sElevation2 sClickable"
@@ -36,14 +36,14 @@
             <i class="ic headerIcon">thumb_up</i>กระทู้แนะนำ<i class="ic dropdown">expand_more</i>
           </div>
           <div id="bestTopicList" :class="{ active: $store.state.showBestTopics }">
-            <best-topic-item v-for="topic in bestTopics" :data="topic"></best-topic-item>
+            <best-topic-item v-for="topic in $store.state.bestTopics" :data="topic"></best-topic-item>
           </div>
         </div>
         <div id="topicListHeader"><i class="ic headerIcon">schedule</i>กระทู้ล่าสุด</div>
         <div id="topicList">
-          <topic-item v-for="topic in topics" :data="topic"></topic-item>
+          <topic-item v-for="topic in $store.state.topics" :data="topic"></topic-item>
           <button class="loadMore sButton sAccentBg sElevation0h2"
-                  :data-tid="loadMoreId"
+                  :data-tid="$store.state.loadMoreId"
                   @click="loadMoreTopics">
             โหลดกระทู้เพิ่ม
           </button>
@@ -113,13 +113,13 @@ export default {
       overflow: false
     },
     showSearch: false,
-    bestTopics: [],
-    topics: [],
+    //bestTopics: [],
+    //topics: [],
     searchQuery: '',
     searchQueryString: '',
     searchResults: [],
-    loadMoreId: 0,
-    topTopicId: 0,
+    //loadMoreId: 0,
+    //topTopicId: 0,
     topicRefreshIntervalId: '',
     unreadComments: 0,
     //topicData: {}
@@ -147,36 +147,14 @@ export default {
       }
     },
 
-    loadTopics(forumName, loadMore = false){
-      let _loadMoreId = loadMore ? this.loadMoreId : 0;
-      this.currentForum = forumName;
-      this.showBestTopics = false;
-      if(!loadMore){
-        $('#leftPane').addClass('wrapUp');
-        $('#leftPane .loading').addClass('active');
-        this.topics = [];
-
-        Pantip.loadBestTopics(forumName).then(data => this.bestTopics = data);
-      }
-
-      Pantip.loadTopics(forumName, _loadMoreId).then(data => {
-        //console.log(data);
-        $('#leftPane').removeClass('wrapUp');
-        $('#leftPane .loading').removeClass('active');
-
-        for(let topic of data['topics']){
-          topic.isActive = topic._id === this.topicId;
-          topic.isTop = topic._id === this.topTopicId;
-          this.topics.push(topic);
-        }
-        this.topTopicId = this.topics[0]._id;
-        this.loadMoreId = data.loadMoreID;
-      });
+    refreshTopics(){
+      this.$store.dispatch('loadTopics', {forumName: this.$store.state.forumName});
     },
 
     loadMoreTopics(){
-      this.loadTopics(this.currentForum, true);
-      $('.topic.' + this.loadMoreId).addClass('beforeMore');
+      //this.loadTopics(this.currentForum, true);
+      this.$store.dispatch('loadTopics', {forumName: this.$store.state.forumName, loadMore: true});
+      $('.topic.' + this.$store.state.loadMoreId).addClass('beforeMore');
     },
 
     doSearch(){
@@ -203,7 +181,7 @@ export default {
     },
 
     refreshTopic(){
-      if(this.topicId !== 0){
+      if(this.$store.state.topicId !== 0){
         let scroll = document.getElementById('rightPane').scrollTop;
 
         this.$store.dispatch('loadTopic', this.topicId).then(value =>{
@@ -231,10 +209,6 @@ export default {
   },
 
   events: {
-    'loadForum': function(forum){
-      this.loadTopics(forum);
-    },
-
     'loadSearchResult': function(url){
       Pantip.getTopicIdFromSearch(url).then(id => {
         this.loadTopic(id);
@@ -250,7 +224,7 @@ export default {
       fontSize: '26',
       fontFace: 'TH Sarabun New'
     }, item => {
-      this.loadTopics(item.defaultForum);
+      this.$store.dispatch('loadTopics', {forumName: item.defaultForum});
       Helper.applyTheme(item.theme, item.fontSize, item.fontFace);
     });
   }

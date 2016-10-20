@@ -361,6 +361,7 @@
 	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
 	        dataType: 'text',
 	        success: function success(data) {
+	          console.log(JSON.parse(data));
 	          data = JSON.parse(data).item;
 	          var res = { topics: [] };
 	          res.topics = data.topic;
@@ -6999,6 +7000,12 @@
 	var state = exports.state = {
 	  showBestTopics: false,
 
+	  forumName: '',
+	  topics: [],
+	  bestTopics: [],
+	  loadMoreId: 0,
+	  topTopicId: 0,
+
 	  topicId: 0,
 	  topicTitle: '',
 	  topicData: {},
@@ -7016,6 +7023,18 @@
 	var mutations = exports.mutations = {
 	  toggleBestTopics: function toggleBestTopics(state) {
 	    state.showBestTopics = !state.showBestTopics;
+	  },
+	  hideBestTopics: function hideBestTopics(state) {
+	    state.showBestTopics = false;
+	  },
+	  setForumName: function setForumName(state, name) {
+	    state.forumName = name;
+	  },
+	  resetTopics: function resetTopics(state) {
+	    state.topics = [];
+	  },
+	  addToTopics: function addToTopics(state, topic) {
+	    state.topics.push(topic);
 	  },
 	  setTopicTitle: function setTopicTitle(state, title) {
 	    state.topicTitle = title;
@@ -7052,7 +7071,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.loadComments = exports.loadTopic = undefined;
+	exports.loadComments = exports.loadTopic = exports.loadTopics = undefined;
 
 	var _vars = __webpack_require__(1);
 
@@ -7068,10 +7087,69 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var loadTopic = exports.loadTopic = function loadTopic(_ref, topicId) {
+	var loadTopics = exports.loadTopics = function loadTopics(_ref, payload) {
 	  var dispatch = _ref.dispatch;
 	  var commit = _ref.commit;
 	  var state = _ref.state;
+
+	  var _loadMoreId = payload.loadMore ? state.loadMoreId : 0;
+
+	  commit('setForumName', payload.forumName);
+	  commit('hideBestTopics');
+
+	  if (!payload.loadMore) {
+	    $('#leftPane').addClass('wrapUp');
+	    $('#leftPane .loading').addClass('active');
+	    commit('resetTopics');
+
+	    _pantipInterface2.default.loadBestTopics(payload.forumName).then(function (data) {
+	      return state.bestTopics = data;
+	    });
+	  }
+
+	  console.log(payload.loadMore, _loadMoreId, state.loadMoreId);
+
+	  _pantipInterface2.default.loadTopics(payload.forumName, _loadMoreId).then(function (data) {
+	    //console.log(data);
+	    $('#leftPane').removeClass('wrapUp');
+	    $('#leftPane .loading').removeClass('active');
+
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	      for (var _iterator = data['topics'][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        var topic = _step.value;
+
+	        topic.isActive = topic._id === state.topicId;
+	        topic.isTop = topic._id === state.topTopicId;
+	        commit('addToTopics', topic);
+	      }
+	    } catch (err) {
+	      _didIteratorError = true;
+	      _iteratorError = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion && _iterator.return) {
+	          _iterator.return();
+	        }
+	      } finally {
+	        if (_didIteratorError) {
+	          throw _iteratorError;
+	        }
+	      }
+	    }
+
+	    state.topTopicId = state.topics[0]._id;
+	    state.loadMoreId = data.loadMoreID;
+	  });
+	};
+
+	var loadTopic = exports.loadTopic = function loadTopic(_ref2, topicId) {
+	  var dispatch = _ref2.dispatch;
+	  var commit = _ref2.commit;
+	  var state = _ref2.state;
 
 	  _helpers2.default.setRightPaneCurtains(false);
 
@@ -7124,10 +7202,10 @@
 	  });
 	};
 
-	var loadComments = exports.loadComments = function loadComments(_ref2, data) {
-	  var dispatch = _ref2.dispatch;
-	  var commit = _ref2.commit;
-	  var state = _ref2.state;
+	var loadComments = exports.loadComments = function loadComments(_ref3, data) {
+	  var dispatch = _ref3.dispatch;
+	  var commit = _ref3.commit;
+	  var state = _ref3.state;
 	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 	  //get commentsPerPage from options
@@ -7328,13 +7406,13 @@
 	        overflow: false
 	      },
 	      showSearch: false,
-	      bestTopics: [],
-	      topics: [],
+	      //bestTopics: [],
+	      //topics: [],
 	      searchQuery: '',
 	      searchQueryString: '',
 	      searchResults: [],
-	      loadMoreId: 0,
-	      topTopicId: 0,
+	      //loadMoreId: 0,
+	      //topTopicId: 0,
 	      topicRefreshIntervalId: '',
 	      unreadComments: 0
 	    };
@@ -7385,66 +7463,16 @@
 	        }
 	      }
 	    },
-	    loadTopics: function loadTopics(forumName) {
-	      var _this = this;
-
-	      var loadMore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-	      var _loadMoreId = loadMore ? this.loadMoreId : 0;
-	      this.currentForum = forumName;
-	      this.showBestTopics = false;
-	      if (!loadMore) {
-	        $('#leftPane').addClass('wrapUp');
-	        $('#leftPane .loading').addClass('active');
-	        this.topics = [];
-
-	        _pantipInterface2.default.loadBestTopics(forumName).then(function (data) {
-	          return _this.bestTopics = data;
-	        });
-	      }
-
-	      _pantipInterface2.default.loadTopics(forumName, _loadMoreId).then(function (data) {
-	        //console.log(data);
-	        $('#leftPane').removeClass('wrapUp');
-	        $('#leftPane .loading').removeClass('active');
-
-	        var _iteratorNormalCompletion2 = true;
-	        var _didIteratorError2 = false;
-	        var _iteratorError2 = undefined;
-
-	        try {
-	          for (var _iterator2 = data['topics'][Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var topic = _step2.value;
-
-	            topic.isActive = topic._id === _this.topicId;
-	            topic.isTop = topic._id === _this.topTopicId;
-	            _this.topics.push(topic);
-	          }
-	        } catch (err) {
-	          _didIteratorError2 = true;
-	          _iteratorError2 = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	              _iterator2.return();
-	            }
-	          } finally {
-	            if (_didIteratorError2) {
-	              throw _iteratorError2;
-	            }
-	          }
-	        }
-
-	        _this.topTopicId = _this.topics[0]._id;
-	        _this.loadMoreId = data.loadMoreID;
-	      });
+	    refreshTopics: function refreshTopics() {
+	      this.$store.dispatch('loadTopics', { forumName: this.$store.state.forumName });
 	    },
 	    loadMoreTopics: function loadMoreTopics() {
-	      this.loadTopics(this.currentForum, true);
-	      $('.topic.' + this.loadMoreId).addClass('beforeMore');
+	      //this.loadTopics(this.currentForum, true);
+	      this.$store.dispatch('loadTopics', { forumName: this.$store.state.forumName, loadMore: true });
+	      $('.topic.' + this.$store.state.loadMoreId).addClass('beforeMore');
 	    },
 	    doSearch: function doSearch() {
-	      var _this2 = this;
+	      var _this = this;
 
 	      if (this.searchQuery === '') return false;
 
@@ -7452,29 +7480,29 @@
 	      $('.searchResultList .loading').addClass('active');
 	      _pantipInterface2.default.search(this.searchQuery).then(function (data) {
 	        //console.log(data);
-	        _this2.searchResults = data.results;
-	        _this2.searchQueryString = data.queryString;
+	        _this.searchResults = data.results;
+	        _this.searchQueryString = data.queryString;
 	        $('.searchResultList').removeClass('wrapUp');
 	        $('.searchResultList .loading').removeClass('active');
 	      });
 	    },
 	    loadMoreSearchResults: function loadMoreSearchResults() {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      _pantipInterface2.default.search(this.searchQuery, this.searchResults.length, this.searchQueryString).then(function (data) {
 	        var _searchResults;
 
-	        (_searchResults = _this3.searchResults).push.apply(_searchResults, _toConsumableArray(data.results));
+	        (_searchResults = _this2.searchResults).push.apply(_searchResults, _toConsumableArray(data.results));
 	      });
 	    },
 	    refreshTopic: function refreshTopic() {
-	      var _this4 = this;
+	      var _this3 = this;
 
-	      if (this.topicId !== 0) {
+	      if (this.$store.state.topicId !== 0) {
 	        (function () {
 	          var scroll = document.getElementById('rightPane').scrollTop;
 
-	          _this4.$store.dispatch('loadTopic', _this4.topicId).then(function (value) {
+	          _this3.$store.dispatch('loadTopic', _this3.topicId).then(function (value) {
 	            $('#rightPane').stop().animate({ scrollTop: scroll }, "0.5s");
 	          });
 	        })();
@@ -7496,21 +7524,17 @@
 	  },
 
 	  events: {
-	    'loadForum': function loadForum(forum) {
-	      this.loadTopics(forum);
-	    },
-
 	    'loadSearchResult': function loadSearchResult(url) {
-	      var _this5 = this;
+	      var _this4 = this;
 
 	      _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
-	        _this5.loadTopic(id);
+	        _this4.loadTopic(id);
 	      });
 	    }
 	  },
 
 	  mounted: function mounted() {
-	    var _this6 = this;
+	    var _this5 = this;
 
 	    //Get and apply options
 	    chrome.storage.sync.get({
@@ -7519,7 +7543,7 @@
 	      fontSize: '26',
 	      fontFace: 'TH Sarabun New'
 	    }, function (item) {
-	      _this6.loadTopics(item.defaultForum);
+	      _this5.$store.dispatch('loadTopics', { forumName: item.defaultForum });
 	      _helpers2.default.applyTheme(item.theme, item.fontSize, item.fontFace);
 	    });
 	  }
@@ -7574,7 +7598,7 @@
 	    },
 	    nativeOn: {
 	      "click": function($event) {
-	        loadTopics(currentForum)
+	        refreshTopics($event)
 	      }
 	    }
 	  }), " ", _h('toolbar-icon', {
@@ -7664,7 +7688,7 @@
 	    attrs: {
 	      "id": "bestTopicList"
 	    }
-	  }, [_l((bestTopics), function(topic) {
+	  }, [_l(($store.state.bestTopics), function(topic) {
 	    return _h('best-topic-item', {
 	      attrs: {
 	        "data": topic
@@ -7674,7 +7698,7 @@
 	    attrs: {
 	      "id": "topicList"
 	    }
-	  }, [_l((topics), function(topic) {
+	  }, [_l(($store.state.topics), function(topic) {
 	    return _h('topic-item', {
 	      attrs: {
 	        "data": topic
@@ -7683,7 +7707,7 @@
 	  }), " ", _h('button', {
 	    staticClass: "loadMore sButton sAccentBg sElevation0h2",
 	    attrs: {
-	      "data-tid": loadMoreId
+	      "data-tid": $store.state.loadMoreId
 	    },
 	    on: {
 	      "click": loadMoreTopics
@@ -8529,7 +8553,8 @@
 
 	  methods: {
 	    loadForum: function loadForum() {
-	      this.$dispatch('loadForum', this.name);
+	      //this.$dispatch('loadForum', this.name);
+	      this.$store.dispatch('loadTopics', { forumName: this.name });
 	    }
 	  }
 	};

@@ -2,6 +2,38 @@ import Vars from '../vars';
 import Pantip from '../pantipInterface';
 import Helper from '../helpers';
 
+export const loadTopics = ({ dispatch, commit, state }, payload) => {
+  let _loadMoreId = payload.loadMore ? state.loadMoreId : 0;
+
+  commit('setForumName', payload.forumName);
+  commit('hideBestTopics');
+
+
+  if(!payload.loadMore){
+    $('#leftPane').addClass('wrapUp');
+    $('#leftPane .loading').addClass('active');
+    commit('resetTopics');
+
+    Pantip.loadBestTopics(payload.forumName).then(data => state.bestTopics = data);
+  }
+
+  console.log(payload.loadMore, _loadMoreId, state.loadMoreId);
+
+  Pantip.loadTopics(payload.forumName, _loadMoreId).then(data => {
+    //console.log(data);
+    $('#leftPane').removeClass('wrapUp');
+    $('#leftPane .loading').removeClass('active');
+
+    for(let topic of data['topics']){
+      topic.isActive = topic._id === state.topicId;
+      topic.isTop = topic._id === state.topTopicId;
+      commit('addToTopics', topic);
+    }
+    state.topTopicId = state.topics[0]._id;
+    state.loadMoreId = data.loadMoreID;
+  });
+}
+
 export const loadTopic = ({ dispatch, commit, state }, topicId) => {
   Helper.setRightPaneCurtains(false);
 
