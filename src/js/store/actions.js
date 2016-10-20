@@ -40,8 +40,6 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
     $('time.timeago').timeago();
 
     //load comments
-    //values[1].tid = topicId;
-    //this.$broadcast('loadCommentView', values[1], topicId === this.currentTopic);
     dispatch('loadComments', values[1], topicId === state.topicId);
 
 
