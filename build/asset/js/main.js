@@ -7201,10 +7201,7 @@
 	    //load topic
 	    values[0].content = _helpers2.default.sanitiseContent(values[0].content);
 
-	    //avatar
 	    if (values[0].avatarSrc === '') values[0].avatarSrc = 'asset/img/default_avatar.png';
-
-	    //tags
 	    if (values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
 
 	    //reactions
@@ -7243,9 +7240,7 @@
 	  var state = _ref3.state;
 	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-	  //get commentsPerPage from options
 	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
-	    //do stuff that needs commentsPerPage value in callback
 	    commit('setTotalComments', data.count);
 	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
 	    commit('resetShownComments');
@@ -7510,7 +7505,6 @@
 	      this.$store.dispatch('loadTopics', { forumName: this.$store.state.forumName });
 	    },
 	    loadMoreTopics: function loadMoreTopics() {
-	      //this.loadTopics(this.currentForum, true);
 	      this.$store.dispatch('loadTopics', { forumName: this.$store.state.forumName, loadMore: true });
 	      $('.topic.' + this.$store.state.loadMoreId).addClass('beforeMore');
 	    },
@@ -9728,7 +9722,7 @@
 	  methods: {
 	    goToPage: function goToPage(pageNumber) {
 	      this.currentPage = pageNumber;
-	      this.$dispatch('goToPage', pageNumber);
+	      //this.$ dispatch('goToPage', pageNumber);
 	    }
 	  },
 
@@ -9978,15 +9972,11 @@
 	      var _this = this;
 
 	      _pantipInterface2.default.loadMoreSubComments(this.data.subData.last, this.data.subData.cid, this.data.subData.c).then(function (res) {
-
-	        //this.data.replies.push(...res.replies);
 	        res.replies.forEach(function (element, index, array) {
 	          _this.data.replies.push(_helpers2.default.vetComment(element, true));
 	        });
 
 	        _this.data.subData.last += 5;
-	        //if(this.subData.last >= this.subData.c) this.showLoadMoreSubButton = false;
-
 	        _this.data.showLoadMoreSubButton = _this.data.subData.last < _this.data.subData.c;
 	      });
 	    }

@@ -49,7 +49,7 @@
     methods: {
       goToPage(pageNumber){
         this.currentPage = pageNumber;
-        this.$dispatch('goToPage', pageNumber);
+        //this.$ dispatch('goToPage', pageNumber);
       }
     },
 

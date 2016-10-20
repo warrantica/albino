@@ -152,7 +152,6 @@ export default {
     },
 
     loadMoreTopics(){
-      //this.loadTopics(this.currentForum, true);
       this.$store.dispatch('loadTopics', {forumName: this.$store.state.forumName, loadMore: true});
       $('.topic.' + this.$store.state.loadMoreId).addClass('beforeMore');
     },

@@ -51,10 +51,7 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
     //load topic
     values[0].content = Helper.sanitiseContent(values[0].content);
 
-    //avatar
     if(values[0].avatarSrc === '') values[0].avatarSrc = 'asset/img/default_avatar.png';
-
-    //tags
     if(values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
 
     //reactions
@@ -89,9 +86,7 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
 }
 
 export const loadComments = ({ dispatch, commit, state }, data, isRefresh = false) => {
-  //get commentsPerPage from options
   chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
-    //do stuff that needs commentsPerPage value in callback
     commit('setTotalComments', data.count);
     commit('setCommentsPerPage', parseInt(item.commentsPerPage));
     commit('resetShownComments');
