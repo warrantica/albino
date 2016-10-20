@@ -199,8 +199,8 @@ export default {
     },
 
     openInPantip(){
-      if(this.$state.store.topicId !== 0)
-        window.open(`http://pantip.com/topic/${this.$state.store.topicId}`, '_blank');
+      if(this.$store.state.topicId !== 0)
+        window.open(`http://pantip.com/topic/${this.$store.state.topicId}`, '_blank');
     },
 
     goToSettings(){
