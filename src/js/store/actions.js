@@ -112,3 +112,23 @@ export const loadComments = ({ dispatch, commit, state }, data, isRefresh = fals
 
   });
 }
+
+export const goToCommentPage = ({ dispatch, commit, state }, pageNumber) => {
+  if(pageNumber < 0 || pageNumber >= state.totalComments/state.commentsPerPage)
+    return false;
+
+  dispatch('resetShownComments');
+
+  let start = pageNumber*state.commentsPerPage;
+  state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+  state.commentPage = pageNumber;
+
+  if(state.shownComments.length === 0){
+    //this.loadMoreComments(pageNumber);
+  }
+
+  let scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
+  $('#rightPane').stop().animate({
+    scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
+  }, "0.5s");
+}

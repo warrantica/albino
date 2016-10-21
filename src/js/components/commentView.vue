@@ -95,28 +95,6 @@
           if(this.currentComments.length === 0) this.loadMoreComments(pageNumber);
         });
       }
-    },
-
-    events: {
-      'goToPage'(pageNumber){
-        if(pageNumber < 0 || pageNumber >= this.totalPages) return false;
-
-        this.currentComments = [];
-        let start = pageNumber*this.commentsPerPage;
-        this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-        this.currentPage = pageNumber;
-
-        this.$broadcast('setCurrentPage', pageNumber);
-
-        if(this.currentComments.length === 0){
-          this.loadMoreComments(pageNumber);
-        }
-
-        let scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
-        $('#rightPane').stop().animate({
-          scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
-        }, "0.5s");
-      }
     }
   }
 </script>

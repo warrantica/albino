@@ -3,9 +3,9 @@
   <i class="ic sClickable" @click="goToPage(currentPage-1)">chevron_left</i>
   <span class="page sClickable"
         v-for="page in totalPages"
-        :class="{ sAccentBg: page==currentPage, current: page==currentPage }"
-        @click="goToPage(page)">
-    {{ page+1 }}
+        :class="{ sAccentBg: page==currentPage+1, current: page==currentPage+1 }"
+        @click="goToPage(page-1)">
+    {{ page }}
   </span>
   <i class="ic sClickable" @click="goToPage(currentPage+1)">chevron_right</i>
 </div>
@@ -30,36 +30,17 @@
 
 <script>
   export default {
-    props: {
-      commentsPerPage: Number
-    },
-
-    data(){ return {
-      count: 0,
-      currentPage: 0,
-      loadedPage: 1
-    }},
-
     computed: {
       totalPages(){
-        return Math.ceil(this.count/this.commentsPerPage);
-      }
+        return Math.ceil(this.$store.state.totalComments/this.$store.state.commentsPerPage);
+      },
+
+      currentPage(){ return this.$store.state.commentPage }
     },
 
     methods: {
       goToPage(pageNumber){
-        this.currentPage = pageNumber;
-        //this.$ dispatch('goToPage', pageNumber);
-      }
-    },
-
-    events: {
-      'setCount'(count){
-        this.count = count;
-      },
-
-      'setCurrentPage'(pageNumber){
-        this.currentPage = pageNumber;
+        this.$store.dispatch('goToCommentPage', pageNumber);
       }
     }
   }

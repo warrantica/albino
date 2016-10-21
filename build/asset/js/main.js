@@ -7109,7 +7109,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.loadComments = exports.loadTopic = exports.loadTopics = undefined;
+	exports.goToCommentPage = exports.loadComments = exports.loadTopic = exports.loadTopics = undefined;
 
 	var _vars = __webpack_require__(1);
 
@@ -7264,6 +7264,29 @@
 	      state.shownComments = state.comments;
 	    }
 	  });
+	};
+
+	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref4, pageNumber) {
+	  var dispatch = _ref4.dispatch;
+	  var commit = _ref4.commit;
+	  var state = _ref4.state;
+
+	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
+
+	  dispatch('resetShownComments');
+
+	  var start = pageNumber * state.commentsPerPage;
+	  state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+	  state.commentPage = pageNumber;
+
+	  if (state.shownComments.length === 0) {
+	    //this.loadMoreComments(pageNumber);
+	  }
+
+	  var scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
+	  $('#rightPane').stop().animate({
+	    scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
+	  }, "0.5s");
 	};
 
 /***/ },
@@ -9484,28 +9507,6 @@
 	        if (_this.currentComments.length === 0) _this.loadMoreComments(pageNumber);
 	      });
 	    }
-	  },
-
-	  events: {
-	    'goToPage': function goToPage(pageNumber) {
-	      if (pageNumber < 0 || pageNumber >= this.totalPages) return false;
-
-	      this.currentComments = [];
-	      var start = pageNumber * this.commentsPerPage;
-	      this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-	      this.currentPage = pageNumber;
-
-	      this.$broadcast('setCurrentPage', pageNumber);
-
-	      if (this.currentComments.length === 0) {
-	        this.loadMoreComments(pageNumber);
-	      }
-
-	      var scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
-	      $('#rightPane').stop().animate({
-	        scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
-	      }, "0.5s");
-	    }
 	  }
 	};
 
@@ -9700,38 +9701,18 @@
 	//
 
 	exports.default = {
-	  props: {
-	    commentsPerPage: Number
-	  },
-
-	  data: function data() {
-	    return {
-	      count: 0,
-	      currentPage: 0,
-	      loadedPage: 1
-	    };
-	  },
-
-
 	  computed: {
 	    totalPages: function totalPages() {
-	      return Math.ceil(this.count / this.commentsPerPage);
+	      return Math.ceil(this.$store.state.totalComments / this.$store.state.commentsPerPage);
+	    },
+	    currentPage: function currentPage() {
+	      return this.$store.state.commentPage;
 	    }
 	  },
 
 	  methods: {
 	    goToPage: function goToPage(pageNumber) {
-	      this.currentPage = pageNumber;
-	      //this.$ dispatch('goToPage', pageNumber);
-	    }
-	  },
-
-	  events: {
-	    'setCount': function setCount(count) {
-	      this.count = count;
-	    },
-	    'setCurrentPage': function setCurrentPage(pageNumber) {
-	      this.currentPage = pageNumber;
+	      this.$store.dispatch('goToCommentPage', pageNumber);
 	    }
 	  }
 	};
@@ -9760,14 +9741,14 @@
 	    return _h('span', {
 	      staticClass: "page sClickable",
 	      class: {
-	        sAccentBg: page == currentPage, current: page == currentPage
+	        sAccentBg: page == currentPage + 1, current: page == currentPage + 1
 	      },
 	      on: {
 	        "click": function($event) {
-	          goToPage(page)
+	          goToPage(page - 1)
 	        }
 	      }
-	    }, ["\r\n    " + _s(page + 1) + "\r\n  "])
+	    }, ["\r\n    " + _s(page) + "\r\n  "])
 	  }), " ", _h('i', {
 	    staticClass: "ic sClickable",
 	    on: {
