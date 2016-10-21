@@ -7957,6 +7957,7 @@
 	    commit('setTopicTitle', values[0]['title']);
 	    commit('setTopicId', topicId);
 	    state.loadedPage = 1;
+	    state.commentPage = 0;
 
 	    //load topic
 	    values[0].content = _helpers2.default.sanitiseContent(values[0].content);
