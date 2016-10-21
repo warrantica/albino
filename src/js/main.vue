@@ -73,7 +73,7 @@
       <div id="bellyHead" class="sPrimaryBg sElevation1">
         <div class="bellyTitle" v-text="$store.state.topicTitle"></div>
         <div id="bellyToolbar">
-          <div class="refreshButtonContainer" @click.native="refreshTopic">
+          <div class="refreshButtonContainer" @click="refreshTopic">
             <toolbar-icon icon="refresh" label="รีเฟรชกระทู้"></toolbar-icon>
             <div class="refreshBadge sAccentBg" v-show="$store.state.unreadComments">
               {{ $store.state.unreadComments }}
@@ -158,7 +158,7 @@ export default {
     },
 
     refreshTopic(){
-      if(this.$store.state.topicId !== 0){
+      if(this.topicId !== 0){
         let scroll = document.getElementById('rightPane').scrollTop;
 
         this.$store.dispatch('loadTopic', this.topicId).then(value =>{

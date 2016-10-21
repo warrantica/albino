@@ -7135,7 +7135,7 @@
 	    refreshTopic: function refreshTopic() {
 	      var _this = this;
 
-	      if (this.$store.state.topicId !== 0) {
+	      if (this.topicId !== 0) {
 	        (function () {
 	          var scroll = document.getElementById('rightPane').scrollTop;
 
@@ -7533,10 +7533,8 @@
 	    }
 	  }, [_h('div', {
 	    staticClass: "refreshButtonContainer",
-	    nativeOn: {
-	      "click": function($event) {
-	        refreshTopic($event)
-	      }
+	    on: {
+	      "click": refreshTopic
 	    }
 	  }, [_h('toolbar-icon', {
 	    attrs: {
