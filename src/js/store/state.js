@@ -7,6 +7,8 @@ export const state = {
   loadMoreId: 0,
   topTopicId: 0,
 
+  pageName: '',
+
   searchQuery: '',
   searchQueryString: '',
   searchResults: [],

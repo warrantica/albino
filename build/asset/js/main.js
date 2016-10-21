@@ -7044,6 +7044,8 @@
 	  loadMoreId: 0,
 	  topTopicId: 0,
 
+	  pageName: '',
+
 	  searchQuery: '',
 	  searchQueryString: '',
 	  searchResults: [],
@@ -7113,7 +7115,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.goToCommentPage = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.search = exports.loadTopics = undefined;
+	exports.goToCommentPage = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = undefined;
 
 	var _vars = __webpack_require__(1);
 
@@ -7233,10 +7235,22 @@
 	  });
 	};
 
-	var loadTopic = exports.loadTopic = function loadTopic(_ref3, topicId) {
+	var loadPage = exports.loadPage = function loadPage(_ref3, pageName) {
 	  var dispatch = _ref3.dispatch;
 	  var commit = _ref3.commit;
 	  var state = _ref3.state;
+
+	  commit('setTopicTitle', '');
+	  commit('setTopicId', 0);
+	  window.clearInterval(state.topicRefreshIntervalId);
+	  state.unreadComments = 0;
+	  state.pageName = pageName;
+	};
+
+	var loadTopic = exports.loadTopic = function loadTopic(_ref4, topicId) {
+	  var dispatch = _ref4.dispatch;
+	  var commit = _ref4.commit;
+	  var state = _ref4.state;
 
 	  _helpers2.default.setRightPaneCurtains(false);
 
@@ -7285,20 +7299,20 @@
 	  });
 	};
 
-	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref4, url) {
-	  var dispatch = _ref4.dispatch;
-	  var commit = _ref4.commit;
-	  var state = _ref4.state;
+	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref5, url) {
+	  var dispatch = _ref5.dispatch;
+	  var commit = _ref5.commit;
+	  var state = _ref5.state;
 
 	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
 	    dispatch('loadTopic', id);
 	  });
 	};
 
-	var loadComments = exports.loadComments = function loadComments(_ref5, data) {
-	  var dispatch = _ref5.dispatch;
-	  var commit = _ref5.commit;
-	  var state = _ref5.state;
+	var loadComments = exports.loadComments = function loadComments(_ref6, data) {
+	  var dispatch = _ref6.dispatch;
+	  var commit = _ref6.commit;
+	  var state = _ref6.state;
 	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
@@ -7327,10 +7341,10 @@
 	  });
 	};
 
-	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref6, pageNumber) {
-	  var dispatch = _ref6.dispatch;
-	  var commit = _ref6.commit;
-	  var state = _ref6.state;
+	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref7, pageNumber) {
+	  var dispatch = _ref7.dispatch;
+	  var commit = _ref7.commit;
+	  var state = _ref7.state;
 
 	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
 
@@ -7502,11 +7516,7 @@
 	      }
 	    },
 	    loadPage: function loadPage(name) {
-	      this.$store.state.topicTitle = '';
-	      this.topicId = 0;
-	      window.clearInterval(this.$store.state.topicRefreshIntervalId);
-	      this.$store.state.unreadComments = 0;
-	      this.currentPage = name;
+	      this.$store.dispatch('loadPage', name);
 	    },
 	    openInPantip: function openInPantip() {
 	      if (this.$store.state.topicId !== 0) window.open('http://pantip.com/topic/' + this.$store.state.topicId, '_blank');
@@ -7528,9 +7538,12 @@
 	    }, function (item) {
 	      _this2.$store.dispatch('loadTopics', { forumName: item.defaultForum });
 	      _helpers2.default.applyTheme(item.theme, item.fontSize, item.fontFace);
+	      _this2.$store.dispatch('loadPage', 'tips');
 	    });
 	  }
 	}; //
+	//
+	//
 	//
 	//
 	//
@@ -7904,11 +7917,11 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (unreadComments),
-	      expression: "unreadComments"
+	      value: ($store.state.unreadComments),
+	      expression: "$store.state.unreadComments"
 	    }],
 	    staticClass: "refreshBadge sAccentBg"
-	  }, [_s(unreadComments)])]), " ", _h('toolbar-icon', {
+	  }, ["\n            " + _s($store.state.unreadComments) + "\n          "])]), " ", _h('toolbar-icon', {
 	    attrs: {
 	      "icon": "open_in_new",
 	      "label": "เปิดใน Pantip.com"
@@ -7937,7 +7950,7 @@
 	    attrs: {
 	      "data": $store.state.topicData
 	    }
-	  }), " ", _h(currentPage, {
+	  }), " ", _h($store.state.pageName, {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",

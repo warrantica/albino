@@ -75,7 +75,9 @@
         <div id="bellyToolbar">
           <div class="refreshButtonContainer" @click.native="refreshTopic">
             <toolbar-icon icon="refresh" label="รีเฟรชกระทู้"></toolbar-icon>
-            <div class="refreshBadge sAccentBg" v-show="unreadComments">{{ unreadComments }}</div>
+            <div class="refreshBadge sAccentBg" v-show="$store.state.unreadComments">
+              {{ $store.state.unreadComments }}
+            </div>
           </div>
           <toolbar-icon icon="open_in_new" label="เปิดใน Pantip.com" @click.native="openInPantip"></toolbar-icon>
         </div>
@@ -84,7 +86,7 @@
         <div class="loading sAccentText"><i class="ic">hourglass_full</i></div>
         <div id="topicView" class="sForeBg sElevation1">
           <topic-view :data="$store.state.topicData" v-show="topicId != 0"></topic-view>
-          <component :is="currentPage" v-show="topicId == 0"></component>
+          <component :is="$store.state.pageName" v-show="topicId == 0"></component>
         </div>
         <comment-view v-show="topicId"></comment-view>
       </div>
@@ -166,11 +168,7 @@ export default {
     },
 
     loadPage(name){
-      this.$store.state.topicTitle = '';
-      this.topicId = 0;
-      window.clearInterval(this.$store.state.topicRefreshIntervalId);
-      this.$store.state.unreadComments = 0;
-      this.currentPage = name;
+      this.$store.dispatch('loadPage', name);
     },
 
     openInPantip(){
@@ -193,6 +191,7 @@ export default {
     }, item => {
       this.$store.dispatch('loadTopics', {forumName: item.defaultForum});
       Helper.applyTheme(item.theme, item.fontSize, item.fontFace);
+      this.$store.dispatch('loadPage', 'tips');
     });
   }
 }

@@ -69,6 +69,14 @@ export const search = ({ dispatch, commit, state }, payload) => {
   });
 }
 
+export const loadPage = ({ dispatch, commit, state }, pageName) => {
+  commit('setTopicTitle', '');
+  commit('setTopicId', 0);
+  window.clearInterval(state.topicRefreshIntervalId);
+  state.unreadComments = 0;
+  state.pageName = pageName;
+}
+
 export const loadTopic = ({ dispatch, commit, state }, topicId) => {
   Helper.setRightPaneCurtains(false);
 
