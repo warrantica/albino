@@ -46,25 +46,33 @@
 
 	'use strict';
 
-	var _vars = __webpack_require__(1);
+	var _vue = __webpack_require__(1);
+
+	var _vue2 = _interopRequireDefault(_vue);
+
+	var _vuex = __webpack_require__(3);
+
+	var _vuex2 = _interopRequireDefault(_vuex);
+
+	var _vars = __webpack_require__(4);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
-	var _pantipInterface = __webpack_require__(2);
+	var _pantipInterface = __webpack_require__(5);
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
-	var _helpers = __webpack_require__(3);
+	var _helpers = __webpack_require__(6);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
-	var _store = __webpack_require__(4);
-
-	var _store2 = _interopRequireDefault(_store);
-
-	var _main = __webpack_require__(10);
+	var _main = __webpack_require__(7);
 
 	var _main2 = _interopRequireDefault(_main);
+
+	var _store = __webpack_require__(10);
+
+	var _store2 = _interopRequireDefault(_store);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -72,22 +80,31 @@
 	// Require stuff
 	//============================================================================
 
-	var Vue = __webpack_require__(5);
-	var Vuex = __webpack_require__(7);
+	_vue2.default.use(_vuex2.default);
+	_vue2.default.config.devtools = false;
 
-	Vue.use(Vuex);
-
-	Vue.config.devtools = false;
+	_vue2.default.component('toolbarIcon', __webpack_require__(13));
+	_vue2.default.component('forumSelectItem', __webpack_require__(20));
+	_vue2.default.component('bestTopicItem', __webpack_require__(25));
+	_vue2.default.component('topicItem', __webpack_require__(30));
+	_vue2.default.component('searchResultItem', __webpack_require__(33));
+	_vue2.default.component('topicView', __webpack_require__(36));
+	_vue2.default.component('commentView', __webpack_require__(41));
+	_vue2.default.component('pagination', __webpack_require__(46));
+	_vue2.default.component('commentItem', __webpack_require__(51));
+	_vue2.default.component('reactionView', __webpack_require__(56));
+	_vue2.default.component('tips', __webpack_require__(61));
+	_vue2.default.component('about', __webpack_require__(65));
 
 	//============================================================================
 	//Event binding stuff
 	//============================================================================
 
-	$('#rightPane').on('click', '.spoil-btn', function (e) {
+	$('body').on('click', '.spoil-btn', function (e) {
 	  $(this).next().toggle();
 	});
 
-	$('#fab').on('click', '.topContainer', function (e) {
+	$('body').on('click', '#fab .topContainer', function (e) {
 	  var scrollTo = 0;
 	  var previousTop = 0;
 	  $('#rightPane').find('.comment:not(.sub)').each(function (i) {
@@ -104,7 +121,7 @@
 	  }
 	});
 
-	$('#fab').on('click', '.bottomContainer', function (e) {
+	$('body').on('click', '#fab .bottomContainer', function (e) {
 	  var scrollTo = 0;
 	  $('#rightPane').find('.comment:not(.sub)').each(function (i) {
 	    if (this.getBoundingClientRect().top > 64) {
@@ -119,7 +136,7 @@
 	  }
 	});
 
-	$('#rightPane').on('click', '.img-in-post', function (e) {
+	$('body').on('click', '.img-in-post', function (e) {
 	  $(this).addClass('inLightBox');
 	  $('#lightBox').addClass('active');
 
@@ -140,7 +157,7 @@
 	  }, 50);
 	});
 
-	$('#lightBox').on('click', function (e) {
+	$('body').on('click', '#lightBox', function (e) {
 	  $(this).removeClass('active');
 	  window.setTimeout(function () {
 	    $('#lightBox img').removeClass('active').removeAttr('style').removeAttr('src');
@@ -152,20 +169,7 @@
 	// Vue Stuff
 	//============================================================================
 
-	Vue.component('toolbarIcon', __webpack_require__(13));
-	Vue.component('forumSelectItem', __webpack_require__(20));
-	Vue.component('bestTopicItem', __webpack_require__(25));
-	Vue.component('topicItem', __webpack_require__(30));
-	Vue.component('searchResultItem', __webpack_require__(33));
-	Vue.component('topicView', __webpack_require__(36));
-	Vue.component('commentView', __webpack_require__(41));
-	Vue.component('pagination', __webpack_require__(46));
-	Vue.component('commentItem', __webpack_require__(51));
-	Vue.component('reactionView', __webpack_require__(56));
-	Vue.component('tips', __webpack_require__(61));
-	Vue.component('about', __webpack_require__(65));
-
-	var vm = new Vue({
+	var vm = new _vue2.default({
 	  store: _store2.default,
 	  render: function render(h) {
 	    return h(_main2.default);
@@ -185,510 +189,6 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = {
-	  forumInfo: [{ name: 'food', label: 'ก้นครัว' }, { name: 'chalermkrung', label: 'เฉลิมกรุง' }, { name: 'blueplanet', label: 'บลูแพลนเน็ต' }, { name: 'all', label: 'รวมมิตร' }, { name: 'siam', label: 'สยามสแควร์' }, { name: 'greenzone', label: 'กรีนโซน' }, { name: 'chalermthai', label: 'เฉลิมไทย' }, { name: 'tvshow', label: 'บางขุนพรหม' }, { name: 'ratchada', label: 'รัชดา' }, { name: 'lumpini', label: 'สวนลุมพินี' }, { name: 'camera', label: 'กล้อง' }, { name: 'family', label: 'ชานเรือน' }, { name: 'bangrak', label: 'บางรัก' }, { name: 'rajdumnern', label: 'ราชดำเนิน' }, { name: 'sinthorn', label: 'สินธร' }, { name: 'cartoon', label: 'การ์ตูน' }, { name: 'home', label: 'ชายคา' }, { name: 'horoscope', label: 'พรหมชาติ' }, { name: 'isolate', label: 'ไร้สังกัด' }, { name: 'silom', label: 'สีลม' }, { name: 'gallery', label: 'แกลเลอรี่' }, { name: 'siliconvalley', label: 'ซิลิคอนวัลเลย์' }, { name: 'pantip', label: 'พันทิป' }, { name: 'social', label: 'ศาลาประชาคม' }, { name: 'wahkor', label: 'หว้ากอ' }, { name: 'klaibann', label: 'ไกลบ้าน' }, { name: 'beauty', label: 'โต๊ะเครื่องแป้ง' }, { name: 'region', label: 'ภูมิภาค' }, { name: 'religious', label: 'ศาสนา' }, { name: 'library', label: 'ห้องสมุด' }, { name: 'jatujak', label: 'จตุจักร' }, { name: 'writer', label: 'ถนนนักเขียน' }, { name: 'mbk', label: 'มาบุญครอง' }, { name: 'supachalasai', label: 'ศุภชลาศัย' }, { name: 'art', label: 'หอศิลป์' }],
-
-	  themes: [{
-	    name: 'default', label: 'เผือก (default)',
-	    primary: '#9C27B0', accent: '#F01F41', base: 'light',
-	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
-	  }, {
-	    name: 'pantip', label: 'ต้นตำรับ',
-	    primary: '#38355c', accent: '#f9d135', base: 'pantip',
-	    textOnPrimary: '#ffffff', textOnAccent: '#222244'
-	  }, {
-	    name: 'zuck', label: 'ซักเกอร์เบิร์ก',
-	    primary: '#3b5998', accent: '#f7412d', base: 'light',
-	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
-	  }, {
-	    name: 'sanook', label: 'สนุก',
-	    primary: '#ff1818', accent: '#f9babd', base: 'light',
-	    textOnPrimary: '#ffffff', textOnAccent: '#333333'
-	  }, {
-	    name: 'thaiair', label: 'รักคุณเท่าฟ้า',
-	    primary: '#3e075b', accent: '#C4007C', base: 'light',
-	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
-	  }, {
-	    name: 'cupertino', label: 'คูเปอร์ติโน่',
-	    primary: '#d8d8d8', accent: '#0088cc', base: 'light',
-	    textOnPrimary: '#333333', textOnAccent: '#ffffff'
-	  }, {
-	    name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
-	    primary: '#0a1128', accent: '#1282a2', base: 'dark',
-	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
-	  }, {
-	    name: 'snyder', label: 'สไนเดอร์',
-	    primary: '#314d62', accent: '#a8d1c3', base: 'dark',
-	    textOnPrimary: '#ffffff', textOnAccent: '#333333'
-	  }, {
-	    name: 'squirtle', label: 'เซนิกาเมะ',
-	    primary: '#76bbc0', accent: '#a76a57', base: 'light',
-	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
-	  }, {
-	    name: 'stark', label: 'สตาร์ก',
-	    primary: '#dc1405', accent: '#efce0b', base: 'light',
-	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
-	  }, {
-	    name: 'andromeda', label: 'แอนโดรเมด้า',
-	    primary: '#e65b8b', accent: '#11984f', base: 'light',
-	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
-	  }, {
-	    name: 'plain', label: 'เส้นเล็กน้ำใส',
-	    primary: '#ffffff', accent: '#ffffff', base: 'light',
-	    textOnPrimary: '#333333', textOnAccent: '#333333'
-	  }],
-
-	  bases: [{
-	    name: 'light', brightness: 'light',
-	    fore: '#ffffff', back: '#eaeaea', hover: '#dedede',
-	    text: '#212121', subtitle: '#888'
-	  }, {
-	    name: 'dark', brightness: 'dark',
-	    fore: '#303030', back: '#212121', hover: '#212121',
-	    text: '#ffffff', subtitle: '#b3b3b3'
-	  }, {
-	    name: 'pantip', brightness: 'dark',
-	    fore: '#222244', back: '#38355c', hover: '#1b1b37',
-	    text: '#dbdbdb', subtitle: '#a6a3c7'
-	  }],
-
-	  getTheme: function getTheme(themeName) {
-	    return this.themes.find(function (theme) {
-	      return theme.name === themeName;
-	    });
-	  },
-	  getBase: function getBase(baseName) {
-	    return this.bases.find(function (base) {
-	      return base.name === baseName;
-	    });
-	  },
-
-
-	  fontSizes: [{ label: 'จิ๋ว', value: '18' }, { label: 'เล็ก', value: '22' }, { label: 'กลาง', value: '26' }, { label: 'ใหญ่', value: '32' }, { label: 'ยักษ์', value: '48' }],
-
-	  fontFaces: [{ label: 'สารบัญ', value: 'TH Sarabun New' }, { label: 'คณิต', value: 'Kanit' }, { label: 'ทวิราช', value: 'Taviraj' }],
-
-	  getFontSize: function getFontSize(sizeLabel) {
-	    return this.fontSizes.find(function (size) {
-	      return size.label === sizeLabel;
-	    });
-	  },
-	  getFontFace: function getFontFace(fontName) {
-	    return this.fontFaces.find(function (font) {
-	      return font.label === fontName;
-	    });
-	  }
-	};
-
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = {
-	  loadBestTopics: function loadBestTopics(forumName) {
-	    if (forumName === 'all') forumName = '';
-	    var loadUrl = 'http://m.pantip.com/forum/' + forumName;
-
-	    return new Promise(function (resolve, reject) {
-	      chrome.cookies.set({
-	        url: 'http://m.pantip.com',
-	        domain: '.pantip.com',
-	        name: 'mobilerun',
-	        value: '1'
-	      }, function () {
-	        $.ajax({
-	          url: loadUrl,
-	          dataType: 'text',
-	          success: function success(data) {
-	            var bestTopics = new Array();
-
-	            data = data.replace(/^[^]*<!-- .columns -->([^]*)<p>[^]*$/, '$1');
-	            //console.log(data);
-
-	            $(data).find('.m-thumb').each(function (i) {
-	              var item = {};
-	              item['_id'] = $(this).find('a').attr('href').substr(7);
-
-	              item['disp_topic'] = $(this).find('.subject').text().trim();
-	              //Note: "author" is misspelled in Pantip's source code
-	              item['author'] = $(this).find('.auther').text().trim();
-
-	              var img = $(this).find('img');
-	              item['cover_img'] = img.length ? img.attr('src') : '';
-
-	              bestTopics.push(item);
-	            });
-	            chrome.cookies.remove({
-	              url: 'http://m.pantip.com',
-	              name: 'mobilerun'
-	            }, function () {
-	              return resolve(bestTopics);
-	            });
-	          },
-	          error: function error() {
-	            chrome.cookies.remove({
-	              url: 'http://m.pantip.com',
-	              name: 'mobilerun'
-	            }, function () {
-	              return console.log('loadTopicList ajax error.');
-	            });
-	          }
-	        });
-	      });
-	    });
-	  },
-	  loadTopics: function loadTopics(forumName) {
-	    var loadMoreID = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-	    if (forumName === 'all') forumName = '';
-	    var loadUrl = 'http://pantip.com/forum/topic/ajax_json_all_topic_info_loadmore?t=' + Math.random();
-	    return new Promise(function (resolve, reject) {
-	      $.ajax({
-	        method: 'post',
-	        url: loadUrl,
-	        data: {
-	          last_id_current_page: loadMoreID,
-	          dataSend: { room: forumName, topic_type: { type: 0, default_type: 1 } },
-	          thumbnailview: false,
-	          current_page: 2
-	        },
-	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-	        dataType: 'text',
-	        success: function success(data) {
-	          data = JSON.parse(data).item;
-	          var res = { topics: [] };
-	          res.topics = data.topic;
-	          res.loadMoreID = data.last_id_current_page;
-	          resolve(res);
-	        },
-	        error: function error() {
-	          console.log('loadTopicList ajax error.');
-	        }
-	      });
-	    });
-	  },
-	  search: function search(query) {
-	    var f = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-	    var queryString = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
-	    return new Promise(function (resolve, reject) {
-	      if (query === '') reject('Empty search string');
-
-	      var url = 'http://search.pantip.com/ss?q=' + query;
-	      if (queryString !== '') url += '&f=' + f + '&y=' + queryString;
-
-	      $.ajax({
-	        type: 'GET',
-	        url: url,
-	        success: function success(data) {
-	          var queryString = data.replace(/^[^]*&y=([^]*?)"[^]*$/, '$1');
-	          var resData = data.replace(/^[^]*(<td style="bo[^]*?<\/td>)[^]*$/, '$1');
-	          var htmlLines = $(resData).find('p')[0].innerHTML.split('\n');
-
-	          var res = [];
-
-	          for (var i = 0; i < htmlLines.length; ++i) {
-	            if (htmlLines[i].endsWith(':&nbsp;')) {
-	              var comment_num = '0';
-	              var content = '';
-	              var author = '';
-
-	              var topicHtml = $(htmlLines[i + 1]);
-	              var disp_topic = topicHtml.text().trim();
-	              var topic_link = topicHtml.first().attr('href');
-
-	              if (htmlLines[i + 2].startsWith('<a')) {
-	                comment_num = $(htmlLines[i + 2]).text().substr(1);
-	                content = htmlLines[i + 3];
-	                author = htmlLines[i + 4];
-	              } else {
-	                content = htmlLines[i + 2];
-	                author = htmlLines[i + 3];
-	              }
-	              content = $(content).html();
-	              author = author.replace(/^[^]*<strong>([^]*)<\/strong>[^]*$/, '$1');
-	              res.push({ disp_topic: disp_topic, topic_link: topic_link, comment_num: comment_num, content: content, author: author });
-	            }
-	          }
-
-	          resolve({
-	            results: res,
-	            queryString: queryString
-	          });
-	        }
-	      });
-	    });
-	  },
-	  getTopicIdFromSearch: function getTopicIdFromSearch(url) {
-	    return new Promise(function (resolve, reject) {
-	      var res = '';
-	      var xhr = new XMLHttpRequest();
-	      xhr.open('GET', 'http://search.pantip.com' + url, true);
-
-	      xhr.onreadystatechange = function () {
-	        if (xhr.readyState == 4 && xhr.status == 200) {
-	          res = xhr.responseURL.split('/');
-	          resolve(res[res.length - 1]);
-	        } else if (xhr.readyState == 4) {
-	          reject('Error: getTopicIdFromSearch XHR failed');
-	        }
-	      };
-	      xhr.send(null);
-	    });
-	  },
-	  loadTopic: function loadTopic(topicID) {
-	    return new Promise(function (resolve, reject) {
-	      $.ajax({
-	        url: 'http://www.pantip.com/topic/' + topicID,
-	        dataType: 'text',
-	        success: function success(data) {
-
-	          data = data.replace(/src="\/.*?"/g, 'src=""');
-	          var html = $(data).find('.main-post-inner')[0];
-	          var res = {};
-
-	          res['author'] = $(html).find('.display-post-name').text();
-	          res['title'] = $(html).find('.display-post-title').text();
-	          res['content'] = $(html).find('.display-post-story').html();
-	          res['utime'] = $(html).find('.display-post-timestamp abbr').attr('data-utime');
-	          res['timeFull'] = $(html).find('.display-post-timestamp abbr').attr('title');
-	          res['avatarSrc'] = $(html).find('.display-post-avatar img').attr('src');
-
-	          //tags
-	          res['tags'] = [];
-	          $(html).find('.tag-item').each(function (i) {
-	            res['tags'][i] = $(this).text();
-	          });
-
-	          //reactions
-	          res['voteCount'] = parseInt($(html).find('.like-score').text());
-	          res['emotionCount'] = {
-	            sum: parseInt($(html).find('.emotion-score').text()),
-	            like: parseInt($(html).find('.emotion-choice-score:eq(1)').text()),
-	            laugh: parseInt($(html).find('.emotion-choice-score:eq(2)').text()),
-	            love: parseInt($(html).find('.emotion-choice-score:eq(3)').text()),
-	            impress: parseInt($(html).find('.emotion-choice-score:eq(4)').text()),
-	            scary: parseInt($(html).find('.emotion-choice-score:eq(5)').text()),
-	            surprised: parseInt($(html).find('.emotion-choice-score:eq(6)').text())
-	          };
-
-	          //for sorting
-	          res['emotions'] = [{ name: "like", count: res['emotionCount']['like'] }, { name: "laugh", count: res['emotionCount']['laugh'] }, { name: "love", count: res['emotionCount']['love'] }, { name: "impress", count: res['emotionCount']['impress'] }, { name: "scary", count: res['emotionCount']['scary'] }, { name: "surprised", count: res['emotionCount']['surprised'] }];
-	          resolve(res);
-	        },
-	        error: function error() {
-	          console.log('loadTopicList ajax error.');
-	        }
-	      });
-	    });
-	  },
-	  loadComments: function loadComments(topicID) {
-	    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-	    return new Promise(function (resolve, reject) {
-	      var url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=1&time=' + Math.random() + '&param=';
-	      if (page !== 0) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
-
-	      $.ajax({
-	        type: 'GET',
-	        cache: false,
-	        url: url,
-	        dataType: 'text',
-	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-	        success: function success(data) {
-	          var dataJSON = JSON.parse(data);
-	          var res = {};
-	          if (dataJSON['count'] !== undefined) {
-	            res['count'] = dataJSON['count'];
-	            res['comments'] = dataJSON['comments'];
-	          } else {
-	            res['count'] = 0;
-	            res['comments'] = [];
-	          }
-	          resolve(res);
-	        },
-	        error: function error() {
-	          console.log('loadComments ajax error.');
-	        }
-	      });
-	    });
-	  },
-	  loadMoreSubComments: function loadMoreSubComments(last, cid, c) {
-	    return new Promise(function (resolve, reject) {
-	      $.ajax({
-	        type: 'GET',
-	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-	        url: 'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
-	        success: function success(data) {
-	          var dataJSON = JSON.parse(data);
-	          resolve(dataJSON);
-	        }
-	      });
-	    });
-	  }
-	};
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _vars = __webpack_require__(1);
-
-	var _vars2 = _interopRequireDefault(_vars);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = {
-	  applyTheme: function applyTheme(themeName, fontSize, fontFace) {
-	    var elementStyle = document.documentElement.style;
-
-	    //apply colors
-	    var theme = _vars2.default.getTheme(themeName);
-	    var base = _vars2.default.getBase(theme.base);
-
-	    var border = base.brightness === 'light' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)';
-
-	    elementStyle.setProperty('--primary', theme.primary);
-	    elementStyle.setProperty('--accent', theme.accent);
-	    elementStyle.setProperty('--text-on-primary', theme.textOnPrimary);
-	    elementStyle.setProperty('--text-on-accent', theme.textOnAccent);
-
-	    elementStyle.setProperty('--text', base.text);
-	    elementStyle.setProperty('--subtitle', base.subtitle);
-	    elementStyle.setProperty('--fore', base.fore);
-	    elementStyle.setProperty('--back', base.back);
-	    elementStyle.setProperty('--hover', base.hover);
-	    elementStyle.setProperty('--border', border);
-
-	    //apply font
-	    if (fontFace) elementStyle.setProperty('--font-face', fontFace);
-	    if (fontSize) elementStyle.setProperty('--font-size', fontSize + 'px');
-	  },
-	  convertTimeFormatToISO: function convertTimeFormatToISO(utime) {
-	    //utime format: mm/dd/yyyy hh:mm:ss
-	    var y = utime.substr(6, 4);
-	    var m = utime.substr(0, 2);
-	    var d = utime.substr(3, 2);
-	    var t = utime.substr(11, 8);
-	    return y + '-' + m + '-' + d + 'T' + t;
-	  },
-	  sanitiseContent: function sanitiseContent(html) {
-	    var content = $('<div>').append(html);
-	    //no eval for you!
-	    $(content).find('script').remove();
-	    $(content).find('.review-section').remove();
-	    $(content).find('.edit-history').remove();
-	    //no polls for you!
-	    $(content).find('.q-poll').remove();
-	    $(content).find('.button-container').remove();
-	    return content.html();
-	  },
-	  setRightPaneCurtains: function setRightPaneCurtains(showContent) {
-	    if (showContent) {
-	      $('#rightPane').removeClass('wrapUp');
-	      $('#rightPane .loading').removeClass('active');
-	    } else {
-	      $('#rightPane').addClass('wrapUp');
-	      $('#rightPane .loading').addClass('active');
-	    }
-	  },
-	  showFAB: function showFAB() {
-	    window.setTimeout(function () {
-	      var rightPane = document.getElementById('rightPane');
-	      if (rightPane.offsetHeight < rightPane.scrollHeight) {
-	        $('#fab').addClass('enable');
-	      } else {
-	        $('#fab').removeClass('enable');
-	      }
-	    }, 50);
-	  },
-	  vetComment: function vetComment(comment) {
-	    var isSub = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-	    comment.commentNumber = comment.comment_no;
-	    if (isSub) {
-	      comment.commentNumber += '-' + comment.reply_no;
-	    } else if (comment.reply_count > comment.replies.length) {
-	      comment.subData = {
-	        last: comment.replies.length,
-	        cid: comment._id,
-	        c: comment.reply_count
-	      };
-
-	      comment.showLoadMoreSubButton = true;
-	    }
-
-	    //avatar
-	    if (comment.user.avatar.medium.substr(-9, 9) === '38x38.png') {
-	      //unknown avatar
-	      comment.user.avatar.medium = 'asset/img/default_avatar.png';
-	    }
-
-	    //reactions
-	    comment.reactionData = {
-	      voteSum: comment.good_bad_vote.point,
-	      emotionSum: comment.emotion.sum,
-	      emotionCounts: {
-	        impress: comment.emotion.impress.count,
-	        laugh: comment.emotion.laugh.count,
-	        like: comment.emotion.like.count,
-	        love: comment.emotion.love.count,
-	        scary: comment.emotion.scary.count,
-	        surprised: comment.emotion.surprised.count
-	      },
-	      emotionSortable: [{ name: "impress", count: comment.emotion.impress.count }, { name: "laugh", count: comment.emotion.laugh.count }, { name: "like", count: comment.emotion.like.count }, { name: "love", count: comment.emotion.love.count }, { name: "scary", count: comment.emotion.scary.count }, { name: "surprised", count: comment.emotion.surprised.count }]
-	    };
-
-	    return comment;
-	  }
-	};
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _vue = __webpack_require__(5);
-
-	var _vue2 = _interopRequireDefault(_vue);
-
-	var _vuex = __webpack_require__(7);
-
-	var _vuex2 = _interopRequireDefault(_vuex);
-
-	var _state = __webpack_require__(8);
-
-	var _actions = __webpack_require__(9);
-
-	var actions = _interopRequireWildcard(_actions);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	_vue2.default.use(_vuex2.default);
-
-	exports.default = new _vuex2.default.Store({
-	  state: _state.state,
-	  mutations: _state.mutations,
-	  actions: actions
-	});
-
-/***/ },
-/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/*!
@@ -6305,10 +5805,10 @@
 
 	module.exports = Vue$2;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 6 */
+/* 2 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -6494,7 +5994,7 @@
 
 
 /***/ },
-/* 7 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7027,354 +6527,484 @@
 	})));
 
 /***/ },
-/* 8 */
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var state = exports.state = {
-	  showBestTopics: false,
+	module.exports = {
+	  forumInfo: [{ name: 'food', label: 'ก้นครัว' }, { name: 'chalermkrung', label: 'เฉลิมกรุง' }, { name: 'blueplanet', label: 'บลูแพลนเน็ต' }, { name: 'all', label: 'รวมมิตร' }, { name: 'siam', label: 'สยามสแควร์' }, { name: 'greenzone', label: 'กรีนโซน' }, { name: 'chalermthai', label: 'เฉลิมไทย' }, { name: 'tvshow', label: 'บางขุนพรหม' }, { name: 'ratchada', label: 'รัชดา' }, { name: 'lumpini', label: 'สวนลุมพินี' }, { name: 'camera', label: 'กล้อง' }, { name: 'family', label: 'ชานเรือน' }, { name: 'bangrak', label: 'บางรัก' }, { name: 'rajdumnern', label: 'ราชดำเนิน' }, { name: 'sinthorn', label: 'สินธร' }, { name: 'cartoon', label: 'การ์ตูน' }, { name: 'home', label: 'ชายคา' }, { name: 'horoscope', label: 'พรหมชาติ' }, { name: 'isolate', label: 'ไร้สังกัด' }, { name: 'silom', label: 'สีลม' }, { name: 'gallery', label: 'แกลเลอรี่' }, { name: 'siliconvalley', label: 'ซิลิคอนวัลเลย์' }, { name: 'pantip', label: 'พันทิป' }, { name: 'social', label: 'ศาลาประชาคม' }, { name: 'wahkor', label: 'หว้ากอ' }, { name: 'klaibann', label: 'ไกลบ้าน' }, { name: 'beauty', label: 'โต๊ะเครื่องแป้ง' }, { name: 'region', label: 'ภูมิภาค' }, { name: 'religious', label: 'ศาสนา' }, { name: 'library', label: 'ห้องสมุด' }, { name: 'jatujak', label: 'จตุจักร' }, { name: 'writer', label: 'ถนนนักเขียน' }, { name: 'mbk', label: 'มาบุญครอง' }, { name: 'supachalasai', label: 'ศุภชลาศัย' }, { name: 'art', label: 'หอศิลป์' }],
 
-	  forumName: '',
-	  topics: [],
-	  bestTopics: [],
-	  loadMoreId: 0,
-	  topTopicId: 0,
+	  themes: [{
+	    name: 'default', label: 'เผือก (default)',
+	    primary: '#9C27B0', accent: '#F01F41', base: 'light',
+	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
+	  }, {
+	    name: 'pantip', label: 'ต้นตำรับ',
+	    primary: '#38355c', accent: '#f9d135', base: 'pantip',
+	    textOnPrimary: '#ffffff', textOnAccent: '#222244'
+	  }, {
+	    name: 'zuck', label: 'ซักเกอร์เบิร์ก',
+	    primary: '#3b5998', accent: '#f7412d', base: 'light',
+	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
+	  }, {
+	    name: 'sanook', label: 'สนุก',
+	    primary: '#ff1818', accent: '#f9babd', base: 'light',
+	    textOnPrimary: '#ffffff', textOnAccent: '#333333'
+	  }, {
+	    name: 'thaiair', label: 'รักคุณเท่าฟ้า',
+	    primary: '#3e075b', accent: '#C4007C', base: 'light',
+	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
+	  }, {
+	    name: 'cupertino', label: 'คูเปอร์ติโน่',
+	    primary: '#d8d8d8', accent: '#0088cc', base: 'light',
+	    textOnPrimary: '#333333', textOnAccent: '#ffffff'
+	  }, {
+	    name: 'space', label: 'เดือนช่วงดวงเด่นฟ้า ดาดาว',
+	    primary: '#0a1128', accent: '#1282a2', base: 'dark',
+	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
+	  }, {
+	    name: 'snyder', label: 'สไนเดอร์',
+	    primary: '#314d62', accent: '#a8d1c3', base: 'dark',
+	    textOnPrimary: '#ffffff', textOnAccent: '#333333'
+	  }, {
+	    name: 'squirtle', label: 'เซนิกาเมะ',
+	    primary: '#76bbc0', accent: '#a76a57', base: 'light',
+	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
+	  }, {
+	    name: 'stark', label: 'สตาร์ก',
+	    primary: '#dc1405', accent: '#efce0b', base: 'light',
+	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
+	  }, {
+	    name: 'andromeda', label: 'แอนโดรเมด้า',
+	    primary: '#e65b8b', accent: '#11984f', base: 'light',
+	    textOnPrimary: '#ffffff', textOnAccent: '#ffffff'
+	  }, {
+	    name: 'plain', label: 'เส้นเล็กน้ำใส',
+	    primary: '#ffffff', accent: '#ffffff', base: 'light',
+	    textOnPrimary: '#333333', textOnAccent: '#333333'
+	  }],
 
-	  pageName: '',
+	  bases: [{
+	    name: 'light', brightness: 'light',
+	    fore: '#ffffff', back: '#eaeaea', hover: '#dedede',
+	    text: '#212121', subtitle: '#888'
+	  }, {
+	    name: 'dark', brightness: 'dark',
+	    fore: '#303030', back: '#212121', hover: '#212121',
+	    text: '#ffffff', subtitle: '#b3b3b3'
+	  }, {
+	    name: 'pantip', brightness: 'dark',
+	    fore: '#222244', back: '#38355c', hover: '#1b1b37',
+	    text: '#dbdbdb', subtitle: '#a6a3c7'
+	  }],
 
-	  searchQuery: '',
-	  searchQueryString: '',
-	  searchResults: [],
+	  getTheme: function getTheme(themeName) {
+	    return this.themes.find(function (theme) {
+	      return theme.name === themeName;
+	    });
+	  },
+	  getBase: function getBase(baseName) {
+	    return this.bases.find(function (base) {
+	      return base.name === baseName;
+	    });
+	  },
 
-	  topicId: 0,
-	  topicTitle: '',
-	  topicData: {},
 
-	  comments: [],
-	  shownComments: [],
-	  totalComments: 0,
-	  commentsPerPage: 5,
-	  commentPage: 0,
+	  fontSizes: [{ label: 'จิ๋ว', value: '18' }, { label: 'เล็ก', value: '22' }, { label: 'กลาง', value: '26' }, { label: 'ใหญ่', value: '32' }, { label: 'ยักษ์', value: '48' }],
 
-	  topicRefreshIntervalId: 0,
-	  unreadComments: 0
-	};
+	  fontFaces: [{ label: 'สารบัญ', value: 'TH Sarabun New' }, { label: 'คณิต', value: 'Kanit' }, { label: 'ทวิราช', value: 'Taviraj' }],
 
-	var mutations = exports.mutations = {
-	  toggleBestTopics: function toggleBestTopics(state) {
-	    state.showBestTopics = !state.showBestTopics;
+	  getFontSize: function getFontSize(sizeLabel) {
+	    return this.fontSizes.find(function (size) {
+	      return size.label === sizeLabel;
+	    });
 	  },
-	  hideBestTopics: function hideBestTopics(state) {
-	    state.showBestTopics = false;
-	  },
-	  setForumName: function setForumName(state, name) {
-	    state.forumName = name;
-	  },
-	  resetTopics: function resetTopics(state) {
-	    state.topics = [];
-	  },
-	  addToTopics: function addToTopics(state, topic) {
-	    state.topics.push(topic);
-	  },
-	  setTopicTitle: function setTopicTitle(state, title) {
-	    state.topicTitle = title;
-	  },
-	  setTopicId: function setTopicId(state, id) {
-	    state.topicId = id;
-	  },
-	  setTotalComments: function setTotalComments(state, number) {
-	    state.totalComments = number;
-	  },
-	  setCommentsPerPage: function setCommentsPerPage(state, number) {
-	    state.commentsPerPage = number;
-	  },
-	  setCommentPage: function setCommentPage(state, page) {
-	    state.commentPage = page;
-	  },
-	  resetShownComments: function resetShownComments(state) {
-	    state.shownComments = [];
-	  },
-	  resetUnreadComments: function resetUnreadComments(state) {
-	    state.unreadComments = 0;
-	  },
-	  setUnreadComments: function setUnreadComments(state, number) {
-	    state.unreadComments = number;
+	  getFontFace: function getFontFace(fontName) {
+	    return this.fontFaces.find(function (font) {
+	      return font.label === fontName;
+	    });
 	  }
 	};
 
 /***/ },
-/* 9 */
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  loadBestTopics: function loadBestTopics(forumName) {
+	    if (forumName === 'all') forumName = '';
+	    var loadUrl = 'http://m.pantip.com/forum/' + forumName;
+
+	    return new Promise(function (resolve, reject) {
+	      chrome.cookies.set({
+	        url: 'http://m.pantip.com',
+	        domain: '.pantip.com',
+	        name: 'mobilerun',
+	        value: '1'
+	      }, function () {
+	        $.ajax({
+	          url: loadUrl,
+	          dataType: 'text',
+	          success: function success(data) {
+	            var bestTopics = new Array();
+
+	            data = data.replace(/^[^]*<!-- .columns -->([^]*)<p>[^]*$/, '$1');
+	            //console.log(data);
+
+	            $(data).find('.m-thumb').each(function (i) {
+	              var item = {};
+	              item['_id'] = $(this).find('a').attr('href').substr(7);
+
+	              item['disp_topic'] = $(this).find('.subject').text().trim();
+	              //Note: "author" is misspelled in Pantip's source code
+	              item['author'] = $(this).find('.auther').text().trim();
+
+	              var img = $(this).find('img');
+	              item['cover_img'] = img.length ? img.attr('src') : '';
+
+	              bestTopics.push(item);
+	            });
+	            chrome.cookies.remove({
+	              url: 'http://m.pantip.com',
+	              name: 'mobilerun'
+	            }, function () {
+	              return resolve(bestTopics);
+	            });
+	          },
+	          error: function error() {
+	            chrome.cookies.remove({
+	              url: 'http://m.pantip.com',
+	              name: 'mobilerun'
+	            }, function () {
+	              return console.log('loadTopicList ajax error.');
+	            });
+	          }
+	        });
+	      });
+	    });
+	  },
+	  loadTopics: function loadTopics(forumName) {
+	    var loadMoreID = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+	    if (forumName === 'all') forumName = '';
+	    var loadUrl = 'http://pantip.com/forum/topic/ajax_json_all_topic_info_loadmore?t=' + Math.random();
+	    return new Promise(function (resolve, reject) {
+	      $.ajax({
+	        method: 'post',
+	        url: loadUrl,
+	        data: {
+	          last_id_current_page: loadMoreID,
+	          dataSend: { room: forumName, topic_type: { type: 0, default_type: 1 } },
+	          thumbnailview: false,
+	          current_page: 2
+	        },
+	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+	        dataType: 'text',
+	        success: function success(data) {
+	          data = JSON.parse(data).item;
+	          var res = { topics: [] };
+	          res.topics = data.topic;
+	          res.loadMoreID = data.last_id_current_page;
+	          resolve(res);
+	        },
+	        error: function error() {
+	          console.log('loadTopicList ajax error.');
+	        }
+	      });
+	    });
+	  },
+	  search: function search(query) {
+	    var f = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+	    var queryString = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
+	    return new Promise(function (resolve, reject) {
+	      if (query === '') reject('Empty search string');
+
+	      var url = 'http://search.pantip.com/ss?q=' + query;
+	      if (queryString !== '') url += '&f=' + f + '&y=' + queryString;
+
+	      $.ajax({
+	        type: 'GET',
+	        url: url,
+	        success: function success(data) {
+	          var queryString = data.replace(/^[^]*&y=([^]*?)"[^]*$/, '$1');
+	          var resData = data.replace(/^[^]*(<td style="bo[^]*?<\/td>)[^]*$/, '$1');
+	          var htmlLines = $(resData).find('p')[0].innerHTML.split('\n');
+
+	          var res = [];
+
+	          for (var i = 0; i < htmlLines.length; ++i) {
+	            if (htmlLines[i].endsWith(':&nbsp;')) {
+	              var comment_num = '0';
+	              var content = '';
+	              var author = '';
+
+	              var topicHtml = $(htmlLines[i + 1]);
+	              var disp_topic = topicHtml.text().trim();
+	              var topic_link = topicHtml.first().attr('href');
+
+	              if (htmlLines[i + 2].startsWith('<a')) {
+	                comment_num = $(htmlLines[i + 2]).text().substr(1);
+	                content = htmlLines[i + 3];
+	                author = htmlLines[i + 4];
+	              } else {
+	                content = htmlLines[i + 2];
+	                author = htmlLines[i + 3];
+	              }
+	              content = $(content).html();
+	              author = author.replace(/^[^]*<strong>([^]*)<\/strong>[^]*$/, '$1');
+	              res.push({ disp_topic: disp_topic, topic_link: topic_link, comment_num: comment_num, content: content, author: author });
+	            }
+	          }
+
+	          resolve({
+	            results: res,
+	            queryString: queryString
+	          });
+	        }
+	      });
+	    });
+	  },
+	  getTopicIdFromSearch: function getTopicIdFromSearch(url) {
+	    return new Promise(function (resolve, reject) {
+	      var res = '';
+	      var xhr = new XMLHttpRequest();
+	      xhr.open('GET', 'http://search.pantip.com' + url, true);
+
+	      xhr.onreadystatechange = function () {
+	        if (xhr.readyState == 4 && xhr.status == 200) {
+	          res = xhr.responseURL.split('/');
+	          resolve(res[res.length - 1]);
+	        } else if (xhr.readyState == 4) {
+	          reject('Error: getTopicIdFromSearch XHR failed');
+	        }
+	      };
+	      xhr.send(null);
+	    });
+	  },
+	  loadTopic: function loadTopic(topicID) {
+	    return new Promise(function (resolve, reject) {
+	      $.ajax({
+	        url: 'http://www.pantip.com/topic/' + topicID,
+	        dataType: 'text',
+	        success: function success(data) {
+
+	          data = data.replace(/src="\/.*?"/g, 'src=""');
+	          var html = $(data).find('.main-post-inner')[0];
+	          var res = {};
+
+	          res['author'] = $(html).find('.display-post-name').text();
+	          res['title'] = $(html).find('.display-post-title').text();
+	          res['content'] = $(html).find('.display-post-story').html();
+	          res['utime'] = $(html).find('.display-post-timestamp abbr').attr('data-utime');
+	          res['timeFull'] = $(html).find('.display-post-timestamp abbr').attr('title');
+	          res['avatarSrc'] = $(html).find('.display-post-avatar img').attr('src');
+
+	          //tags
+	          res['tags'] = [];
+	          $(html).find('.tag-item').each(function (i) {
+	            res['tags'][i] = $(this).text();
+	          });
+
+	          //reactions
+	          res['voteCount'] = parseInt($(html).find('.like-score').text());
+	          res['emotionCount'] = {
+	            sum: parseInt($(html).find('.emotion-score').text()),
+	            like: parseInt($(html).find('.emotion-choice-score:eq(1)').text()),
+	            laugh: parseInt($(html).find('.emotion-choice-score:eq(2)').text()),
+	            love: parseInt($(html).find('.emotion-choice-score:eq(3)').text()),
+	            impress: parseInt($(html).find('.emotion-choice-score:eq(4)').text()),
+	            scary: parseInt($(html).find('.emotion-choice-score:eq(5)').text()),
+	            surprised: parseInt($(html).find('.emotion-choice-score:eq(6)').text())
+	          };
+
+	          //for sorting
+	          res['emotions'] = [{ name: "like", count: res['emotionCount']['like'] }, { name: "laugh", count: res['emotionCount']['laugh'] }, { name: "love", count: res['emotionCount']['love'] }, { name: "impress", count: res['emotionCount']['impress'] }, { name: "scary", count: res['emotionCount']['scary'] }, { name: "surprised", count: res['emotionCount']['surprised'] }];
+	          resolve(res);
+	        },
+	        error: function error() {
+	          console.log('loadTopicList ajax error.');
+	        }
+	      });
+	    });
+	  },
+	  loadComments: function loadComments(topicID) {
+	    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+	    return new Promise(function (resolve, reject) {
+	      var url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=1&time=' + Math.random() + '&param=';
+	      if (page !== 0) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
+
+	      $.ajax({
+	        type: 'GET',
+	        cache: false,
+	        url: url,
+	        dataType: 'text',
+	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+	        success: function success(data) {
+	          var dataJSON = JSON.parse(data);
+	          var res = {};
+	          if (dataJSON['count'] !== undefined) {
+	            res['count'] = dataJSON['count'];
+	            res['comments'] = dataJSON['comments'];
+	          } else {
+	            res['count'] = 0;
+	            res['comments'] = [];
+	          }
+	          resolve(res);
+	        },
+	        error: function error() {
+	          console.log('loadComments ajax error.');
+	        }
+	      });
+	    });
+	  },
+	  loadMoreSubComments: function loadMoreSubComments(last, cid, c) {
+	    return new Promise(function (resolve, reject) {
+	      $.ajax({
+	        type: 'GET',
+	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+	        url: 'http://pantip.com/forum/topic/render_replys?last=' + last + '&cid=' + cid + '&c=' + c + '&ac=p&o=',
+	        success: function success(data) {
+	          var dataJSON = JSON.parse(data);
+	          resolve(dataJSON);
+	        }
+	      });
+	    });
+	  }
+	};
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.goToCommentPage = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = undefined;
-
-	var _vars = __webpack_require__(1);
+	var _vars = __webpack_require__(4);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
-	var _pantipInterface = __webpack_require__(2);
-
-	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
-
-	var _helpers = __webpack_require__(3);
-
-	var _helpers2 = _interopRequireDefault(_helpers);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	module.exports = {
+	  applyTheme: function applyTheme(themeName, fontSize, fontFace) {
+	    var elementStyle = document.documentElement.style;
 
-	/*
-	payload = {
-	  forumName : name of forum to load
-	  loadMore : whether or not this request is from a load more button
-	}
-	*/
-	var loadTopics = exports.loadTopics = function loadTopics(_ref, payload) {
-	  var dispatch = _ref.dispatch;
-	  var commit = _ref.commit;
-	  var state = _ref.state;
+	    //apply colors
+	    var theme = _vars2.default.getTheme(themeName);
+	    var base = _vars2.default.getBase(theme.base);
 
-	  var _loadMoreId = payload.loadMore ? state.loadMoreId : 0;
+	    var border = base.brightness === 'light' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)';
 
-	  commit('setForumName', payload.forumName);
-	  commit('hideBestTopics');
+	    elementStyle.setProperty('--primary', theme.primary);
+	    elementStyle.setProperty('--accent', theme.accent);
+	    elementStyle.setProperty('--text-on-primary', theme.textOnPrimary);
+	    elementStyle.setProperty('--text-on-accent', theme.textOnAccent);
 
-	  if (!payload.loadMore) {
-	    $('#leftPane').addClass('wrapUp');
-	    $('#leftPane .loading').addClass('active');
-	    commit('resetTopics');
+	    elementStyle.setProperty('--text', base.text);
+	    elementStyle.setProperty('--subtitle', base.subtitle);
+	    elementStyle.setProperty('--fore', base.fore);
+	    elementStyle.setProperty('--back', base.back);
+	    elementStyle.setProperty('--hover', base.hover);
+	    elementStyle.setProperty('--border', border);
 
-	    _pantipInterface2.default.loadBestTopics(payload.forumName).then(function (data) {
-	      return state.bestTopics = data;
-	    });
-	  }
-
-	  _pantipInterface2.default.loadTopics(payload.forumName, _loadMoreId).then(function (data) {
-	    //console.log(data);
-	    $('#leftPane').removeClass('wrapUp');
-	    $('#leftPane .loading').removeClass('active');
-
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	      for (var _iterator = data['topics'][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var topic = _step.value;
-
-	        topic.isActive = topic._id === state.topicId;
-	        topic.isTop = topic._id === state.topTopicId;
-	        commit('addToTopics', topic);
-	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator.return) {
-	          _iterator.return();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
-	      }
-	    }
-
-	    state.topTopicId = state.topics[0]._id;
-	    state.loadMoreId = data.loadMoreID;
-	  });
-	};
-
-	/*
-	payload = {
-	  loadMore : whether or not this request is from a load more button
-	}
-	*/
-	var search = exports.search = function search(_ref2, payload) {
-	  var _console;
-
-	  var dispatch = _ref2.dispatch;
-	  var commit = _ref2.commit;
-	  var state = _ref2.state;
-
-	  if (state.searchQuery === '') return false;
-	  if (payload === undefined) payload = {};
-	  if (payload.loadMore === undefined) payload.loadMore = false;
-
-	  var searchArguments = [state.searchQuery];
-	  if (payload.loadMore) {
-	    searchArguments.push(state.searchResults.length, state.searchQueryString);
-	  } else {
-	    $('.searchResultList').addClass('wrapUp');
-	    $('.searchResultList .loading').addClass('active');
-	  }
-	  (_console = console).log.apply(_console, searchArguments);
-	  _pantipInterface2.default.search.apply(_pantipInterface2.default, searchArguments).then(function (data) {
-	    //console.log(data);
-	    if (payload.loadMore) {
-	      var _state$searchResults;
-
-	      (_state$searchResults = state.searchResults).push.apply(_state$searchResults, _toConsumableArray(data.results));
+	    //apply font
+	    if (fontFace) elementStyle.setProperty('--font-face', fontFace);
+	    if (fontSize) elementStyle.setProperty('--font-size', fontSize + 'px');
+	  },
+	  convertTimeFormatToISO: function convertTimeFormatToISO(utime) {
+	    //utime format: mm/dd/yyyy hh:mm:ss
+	    var y = utime.substr(6, 4);
+	    var m = utime.substr(0, 2);
+	    var d = utime.substr(3, 2);
+	    var t = utime.substr(11, 8);
+	    return y + '-' + m + '-' + d + 'T' + t;
+	  },
+	  sanitiseContent: function sanitiseContent(html) {
+	    var content = $('<div>').append(html);
+	    //no eval for you!
+	    $(content).find('script').remove();
+	    $(content).find('.review-section').remove();
+	    $(content).find('.edit-history').remove();
+	    //no polls for you!
+	    $(content).find('.q-poll').remove();
+	    $(content).find('.button-container').remove();
+	    return content.html();
+	  },
+	  setRightPaneCurtains: function setRightPaneCurtains(showContent) {
+	    if (showContent) {
+	      $('#rightPane').removeClass('wrapUp');
+	      $('#rightPane .loading').removeClass('active');
 	    } else {
-	      state.searchResults = data.results;
-	      state.searchQueryString = data.queryString;
-	      $('.searchResultList').removeClass('wrapUp');
-	      $('.searchResultList .loading').removeClass('active');
+	      $('#rightPane').addClass('wrapUp');
+	      $('#rightPane .loading').addClass('active');
 	    }
-	  });
-	};
+	  },
+	  showFAB: function showFAB() {
+	    window.setTimeout(function () {
+	      var rightPane = document.getElementById('rightPane');
+	      if (rightPane.offsetHeight < rightPane.scrollHeight) {
+	        $('#fab').addClass('enable');
+	      } else {
+	        $('#fab').removeClass('enable');
+	      }
+	    }, 50);
+	  },
+	  vetComment: function vetComment(comment) {
+	    var isSub = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-	var loadPage = exports.loadPage = function loadPage(_ref3, pageName) {
-	  var dispatch = _ref3.dispatch;
-	  var commit = _ref3.commit;
-	  var state = _ref3.state;
+	    comment.commentNumber = comment.comment_no;
+	    if (isSub) {
+	      comment.commentNumber += '-' + comment.reply_no;
+	    } else if (comment.reply_count > comment.replies.length) {
+	      comment.subData = {
+	        last: comment.replies.length,
+	        cid: comment._id,
+	        c: comment.reply_count
+	      };
 
-	  commit('setTopicTitle', '');
-	  commit('setTopicId', 0);
-	  window.clearInterval(state.topicRefreshIntervalId);
-	  state.unreadComments = 0;
-	  state.pageName = pageName;
-	};
+	      comment.showLoadMoreSubButton = true;
+	    }
 
-	var loadTopic = exports.loadTopic = function loadTopic(_ref4, topicId) {
-	  var dispatch = _ref4.dispatch;
-	  var commit = _ref4.commit;
-	  var state = _ref4.state;
-
-	  _helpers2.default.setRightPaneCurtains(false);
-
-	  if (topicId !== state.currentTopic) $('#rightPane').animate({ scrollTop: 0 }, "0.5s");
-
-	  return Promise.all([_pantipInterface2.default.loadTopic(topicId), _pantipInterface2.default.loadComments(topicId)]).then(function (values) {
-	    //console.log(values);
-
-	    values[0].utime = _helpers2.default.convertTimeFormatToISO(values[0].utime);
-	    commit('setTopicTitle', values[0]['title']);
-	    commit('setTopicId', topicId);
-
-	    //load topic
-	    values[0].content = _helpers2.default.sanitiseContent(values[0].content);
-
-	    if (values[0].avatarSrc === '') values[0].avatarSrc = 'asset/img/default_avatar.png';
-	    if (values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
+	    //avatar
+	    if (comment.user.avatar.medium.substr(-9, 9) === '38x38.png') {
+	      //unknown avatar
+	      comment.user.avatar.medium = 'asset/img/default_avatar.png';
+	    }
 
 	    //reactions
-	    values[0].reactionData = {
-	      voteSum: values[0].voteCount,
-	      emotionSum: values[0].emotionCount.sum,
-	      emotionCounts: values[0].emotionCount,
-	      emotionSortable: values[0].emotions
+	    comment.reactionData = {
+	      voteSum: comment.good_bad_vote.point,
+	      emotionSum: comment.emotion.sum,
+	      emotionCounts: {
+	        impress: comment.emotion.impress.count,
+	        laugh: comment.emotion.laugh.count,
+	        like: comment.emotion.like.count,
+	        love: comment.emotion.love.count,
+	        scary: comment.emotion.scary.count,
+	        surprised: comment.emotion.surprised.count
+	      },
+	      emotionSortable: [{ name: "impress", count: comment.emotion.impress.count }, { name: "laugh", count: comment.emotion.laugh.count }, { name: "like", count: comment.emotion.like.count }, { name: "love", count: comment.emotion.love.count }, { name: "scary", count: comment.emotion.scary.count }, { name: "surprised", count: comment.emotion.surprised.count }]
 	    };
 
-	    state.topicData = values[0];
-	    $('time.timeago').timeago();
-
-	    //load comments
-	    dispatch('loadComments', values[1], topicId === state.topicId);
-
-	    _helpers2.default.setRightPaneCurtains(true);
-	    _helpers2.default.showFAB();
-
-	    //set up polling
-	    commit('resetUnreadComments');
-	    window.clearInterval(state.topicRefreshIntervalId);
-	    state.topicRefreshIntervalId = window.setInterval(function () {
-	      _pantipInterface2.default.loadComments(topicId).then(function (data) {
-	        if (data.count >= values[1].count) {
-	          commit('setUnreadComments', data.count - values[1].count);
-	        }
-	      });
-	    }, 30000);
-	  });
-	};
-
-	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref5, url) {
-	  var dispatch = _ref5.dispatch;
-	  var commit = _ref5.commit;
-	  var state = _ref5.state;
-
-	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
-	    dispatch('loadTopic', id);
-	  });
-	};
-
-	var loadComments = exports.loadComments = function loadComments(_ref6, data) {
-	  var dispatch = _ref6.dispatch;
-	  var commit = _ref6.commit;
-	  var state = _ref6.state;
-	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
-	    commit('setTotalComments', data.count);
-	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
-	    commit('resetShownComments');
-
-	    data.comments.forEach(function (element, index, array) {
-	      array[index] = _helpers2.default.vetComment(element);
-	      if (element.reply_count > 0) {
-	        element.replies.forEach(function (subElement, subIndex, subArray) {
-	          subArray[subIndex] = _helpers2.default.vetComment(subElement, true);
-	        });
-	      }
-	    });
-
-	    if (state.totalComments > 0) state.comments = data.comments;
-
-	    if (state.commentsPerPage < state.totalComments) {
-	      var start = isRefresh ? state.commentPage * state.commentsPerPage : 0;
-	      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
-	    } else {
-	      commit('setCommentPage', 0);
-	      state.shownComments = state.comments;
-	    }
-	  });
-	};
-
-	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref7, pageNumber) {
-	  var dispatch = _ref7.dispatch;
-	  var commit = _ref7.commit;
-	  var state = _ref7.state;
-
-	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
-
-	  dispatch('resetShownComments');
-
-	  var start = pageNumber * state.commentsPerPage;
-	  state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
-	  state.commentPage = pageNumber;
-
-	  if (state.shownComments.length === 0) {
-	    //this.loadMoreComments(pageNumber);
+	    return comment;
 	  }
-
-	  var scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
-	  $('#rightPane').stop().animate({
-	    scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
-	  }, "0.5s");
 	};
 
 /***/ },
-/* 10 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* script */
-	__vue_exports__ = __webpack_require__(11)
+	__vue_exports__ = __webpack_require__(8)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(12)
+	var __vue_template__ = __webpack_require__(9)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -7408,7 +7038,7 @@
 
 
 /***/ },
-/* 11 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7417,15 +7047,15 @@
 	  value: true
 	});
 
-	var _vars = __webpack_require__(1);
+	var _vars = __webpack_require__(4);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
-	var _pantipInterface = __webpack_require__(2);
+	var _pantipInterface = __webpack_require__(5);
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
-	var _helpers = __webpack_require__(3);
+	var _helpers = __webpack_require__(6);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -7646,7 +7276,7 @@
 	//
 
 /***/ },
-/* 12 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -8052,6 +7682,380 @@
 	     require("vue-hot-reload-api").rerender("data-v-148a1866", module.exports)
 	  }
 	}
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _vue = __webpack_require__(1);
+
+	var _vue2 = _interopRequireDefault(_vue);
+
+	var _vuex = __webpack_require__(3);
+
+	var _vuex2 = _interopRequireDefault(_vuex);
+
+	var _state = __webpack_require__(11);
+
+	var _actions = __webpack_require__(12);
+
+	var actions = _interopRequireWildcard(_actions);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_vue2.default.use(_vuex2.default);
+
+	exports.default = new _vuex2.default.Store({
+	  state: _state.state,
+	  mutations: _state.mutations,
+	  actions: actions
+	});
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var state = exports.state = {
+	  showBestTopics: false,
+
+	  forumName: '',
+	  topics: [],
+	  bestTopics: [],
+	  loadMoreId: 0,
+	  topTopicId: 0,
+
+	  pageName: '',
+
+	  searchQuery: '',
+	  searchQueryString: '',
+	  searchResults: [],
+
+	  topicId: 0,
+	  topicTitle: '',
+	  topicData: {},
+
+	  comments: [],
+	  shownComments: [],
+	  totalComments: 0,
+	  commentsPerPage: 5,
+	  commentPage: 0,
+
+	  topicRefreshIntervalId: 0,
+	  unreadComments: 0
+	};
+
+	var mutations = exports.mutations = {
+	  toggleBestTopics: function toggleBestTopics(state) {
+	    state.showBestTopics = !state.showBestTopics;
+	  },
+	  hideBestTopics: function hideBestTopics(state) {
+	    state.showBestTopics = false;
+	  },
+	  setForumName: function setForumName(state, name) {
+	    state.forumName = name;
+	  },
+	  resetTopics: function resetTopics(state) {
+	    state.topics = [];
+	  },
+	  addToTopics: function addToTopics(state, topic) {
+	    state.topics.push(topic);
+	  },
+	  setTopicTitle: function setTopicTitle(state, title) {
+	    state.topicTitle = title;
+	  },
+	  setTopicId: function setTopicId(state, id) {
+	    state.topicId = id;
+	  },
+	  setTotalComments: function setTotalComments(state, number) {
+	    state.totalComments = number;
+	  },
+	  setCommentsPerPage: function setCommentsPerPage(state, number) {
+	    state.commentsPerPage = number;
+	  },
+	  setCommentPage: function setCommentPage(state, page) {
+	    state.commentPage = page;
+	  },
+	  resetShownComments: function resetShownComments(state) {
+	    state.shownComments = [];
+	  },
+	  resetUnreadComments: function resetUnreadComments(state) {
+	    state.unreadComments = 0;
+	  },
+	  setUnreadComments: function setUnreadComments(state, number) {
+	    state.unreadComments = number;
+	  }
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.goToCommentPage = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = undefined;
+
+	var _vars = __webpack_require__(4);
+
+	var _vars2 = _interopRequireDefault(_vars);
+
+	var _pantipInterface = __webpack_require__(5);
+
+	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
+
+	var _helpers = __webpack_require__(6);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	/*
+	payload = {
+	  forumName : name of forum to load
+	  loadMore : whether or not this request is from a load more button
+	}
+	*/
+	var loadTopics = exports.loadTopics = function loadTopics(_ref, payload) {
+	  var dispatch = _ref.dispatch;
+	  var commit = _ref.commit;
+	  var state = _ref.state;
+
+	  var _loadMoreId = payload.loadMore ? state.loadMoreId : 0;
+
+	  commit('setForumName', payload.forumName);
+	  commit('hideBestTopics');
+
+	  if (!payload.loadMore) {
+	    $('#leftPane').addClass('wrapUp');
+	    $('#leftPane .loading').addClass('active');
+	    commit('resetTopics');
+
+	    _pantipInterface2.default.loadBestTopics(payload.forumName).then(function (data) {
+	      return state.bestTopics = data;
+	    });
+	  }
+
+	  _pantipInterface2.default.loadTopics(payload.forumName, _loadMoreId).then(function (data) {
+	    //console.log(data);
+	    $('#leftPane').removeClass('wrapUp');
+	    $('#leftPane .loading').removeClass('active');
+
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+
+	    try {
+	      for (var _iterator = data['topics'][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        var topic = _step.value;
+
+	        topic.isActive = topic._id === state.topicId;
+	        topic.isTop = topic._id === state.topTopicId;
+	        commit('addToTopics', topic);
+	      }
+	    } catch (err) {
+	      _didIteratorError = true;
+	      _iteratorError = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion && _iterator.return) {
+	          _iterator.return();
+	        }
+	      } finally {
+	        if (_didIteratorError) {
+	          throw _iteratorError;
+	        }
+	      }
+	    }
+
+	    state.topTopicId = state.topics[0]._id;
+	    state.loadMoreId = data.loadMoreID;
+	  });
+	};
+
+	/*
+	payload = {
+	  loadMore : whether or not this request is from a load more button
+	}
+	*/
+	var search = exports.search = function search(_ref2, payload) {
+	  var _console;
+
+	  var dispatch = _ref2.dispatch;
+	  var commit = _ref2.commit;
+	  var state = _ref2.state;
+
+	  if (state.searchQuery === '') return false;
+	  if (payload === undefined) payload = {};
+	  if (payload.loadMore === undefined) payload.loadMore = false;
+
+	  var searchArguments = [state.searchQuery];
+	  if (payload.loadMore) {
+	    searchArguments.push(state.searchResults.length, state.searchQueryString);
+	  } else {
+	    $('.searchResultList').addClass('wrapUp');
+	    $('.searchResultList .loading').addClass('active');
+	  }
+	  (_console = console).log.apply(_console, searchArguments);
+	  _pantipInterface2.default.search.apply(_pantipInterface2.default, searchArguments).then(function (data) {
+	    //console.log(data);
+	    if (payload.loadMore) {
+	      var _state$searchResults;
+
+	      (_state$searchResults = state.searchResults).push.apply(_state$searchResults, _toConsumableArray(data.results));
+	    } else {
+	      state.searchResults = data.results;
+	      state.searchQueryString = data.queryString;
+	      $('.searchResultList').removeClass('wrapUp');
+	      $('.searchResultList .loading').removeClass('active');
+	    }
+	  });
+	};
+
+	var loadPage = exports.loadPage = function loadPage(_ref3, pageName) {
+	  var dispatch = _ref3.dispatch;
+	  var commit = _ref3.commit;
+	  var state = _ref3.state;
+
+	  commit('setTopicTitle', '');
+	  commit('setTopicId', 0);
+	  window.clearInterval(state.topicRefreshIntervalId);
+	  state.unreadComments = 0;
+	  state.pageName = pageName;
+	};
+
+	var loadTopic = exports.loadTopic = function loadTopic(_ref4, topicId) {
+	  var dispatch = _ref4.dispatch;
+	  var commit = _ref4.commit;
+	  var state = _ref4.state;
+
+	  _helpers2.default.setRightPaneCurtains(false);
+
+	  if (topicId !== state.currentTopic) $('#rightPane').animate({ scrollTop: 0 }, "0.5s");
+
+	  return Promise.all([_pantipInterface2.default.loadTopic(topicId), _pantipInterface2.default.loadComments(topicId)]).then(function (values) {
+	    //console.log(values);
+
+	    values[0].utime = _helpers2.default.convertTimeFormatToISO(values[0].utime);
+	    commit('setTopicTitle', values[0]['title']);
+	    commit('setTopicId', topicId);
+
+	    //load topic
+	    values[0].content = _helpers2.default.sanitiseContent(values[0].content);
+
+	    if (values[0].avatarSrc === '') values[0].avatarSrc = 'asset/img/default_avatar.png';
+	    if (values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
+
+	    //reactions
+	    values[0].reactionData = {
+	      voteSum: values[0].voteCount,
+	      emotionSum: values[0].emotionCount.sum,
+	      emotionCounts: values[0].emotionCount,
+	      emotionSortable: values[0].emotions
+	    };
+
+	    state.topicData = values[0];
+	    $('time.timeago').timeago();
+
+	    //load comments
+	    dispatch('loadComments', values[1], topicId === state.topicId);
+
+	    _helpers2.default.setRightPaneCurtains(true);
+	    _helpers2.default.showFAB();
+
+	    //set up polling
+	    commit('resetUnreadComments');
+	    window.clearInterval(state.topicRefreshIntervalId);
+	    state.topicRefreshIntervalId = window.setInterval(function () {
+	      _pantipInterface2.default.loadComments(topicId).then(function (data) {
+	        if (data.count >= values[1].count) {
+	          commit('setUnreadComments', data.count - values[1].count);
+	        }
+	      });
+	    }, 30000);
+	  });
+	};
+
+	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref5, url) {
+	  var dispatch = _ref5.dispatch;
+	  var commit = _ref5.commit;
+	  var state = _ref5.state;
+
+	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
+	    dispatch('loadTopic', id);
+	  });
+	};
+
+	var loadComments = exports.loadComments = function loadComments(_ref6, data) {
+	  var dispatch = _ref6.dispatch;
+	  var commit = _ref6.commit;
+	  var state = _ref6.state;
+	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
+	    commit('setTotalComments', data.count);
+	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
+	    commit('resetShownComments');
+
+	    data.comments.forEach(function (element, index, array) {
+	      array[index] = _helpers2.default.vetComment(element);
+	      if (element.reply_count > 0) {
+	        element.replies.forEach(function (subElement, subIndex, subArray) {
+	          subArray[subIndex] = _helpers2.default.vetComment(subElement, true);
+	        });
+	      }
+	    });
+
+	    if (state.totalComments > 0) state.comments = data.comments;
+
+	    if (state.commentsPerPage < state.totalComments) {
+	      var start = isRefresh ? state.commentPage * state.commentsPerPage : 0;
+	      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+	    } else {
+	      commit('setCommentPage', 0);
+	      state.shownComments = state.comments;
+	    }
+	  });
+	};
+
+	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref7, pageNumber) {
+	  var dispatch = _ref7.dispatch;
+	  var commit = _ref7.commit;
+	  var state = _ref7.state;
+
+	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
+
+	  dispatch('resetShownComments');
+
+	  var start = pageNumber * state.commentsPerPage;
+	  state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+	  state.commentPage = pageNumber;
+
+	  if (state.shownComments.length === 0) {
+	    //this.loadMoreComments(pageNumber);
+	  }
+
+	  var scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
+	  $('#rightPane').stop().animate({
+	    scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
+	  }, "0.5s");
+	};
 
 /***/ },
 /* 13 */
@@ -9511,7 +9515,7 @@
 	//
 	//
 
-	var Pantip = __webpack_require__(2);
+	var Pantip = __webpack_require__(5);
 	exports.default = {
 	  props: {
 	    comments: []
@@ -9892,11 +9896,11 @@
 	  value: true
 	});
 
-	var _pantipInterface = __webpack_require__(2);
+	var _pantipInterface = __webpack_require__(5);
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
-	var _helpers = __webpack_require__(3);
+	var _helpers = __webpack_require__(6);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 

@@ -1,48 +1,11 @@
-let Vue = require('vue');
-let Vars = require('./vars.js');
+import Vue from 'vue';
+import Vars from './vars';
 
-let themeItem = require('./components/themeItem.vue');
-let themePreview = require('./components/themePreview.vue');
+import App from './options.vue';
 
-Vue.component('themeItem', themeItem);
-Vue.component('themePreview', themePreview);
+Vue.component('themeItem', require('./components/themeItem.vue'));
+Vue.component('themePreview', require('./components/themePreview.vue'));
 
 let vm = new Vue({
-  el: 'body',
-
-  data(){ return {
-    forums: Vars.forumInfo,
-    themes: Vars.themes,
-    fontSizes: Vars.fontSizes,
-    fontFaces: Vars.fontFaces,
-    options: {
-      defaultForum: 'all',
-      theme: 'default',
-      fontSize: '26',
-      fontFace: 'TH Sarabun New',
-      commentsPerPage: '10'
-    },
-    saveButtonState: 'default'
-  }},
-
-  methods: {
-    saveOptions(){
-      let saveButton = document.querySelector('.saveButton');
-      saveButton.disabled = true;
-      chrome.storage.sync.set(this.options, () => {
-        //Notify user
-        this.saveButtonState = 'success';
-        window.setTimeout(() => {
-          this.saveButtonState = 'default';
-          saveButton.disabled = false;
-        }, 3000);
-        console.log("Options saved");
-      });
-    }
-  },
-
-  mounted(){
-    //restore options
-    chrome.storage.sync.get(this.options, item => this.options = item);
-  }
-});
+  render: h => h(App)
+}).$mount('#app');
