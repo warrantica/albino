@@ -7129,6 +7129,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 	/*
 	payload = {
 	  forumName : name of forum to load
@@ -7194,24 +7196,40 @@
 
 	/*
 	payload = {
-	  none for now
+	  loadMore : whether or not this request is from a load more button
 	}
 	*/
-	var search = exports.search = function search(_ref2) {
+	var search = exports.search = function search(_ref2, payload) {
+	  var _console;
+
 	  var dispatch = _ref2.dispatch;
 	  var commit = _ref2.commit;
 	  var state = _ref2.state;
 
 	  if (state.searchQuery === '') return false;
+	  if (payload === undefined) payload = {};
+	  if (payload.loadMore === undefined) payload.loadMore = false;
 
-	  $('.searchResultList').addClass('wrapUp');
-	  $('.searchResultList .loading').addClass('active');
-	  _pantipInterface2.default.search(state.searchQuery).then(function (data) {
+	  var searchArguments = [state.searchQuery];
+	  if (payload.loadMore) {
+	    searchArguments.push(state.searchResults.length, state.searchQueryString);
+	  } else {
+	    $('.searchResultList').addClass('wrapUp');
+	    $('.searchResultList .loading').addClass('active');
+	  }
+	  (_console = console).log.apply(_console, searchArguments);
+	  _pantipInterface2.default.search.apply(_pantipInterface2.default, searchArguments).then(function (data) {
 	    //console.log(data);
-	    state.searchResults = data.results;
-	    state.searchQueryString = data.queryString;
-	    $('.searchResultList').removeClass('wrapUp');
-	    $('.searchResultList .loading').removeClass('active');
+	    if (payload.loadMore) {
+	      var _state$searchResults;
+
+	      (_state$searchResults = state.searchResults).push.apply(_state$searchResults, _toConsumableArray(data.results));
+	    } else {
+	      state.searchResults = data.results;
+	      state.searchQueryString = data.queryString;
+	      $('.searchResultList').removeClass('wrapUp');
+	      $('.searchResultList .loading').removeClass('active');
+	    }
 	  });
 	};
 
@@ -7399,129 +7417,16 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
 	exports.default = {
 	  data: function data() {
 	    return {
 	      forums: _vars2.default.forumInfo,
-	      currentForum: '',
 	      currentPage: 'tips',
-	      //showBestTopics: false,
 	      showDialogues: {
 	        forumSelect: false,
 	        overflow: false
 	      },
-	      showSearch: false,
-	      //bestTopics: [],
-	      //topics: [],
-	      //searchQuery: '',
-	      //searchQueryString: '',
-	      //searchResults: [],
-	      //loadMoreId: 0,
-	      //topTopicId: 0,
-	      topicRefreshIntervalId: '',
-	      unreadComments: 0
+	      showSearch: false
 	    };
 	  },
 
@@ -7581,22 +7486,16 @@
 	      this.$store.dispatch('search');
 	    },
 	    loadMoreSearchResults: function loadMoreSearchResults() {
-	      var _this = this;
-
-	      _pantipInterface2.default.search(this.searchQuery, this.searchResults.length, this.searchQueryString).then(function (data) {
-	        var _searchResults;
-
-	        (_searchResults = _this.searchResults).push.apply(_searchResults, _toConsumableArray(data.results));
-	      });
+	      this.$store.dispatch('search', { loadMore: true });
 	    },
 	    refreshTopic: function refreshTopic() {
-	      var _this2 = this;
+	      var _this = this;
 
 	      if (this.$store.state.topicId !== 0) {
 	        (function () {
 	          var scroll = document.getElementById('rightPane').scrollTop;
 
-	          _this2.$store.dispatch('loadTopic', _this2.topicId).then(function (value) {
+	          _this.$store.dispatch('loadTopic', _this.topicId).then(function (value) {
 	            $('#rightPane').stop().animate({ scrollTop: scroll }, "0.5s");
 	          });
 	        })();
@@ -7618,7 +7517,7 @@
 	  },
 
 	  mounted: function mounted() {
-	    var _this3 = this;
+	    var _this2 = this;
 
 	    //Get and apply options
 	    chrome.storage.sync.get({
@@ -7627,11 +7526,111 @@
 	      fontSize: '26',
 	      fontFace: 'TH Sarabun New'
 	    }, function (item) {
-	      _this3.$store.dispatch('loadTopics', { forumName: item.defaultForum });
+	      _this2.$store.dispatch('loadTopics', { forumName: item.defaultForum });
 	      _helpers2.default.applyTheme(item.theme, item.fontSize, item.fontFace);
 	    });
 	  }
-	};
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 12 */

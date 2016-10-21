@@ -40,20 +40,32 @@ export const loadTopics = ({ dispatch, commit, state }, payload) => {
 
 /*
 payload = {
-  none for now
+  loadMore : whether or not this request is from a load more button
 }
 */
-export const search = ({ dispatch, commit, state }) => {
+export const search = ({ dispatch, commit, state }, payload) => {
   if(state.searchQuery === '') return false;
+  if(payload === undefined) payload = {};
+  if(payload.loadMore === undefined) payload.loadMore = false;
 
-  $('.searchResultList').addClass('wrapUp');
-  $('.searchResultList .loading').addClass('active');
-  Pantip.search(state.searchQuery).then(data => {
+  let searchArguments = [state.searchQuery];
+  if(payload.loadMore){
+    searchArguments.push(state.searchResults.length, state.searchQueryString);
+  }else{
+    $('.searchResultList').addClass('wrapUp');
+    $('.searchResultList .loading').addClass('active');
+  }
+  console.log(...searchArguments);
+  Pantip.search(...searchArguments).then(data => {
     //console.log(data);
-    state.searchResults = data.results;
-    state.searchQueryString = data.queryString;
-    $('.searchResultList').removeClass('wrapUp');
-    $('.searchResultList .loading').removeClass('active');
+    if(payload.loadMore){
+      state.searchResults.push(...data.results);
+    }else{
+      state.searchResults = data.results;
+      state.searchQueryString = data.queryString;
+      $('.searchResultList').removeClass('wrapUp');
+      $('.searchResultList .loading').removeClass('active');
+    }
   });
 }
 

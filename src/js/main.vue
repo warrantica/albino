@@ -108,24 +108,12 @@ export default {
 
   data(){ return{
     forums: Vars.forumInfo,
-    currentForum: '',
     currentPage: 'tips',
-    //showBestTopics: false,
     showDialogues: {
       forumSelect: false,
       overflow: false
     },
     showSearch: false,
-    //bestTopics: [],
-    //topics: [],
-    //searchQuery: '',
-    //searchQueryString: '',
-    //searchResults: [],
-    //loadMoreId: 0,
-    //topTopicId: 0,
-    topicRefreshIntervalId: '',
-    unreadComments: 0,
-    //topicData: {}
   }},
 
   computed: {
@@ -164,12 +152,7 @@ export default {
     },
 
     loadMoreSearchResults(){
-      Pantip.search(this.searchQuery,
-        this.searchResults.length,
-        this.searchQueryString).then(data => {
-
-        this.searchResults.push(...data.results);
-      });
+      this.$store.dispatch('search', { loadMore: true });
     },
 
     refreshTopic(){
