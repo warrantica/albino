@@ -6835,7 +6835,7 @@
 	    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
 	    return new Promise(function (resolve, reject) {
-	      var url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=1&time=' + Math.random() + '&param=';
+	      var url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=3&time=' + Math.random() + '&param=';
 	      if (page !== 0) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
 
 	      $.ajax({
@@ -7752,6 +7752,7 @@
 	  totalComments: 0,
 	  commentsPerPage: 5,
 	  commentPage: 0,
+	  loadedPage: 1,
 
 	  topicRefreshIntervalId: 0,
 	  unreadComments: 0
@@ -7808,7 +7809,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.goToCommentPage = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = undefined;
+	exports.goToCommentPage = exports.loadMoreComments = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = undefined;
 
 	var _vars = __webpack_require__(4);
 
@@ -7955,6 +7956,7 @@
 	    values[0].utime = _helpers2.default.convertTimeFormatToISO(values[0].utime);
 	    commit('setTopicTitle', values[0]['title']);
 	    commit('setTopicId', topicId);
+	    state.loadedPage = 1;
 
 	    //load topic
 	    values[0].content = _helpers2.default.sanitiseContent(values[0].content);
@@ -8034,22 +8036,47 @@
 	  });
 	};
 
-	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref7, pageNumber) {
+	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref7, pageNumber) {
 	  var dispatch = _ref7.dispatch;
 	  var commit = _ref7.commit;
 	  var state = _ref7.state;
 
+	  var start = pageNumber * state.commentsPerPage;
+	  _pantipInterface2.default.loadComments(state.topicId, ++state.loadedPage).then(function (data) {
+	    var _state$comments;
+
+	    data.comments.forEach(function (element, index, array) {
+	      array[index] = _helpers2.default.vetComment(element);
+	      if (element.reply_count > 0) {
+	        element.replies.forEach(function (subElement, subIndex, subArray) {
+	          subArray[subIndex] = _helpers2.default.vetComment(subElement, true);
+	        });
+	      }
+	    });
+
+	    (_state$comments = state.comments).push.apply(_state$comments, _toConsumableArray(data.comments));
+
+	    state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+
+	    //DANGER!?
+	    if (state.shownComments.length === 0) dispatch('loadMoreComments', pageNumber);
+	  });
+	};
+
+	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref8, pageNumber) {
+	  var dispatch = _ref8.dispatch;
+	  var commit = _ref8.commit;
+	  var state = _ref8.state;
+
 	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
 
-	  dispatch('resetShownComments');
+	  commit('resetShownComments');
 
 	  var start = pageNumber * state.commentsPerPage;
 	  state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
 	  state.commentPage = pageNumber;
 
-	  if (state.shownComments.length === 0) {
-	    //this.loadMoreComments(pageNumber);
-	  }
+	  if (state.shownComments.length === 0) dispatch('loadMoreComments', pageNumber);
 
 	  var scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
 	  $('#rightPane').stop().animate({
@@ -9442,9 +9469,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
+	//
 	//
 	//
 	//
@@ -9516,41 +9541,7 @@
 	//
 
 	var Pantip = __webpack_require__(5);
-	exports.default = {
-	  props: {
-	    comments: []
-	  },
-
-	  data: function data() {
-	    return {
-	      loadedPage: 1
-	    };
-	  },
-
-
-	  computed: {
-	    totalPages: function totalPages() {
-	      return Math.ceil(this.count / this.commentsPerPage);
-	    }
-	  },
-
-	  methods: {
-	    loadMoreComments: function loadMoreComments(pageNumber) {
-	      var _this = this;
-
-	      var start = pageNumber * this.commentsPerPage;
-	      Pantip.loadComments(this.topicId, ++this.loadedPage).then(function (data) {
-	        var _comments;
-
-	        (_comments = _this.comments).push.apply(_comments, _toConsumableArray(data.comments));
-	        _this.currentComments = _this.comments.slice(start, start + _this.commentsPerPage);
-
-	        //DANGER!?
-	        if (_this.currentComments.length === 0) _this.loadMoreComments(pageNumber);
-	      });
-	    }
-	  }
-	};
+	exports.default = {};
 
 /***/ },
 /* 45 */
@@ -9577,14 +9568,14 @@
 	        "data": comment
 	      }
 	    })
-	  }), " ", _h('pagination'), " ", _h('div', {
+	  }), " ", _h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
 	      value: ($store.state.totalComments && !$store.state.shownComments.length),
 	      expression: "$store.state.totalComments && !$store.state.shownComments.length"
 	    }]
-	  }, [_m(2), " loading...\n  "])])
+	  }, [_m(2), " loading...\n  "]), " ", _h('pagination')])
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('i', {
 	    staticClass: "ic"

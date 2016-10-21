@@ -13,10 +13,11 @@
     <comment-item v-for="comment in $store.state.shownComments" :data="comment">
     </comment-item>
 
-    <pagination></pagination>
     <div v-show="$store.state.totalComments && !$store.state.shownComments.length">
       <i class="ic">hourglass_full</i> loading...
     </div>
+
+    <pagination></pagination>
   </div>
 </template>
 
@@ -70,31 +71,6 @@
 <script>
   let Pantip = require('../pantipInterface.js');
   export default {
-    props: {
-      comments: []
-    },
 
-    data(){ return {
-      loadedPage: 1
-    }},
-
-    computed: {
-      totalPages(){
-        return Math.ceil(this.count/this.commentsPerPage);
-      }
-    },
-
-    methods: {
-      loadMoreComments(pageNumber){
-        let start = pageNumber*this.commentsPerPage;
-        Pantip.loadComments(this.topicId, ++this.loadedPage).then(data => {
-          this.comments.push(...data.comments);
-          this.currentComments = this.comments.slice(start, start + this.commentsPerPage);
-
-          //DANGER!?
-          if(this.currentComments.length === 0) this.loadMoreComments(pageNumber);
-        });
-      }
-    }
   }
 </script>

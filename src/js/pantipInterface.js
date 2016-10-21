@@ -205,7 +205,7 @@ module.exports = {
 
   loadComments(topicID, page=0){
     return new Promise((resolve, reject) => {
-      let url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=1&time=' + Math.random() + '&param=';
+      let url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=3&time=' + Math.random() + '&param=';
       if(page !== 0) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
 
       $.ajax({

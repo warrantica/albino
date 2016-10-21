@@ -22,6 +22,7 @@ export const state = {
   totalComments: 0,
   commentsPerPage: 5,
   commentPage: 0,
+  loadedPage: 1,
 
   topicRefreshIntervalId: 0,
   unreadComments: 0
