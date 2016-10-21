@@ -1,8 +1,10 @@
 <template>
   <div class="topic sClickable" @click="loadSearchResult">
-    <div class="title" v-html="data.disp_topic"></div>
-    <div class="subtitle sSubtitle">คห. {{ data.comment_num }} โดย {{ data.author }}</div>
-    <div class="result sSubtitle" v-html="data.content"></div>
+    <div class="topic-text">
+      <div class="topic-title" v-html="data.disp_topic"></div>
+      <div class="topic-subtitle sSubtitle">คห. {{ data.comment_num }} โดย {{ data.author }}</div>
+      <div class="topic-result sSubtitle" v-html="data.content"></div>
+    </div>
   </div>
 </template>
 
@@ -20,7 +22,7 @@
 
     methods: {
       loadSearchResult(){
-        this.$dispatch('loadSearchResult', this.data.topic_link);
+        this.$store.dispatch('loadSearchResult', this.data.topic_link);
       }
     }
   }

@@ -7,6 +7,10 @@ export const state = {
   loadMoreId: 0,
   topTopicId: 0,
 
+  searchQuery: '',
+  searchQueryString: '',
+  searchResults: [],
+
   topicId: 0,
   topicTitle: '',
   topicData: {},

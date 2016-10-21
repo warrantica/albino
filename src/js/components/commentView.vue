@@ -8,12 +8,12 @@
         เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
       </div>
     </div>
-    <pagination :comments-per-page="$store.state.commentsPerPage"></pagination>
+    <pagination></pagination>
 
     <comment-item v-for="comment in $store.state.shownComments" :data="comment">
     </comment-item>
 
-    <pagination :comments-per-page="$store.state.commentsPerPage"></pagination>
+    <pagination></pagination>
     <div v-show="$store.state.totalComments && !$store.state.shownComments.length">
       <i class="ic">hourglass_full</i> loading...
     </div>

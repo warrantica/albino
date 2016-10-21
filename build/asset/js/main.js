@@ -7044,6 +7044,10 @@
 	  loadMoreId: 0,
 	  topTopicId: 0,
 
+	  searchQuery: '',
+	  searchQueryString: '',
+	  searchResults: [],
+
 	  topicId: 0,
 	  topicTitle: '',
 	  topicData: {},
@@ -7109,7 +7113,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.goToCommentPage = exports.loadComments = exports.loadTopic = exports.loadTopics = undefined;
+	exports.goToCommentPage = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.search = exports.loadTopics = undefined;
 
 	var _vars = __webpack_require__(1);
 
@@ -7125,6 +7129,12 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/*
+	payload = {
+	  forumName : name of forum to load
+	  loadMore : whether or not this request is from a load more button
+	}
+	*/
 	var loadTopics = exports.loadTopics = function loadTopics(_ref, payload) {
 	  var dispatch = _ref.dispatch;
 	  var commit = _ref.commit;
@@ -7182,10 +7192,33 @@
 	  });
 	};
 
-	var loadTopic = exports.loadTopic = function loadTopic(_ref2, topicId) {
+	/*
+	payload = {
+	  none for now
+	}
+	*/
+	var search = exports.search = function search(_ref2) {
 	  var dispatch = _ref2.dispatch;
 	  var commit = _ref2.commit;
 	  var state = _ref2.state;
+
+	  if (state.searchQuery === '') return false;
+
+	  $('.searchResultList').addClass('wrapUp');
+	  $('.searchResultList .loading').addClass('active');
+	  _pantipInterface2.default.search(state.searchQuery).then(function (data) {
+	    //console.log(data);
+	    state.searchResults = data.results;
+	    state.searchQueryString = data.queryString;
+	    $('.searchResultList').removeClass('wrapUp');
+	    $('.searchResultList .loading').removeClass('active');
+	  });
+	};
+
+	var loadTopic = exports.loadTopic = function loadTopic(_ref3, topicId) {
+	  var dispatch = _ref3.dispatch;
+	  var commit = _ref3.commit;
+	  var state = _ref3.state;
 
 	  _helpers2.default.setRightPaneCurtains(false);
 
@@ -7234,10 +7267,20 @@
 	  });
 	};
 
-	var loadComments = exports.loadComments = function loadComments(_ref3, data) {
-	  var dispatch = _ref3.dispatch;
-	  var commit = _ref3.commit;
-	  var state = _ref3.state;
+	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref4, url) {
+	  var dispatch = _ref4.dispatch;
+	  var commit = _ref4.commit;
+	  var state = _ref4.state;
+
+	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
+	    dispatch('loadTopic', id);
+	  });
+	};
+
+	var loadComments = exports.loadComments = function loadComments(_ref5, data) {
+	  var dispatch = _ref5.dispatch;
+	  var commit = _ref5.commit;
+	  var state = _ref5.state;
 	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
@@ -7266,10 +7309,10 @@
 	  });
 	};
 
-	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref4, pageNumber) {
-	  var dispatch = _ref4.dispatch;
-	  var commit = _ref4.commit;
-	  var state = _ref4.state;
+	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref6, pageNumber) {
+	  var dispatch = _ref6.dispatch;
+	  var commit = _ref6.commit;
+	  var state = _ref6.state;
 
 	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
 
@@ -7454,6 +7497,9 @@
 	//
 	//
 	//
+	//
+	//
+	//
 
 	exports.default = {
 	  data: function data() {
@@ -7469,9 +7515,9 @@
 	      showSearch: false,
 	      //bestTopics: [],
 	      //topics: [],
-	      searchQuery: '',
-	      searchQueryString: '',
-	      searchResults: [],
+	      //searchQuery: '',
+	      //searchQueryString: '',
+	      //searchResults: [],
 	      //loadMoreId: 0,
 	      //topTopicId: 0,
 	      topicRefreshIntervalId: '',
@@ -7532,37 +7578,25 @@
 	      $('.topic.' + this.$store.state.loadMoreId).addClass('beforeMore');
 	    },
 	    doSearch: function doSearch() {
-	      var _this = this;
-
-	      if (this.searchQuery === '') return false;
-
-	      $('.searchResultList').addClass('wrapUp');
-	      $('.searchResultList .loading').addClass('active');
-	      _pantipInterface2.default.search(this.searchQuery).then(function (data) {
-	        //console.log(data);
-	        _this.searchResults = data.results;
-	        _this.searchQueryString = data.queryString;
-	        $('.searchResultList').removeClass('wrapUp');
-	        $('.searchResultList .loading').removeClass('active');
-	      });
+	      this.$store.dispatch('search');
 	    },
 	    loadMoreSearchResults: function loadMoreSearchResults() {
-	      var _this2 = this;
+	      var _this = this;
 
 	      _pantipInterface2.default.search(this.searchQuery, this.searchResults.length, this.searchQueryString).then(function (data) {
 	        var _searchResults;
 
-	        (_searchResults = _this2.searchResults).push.apply(_searchResults, _toConsumableArray(data.results));
+	        (_searchResults = _this.searchResults).push.apply(_searchResults, _toConsumableArray(data.results));
 	      });
 	    },
 	    refreshTopic: function refreshTopic() {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      if (this.$store.state.topicId !== 0) {
 	        (function () {
 	          var scroll = document.getElementById('rightPane').scrollTop;
 
-	          _this3.$store.dispatch('loadTopic', _this3.topicId).then(function (value) {
+	          _this2.$store.dispatch('loadTopic', _this2.topicId).then(function (value) {
 	            $('#rightPane').stop().animate({ scrollTop: scroll }, "0.5s");
 	          });
 	        })();
@@ -7583,18 +7617,8 @@
 	    }
 	  },
 
-	  events: {
-	    'loadSearchResult': function loadSearchResult(url) {
-	      var _this4 = this;
-
-	      _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
-	        _this4.loadTopic(id);
-	      });
-	    }
-	  },
-
 	  mounted: function mounted() {
-	    var _this5 = this;
+	    var _this3 = this;
 
 	    //Get and apply options
 	    chrome.storage.sync.get({
@@ -7603,7 +7627,7 @@
 	      fontSize: '26',
 	      fontFace: 'TH Sarabun New'
 	    }, function (item) {
-	      _this5.$store.dispatch('loadTopics', { forumName: item.defaultForum });
+	      _this3.$store.dispatch('loadTopics', { forumName: item.defaultForum });
 	      _helpers2.default.applyTheme(item.theme, item.fontSize, item.fontFace);
 	    });
 	  }
@@ -7796,8 +7820,8 @@
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
-	      value: (searchQuery),
-	      expression: "searchQuery"
+	      value: ($store.state.searchQuery),
+	      expression: "$store.state.searchQuery"
 	    }],
 	    staticClass: "searchBar",
 	    attrs: {
@@ -7805,7 +7829,7 @@
 	      "placeholder": "คำค้นหา..."
 	    },
 	    domProps: {
-	      "value": _s(searchQuery)
+	      "value": _s($store.state.searchQuery)
 	    },
 	    on: {
 	      "keyup": function($event) {
@@ -7814,7 +7838,7 @@
 	      },
 	      "input": function($event) {
 	        if ($event.target.composing) return;
-	        searchQuery = $event.target.value
+	        $store.state.searchQuery = $event.target.value
 	      }
 	    }
 	  }), " ", _h('toolbar-icon', {
@@ -7829,7 +7853,7 @@
 	    }
 	  })]), " ", _h('div', {
 	    staticClass: "searchResultList sForeBg"
-	  }, [_m(6), " ", _l((searchResults), function(topic) {
+	  }, [_m(6), " ", _l(($store.state.searchResults), function(topic) {
 	    return _h('search-result-item', {
 	      attrs: {
 	        "data": topic
@@ -7839,8 +7863,8 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: (searchResults.length),
-	      expression: "searchResults.length"
+	      value: ($store.state.searchResults.length),
+	      expression: "$store.state.searchResults.length"
 	    }],
 	    staticClass: "loadMore sButton sAccentBg sElevation0h2",
 	    on: {
@@ -9056,6 +9080,8 @@
 	//
 	//
 	//
+	//
+	//
 
 	exports.default = {
 	  props: {
@@ -9070,7 +9096,7 @@
 
 	  methods: {
 	    loadSearchResult: function loadSearchResult() {
-	      this.$dispatch('loadSearchResult', this.data.topic_link);
+	      this.$store.dispatch('loadSearchResult', this.data.topic_link);
 	    }
 	  }
 	};
@@ -9086,18 +9112,20 @@
 	      "click": loadSearchResult
 	    }
 	  }, [_h('div', {
-	    staticClass: "title",
+	    staticClass: "topic-text"
+	  }, [_h('div', {
+	    staticClass: "topic-title",
 	    domProps: {
 	      "innerHTML": _s(data.disp_topic)
 	    }
 	  }), " ", _h('div', {
-	    staticClass: "subtitle sSubtitle"
+	    staticClass: "topic-subtitle sSubtitle"
 	  }, ["คห. " + _s(data.comment_num) + " โดย " + _s(data.author)]), " ", _h('div', {
-	    staticClass: "result sSubtitle",
+	    staticClass: "topic-result sSubtitle",
 	    domProps: {
 	      "innerHTML": _s(data.content)
 	    }
-	  })])
+	  })])])
 	}},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -9529,21 +9557,13 @@
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
 	    staticClass: "commentsCount sBackBg"
-	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\n    "]), " ", _m(1)]), " ", _h('pagination', {
-	    attrs: {
-	      "comments-per-page": $store.state.commentsPerPage
-	    }
-	  }), " ", _l(($store.state.shownComments), function(comment) {
+	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\n    "]), " ", _m(1)]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
 	    return _h('comment-item', {
 	      attrs: {
 	        "data": comment
 	      }
 	    })
-	  }), " ", _h('pagination', {
-	    attrs: {
-	      "comments-per-page": $store.state.commentsPerPage
-	    }
-	  }), " ", _h('div', {
+	  }), " ", _h('pagination'), " ", _h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",

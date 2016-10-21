@@ -2,6 +2,12 @@ import Vars from '../vars';
 import Pantip from '../pantipInterface';
 import Helper from '../helpers';
 
+/*
+payload = {
+  forumName : name of forum to load
+  loadMore : whether or not this request is from a load more button
+}
+*/
 export const loadTopics = ({ dispatch, commit, state }, payload) => {
   let _loadMoreId = payload.loadMore ? state.loadMoreId : 0;
 
@@ -29,6 +35,25 @@ export const loadTopics = ({ dispatch, commit, state }, payload) => {
     }
     state.topTopicId = state.topics[0]._id;
     state.loadMoreId = data.loadMoreID;
+  });
+}
+
+/*
+payload = {
+  none for now
+}
+*/
+export const search = ({ dispatch, commit, state }) => {
+  if(state.searchQuery === '') return false;
+
+  $('.searchResultList').addClass('wrapUp');
+  $('.searchResultList .loading').addClass('active');
+  Pantip.search(state.searchQuery).then(data => {
+    //console.log(data);
+    state.searchResults = data.results;
+    state.searchQueryString = data.queryString;
+    $('.searchResultList').removeClass('wrapUp');
+    $('.searchResultList .loading').removeClass('active');
   });
 }
 
@@ -82,6 +107,12 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
         }
       });
     }, 30000);
+  });
+}
+
+export const loadSearchResult = ({ dispatch, commit, state }, url) => {
+  Pantip.getTopicIdFromSearch(url).then(id => {
+    dispatch('loadTopic', id);
   });
 }
 

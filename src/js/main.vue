@@ -52,15 +52,18 @@
       <div class="searchPane" v-show="showSearch">
         <div class="searchContainer sForeBg">
           <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click.native="showSearch = false"></toolbar-icon>
-          <input class="searchBar" type="text" v-model="searchQuery" placeholder="คำค้นหา..." @keyup.enter="doSearch">
+          <input class="searchBar" type="text"
+                 v-model="$store.state.searchQuery"
+                 placeholder="คำค้นหา..."
+                 @keyup.enter="doSearch">
           <toolbar-icon icon="search" label="ค้นหา" @click.native="doSearch"></toolbar-icon>
         </div>
         <div class="searchResultList sForeBg">
           <div class="loading sAccentText"><i class="ic">refresh</i></div>
-          <search-result-item v-for="topic in searchResults" :data="topic"></search-result-item>
+          <search-result-item v-for="topic in $store.state.searchResults" :data="topic"></search-result-item>
           <button class="loadMore sButton sAccentBg sElevation0h2"
                   @click="loadMoreSearchResults"
-                  v-show="searchResults.length">
+                  v-show="$store.state.searchResults.length">
             โหลดกระทู้เพิ่ม
           </button>
         </div>
@@ -115,9 +118,9 @@ export default {
     showSearch: false,
     //bestTopics: [],
     //topics: [],
-    searchQuery: '',
-    searchQueryString: '',
-    searchResults: [],
+    //searchQuery: '',
+    //searchQueryString: '',
+    //searchResults: [],
     //loadMoreId: 0,
     //topTopicId: 0,
     topicRefreshIntervalId: '',
@@ -157,17 +160,7 @@ export default {
     },
 
     doSearch(){
-      if(this.searchQuery === '') return false;
-
-      $('.searchResultList').addClass('wrapUp');
-      $('.searchResultList .loading').addClass('active');
-      Pantip.search(this.searchQuery).then(data => {
-        //console.log(data);
-        this.searchResults = data.results;
-        this.searchQueryString = data.queryString;
-        $('.searchResultList').removeClass('wrapUp');
-        $('.searchResultList .loading').removeClass('active');
-      });
+      this.$store.dispatch('search');
     },
 
     loadMoreSearchResults(){
@@ -204,14 +197,6 @@ export default {
 
     goToSettings(){
       chrome.runtime.openOptionsPage();
-    }
-  },
-
-  events: {
-    'loadSearchResult': function(url){
-      Pantip.getTopicIdFromSearch(url).then(id => {
-        this.loadTopic(id);
-      });
     }
   },
 
