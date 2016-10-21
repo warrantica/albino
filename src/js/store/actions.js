@@ -153,7 +153,7 @@ export const loadComments = ({ dispatch, commit, state }, data, isRefresh = fals
       }
     });
 
-    if(state.totalComments > 0) state.comments = data.comments;
+    state.comments = state.totalComments ? data.comments : [];
 
     if(state.commentsPerPage < state.totalComments){
       let start = isRefresh ? state.commentPage*state.commentsPerPage : 0;

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click.stop="dismissDialogues">
+  <div id="app" @click="dismissDialogues">
     <div id="sidebar" class="sBackBg sElevation2">
       <div id="sidebarHead" class="sForeBg">
         <div id="logo">

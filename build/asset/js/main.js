@@ -104,7 +104,7 @@
 	  $(this).next().toggle();
 	});
 
-	$('body').on('click', '#fab .topContainer', function (e) {
+	$('body').on('click', '.topContainer', function (e) {
 	  var scrollTo = 0;
 	  var previousTop = 0;
 	  $('#rightPane').find('.comment:not(.sub)').each(function (i) {
@@ -121,7 +121,7 @@
 	  }
 	});
 
-	$('body').on('click', '#fab .bottomContainer', function (e) {
+	$('body').on('click', '.bottomContainer', function (e) {
 	  var scrollTo = 0;
 	  $('#rightPane').find('.comment:not(.sub)').each(function (i) {
 	    if (this.getBoundingClientRect().top > 64) {
@@ -7285,10 +7285,7 @@
 	      "id": "app"
 	    },
 	    on: {
-	      "click": function($event) {
-	        $event.stopPropagation();
-	        dismissDialogues($event)
-	      }
+	      "click": dismissDialogues
 	    }
 	  }, [_h('div', {
 	    staticClass: "sBackBg sElevation2",
@@ -8023,7 +8020,7 @@
 	      }
 	    });
 
-	    if (state.totalComments > 0) state.comments = data.comments;
+	    state.comments = state.totalComments ? data.comments : [];
 
 	    if (state.commentsPerPage < state.totalComments) {
 	      var start = isRefresh ? state.commentPage * state.commentsPerPage : 0;
@@ -9534,10 +9531,6 @@
 	//
 	//
 	//
-	//
-	//
-	//
-	//
 
 	var Pantip = __webpack_require__(5);
 	exports.default = {};
@@ -9555,8 +9548,8 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: ($store.state.totalComments),
-	      expression: "$store.state.totalComments"
+	      value: ($store.state.totalComments > 0),
+	      expression: "$store.state.totalComments > 0"
 	    }],
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
@@ -9567,14 +9560,7 @@
 	        "data": comment
 	      }
 	    })
-	  }), " ", _h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: ($store.state.totalComments && !$store.state.shownComments.length),
-	      expression: "$store.state.totalComments && !$store.state.shownComments.length"
-	    }]
-	  }, [_m(2), " loading...\n  "]), " ", _h('pagination')])
+	  }), " ", _h('pagination')])
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('i', {
 	    staticClass: "ic"
@@ -9585,10 +9571,6 @@
 	  }, ["\n      เรียงตาม: เวลาโพสต์ ", _h('i', {
 	    staticClass: "ic"
 	  }, ["arrow_drop_down"])])
-	}},function (){with(this) {
-	  return _h('i', {
-	    staticClass: "ic"
-	  }, ["hourglass_full"])
 	}}]}
 	if (false) {
 	  module.hot.accept()

@@ -35,7 +35,7 @@ $('body').on('click', '.spoil-btn', function(e){
   $(this).next().toggle();
 });
 
-$('body').on('click', '#fab .topContainer', function(e){
+$('body').on('click', '.topContainer', function(e){
   let scrollTo = 0;
   let previousTop = 0;
   $('#rightPane').find('.comment:not(.sub)').each(function(i){
@@ -52,7 +52,7 @@ $('body').on('click', '#fab .topContainer', function(e){
   }
 });
 
-$('body').on('click', '#fab .bottomContainer', function(e){
+$('body').on('click', '.bottomContainer', function(e){
   let scrollTo = 0;
   $('#rightPane').find('.comment:not(.sub)').each(function(i){
     if(this.getBoundingClientRect().top > 64){

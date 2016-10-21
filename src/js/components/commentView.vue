@@ -1,6 +1,6 @@
 <template>
   <div id="commentsView">
-    <div class="commentsInfo" v-show="$store.state.totalComments">
+    <div class="commentsInfo" v-show="$store.state.totalComments > 0">
       <div class="commentsCount sBackBg">
         <i class="ic">chat_bubble</i> {{ $store.state.totalComments }} ความเห็น
       </div>
@@ -12,10 +12,6 @@
 
     <comment-item v-for="comment in $store.state.shownComments" :data="comment">
     </comment-item>
-
-    <div v-show="$store.state.totalComments && !$store.state.shownComments.length">
-      <i class="ic">hourglass_full</i> loading...
-    </div>
 
     <pagination></pagination>
   </div>
