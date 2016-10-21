@@ -18,42 +18,41 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      data: {
-        _id: String,
-        disp_topic: String,
-        cover_img: String,
-        author: String,
-        commentsNum: Number,
-        utime: String,
-        timeFull: String,
-        isTop: {
-          type: Boolean,
-          default: false
-        }
-      },
-      commentIcon: String,
-      voteIcon: String,
-    },
-
-    methods: {
-      loadTopic(){
-        //this.$dispatch('loadTopic', this.data._id);
-        this.$store.dispatch('loadTopic', this.data._id);
+export default {
+  props: {
+    data: {
+      _id: String,
+      disp_topic: String,
+      cover_img: String,
+      author: String,
+      commentsNum: Number,
+      utime: String,
+      timeFull: String,
+      isTop: {
+        type: Boolean,
+        default: false
       }
     },
+    commentIcon: String,
+    voteIcon: String,
+  },
 
-    computed: {
-      isActive(){ return this.data._id === this.$store.state.topicId },
-
-      thumbnail(){
-        return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
-      }
-    },
-
-    mounted(){
-      $('time').timeago();
+  methods: {
+    loadTopic(){
+      this.$store.dispatch('loadTopic', this.data._id);
     }
+  },
+
+  computed: {
+    isActive(){ return this.data._id === this.$store.state.topicId },
+
+    thumbnail(){
+      return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
+    }
+  },
+
+  mounted(){
+    $('time').timeago();
   }
+}
 </script>

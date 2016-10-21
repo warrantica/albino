@@ -7445,7 +7445,7 @@
 	          for (var _iterator = this.forums[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	            var forum = _step.value;
 
-	            if (forum.name === this.currentForum) return forum.label;
+	            if (forum.name === this.$store.state.forumName) return forum.label;
 	          }
 	        } catch (err) {
 	          _didIteratorError = true;
@@ -8636,7 +8636,6 @@
 
 	  methods: {
 	    loadForum: function loadForum() {
-	      //this.$dispatch('loadForum', this.name);
 	      this.$store.dispatch('loadTopics', { forumName: this.name });
 	    }
 	  }
@@ -8936,7 +8935,6 @@
 
 	  methods: {
 	    loadTopic: function loadTopic() {
-	      //this.$dispatch('loadTopic', this.data._id);
 	      this.$store.dispatch('loadTopic', this.data._id);
 	    }
 	  },

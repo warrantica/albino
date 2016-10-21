@@ -122,7 +122,7 @@ export default {
     forumDisplayName(){
       if(this.currentForum !== ''){
         for(let forum of this.forums)
-          if(forum.name === this.currentForum) return forum.label;
+          if(forum.name === this.$store.state.forumName) return forum.label;
       }else{
         return 'เลือกห้อง';
       }
