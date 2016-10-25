@@ -7945,12 +7945,15 @@
 
 	  if (topicId !== state.currentTopic) $('#rightPane').animate({ scrollTop: 0 }, "0.5s");
 
+	  commit('setTopicId', topicId);
+	  commit('setTopicTitle', '');
+
 	  return Promise.all([_pantipInterface2.default.loadTopic(topicId), _pantipInterface2.default.loadComments(topicId)]).then(function (values) {
 	    //console.log(values);
 
 	    values[0].utime = _helpers2.default.convertTimeFormatToISO(values[0].utime);
 	    commit('setTopicTitle', values[0]['title']);
-	    commit('setTopicId', topicId);
+
 	    state.loadedPage = 1;
 	    state.commentPage = 0;
 

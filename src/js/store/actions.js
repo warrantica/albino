@@ -80,8 +80,10 @@ export const loadPage = ({ dispatch, commit, state }, pageName) => {
 export const loadTopic = ({ dispatch, commit, state }, topicId) => {
   Helper.setRightPaneCurtains(false);
 
-  if(topicId !== state.currentTopic)
-    $('#rightPane').animate({scrollTop:0}, "0.5s");
+  if(topicId !== state.currentTopic) $('#rightPane').animate({scrollTop:0}, "0.5s");
+
+  commit('setTopicId', topicId);
+  commit('setTopicTitle', '');
 
   return Promise.all([
     Pantip.loadTopic(topicId),
@@ -91,7 +93,7 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
 
     values[0].utime = Helper.convertTimeFormatToISO(values[0].utime);
     commit('setTopicTitle', values[0]['title']);
-    commit('setTopicId', topicId);
+
     state.loadedPage = 1;
     state.commentPage = 0;
 
