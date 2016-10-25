@@ -174,7 +174,7 @@
 	  render: function render(h) {
 	    return h(_main2.default);
 	  }
-	}).$mount('#app');
+	}).$mount('.app');
 
 	//============================================================================
 	//Utility function stuff
@@ -7337,9 +7337,7 @@
 
 	module.exports={render:function (){with(this) {
 	  return _h('div', {
-	    attrs: {
-	      "id": "app"
-	    },
+	    staticClass: "app",
 	    on: {
 	      "click": dismissDialogues
 	    }

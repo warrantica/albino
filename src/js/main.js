@@ -103,7 +103,7 @@ $('body').on('click', '#lightBox', function(e){
 let vm = new Vue({
   store,
   render: h => h(App)
-}).$mount('#app');
+}).$mount('.app');
 
 //============================================================================
 //Utility function stuff
