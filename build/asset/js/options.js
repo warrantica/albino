@@ -47,11 +47,11 @@
 
 	'use strict';
 
-	var _vue = __webpack_require__(1);
+	var _vue = __webpack_require__(2);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
-	var _vars = __webpack_require__(4);
+	var _vars = __webpack_require__(5);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
@@ -73,6 +73,63 @@
 /***/ },
 
 /***/ 1:
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+
+/***/ 2:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/*!
@@ -5689,11 +5746,11 @@
 
 	module.exports = Vue$2;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 
-/***/ 2:
+/***/ 3:
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -5880,7 +5937,7 @@
 
 /***/ },
 
-/***/ 4:
+/***/ 5:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5982,7 +6039,7 @@
 
 /***/ },
 
-/***/ 5:
+/***/ 6:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -6233,12 +6290,12 @@
 
 /***/ },
 
-/***/ 6:
+/***/ 7:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _vars = __webpack_require__(4);
+	var _vars = __webpack_require__(5);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
@@ -6348,63 +6405,6 @@
 	    return comment;
 	  }
 	};
-
-/***/ },
-
-/***/ 16:
-/***/ function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
 
 /***/ },
 
@@ -6684,15 +6684,15 @@
 	  value: true
 	});
 
-	var _vars = __webpack_require__(4);
+	var _vars = __webpack_require__(5);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
-	var _pantipInterface = __webpack_require__(5);
+	var _pantipInterface = __webpack_require__(6);
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
-	var _helpers = __webpack_require__(6);
+	var _helpers = __webpack_require__(7);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -7169,7 +7169,7 @@
 /***/ 74:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -7254,7 +7254,7 @@
 	//
 	//
 
-	var Vars = __webpack_require__(4);
+	var Vars = __webpack_require__(5);
 
 	exports.default = {
 	  props: {
@@ -7420,7 +7420,7 @@
 /***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -7510,7 +7510,7 @@
 	//
 	//
 
-	var Vars = __webpack_require__(4);
+	var Vars = __webpack_require__(5);
 
 	exports.default = {
 	  props: {

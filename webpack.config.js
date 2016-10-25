@@ -1,7 +1,10 @@
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = {
   entry: {
     './js/main.js': './src/js/main.js',
-    './js/options.js': './src/js/options.js'
+    './js/options.js': './src/js/options.js',
+    './css/app.css': './src/css/app.scss'
   },
   output: {
     path: './build/asset',
@@ -18,9 +21,15 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel',
         exclude: /node_modules/
+      },{
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css!sass')
       }
     ]
   },
+  plugins: [
+    new ExtractTextPlugin('[name]')
+  ],
   vue: {
     loaders: {
       js: 'babel',

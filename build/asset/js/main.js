@@ -46,31 +46,31 @@
 
 	'use strict';
 
-	var _vue = __webpack_require__(1);
+	var _vue = __webpack_require__(2);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
-	var _vuex = __webpack_require__(3);
+	var _vuex = __webpack_require__(4);
 
 	var _vuex2 = _interopRequireDefault(_vuex);
 
-	var _vars = __webpack_require__(4);
+	var _vars = __webpack_require__(5);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
-	var _pantipInterface = __webpack_require__(5);
+	var _pantipInterface = __webpack_require__(6);
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
-	var _helpers = __webpack_require__(6);
+	var _helpers = __webpack_require__(7);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
-	var _main = __webpack_require__(7);
+	var _main = __webpack_require__(8);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _store = __webpack_require__(10);
+	var _store = __webpack_require__(11);
 
 	var _store2 = _interopRequireDefault(_store);
 
@@ -83,7 +83,7 @@
 	_vue2.default.use(_vuex2.default);
 	_vue2.default.config.devtools = false;
 
-	_vue2.default.component('toolbarIcon', __webpack_require__(13));
+	_vue2.default.component('toolbarIcon', __webpack_require__(14));
 	_vue2.default.component('forumSelectItem', __webpack_require__(20));
 	_vue2.default.component('bestTopicItem', __webpack_require__(25));
 	_vue2.default.component('topicItem', __webpack_require__(30));
@@ -189,6 +189,62 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/*!
@@ -5805,10 +5861,10 @@
 
 	module.exports = Vue$2;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -5994,7 +6050,7 @@
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6527,7 +6583,7 @@
 	})));
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -6628,7 +6684,7 @@
 	};
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -6878,12 +6934,12 @@
 	};
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _vars = __webpack_require__(4);
+	var _vars = __webpack_require__(5);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
@@ -6995,16 +7051,16 @@
 	};
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* script */
-	__vue_exports__ = __webpack_require__(8)
+	__vue_exports__ = __webpack_require__(9)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(9)
+	var __vue_template__ = __webpack_require__(10)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -7038,7 +7094,7 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7047,15 +7103,15 @@
 	  value: true
 	});
 
-	var _vars = __webpack_require__(4);
+	var _vars = __webpack_require__(5);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
-	var _pantipInterface = __webpack_require__(5);
+	var _pantipInterface = __webpack_require__(6);
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
-	var _helpers = __webpack_require__(6);
+	var _helpers = __webpack_require__(7);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -7276,7 +7332,7 @@
 	//
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -7679,7 +7735,7 @@
 	}
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7688,17 +7744,17 @@
 	  value: true
 	});
 
-	var _vue = __webpack_require__(1);
+	var _vue = __webpack_require__(2);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
-	var _vuex = __webpack_require__(3);
+	var _vuex = __webpack_require__(4);
 
 	var _vuex2 = _interopRequireDefault(_vuex);
 
-	var _state = __webpack_require__(11);
+	var _state = __webpack_require__(12);
 
-	var _actions = __webpack_require__(12);
+	var _actions = __webpack_require__(13);
 
 	var actions = _interopRequireWildcard(_actions);
 
@@ -7715,7 +7771,7 @@
 	});
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7796,7 +7852,7 @@
 	};
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7806,15 +7862,15 @@
 	});
 	exports.goToCommentPage = exports.loadMoreComments = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = undefined;
 
-	var _vars = __webpack_require__(4);
+	var _vars = __webpack_require__(5);
 
 	var _vars2 = _interopRequireDefault(_vars);
 
-	var _pantipInterface = __webpack_require__(5);
+	var _pantipInterface = __webpack_require__(6);
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
-	var _helpers = __webpack_require__(6);
+	var _helpers = __webpack_require__(7);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -7829,9 +7885,9 @@
 	}
 	*/
 	var loadTopics = exports.loadTopics = function loadTopics(_ref, payload) {
-	  var dispatch = _ref.dispatch;
-	  var commit = _ref.commit;
-	  var state = _ref.state;
+	  var dispatch = _ref.dispatch,
+	      commit = _ref.commit,
+	      state = _ref.state;
 
 	  var _loadMoreId = payload.loadMore ? state.loadMoreId : 0;
 
@@ -7893,9 +7949,9 @@
 	var search = exports.search = function search(_ref2, payload) {
 	  var _console;
 
-	  var dispatch = _ref2.dispatch;
-	  var commit = _ref2.commit;
-	  var state = _ref2.state;
+	  var dispatch = _ref2.dispatch,
+	      commit = _ref2.commit,
+	      state = _ref2.state;
 
 	  if (state.searchQuery === '') return false;
 	  if (payload === undefined) payload = {};
@@ -7925,9 +7981,9 @@
 	};
 
 	var loadPage = exports.loadPage = function loadPage(_ref3, pageName) {
-	  var dispatch = _ref3.dispatch;
-	  var commit = _ref3.commit;
-	  var state = _ref3.state;
+	  var dispatch = _ref3.dispatch,
+	      commit = _ref3.commit,
+	      state = _ref3.state;
 
 	  commit('setTopicTitle', '');
 	  commit('setTopicId', 0);
@@ -7937,9 +7993,9 @@
 	};
 
 	var loadTopic = exports.loadTopic = function loadTopic(_ref4, topicId) {
-	  var dispatch = _ref4.dispatch;
-	  var commit = _ref4.commit;
-	  var state = _ref4.state;
+	  var dispatch = _ref4.dispatch,
+	      commit = _ref4.commit,
+	      state = _ref4.state;
 
 	  _helpers2.default.setRightPaneCurtains(false);
 
@@ -7994,9 +8050,9 @@
 	};
 
 	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref5, url) {
-	  var dispatch = _ref5.dispatch;
-	  var commit = _ref5.commit;
-	  var state = _ref5.state;
+	  var dispatch = _ref5.dispatch,
+	      commit = _ref5.commit,
+	      state = _ref5.state;
 
 	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
 	    dispatch('loadTopic', id);
@@ -8004,9 +8060,9 @@
 	};
 
 	var loadComments = exports.loadComments = function loadComments(_ref6, data) {
-	  var dispatch = _ref6.dispatch;
-	  var commit = _ref6.commit;
-	  var state = _ref6.state;
+	  var dispatch = _ref6.dispatch,
+	      commit = _ref6.commit,
+	      state = _ref6.state;
 	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
@@ -8036,9 +8092,9 @@
 	};
 
 	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref7, pageNumber) {
-	  var dispatch = _ref7.dispatch;
-	  var commit = _ref7.commit;
-	  var state = _ref7.state;
+	  var dispatch = _ref7.dispatch,
+	      commit = _ref7.commit,
+	      state = _ref7.state;
 
 	  var start = pageNumber * state.commentsPerPage;
 	  _pantipInterface2.default.loadComments(state.topicId, ++state.loadedPage).then(function (data) {
@@ -8063,9 +8119,9 @@
 	};
 
 	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref8, pageNumber) {
-	  var dispatch = _ref8.dispatch;
-	  var commit = _ref8.commit;
-	  var state = _ref8.state;
+	  var dispatch = _ref8.dispatch,
+	      commit = _ref8.commit,
+	      state = _ref8.state;
 
 	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
 
@@ -8084,13 +8140,13 @@
 	};
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(14)
+	__webpack_require__(15)
 
 	/* script */
 	__vue_exports__ = __webpack_require__(18)
@@ -8131,13 +8187,13 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(15);
+	var content = __webpack_require__(16);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -8157,10 +8213,10 @@
 	}
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -8168,62 +8224,6 @@
 	exports.push([module.id, "\n.toolbarIcon[data-v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n.label[data-v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  transition: all .1s ease;\n}\n.ic:hover + .label[data-v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n", ""]);
 
 	// exports
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
 
 
 /***/ },
@@ -8626,7 +8626,7 @@
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -8783,7 +8783,7 @@
 /* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -9251,7 +9251,7 @@
 /* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -9449,7 +9449,7 @@
 /* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -9535,7 +9535,7 @@
 	//
 	//
 
-	var Pantip = __webpack_require__(5);
+	var Pantip = __webpack_require__(6);
 	exports.default = {};
 
 /***/ },
@@ -9659,7 +9659,7 @@
 /* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -9851,7 +9851,7 @@
 /* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -9871,11 +9871,11 @@
 	  value: true
 	});
 
-	var _pantipInterface = __webpack_require__(5);
+	var _pantipInterface = __webpack_require__(6);
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
-	var _helpers = __webpack_require__(6);
+	var _helpers = __webpack_require__(7);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -10119,7 +10119,7 @@
 /* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -10445,7 +10445,7 @@
 /* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
@@ -10549,7 +10549,7 @@
 /* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(16)();
+	exports = module.exports = __webpack_require__(1)();
 	// imports
 
 
