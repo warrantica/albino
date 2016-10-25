@@ -7342,17 +7342,11 @@
 	      "click": dismissDialogues
 	    }
 	  }, [_h('div', {
-	    staticClass: "sBackBg sElevation2",
-	    attrs: {
-	      "id": "sidebar"
-	    }
+	    staticClass: "sidebar"
 	  }, [_h('div', {
-	    staticClass: "sForeBg",
-	    attrs: {
-	      "id": "sidebarHead"
-	    }
+	    staticClass: "sidebarHead"
 	  }, [_m(0), " ", _h('div', {
-	    staticClass: "sidebarToolbar"
+	    staticClass: "sidebar-toolbar"
 	  }, [_h('div', {
 	    staticClass: "sClickable",
 	    attrs: {
@@ -7647,15 +7641,13 @@
 	  })]), " ", _m(8)]), " ", _m(9)])
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('div', {
-	    attrs: {
-	      "id": "logo"
-	    }
+	    staticClass: "logo"
 	  }, [_h('img', {
 	    attrs: {
 	      "src": "asset/img/logo.png"
 	    }
 	  }), " ", _h('img', {
-	    staticClass: "logoHover",
+	    staticClass: "logo-colored",
 	    attrs: {
 	      "src": "asset/img/logoHover.png"
 	    }

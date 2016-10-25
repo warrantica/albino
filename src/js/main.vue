@@ -1,12 +1,12 @@
 <template>
   <div class="app" @click="dismissDialogues">
-    <div id="sidebar" class="sBackBg sElevation2">
-      <div id="sidebarHead" class="sForeBg">
-        <div id="logo">
+    <div class="sidebar">
+      <div class="sidebarHead">
+        <div class="logo">
           <img src="asset/img/logo.png"/>
-          <img src="asset/img/logoHover.png" class="logoHover"/>
+          <img src="asset/img/logoHover.png" class="logo-colored"/>
         </div>
-        <div class="sidebarToolbar">
+        <div class="sidebar-toolbar">
           <div id="forumSelector" class="sClickable" @click.stop="showDialogues.forumSelect = true">
             <span id="forumSelectorName">{{ forumDisplayName }}</span>
             <i class="ic">arrow_drop_down</i>

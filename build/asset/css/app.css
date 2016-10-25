@@ -16,28 +16,70 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-/*============================================================*/
-body {
-  line-height: 1.25;
-  font-family: sans-serif;
-  font-size: 14px;
-  color: #212121; }
-
-html, body {
-  height: 100%;
-  min-height: 100%;
-  overflow: hidden; }
-
-.app {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: stretch;
-  height: 100%;
-  overflow: hidden; }
+:root {
+  --primary: #9C27B0;
+  --accent: #F01F41;
+  --text-on-primary: #FFFFFF;
+  --text-on-accent: #FFFFFF;
+  --text: #212121;
+  --subtitle: #888888;
+  --fore: #FFFFFF;
+  --back: #EAEAEA;
+  --hover: #DEDEDE;
+  --border: rgba(0, 0, 0, 0.12);
+  --font-face: 'TH Sarabun New';
+  --font-size: 26px; }
 
 a:link, a:visited {
-  text-decoration: none; }
+  color: var(--accent);
+  border-bottom: 1px var(--accent) solid; }
 
+.sPrimaryBg {
+  background: var(--primary);
+  color: var(--text-on-primary); }
+
+.sPrimaryText {
+  color: var(--primary); }
+
+.sAccentBg, ::selection {
+  background: var(--accent);
+  color: var(--text-on-accent); }
+
+.sAccentText, .result b {
+  color: var(--accent); }
+
+.sSubtitle {
+  color: var(--subtitle); }
+
+.sBackBg, .sub.comment {
+  background: var(--back);
+  color: var(--text); }
+
+.sForeBg, .dialogue, .loading {
+  background: var(--fore); }
+
+.dialogue li:hover, .topic:hover, .topic.active, .page:not(.current):hover {
+  background: var(--hover); }
+
+#sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info {
+  border-bottom: 1px var(--border) solid; }
+
+.top.topic, .commentsInfo:before {
+  border-top: 1px var(--border) solid; }
+
+#rightPane .content {
+  font-size: var(--font-size);
+  font-family: var(--font-face); }
+
+/*============================================================*/
+/* Colors
+/*============================================================*/
+/*============================================================*/
+/* Fonts
+/*============================================================*/
+/*============================================================*/
+/* Style Presets
+/*============================================================*/
 .sSubtitle {
   font-size: 11px; }
 
@@ -67,42 +109,71 @@ a:link, a:visited {
   cursor: pointer; }
 
 /*============================================================*/
-#sidebar {
-  flex: 3;
+/* Mixins
+/*============================================================*/
+/*============================================================*/
+/* Vue Related
+/*============================================================*/
+/*============================================================*/
+html, body {
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden; }
+
+body {
+  line-height: 1.25;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #212121; }
+
+.app {
   display: flex;
-  flex-direction: column;
+  flex-flow: row nowrap;
+  align-items: center;
   align-items: stretch;
+  height: 100%;
+  overflow: hidden; }
+
+a:link, a:visited {
+  text-decoration: none; }
+
+/*============================================================*/
+.sidebar {
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background: var(--back);
+  color: var(--text);
+  flex: 3;
   z-index: 10;
   position: relative; }
 
-#sidebarHead {
+.sidebarHead {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  background: var(--fore);
   width: 100%;
-  height: 64px;
-  min-height: 64px;
-  line-height: 64px;
-  box-sizing: border-box; }
-
-#logo {
-  position: relative;
-  top: 0;
-  left: 0;
-  display: inline-block;
-  width: auto;
   height: 64px; }
 
-#logo .logoHover {
+.logo {
+  flex: 1;
+  height: 64px;
+  position: relative; }
+
+.logo-colored {
+  transition: all .2s ease;
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0;
-  transition: all .2s ease-in-out; }
+  opacity: 0; }
 
-#sidebar:hover .logoHover {
+.sidebar:hover .logo-colored {
   opacity: 1; }
 
-.sidebarToolbar {
-  float: right;
-  padding-right: 15px; }
+.sidebar-toolbar {
+  margin-right: 15px; }
 
 #forumSelector {
   display: inline-block;
