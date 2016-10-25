@@ -1,11 +1,11 @@
 module.exports = {
   entry: {
-    main: './src/js/main.js',
-    options: './src/js/options.js'
+    './js/main.js': './src/js/main.js',
+    './js/options.js': './src/js/options.js'
   },
   output: {
-    path: './build/asset/js',
-    filename: '[name].js'
+    path: './build/asset',
+    filename: '[name]'
   },
   module: {
     loaders: [{
