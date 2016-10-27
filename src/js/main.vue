@@ -97,7 +97,7 @@
       </div>
     </div>
     <div class="lightBox">
-      <img src="" />
+      <img src="" class="lightBox-img"/>
     </div>
   </div>
 </template>

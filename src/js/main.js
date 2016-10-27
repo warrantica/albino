@@ -84,7 +84,7 @@ $('body').on('click', '.img-in-post', function(e){
       'left':'',
       'max-width':'99%',
       'max-height':'99vh'
-    }).addClass('.lightBox-img--active');
+    }).addClass('lightBox-img--active');
   }, 50);
 });
 

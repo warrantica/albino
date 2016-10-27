@@ -153,7 +153,7 @@
 	      'left': '',
 	      'max-width': '99%',
 	      'max-height': '99vh'
-	    }).addClass('.lightBox-img--active');
+	    }).addClass('lightBox-img--active');
 	  }, 50);
 	});
 
@@ -7669,6 +7669,7 @@
 	  return _h('div', {
 	    staticClass: "lightBox"
 	  }, [_h('img', {
+	    staticClass: "lightBox-img",
 	    attrs: {
 	      "src": ""
 	    }
