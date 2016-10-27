@@ -70,13 +70,13 @@
         </div>
       </div>
     </div>
-    <div id="belly" class="sBackBg">
-      <div id="bellyHead" class="sPrimaryBg sElevation1">
-        <div class="bellyTitle" v-text="$store.state.topicTitle"></div>
-        <div id="bellyToolbar">
-          <div class="refreshButtonContainer" @click="refreshTopic">
+    <div class="belly">
+      <div class="bellyBar">
+        <div class="bellyBar-title" v-text="$store.state.topicTitle"></div>
+        <div class="bellyBar-controls">
+          <div class="bellyBar-refresh" @click="refreshTopic">
             <toolbar-icon icon="refresh" label="รีเฟรชกระทู้"></toolbar-icon>
-            <div class="refreshBadge sAccentBg" v-show="$store.state.unreadComments">
+            <div class="bellyBar-refreshBadge" v-show="$store.state.unreadComments">
               {{ $store.state.unreadComments }}
             </div>
           </div>
@@ -84,7 +84,7 @@
         </div>
       </div>
       <div id="rightPane">
-        <div class="loading sAccentText"><i class="ic">hourglass_full</i></div>
+        <div class="loading loading--right"><i class="ics">hourglass_full</i></div>
         <div id="topicView" class="sForeBg sElevation1">
           <topic-view :data="$store.state.topicData" v-show="topicId != 0"></topic-view>
           <component :is="$store.state.pageName" v-show="topicId == 0"></component>
@@ -96,7 +96,7 @@
         <div class="bottomContainer sClickable"><i class="ic">expand_more</i></div>
       </div>
     </div>
-    <div id="lightBox" class="sClickable">
+    <div class="lightBox">
       <img src="" />
     </div>
   </div>

@@ -382,61 +382,60 @@ a:link, a:visited {
     margin-bottom: 1px; }
 
 /*============================================================*/
-#belly {
+.belly {
   display: flex;
   flex-flow: column;
   align-items: stretch;
+  background: var(--back);
+  color: var(--text);
   flex: 7;
   z-index: 5; }
 
-#bellyHead {
+.bellyBar {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background: var(--primary);
+  color: var(--text-on-primary);
+  justify-content: space-between;
   width: 100%;
   height: 64px;
-  min-height: 64px;
-  line-height: 64px; }
+  box-sizing: border-box;
+  padding: 0 15px;
+  min-height: 64px; }
+  .bellyBar-title {
+    width: 0;
+    flex: 1;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+  .bellyBar-controls {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center; }
+  .bellyBar-refresh {
+    position: relative; }
+  .bellyBar-refreshBadge {
+    background: var(--accent);
+    color: var(--text-on-accent);
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 4px; }
 
-.bellyTitle {
-  display: inline-block;
-  margin-left: 15px;
-  font-size: 20px;
-  max-width: calc(100% - 130px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; }
-
-#bellyToolbar {
-  display: inline-block;
-  float: right;
-  padding-right: 15px; }
-
-#bellyToolbar i {
-  margin-left: 10px; }
-
-.refreshButtonContainer {
-  position: relative;
-  top: 0;
-  left: 0;
-  display: inline-block;
-  line-height: 11px; }
-
-.refreshBadge {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  border-radius: 50%;
-  font-size: 11px;
-  font-weight: bold;
-  padding: 2px 4px; }
-
+/*============================================================*/
 #rightPane {
+  transition: all 0.5s ease;
   height: auto;
   flex: 1;
   overflow-y: auto;
   -webkit-clip-path: circle(110% at 50% 55px);
-  transition: all .5s ease-in-out;
-  position: relative;
-  top: 0;
-  left: 0; }
+  position: relative; }
 
 #rightPane.wrapUp {
   -webkit-clip-path: circle(15px at 50% 55px); }

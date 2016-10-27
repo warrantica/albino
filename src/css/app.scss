@@ -306,60 +306,62 @@ a:link, a:visited{ text-decoration: none; }
 
 /*============================================================*/
 
-#belly{
+.belly{
   @include flex-column-stretch;
+  @include base-back-bg;
   flex: 7;
   z-index: 5;
 }
 
-#bellyHead{
+.bellyBar{
+  @include flex-row-center;
+  @include elevation(1);
+  @include theme-primary-bg;
+  justify-content: space-between;
   width: 100%;
   height: 64px;
+  box-sizing: border-box;
+  padding: 0 15px;
   min-height: 64px;
-  line-height: 64px;
+
+  &-title{
+    width: 0; //fixes some weird flexbox ellipsis thing
+    flex: 1;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-controls{
+    @include flex-row-center;
+  }
+
+  &-refresh{
+    position: relative;
+  }
+
+  &-refreshBadge{
+    @include theme-accent-bg;
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 4px;
+  }
 }
 
-.bellyTitle{
-  display: inline-block;
-  margin-left: 15px;
-  font-size: 20px;
-  max-width: calc(100% - 130px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#bellyToolbar{
-  display: inline-block;
-  float: right;
-  padding-right: 15px;
-}
-
-#bellyToolbar i{ margin-left: 10px; }
-
-.refreshButtonContainer{
-  position: relative; top: 0; left: 0;
-  display: inline-block;
-  line-height: 11px;
-}
-
-.refreshBadge{
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  border-radius: 50%;
-  font-size: 11px;
-  font-weight: bold;
-  padding: 2px 4px;
-}
+/*============================================================*/
 
 #rightPane{
+  @include transition(.5s);
   height: auto;
   flex: 1;
   overflow-y: auto;
   -webkit-clip-path: circle(110% at 50% 55px);
-  transition: all .5s ease-in-out;
-  position: relative; top: 0; left: 0;
+  position: relative;
 }
 
 #rightPane.wrapUp{
@@ -521,8 +523,9 @@ a:link, a:visited{ text-decoration: none; }
 
 /*============================================================*/
 
-#lightBox{
-  width: 100%;
+.lightBox{
+  @include clickable;
+  width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0);
   position: absolute; top: 100vh; right: 0;
@@ -531,30 +534,30 @@ a:link, a:visited{ text-decoration: none; }
   transition: background-color .2s ease-in-out 0s,
               top .01s ease-in-out .2s,
               opacity .2s ease-in-out .01s;
-}
 
-#lightBox.active{
-  top: 0;
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.3);
-  transition: background-color .2s ease-in-out .1s,
-              top .01s ease-in-out 0s,
-              opacity .2s ease-in-out 0s;
-}
+  &--active{
+    top: 0;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.3);
+    transition: background-color .2s ease-in-out .1s,
+                top .01s ease-in-out 0s,
+                opacity .2s ease-in-out 0s;
+  }
 
-#lightBox img{
-  position: absolute;
-  top: 0; left: 0;
-  transform: translate(0, 0);
-  width: auto;
-  height: auto;
-}
+  &-img{
+    position: absolute;
+    top: 0; left: 0;
+    transform: translate(0, 0);
+    width: auto;
+    height: auto;
 
-#lightBox img.active{
-  width: auto;
-  height: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: all .2s ease-in-out;
+    &--active{
+      @include transition;
+      width: auto;
+      height: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }

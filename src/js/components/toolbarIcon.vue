@@ -11,7 +11,7 @@
 <style scoped>
   .toolbarIcon{
     display: inline-block;
-    margin: 0 5px;
+    margin: 0 10px;
     line-height: 1;
     position: relative; top: 0; right: 0;
     z-index: 15;

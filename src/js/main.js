@@ -69,29 +69,31 @@ $('body').on('click', '.bottomContainer', function(e){
 
 $('body').on('click', '.img-in-post', function(e){
   $(this).addClass('inLightBox');
-  $('#lightBox').addClass('active');
+  $('.lightBox').addClass('lightBox--active');
 
   let dimensions = this.getBoundingClientRect();
-  $('#lightBox img').attr('src', $(this).attr('src')).css({
+  $('.lightBox-img').attr('src', $(this).attr('src')).css({
     'top':dimensions.top,
     'left':dimensions.left,
     'max-width':dimensions.width,
     'max-height':dimensions.height
   });
   window.setTimeout(function(){
-    $('#lightBox img').css({
+    $('.lightBox-img').css({
       'top':'',
       'left':'',
       'max-width':'99%',
       'max-height':'99vh'
-    }).addClass('active');
+    }).addClass('.lightBox-img--active');
   }, 50);
 });
 
-$('body').on('click', '#lightBox', function(e){
-  $(this).removeClass('active');
+$('body').on('click', '.lightBox', function(e){
+  $(this).removeClass('lightBox--active');
   window.setTimeout(function(){
-    $('#lightBox img').removeClass('active').removeAttr('style').removeAttr('src');
+    $('.lightBox-img').removeClass('lightBox-img--active')
+      .removeAttr('style')
+      .removeAttr('src');
   }, 250);
   $('#rightPane .img-in-post').removeClass('inLightBox');
 });

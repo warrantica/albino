@@ -7535,26 +7535,18 @@
 	      "click": loadMoreSearchResults
 	    }
 	  }, ["\n          โหลดกระทู้เพิ่ม\n        "])])])]), " ", _h('div', {
-	    staticClass: "sBackBg",
-	    attrs: {
-	      "id": "belly"
-	    }
+	    staticClass: "belly"
 	  }, [_h('div', {
-	    staticClass: "sPrimaryBg sElevation1",
-	    attrs: {
-	      "id": "bellyHead"
-	    }
+	    staticClass: "bellyBar"
 	  }, [_h('div', {
-	    staticClass: "bellyTitle",
+	    staticClass: "bellyBar-title",
 	    domProps: {
 	      "textContent": _s($store.state.topicTitle)
 	    }
 	  }), " ", _h('div', {
-	    attrs: {
-	      "id": "bellyToolbar"
-	    }
+	    staticClass: "bellyBar-controls"
 	  }, [_h('div', {
-	    staticClass: "refreshButtonContainer",
+	    staticClass: "bellyBar-refresh",
 	    on: {
 	      "click": refreshTopic
 	    }
@@ -7570,7 +7562,7 @@
 	      value: ($store.state.unreadComments),
 	      expression: "$store.state.unreadComments"
 	    }],
-	    staticClass: "refreshBadge sAccentBg"
+	    staticClass: "bellyBar-refreshBadge"
 	  }, ["\n            " + _s($store.state.unreadComments) + "\n          "])]), " ", _h('toolbar-icon', {
 	    attrs: {
 	      "icon": "open_in_new",
@@ -8182,7 +8174,7 @@
 
 
 	// module
-	exports.push([module.id, "\n.toolbarIcon[data-v-74e5db62]{\n  display: inline-block;\n  margin: 0 5px;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n.label[data-v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  transition: all .1s ease;\n}\n.ic:hover + .label[data-v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n", ""]);
+	exports.push([module.id, "\n.toolbarIcon[data-v-74e5db62]{\n  display: inline-block;\n  margin: 0 10px;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n.label[data-v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  transition: all .1s ease;\n}\n.ic:hover + .label[data-v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n", ""]);
 
 	// exports
 

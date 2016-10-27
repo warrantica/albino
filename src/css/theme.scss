@@ -25,6 +25,11 @@ a:link, a:visited{
   color: var(--text-on-primary);
 }
 
+@mixin theme-primary-bg{
+  background: var(--primary);
+  color: var(--text-on-primary);
+}
+
 .sPrimaryText{ color: var(--primary); }
 
 .sAccentBg, ::selection{
