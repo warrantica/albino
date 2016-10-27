@@ -63,6 +63,7 @@ $base-line-height: 1.25;
 .sSubtitle{ font-size: 11px; }
 
 @mixin subtitle{
+  @include base-subtitle;
   font-size: 11px;
 }
 
@@ -108,3 +109,6 @@ $base-line-height: 1.25;
 /*============================================================*/
 /* Vue Related
 /*============================================================*/
+
+.fade-enter-active, .fade-leave-active{ opacity:1; transition: all .3s ease; }
+.fade-enter, .fade-leave-active{ opacity: 0; }

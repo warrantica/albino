@@ -17,56 +17,7 @@
   </div>
 </template>
 
-<style scoped>
-  .commentsView{
-    width: 100%;
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
-  .commentsInfo{
-    margin-bottom: 10px;
-    position: relative;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .commentsInfo:before{
-    content: '';
-    height: 1px;
-    width: 100%;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    z-index: 1;
-  }
-
-  .commentsCount{
-    margin-left: 10px;
-    padding: 0 10px;
-    z-index: 2;
-  }
-
-  .commentsCount i{
-    font-size: 14px;
-    margin-bottom: 1px;
-  }
-
-  .commentsSort{
-    margin-right: 10px;
-    padding: 0 10px;
-    z-index: 2;
-  }
-
-  .fade-enter-active, .fade-leave-active{ opacity:1; transition: all .3s ease; }
-  .fade-enter, .fade-leave-active{ opacity: 0; }
-</style>
-
 <script>
   let Pantip = require('../pantipInterface.js');
-  export default {
-
-  }
+  export default { }
 </script>

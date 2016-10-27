@@ -1,12 +1,12 @@
 <template>
-  <div class="comment sForeBg sElevation1" :class="{sub:sub}">
-    <div class="info">
-      <img class="avatar sPrimaryBg" :src="data.user.avatar.medium" />
-      <div class="author" :class="{op:data.owner_topic, sAccentBg:data.owner_topic}">{{ data.user.name }}</div>
-      <div class="time sSubtitle">
+  <div class="topic comment sForeBg sElevation1" :class="{sub:sub}">
+    <div class="topic-info">
+      <img class="topic-avatar" :src="data.user.avatar.medium" />
+      <div class="topic-author" :class="{'topic-author--op':data.owner_topic }">{{ data.user.name }}</div>
+      <div class="topic-time">
         <time class="timeago" :datetime="data.utime">{{ data.data_addrtitle }}</time>
       </div>
-      <div class="numContainer sSubtitle">#{{ data.commentNumber }}</div>
+      <div class="topic-commentNumber">#{{ data.commentNumber }}</div>
     </div>
     <div class="topic-content" v-html="data.message"></div>
     <reaction-view :data="data.reactionData"></reaction-view>
@@ -14,7 +14,7 @@
       <comment-item v-for="reply in data.replies"
                     :data="reply" sub>
       </comment-item>
-      <button class="loadMoreSubComments sButton sElevation0h2 sAccentBg"
+      <button class="loadMoreSubComments sElevation0h2"
               v-show="data.showLoadMoreSubButton"
               @click="loadMoreSubComments">
         โหลดความเห็นย่อยเพิ่ม
@@ -22,29 +22,6 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  .comment{
-    width: 100%;
-    box-sizing: border-box;
-    margin: 20px 0;
-    border-radius: 2px;
-  }
-
-  .subContainer{
-    padding-bottom: 1px;
-  }
-
-  .sub.comment{
-    width: calc(100% - 10px);
-    margin-left: 10px;
-    box-shadow: none;
-  }
-
-  .sub.comment:first-child{
-    margin-top: 0;
-  }
-</style>
 
 <script>
 import Pantip from '../pantipInterface';

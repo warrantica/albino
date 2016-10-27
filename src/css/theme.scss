@@ -50,6 +50,8 @@ a:link, a:visited{
 
 .sSubtitle{ color: var(--subtitle); }
 
+@mixin base-subtitle{ color: var(--subtitle); }
+
 .sBackBg, .sub.comment{
   background: var(--back);
   color: var(--text);
@@ -77,7 +79,7 @@ a:link, a:visited{
   background: var(--hover);
 }
 
-.sidebarHead, .bestTopicContainer, .searchContainer, .rightPane .info{
+.sidebarHead, .bestTopicContainer, .searchHeader, .topic-info{
   border-bottom: 1px var(--border) solid;
 }
 
@@ -85,7 +87,7 @@ a:link, a:visited{
   border-top: 1px var(--border) solid;
 }
 
-.rightPane .content{
+.topic-content{
   font-size: var(--font-size);
   font-family: var(--font-face);
 }

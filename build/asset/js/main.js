@@ -89,12 +89,12 @@
 	_vue2.default.component('topicItem', __webpack_require__(28));
 	_vue2.default.component('searchResultItem', __webpack_require__(31));
 	_vue2.default.component('topicView', __webpack_require__(34));
-	_vue2.default.component('commentView', __webpack_require__(39));
-	_vue2.default.component('pagination', __webpack_require__(44));
-	_vue2.default.component('commentItem', __webpack_require__(49));
-	_vue2.default.component('reactionView', __webpack_require__(54));
-	_vue2.default.component('tips', __webpack_require__(59));
-	_vue2.default.component('about', __webpack_require__(63));
+	_vue2.default.component('commentView', __webpack_require__(37));
+	_vue2.default.component('pagination', __webpack_require__(40));
+	_vue2.default.component('commentItem', __webpack_require__(45));
+	_vue2.default.component('reactionView', __webpack_require__(48));
+	_vue2.default.component('tips', __webpack_require__(53));
+	_vue2.default.component('about', __webpack_require__(57));
 
 	//============================================================================
 	//Event binding stuff
@@ -9076,14 +9076,11 @@
 
 	var __vue_exports__, __vue_options__
 
-	/* styles */
-	__webpack_require__(35)
-
 	/* script */
-	__vue_exports__ = __webpack_require__(37)
+	__vue_exports__ = __webpack_require__(35)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(38)
+	var __vue_template__ = __webpack_require__(36)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9098,7 +9095,6 @@
 	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\topicView.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-dcfa727c"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -9119,46 +9115,6 @@
 
 /***/ },
 /* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(36);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(17)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-dcfa727c&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./topicView.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-dcfa727c&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./topicView.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(1)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n.tag[data-v-dcfa727c]{\n  padding: 15px 0 0 15px;\n}\n.tag .ic[data-v-dcfa727c]{\n  font-size: 14px;\n  margin-bottom: 2px;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 37 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9166,15 +9122,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 	//
 	//
 	//
@@ -9216,7 +9163,7 @@
 	};
 
 /***/ },
-/* 38 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -9225,16 +9172,16 @@
 	  }, [_h('h1', {
 	    staticClass: "topic-title"
 	  }, [_s(data.title)]), " ", _h('div', {
-	    staticClass: "info"
+	    staticClass: "topic-info"
 	  }, [_h('img', {
-	    staticClass: "avatar sPrimaryBg",
+	    staticClass: "topic-avatar",
 	    attrs: {
 	      "src": data.avatarSrc
 	    }
 	  }), " ", _h('div', {
-	    staticClass: "author op sAccentBg"
+	    staticClass: "topic-author topic-author--op"
 	  }, [_s(data.author)]), " ", _h('div', {
-	    staticClass: "time sSubtitle"
+	    staticClass: "topic-time"
 	  }, [_h('time', {
 	    staticClass: "timeago",
 	    attrs: {
@@ -9247,8 +9194,8 @@
 	      value: (data.tags),
 	      expression: "data.tags"
 	    }],
-	    staticClass: "tag sSubtitle"
-	  }, [_m(0), " " + _s(data.tags)]), " ", _h('div', {
+	    staticClass: "topic-tag"
+	  }, [_m(0), " " + _s(data.tags) + "\n  "]), " ", _h('div', {
 	    staticClass: "topic-content",
 	    domProps: {
 	      "innerHTML": _s(data.content)
@@ -9260,7 +9207,7 @@
 	  })])
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('i', {
-	    staticClass: "ic"
+	    staticClass: "ic topic-tagIcon"
 	  }, ["label"])
 	}}]}
 	if (false) {
@@ -9271,19 +9218,16 @@
 	}
 
 /***/ },
-/* 39 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
-	/* styles */
-	__webpack_require__(40)
-
 	/* script */
-	__vue_exports__ = __webpack_require__(42)
+	__vue_exports__ = __webpack_require__(38)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(43)
+	var __vue_template__ = __webpack_require__(39)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9298,7 +9242,6 @@
 	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\commentView.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-6a342272"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -9318,47 +9261,7 @@
 
 
 /***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(41);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(17)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-6a342272&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./commentView.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-6a342272&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./commentView.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(1)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n#commentsView[data-v-6a342272]{\n  width: 100%;\n  max-width: 560px;\n  margin: 0 auto;\n}\n.commentsInfo[data-v-6a342272]{\n  margin-bottom: 10px;\n  position: relative;\n  display: flex;\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  align-items: center;\n}\n.commentsInfo[data-v-6a342272]:before{\n  content: '';\n  height: 1px;\n  width: 100%;\n  position: absolute;\n  right: 0;\n  top: 50%;\n  z-index: 1;\n}\n.commentsCount[data-v-6a342272]{\n  margin-left: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n.commentsCount i[data-v-6a342272]{\n  font-size: 14px;\n  margin-bottom: 1px;\n}\n.commentsSort[data-v-6a342272]{\n  margin-right: 10px;\n  padding: 0 10px;\n  z-index: 2;\n}\n.fade-enter-active[data-v-6a342272], .fade-leave-active[data-v-6a342272]{ opacity:1; transition: all .3s ease;\n}\n.fade-enter[data-v-6a342272], .fade-leave-active[data-v-6a342272]{ opacity: 0;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 42 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9385,59 +9288,12 @@
 	//
 	//
 	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 
 	var Pantip = __webpack_require__(6);
 	exports.default = {};
 
 /***/ },
-/* 43 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -9479,19 +9335,19 @@
 	}
 
 /***/ },
-/* 44 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(45)
+	__webpack_require__(41)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(47)
+	__vue_exports__ = __webpack_require__(43)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(48)
+	var __vue_template__ = __webpack_require__(44)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9526,13 +9382,13 @@
 
 
 /***/ },
-/* 45 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(46);
+	var content = __webpack_require__(42);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -9552,7 +9408,7 @@
 	}
 
 /***/ },
-/* 46 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -9566,7 +9422,7 @@
 
 
 /***/ },
-/* 47 */
+/* 43 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9623,7 +9479,7 @@
 	};
 
 /***/ },
-/* 48 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -9671,19 +9527,16 @@
 	}
 
 /***/ },
-/* 49 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
-	/* styles */
-	__webpack_require__(50)
-
 	/* script */
-	__vue_exports__ = __webpack_require__(52)
+	__vue_exports__ = __webpack_require__(46)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(53)
+	var __vue_template__ = __webpack_require__(47)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9698,7 +9551,6 @@
 	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\commentItem.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-691c7be0"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -9718,47 +9570,7 @@
 
 
 /***/ },
-/* 50 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(51);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(17)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-691c7be0&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./commentItem.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-691c7be0&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./commentItem.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 51 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(1)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n.comment[data-v-691c7be0]{\n  width: 100%;\n  box-sizing: border-box;\n  margin: 20px 0;\n  border-radius: 2px;\n}\n.subContainer[data-v-691c7be0]{\n  padding-bottom: 1px;\n}\n.sub.comment[data-v-691c7be0]{\n  width: calc(100% - 10px);\n  margin-left: 10px;\n  box-shadow: none;\n}\n.sub.comment[data-v-691c7be0]:first-child{\n  margin-top: 0;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 52 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9777,29 +9589,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 	//
 	//
 	//
@@ -9870,36 +9659,36 @@
 	};
 
 /***/ },
-/* 53 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
 	  return _h('div', {
-	    staticClass: "comment sForeBg sElevation1",
+	    staticClass: "topic comment sForeBg sElevation1",
 	    class: {
 	      sub: sub
 	    }
 	  }, [_h('div', {
-	    staticClass: "info"
+	    staticClass: "topic-info"
 	  }, [_h('img', {
-	    staticClass: "avatar sPrimaryBg",
+	    staticClass: "topic-avatar",
 	    attrs: {
 	      "src": data.user.avatar.medium
 	    }
 	  }), " ", _h('div', {
-	    staticClass: "author",
+	    staticClass: "topic-author",
 	    class: {
-	      op: data.owner_topic, sAccentBg: data.owner_topic
+	      'topic-author--op': data.owner_topic
 	    }
 	  }, [_s(data.user.name)]), " ", _h('div', {
-	    staticClass: "time sSubtitle"
+	    staticClass: "topic-time"
 	  }, [_h('time', {
 	    staticClass: "timeago",
 	    attrs: {
 	      "datetime": data.utime
 	    }
 	  }, [_s(data.data_addrtitle)])]), " ", _h('div', {
-	    staticClass: "numContainer sSubtitle"
+	    staticClass: "topic-commentNumber"
 	  }, ["#" + _s(data.commentNumber)])]), " ", _h('div', {
 	    staticClass: "topic-content",
 	    domProps: {
@@ -9925,7 +9714,7 @@
 	      value: (data.showLoadMoreSubButton),
 	      expression: "data.showLoadMoreSubButton"
 	    }],
-	    staticClass: "loadMoreSubComments sButton sElevation0h2 sAccentBg",
+	    staticClass: "loadMoreSubComments sElevation0h2",
 	    on: {
 	      "click": loadMoreSubComments
 	    }
@@ -9939,19 +9728,19 @@
 	}
 
 /***/ },
-/* 54 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(55)
+	__webpack_require__(49)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(57)
+	__vue_exports__ = __webpack_require__(51)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(58)
+	var __vue_template__ = __webpack_require__(52)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9986,13 +9775,13 @@
 
 
 /***/ },
-/* 55 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(56);
+	var content = __webpack_require__(50);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -10012,7 +9801,7 @@
 	}
 
 /***/ },
-/* 56 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -10026,7 +9815,7 @@
 
 
 /***/ },
-/* 57 */
+/* 51 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -10178,7 +9967,7 @@
 	};
 
 /***/ },
-/* 58 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -10268,16 +10057,16 @@
 	}
 
 /***/ },
-/* 59 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(60)
+	__webpack_require__(54)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(62)
+	var __vue_template__ = __webpack_require__(56)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -10312,13 +10101,13 @@
 
 
 /***/ },
-/* 60 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(61);
+	var content = __webpack_require__(55);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -10338,7 +10127,7 @@
 	}
 
 /***/ },
-/* 61 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -10352,7 +10141,7 @@
 
 
 /***/ },
-/* 62 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -10374,16 +10163,16 @@
 	}
 
 /***/ },
-/* 63 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(64)
+	__webpack_require__(58)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(66)
+	var __vue_template__ = __webpack_require__(60)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -10418,13 +10207,13 @@
 
 
 /***/ },
-/* 64 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(65);
+	var content = __webpack_require__(59);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -10444,7 +10233,7 @@
 	}
 
 /***/ },
-/* 65 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -10458,7 +10247,7 @@
 
 
 /***/ },
-/* 66 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
