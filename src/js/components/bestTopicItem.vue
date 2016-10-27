@@ -1,22 +1,18 @@
 <template>
-  <div class="topic"
-       :class="{'topic--active': isActive}"
+  <div class="topicItem"
+       :class="{'topicItem--active': isActive}"
        @click="loadTopic">
-    <div class="topic-thumbnail">
-      <img class="topic-thumbnailImage" :src="thumbnail" />
+    <div class="topicItem-thumbnail">
+      <img class="topicItem-thumbnailImage" :src="thumbnail" />
     </div>
-    <div class="topic-text">
-      <div class="topic-title" v-html="data.disp_topic"></div>
-      <div class="topic-subtitle">
+    <div class="topicItem-text">
+      <div class="topicItem-title" v-html="data.disp_topic"></div>
+      <div class="topicItem-subtitle">
         {{ data.author }}
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>
 
 <script>
   export default {

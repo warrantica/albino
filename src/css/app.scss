@@ -17,6 +17,8 @@ body{
   color: #212121;
 }
 
+::selection{ @include theme-accent-bg; }
+
 .app{
   @include flex-row-center;
   align-items: stretch;
@@ -237,7 +239,7 @@ a:link, a:visited{ text-decoration: none; }
 
 /*============================================================*/
 
-.topic{
+.topicItem{
   @include flex-row-center;
   @include transition;
   @include clickable;
@@ -333,27 +335,24 @@ a:link, a:visited{ text-decoration: none; }
 
 /*============================================================*/
 
-#rightPane{
+.rightPane{
   @include transition(.5s);
   height: auto;
   flex: 1;
   overflow-y: auto;
   -webkit-clip-path: circle(110% at 50% 55px);
   position: relative;
+
+  &--wrapUp{ -webkit-clip-path: circle(15px at 50% 55px); }
 }
 
-#rightPane.wrapUp{
-  -webkit-clip-path: circle(15px at 50% 55px);
-}
-
-#rightPane.wrapUp .topicWrapper{
+.rightPane--wrapUp .topic{
   opacity: 0;
-  transition: all .2s ease-in-out;
 }
 
-#rightPane .topicWrapper{ opacity: 1; }
-
-#topicView{
+.topicContainer{
+  @include elevation(1);
+  @include base-fore-bg;
   width: 100%;
   max-width: 560px;
   box-sizing: border-box;
@@ -361,35 +360,37 @@ a:link, a:visited{ text-decoration: none; }
   border-radius: 2px;
 }
 
-#topicView h1{
-  box-sizing: border-box;
-  padding: 15px;
-  padding-bottom: 0;
-  font-family: "TH Sarabun New";
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 1;
-  word-wrap: break-word;
+.topic{
+  @include transition;
+  opacity: 1;
+
+  &-title{
+    box-sizing: border-box;
+    padding: 15px;
+    padding-bottom: 0;
+    font-family: "TH Sarabun New";
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1;
+    word-wrap: break-word;
+  }
 }
 
-#rightPane .content{
+.topic-content{
   padding: 15px;
   line-height: 1.5;
   word-wrap: break-word;
-}
-
-#topicView .content{
   box-sizing: border-box;
   width: 100%;
   margin-bottom: 30px;
 }
 
-#topicView .content u{
+.topic-content u{
   text-decoration: none;
   border-bottom: 1px #333 solid;
 }
 
-#rightPane .spoil-style{
+.topic-content .spoil-style{
   display: block;
   width: 100%;
   padding: 15px;
@@ -397,54 +398,53 @@ a:link, a:visited{ text-decoration: none; }
   background: rgba(0, 0, 0, 0.07);
 }
 
-#rightPane .img-in-post{
+.topic-content .img-in-post{
   cursor: pointer;
   opacity: 1;
   transition: opacity .2s ease-in-out .2s;
 }
 
-#rightPane .img-in-post.inLightBox{
+.topic-content .img-in-post.inLightBox{
   opacity: 0;
   transition: opacity .01s ease-in-out .1s;
 }
 
 /*============================================================*/
 
-#commentsView .content{
+.commentsView .topic-content{
   margin-bottom: 0px;
 }
 
-#rightPane .content img{
+.topic-content img{
   max-width: 100%;
   margin: 10px 0;
 }
 
-#rightPane .info{
+.rightPane .info{
   padding: 15px;
-  position: relative; top: 0; left: 0;
+  position: relative;
 }
 
-#rightPane .author{
+.rightPane .author{
   border-radius: 2px;
   display: inline-block;
 }
 
-#rightPane .author.op{ padding: 0 5px; }
+.rightPane .author.op{ padding: 0 5px; }
 
-#rightPane .numContainer{
+.rightPane .numContainer{
   position: absolute;
   top: 15px;
   right: 15px;
 }
 
-#rightPane .avatar{
-  width: 38px;
-  border-radius: 38px;
+.rightPane .avatar{
+  @include circle(38px);
   margin-right: 10px;
   float: left;
 }
 
-#rightPane .loadMoreSubComments{
+.rightPane .loadMoreSubComments{
   margin: 0 auto 20px auto;
 }
 

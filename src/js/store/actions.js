@@ -80,7 +80,7 @@ export const loadPage = ({ dispatch, commit, state }, pageName) => {
 export const loadTopic = ({ dispatch, commit, state }, topicId) => {
   Helper.setRightPaneCurtains(false);
 
-  if(topicId !== state.currentTopic) $('#rightPane').animate({scrollTop:0}, "0.5s");
+  if(topicId !== state.currentTopic) $('.rightPane').animate({scrollTop:0}, "0.5s");
 
   commit('setTopicId', topicId);
   commit('setTopicTitle', '');
@@ -202,7 +202,7 @@ export const goToCommentPage = ({ dispatch, commit, state }, pageNumber) => {
   if(state.shownComments.length === 0) dispatch('loadMoreComments', pageNumber);
 
   let scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
-  $('#rightPane').stop().animate({
-    scrollTop: $('#rightPane').scrollTop() + scrollTo - 64
+  $('.rightPane').stop().animate({
+    scrollTop: $('.rightPane').scrollTop() + scrollTo - 64
   }, "0.5s");
 }

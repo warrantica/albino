@@ -54,17 +54,17 @@ module.exports = {
 
   setRightPaneCurtains(showContent){
     if(showContent){
-      $('#rightPane').removeClass('wrapUp');
-      $('#rightPane .loading').removeClass('active');
+      $('.rightPane').removeClass('rightPane--wrapUp');
+      $('.loading--right').removeClass('loading--active');
     }else{
-      $('#rightPane').addClass('wrapUp');
-      $('#rightPane .loading').addClass('active');
+      $('.rightPane').addClass('rightPane--wrapUp');
+      $('.loading--right').addClass('loading--active');
     }
   },
 
   showFAB(){
     window.setTimeout(() => {
-      let rightPane = document.getElementById('rightPane');
+      let rightPane = document.querySelector('.rightPane');
       if(rightPane.offsetHeight < rightPane.scrollHeight){
         $('.fab').addClass('fab--enable');
       }else{

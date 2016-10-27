@@ -1,7 +1,7 @@
 <template>
-  <div class="topicWrapper">
-    <h1>เกี่ยวกับ Albino</h1>
-    <div class="content">
+  <div class="topic">
+    <h1 class="topic-title">เกี่ยวกับ Albino</h1>
+    <div class="topic-content">
       <p>
         Albino เวอร์ชั่น 0.99-beta3<br>
         ดูข้อมูลเพิ่มเติมได้ที่<a href="http://warrantica.github.io/albino" target="_blank">เว็บไซต์</a>

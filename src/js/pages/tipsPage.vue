@@ -1,7 +1,7 @@
 <template>
-  <div class="topicWrapper">
-    <h1>Welcome Page</h1>
-    <div class="content">
+  <div class="topic">
+    <h1 class="topic-title">Welcome Page</h1>
+    <div class="topic-content">
       TODO: put some tips here.
     </div>
   </div>

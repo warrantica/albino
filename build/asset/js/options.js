@@ -55,14 +55,14 @@
 
 	var _vars2 = _interopRequireDefault(_vars);
 
-	var _options = __webpack_require__(69);
+	var _options = __webpack_require__(67);
 
 	var _options2 = _interopRequireDefault(_options);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_vue2.default.component('themeItem', __webpack_require__(72));
-	_vue2.default.component('themePreview', __webpack_require__(77));
+	_vue2.default.component('themeItem', __webpack_require__(70));
+	_vue2.default.component('themePreview', __webpack_require__(75));
 
 	var vm = new _vue2.default({
 	  render: function render(h) {
@@ -6348,16 +6348,16 @@
 	  },
 	  setRightPaneCurtains: function setRightPaneCurtains(showContent) {
 	    if (showContent) {
-	      $('#rightPane').removeClass('wrapUp');
-	      $('#rightPane .loading').removeClass('active');
+	      $('.rightPane').removeClass('rightPane--wrapUp');
+	      $('.loading--right').removeClass('loading--active');
 	    } else {
-	      $('#rightPane').addClass('wrapUp');
-	      $('#rightPane .loading').addClass('active');
+	      $('.rightPane').addClass('rightPane--wrapUp');
+	      $('.loading--right').addClass('loading--active');
 	    }
 	  },
 	  showFAB: function showFAB() {
 	    window.setTimeout(function () {
-	      var rightPane = document.getElementById('rightPane');
+	      var rightPane = document.querySelector('.rightPane');
 	      if (rightPane.offsetHeight < rightPane.scrollHeight) {
 	        $('.fab').addClass('fab--enable');
 	      } else {
@@ -6631,16 +6631,16 @@
 
 /***/ },
 
-/***/ 69:
+/***/ 67:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* script */
-	__vue_exports__ = __webpack_require__(70)
+	__vue_exports__ = __webpack_require__(68)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(71)
+	var __vue_template__ = __webpack_require__(69)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -6675,7 +6675,7 @@
 
 /***/ },
 
-/***/ 70:
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6829,7 +6829,7 @@
 
 /***/ },
 
-/***/ 71:
+/***/ 69:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -7091,19 +7091,19 @@
 
 /***/ },
 
-/***/ 72:
+/***/ 70:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(73)
+	__webpack_require__(71)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(75)
+	__vue_exports__ = __webpack_require__(73)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(76)
+	var __vue_template__ = __webpack_require__(74)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -7139,13 +7139,13 @@
 
 /***/ },
 
-/***/ 73:
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(74);
+	var content = __webpack_require__(72);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -7166,7 +7166,7 @@
 
 /***/ },
 
-/***/ 74:
+/***/ 72:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -7181,7 +7181,7 @@
 
 /***/ },
 
-/***/ 75:
+/***/ 73:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7283,7 +7283,7 @@
 
 /***/ },
 
-/***/ 76:
+/***/ 74:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -7342,19 +7342,19 @@
 
 /***/ },
 
-/***/ 77:
+/***/ 75:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(78)
+	__webpack_require__(76)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(80)
+	__vue_exports__ = __webpack_require__(78)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(81)
+	var __vue_template__ = __webpack_require__(79)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -7390,13 +7390,13 @@
 
 /***/ },
 
-/***/ 78:
+/***/ 76:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(79);
+	var content = __webpack_require__(77);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -7417,7 +7417,7 @@
 
 /***/ },
 
-/***/ 79:
+/***/ 77:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -7432,7 +7432,7 @@
 
 /***/ },
 
-/***/ 80:
+/***/ 78:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7532,7 +7532,7 @@
 
 /***/ },
 
-/***/ 81:
+/***/ 79:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {

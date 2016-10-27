@@ -32,7 +32,7 @@ a:link, a:visited{
 
 .sPrimaryText{ color: var(--primary); }
 
-.sAccentBg, ::selection{
+.sAccentBg{
   background: var(--accent);
   color: var(--text-on-accent);
 }
@@ -42,7 +42,7 @@ a:link, a:visited{
   color: var(--text-on-accent);
 }
 
-.sAccentText, .result b{ color: var(--accent); }
+.sAccentText{ color: var(--accent); }
 
 @mixin theme-accent-text{
   color: var(--accent);
@@ -77,15 +77,15 @@ a:link, a:visited{
   background: var(--hover);
 }
 
-.sidebarHead, .bestTopicContainer, .searchContainer, #rightPane .info{
+.sidebarHead, .bestTopicContainer, .searchContainer, .rightPane .info{
   border-bottom: 1px var(--border) solid;
 }
 
-.topic--top, .commentsInfo:before{
+.topicItem--top, .commentsInfo:before{
   border-top: 1px var(--border) solid;
 }
 
-#rightPane .content{
+.rightPane .content{
   font-size: var(--font-size);
   font-family: var(--font-face);
 }

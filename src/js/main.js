@@ -35,10 +35,10 @@ $('body').on('click', '.spoil-btn', function(e){
   $(this).next().toggle();
 });
 
-$('body').on('click', '.topContainer', function(e){
+$('body').on('click', '.fab-button--up', function(e){
   let scrollTo = 0;
   let previousTop = 0;
-  $('#rightPane').find('.comment:not(.sub)').each(function(i){
+  $('.rightPane').find('.comment:not(.sub)').each(function(i){
     if(this.getBoundingClientRect().top >= 64){
       scrollTo = previousTop;
       return false; //break
@@ -46,23 +46,23 @@ $('body').on('click', '.topContainer', function(e){
     previousTop = this.getBoundingClientRect().top;
   });
   if(scrollTo !== 0){
-    $('#rightPane').stop().animate({
-      scrollTop:$('#rightPane').scrollTop() + scrollTo - 64
+    $('.rightPane').stop().animate({
+      scrollTop:$('.rightPane').scrollTop() + scrollTo - 64
     }, "0.5s");
   }
 });
 
-$('body').on('click', '.bottomContainer', function(e){
+$('body').on('click', '.fab-button--down', function(e){
   let scrollTo = 0;
-  $('#rightPane').find('.comment:not(.sub)').each(function(i){
+  $('.rightPane').find('.comment:not(.sub)').each(function(i){
     if(this.getBoundingClientRect().top > 64){
       scrollTo = this.getBoundingClientRect().top;
       return false; //break
     }
   });
   if(scrollTo !== 0){
-    $('#rightPane').stop().animate({
-      scrollTop:$('#rightPane').scrollTop() + scrollTo - 64
+    $('.rightPane').stop().animate({
+      scrollTop:$('.rightPane').scrollTop() + scrollTo - 64
     }, "0.5s");
   }
 });
@@ -95,7 +95,7 @@ $('body').on('click', '.lightBox', function(e){
       .removeAttr('style')
       .removeAttr('src');
   }, 250);
-  $('#rightPane .img-in-post').removeClass('inLightBox');
+  $('.rightPane .img-in-post').removeClass('inLightBox');
 });
 
 //============================================================================

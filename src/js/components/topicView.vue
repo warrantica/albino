@@ -1,6 +1,6 @@
 <template>
-  <div class="topicWrapper">
-    <h1>{{ data.title }}</h1>
+  <div class="topic">
+    <h1 class="topic-title">{{ data.title }}</h1>
     <div class="info">
       <img class="avatar sPrimaryBg" :src="data.avatarSrc" />
       <div class="author op sAccentBg">{{ data.author }}</div>
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="tag sSubtitle" v-show="data.tags"><i class="ic">label</i> {{ data.tags }}</div>
-    <div class="content" v-html="data.content"></div>
+    <div class="topic-content" v-html="data.content"></div>
     <reaction-view :data="data.reactionData"></reaction-view>
   </div>
 </template>

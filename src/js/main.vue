@@ -83,9 +83,9 @@
           <toolbar-icon icon="open_in_new" label="เปิดใน Pantip.com" @click.native="openInPantip"></toolbar-icon>
         </div>
       </div>
-      <div id="rightPane">
+      <div class="rightPane">
         <div class="loading loading--right"><i class="ics">hourglass_full</i></div>
-        <div id="topicView" class="sForeBg sElevation1">
+        <div class="topicContainer">
           <topic-view :data="$store.state.topicData" v-show="topicId != 0"></topic-view>
           <component :is="$store.state.pageName" v-show="topicId == 0"></component>
         </div>
@@ -147,7 +147,7 @@ export default {
 
     loadMoreTopics(){
       this.$store.dispatch('loadTopics', {forumName: this.$store.state.forumName, loadMore: true});
-      $('.topic.' + this.$store.state.loadMoreId).addClass('topic--beforeMore');
+      $('.topicItem.' + this.$store.state.loadMoreId).addClass('topicItem--beforeMore');
     },
 
     doSearch(){
@@ -160,10 +160,10 @@ export default {
 
     refreshTopic(){
       if(this.topicId !== 0){
-        let scroll = document.getElementById('rightPane').scrollTop;
+        let scroll = document.querySelector('.rightPane').scrollTop;
 
         this.$store.dispatch('loadTopic', this.topicId).then(value =>{
-          $('#rightPane').stop().animate({scrollTop:scroll}, "0.5s");
+          $('.rightPane').stop().animate({scrollTop:scroll}, "0.5s");
         });
       }
     },

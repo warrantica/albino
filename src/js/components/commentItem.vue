@@ -8,7 +8,7 @@
       </div>
       <div class="numContainer sSubtitle">#{{ data.commentNumber }}</div>
     </div>
-    <div class="content" v-html="data.message"></div>
+    <div class="topic-content" v-html="data.message"></div>
     <reaction-view :data="data.reactionData"></reaction-view>
     <div class="subContainer" v-if="data.reply_count">
       <comment-item v-for="reply in data.replies"

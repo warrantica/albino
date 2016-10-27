@@ -1,5 +1,5 @@
 <template>
-  <div id="commentsView">
+  <div class="commentsView">
     <div class="commentsInfo" v-show="$store.state.totalComments > 0">
       <div class="commentsCount sBackBg">
         <i class="ic">chat_bubble</i> {{ $store.state.totalComments }} ความเห็น
@@ -18,7 +18,7 @@
 </template>
 
 <style scoped>
-  #commentsView{
+  .commentsView{
     width: 100%;
     max-width: 560px;
     margin: 0 auto;
