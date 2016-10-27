@@ -79,9 +79,7 @@ a:link, a:visited{ text-decoration: none; }
   z-index: 20;
   transition: all .3s ease-in-out;
 
-  &--active{
-    -webkit-clip-path: circle(100% at 50% 50%);
-  }
+  &--active{ -webkit-clip-path: circle(100% at 50% 50%); }
 
   &--forumSelect{
     top: 10px;
@@ -90,9 +88,7 @@ a:link, a:visited{ text-decoration: none; }
     overflow: hidden;
   }
 
-  &--forumSelect.dialogue--active{
-    overflow: auto;
-  }
+  &--forumSelect.dialogue--active{ overflow: auto; }
 
   &--overflow{
     top: 10px;
@@ -105,9 +101,7 @@ a:link, a:visited{ text-decoration: none; }
     line-height: 1;
     padding: 15px 20px;
 
-    &:hover{
-      @include base-hover-bg;
-    }
+    &:hover{ @include base-hover-bg; }
   }
 }
 
@@ -122,9 +116,7 @@ a:link, a:visited{ text-decoration: none; }
   -webkit-clip-path: circle(150% at 50% 55px);
   position: relative; top: 0; left: 0;
 
-  &--wrapUp{
-    -webkit-clip-path: circle(15px at 50% 55px);
-  }
+  &--wrapUp{ -webkit-clip-path: circle(15px at 50% 55px); }
 }
 
 .leftPane--wrapUp .topicList, .leftPane--wrapUp .bestTopicList{
@@ -179,9 +171,7 @@ a:link, a:visited{ text-decoration: none; }
     transform: rotate(0deg);
     transition: .5s all cubic-bezier(.8, -0.2, 0.2, 1.2);
 
-    &--active{
-      transform: rotate(180deg);
-    }
+    &--active{ transform: rotate(180deg); }
   }
 }
 
@@ -195,18 +185,14 @@ a:link, a:visited{ text-decoration: none; }
     overflow: hidden;
   }
 
-  &--showBest{
-    max-height: 800px;
-  }
+  &--showBest{ max-height: 800px; }
 
   &-loadMore{
     @include button;
     @include elevation(0);
     margin: 10px auto;
 
-    &:hover{
-      @include elevation(2);
-    }
+    &:hover{ @include elevation(2); }
   }
 }
 
@@ -238,18 +224,14 @@ a:link, a:visited{ text-decoration: none; }
   position: relative;
   -webkit-clip-path: circle(150% at 50% 55px);
 
-  &--wrapUp{
-    -webkit-clip-path: circle(15px at 50% 55px);
-  }
+  &--wrapUp{ -webkit-clip-path: circle(15px at 50% 55px); }
 
   &-loadMore{
     @include button;
     @include elevation(0);
     margin: 10px auto;
 
-    &:hover{
-      @include elevation(2);
-    }
+    &:hover{ @include elevation(2); }
   }
 }
 
@@ -265,13 +247,9 @@ a:link, a:visited{ text-decoration: none; }
   padding: 10px;
   word-wrap: break-word;
 
-  &:hover{
-    @include base-hover-bg;
-  }
+  &:hover{ @include base-hover-bg; }
 
-  &--active{
-    @include base-hover-bg;
-  }
+  &--active{ @include base-hover-bg; }
 
   &-thumbnail{
     margin-right: 10px;
@@ -286,21 +264,21 @@ a:link, a:visited{ text-decoration: none; }
     object-fit: cover;
   }
 
-  &-text{
-    flex: 1;
-  }
+  &-text{ flex: 1; }
 
-  &-title{
-    font-size: 16px;
-  }
+  &-title{ font-size: 16px; }
 
-  &-subtitle{
-    @include subtitle;
-  }
+  &-subtitle{ @include subtitle; }
 
   &-subtitle .ic{
     font-size: 11px;
     margin-bottom: 1px;
+  }
+
+  &-result{
+    @include subtitle;
+
+    & b{ @include theme-accent-text; }
   }
 }
 

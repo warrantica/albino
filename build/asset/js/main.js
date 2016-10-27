@@ -9096,7 +9096,7 @@
 
 	module.exports={render:function (){with(this) {
 	  return _h('div', {
-	    staticClass: "topic sClickable",
+	    staticClass: "topic",
 	    on: {
 	      "click": loadSearchResult
 	    }
@@ -9108,9 +9108,9 @@
 	      "innerHTML": _s(data.disp_topic)
 	    }
 	  }), " ", _h('div', {
-	    staticClass: "topic-subtitle sSubtitle"
+	    staticClass: "topic-subtitle"
 	  }, ["คห. " + _s(data.comment_num) + " โดย " + _s(data.author)]), " ", _h('div', {
-	    staticClass: "topic-result sSubtitle",
+	    staticClass: "topic-result",
 	    domProps: {
 	      "innerHTML": _s(data.content)
 	    }

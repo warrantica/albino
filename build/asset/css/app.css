@@ -380,6 +380,10 @@ a:link, a:visited {
   .topic-subtitle .ic {
     font-size: 11px;
     margin-bottom: 1px; }
+  .topic-result {
+    font-size: 11px; }
+    .topic-result b {
+      color: var(--accent); }
 
 /*============================================================*/
 .belly {
