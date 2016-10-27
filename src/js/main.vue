@@ -6,62 +6,63 @@
           <img src="asset/img/logo.png"/>
           <img src="asset/img/logoHover.png" class="logo-colored"/>
         </div>
-        <div class="sidebar-toolbar">
-          <div id="forumSelector" class="sClickable" @click.stop="showDialogues.forumSelect = true">
-            <span id="forumSelectorName">{{ forumDisplayName }}</span>
+        <div class="sidebarToolbar">
+          <div class="forumSelector" @click.stop="showDialogues.forumSelect = true">
+            <span class="forumSelector-name">{{ forumDisplayName }}</span>
             <i class="ic">arrow_drop_down</i>
           </div>
           <toolbar-icon icon="refresh" label="รีเฟรชรายชื่อกระทู้" @click.native="refreshTopics"></toolbar-icon>
           <toolbar-icon icon="more_vert" label="อื่น ๆ" @click.native.stop="showDialogues.overflow = true"></toolbar-icon>
         </div>
-        <ul id="forumSelect" class="dialogue sElevation2 sClickable"
-            :class="{ active:showDialogues.forumSelect }">
+        <ul class="dialogue dialogue--forumSelect"
+            :class="{ 'dialogue--active':showDialogues.forumSelect }">
           <forum-select-item v-for="forum in forums" :name="forum.name">
             {{ forum.label }}
           </forum-select-item>
         </ul>
-        <ul id="overflow" class="dialogue sElevation2"
-            :class="{ active:showDialogues.overflow }">
-          <li class="sClickable" @click="showSearch = true">ค้นหา</a></li>
-          <li class="sClickable" @click="goToSettings">ตั้งค่า</a></li>
-          <li class="sClickable" @click="loadPage('about')">เกี่ยวกับ Albino</li>
+        <ul class="dialogue dialogue--overflow"
+            :class="{ 'dialogue--active':showDialogues.overflow }">
+          <li class="dialogue-item" @click="showSearch = true">ค้นหา</a></li>
+          <li class="dialogue-item" @click="goToSettings">ตั้งค่า</a></li>
+          <li class="dialogue-item" @click="loadPage('about')">เกี่ยวกับ Albino</li>
         </ul>
       </div>
-      <div id="leftPane" class="sForeBg" v-show="!showSearch">
-        <div class="loading sAccentText"><i class="ic">refresh</i></div>
-        <div id="bestTopicContainer">
-          <div id="bestTopicHeader" class="sClickable"
-               :class="{ active: $store.state.showBestTopics }"
+      <div class="leftPane" v-show="!showSearch">
+        <div class="loading loading--left"><i class="ics">refresh</i></div>
+        <div class="bestTopicContainer">
+          <div class="topicHeader topicHeader--best"
                @click="$store.commit('toggleBestTopics')">
-            <i class="ic headerIcon">thumb_up</i>กระทู้แนะนำ<i class="ic dropdown">expand_more</i>
+            <i class="ic topicHeader-icon">thumb_up</i>
+            กระทู้แนะนำ
+            <i class="ic topicHeader-dropdownIcon"
+               :class="{ 'topicHeader-dropdownIcon--active': $store.state.showBestTopics }">
+              expand_more</i>
           </div>
-          <div id="bestTopicList" :class="{ active: $store.state.showBestTopics }">
+          <div class="topicList topicList--best"
+               :class="{ 'topicList--showBest': $store.state.showBestTopics }">
             <best-topic-item v-for="topic in $store.state.bestTopics" :data="topic"></best-topic-item>
           </div>
         </div>
-        <div id="topicListHeader"><i class="ic headerIcon">schedule</i>กระทู้ล่าสุด</div>
-        <div id="topicList">
+        <div class="topicHeader"><i class="ic topicHeader-icon">schedule</i>กระทู้ล่าสุด</div>
+        <div class="topicList">
           <topic-item v-for="topic in $store.state.topics" :data="topic"></topic-item>
-          <button class="loadMore sButton sAccentBg sElevation0h2"
-                  :data-tid="$store.state.loadMoreId"
-                  @click="loadMoreTopics">
-            โหลดกระทู้เพิ่ม
-          </button>
+          <button class="topicList-loadMore"
+                  @click="loadMoreTopics">โหลดกระทู้เพิ่ม</button>
         </div>
       </div>
       <div class="searchPane" v-show="showSearch">
-        <div class="searchContainer sForeBg">
+        <div class="searchHeader">
           <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click.native="showSearch = false"></toolbar-icon>
-          <input class="searchBar" type="text"
+          <input class="searchHeader-input" type="text"
                  v-model="$store.state.searchQuery"
                  placeholder="คำค้นหา..."
                  @keyup.enter="doSearch">
           <toolbar-icon icon="search" label="ค้นหา" @click.native="doSearch"></toolbar-icon>
         </div>
-        <div class="searchResultList sForeBg">
-          <div class="loading sAccentText"><i class="ic">refresh</i></div>
+        <div class="searchResultList">
+          <div class="loading loading--search"><i class="ics">refresh</i></div>
           <search-result-item v-for="topic in $store.state.searchResults" :data="topic"></search-result-item>
-          <button class="loadMore sButton sAccentBg sElevation0h2"
+          <button class="searchResultList-loadMore"
                   @click="loadMoreSearchResults"
                   v-show="$store.state.searchResults.length">
             โหลดกระทู้เพิ่ม
@@ -146,7 +147,7 @@ export default {
 
     loadMoreTopics(){
       this.$store.dispatch('loadTopics', {forumName: this.$store.state.forumName, loadMore: true});
-      $('.topic.' + this.$store.state.loadMoreId).addClass('beforeMore');
+      $('.topic.' + this.$store.state.loadMoreId).addClass('topic--beforeMore');
     },
 
     doSearch(){

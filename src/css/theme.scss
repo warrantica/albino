@@ -32,7 +32,16 @@ a:link, a:visited{
   color: var(--text-on-accent);
 }
 
+@mixin theme-accent-bg{
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
 .sAccentText, .result b{ color: var(--accent); }
+
+@mixin theme-accent-text{
+  color: var(--accent);
+}
 
 .sSubtitle{ color: var(--subtitle); }
 
@@ -46,23 +55,28 @@ a:link, a:visited{
   color: var(--text);
 }
 
-.sForeBg, .dialogue, .loading{
+.sForeBg{
   background: var(--fore);
 }
 
 @mixin base-fore-bg{
   background: var(--fore);
+  color: var(--text);
 }
 
-.dialogue li:hover, .topic:hover, .topic.active, .page:not(.current):hover{
+.page:not(.current):hover{
   background: var(--hover);
 }
 
-#sidebarHead, #bestTopicContainer, .searchContainer, #rightPane .info{
+@mixin base-hover-bg{
+  background: var(--hover);
+}
+
+.sidebarHead, .bestTopicContainer, .searchContainer, #rightPane .info{
   border-bottom: 1px var(--border) solid;
 }
 
-.top.topic, .commentsInfo:before{
+.topic--top, .commentsInfo:before{
   border-top: 1px var(--border) solid;
 }
 

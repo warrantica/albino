@@ -1,5 +1,5 @@
 <template>
-  <li @click="loadForum">
+  <li class="dialogue-item" @click="loadForum">
     <img :src="'asset/forumIcon/'+name+'.png'" />
     <span><slot></slot></span>
   </li>
@@ -10,7 +10,6 @@
     padding: 10px 20px;
     height: 36px;
     line-height: 36px;
-    transition: .2s all ease-in-out;
   }
 
   img{

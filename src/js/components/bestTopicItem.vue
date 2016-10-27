@@ -1,13 +1,13 @@
 <template>
-  <div class="topic sForeBg sClickable"
-       :class="{active: isActive}"
+  <div class="topic"
+       :class="{'topic--active': isActive}"
        @click="loadTopic">
     <div class="topic-thumbnail">
       <img class="topic-thumbnailImage" :src="thumbnail" />
     </div>
     <div class="topic-text">
       <div class="topic-title" v-html="data.disp_topic"></div>
-      <div class="topic-subtitle sSubtitle">
+      <div class="topic-subtitle">
         {{ data.author }}
       </div>
     </div>

@@ -1,13 +1,13 @@
 <template>
-  <div class="topic sForeBg sClickable"
-       :class="{active: isActive, top: data.isTop}"
+  <div class="topic"
+       :class="{'topic--active': isActive, 'topic--top': data.isTop}"
        @click="loadTopic">
     <div class="topic-thumbnail">
       <img class="topic-thumbnailImage" :src="thumbnail" />
     </div>
     <div class="topic-text">
       <div class="topic-title" v-html="data.disp_topic"></div>
-      <div class="topic-subtitle sSubtitle">
+      <div class="topic-subtitle">
         {{ data.author }}
         &#149; <time :datetime="data.utime">{{ data.timeFull }}</time>
         <span v-show="data.comments">&#149; {{ data.comments }} <i class="ic">chat_bubble</i></span>

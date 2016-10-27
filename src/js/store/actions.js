@@ -16,8 +16,8 @@ export const loadTopics = ({ dispatch, commit, state }, payload) => {
 
 
   if(!payload.loadMore){
-    $('#leftPane').addClass('wrapUp');
-    $('#leftPane .loading').addClass('active');
+    $('.leftPane').addClass('leftPane--wrapUp');
+    $('.loading--left').addClass('loading--active');
     commit('resetTopics');
 
     Pantip.loadBestTopics(payload.forumName).then(data => state.bestTopics = data);
@@ -25,8 +25,8 @@ export const loadTopics = ({ dispatch, commit, state }, payload) => {
 
   Pantip.loadTopics(payload.forumName, _loadMoreId).then(data => {
     //console.log(data);
-    $('#leftPane').removeClass('wrapUp');
-    $('#leftPane .loading').removeClass('active');
+    $('.leftPane').removeClass('leftPane--wrapUp');
+    $('.loading--left').removeClass('loading--active');
 
     for(let topic of data['topics']){
       topic.isActive = topic._id === state.topicId;
@@ -52,8 +52,8 @@ export const search = ({ dispatch, commit, state }, payload) => {
   if(payload.loadMore){
     searchArguments.push(state.searchResults.length, state.searchQueryString);
   }else{
-    $('.searchResultList').addClass('wrapUp');
-    $('.searchResultList .loading').addClass('active');
+    $('.searchResultList').addClass('searchResultList--wrapUp');
+    $('.loading--search').addClass('loading--active');
   }
   console.log(...searchArguments);
   Pantip.search(...searchArguments).then(data => {
@@ -63,8 +63,8 @@ export const search = ({ dispatch, commit, state }, payload) => {
     }else{
       state.searchResults = data.results;
       state.searchQueryString = data.queryString;
-      $('.searchResultList').removeClass('wrapUp');
-      $('.searchResultList .loading').removeClass('active');
+      $('.searchResultList').removeClass('searchResultList--wrapUp');
+      $('.loading--search').removeClass('loading--active');
     }
   });
 }

@@ -7180,7 +7180,7 @@
 	    },
 	    loadMoreTopics: function loadMoreTopics() {
 	      this.$store.dispatch('loadTopics', { forumName: this.$store.state.forumName, loadMore: true });
-	      $('.topic.' + this.$store.state.loadMoreId).addClass('beforeMore');
+	      $('.topic.' + this.$store.state.loadMoreId).addClass('topic--beforeMore');
 	    },
 	    doSearch: function doSearch() {
 	      this.$store.dispatch('search');
@@ -7330,6 +7330,7 @@
 	//
 	//
 	//
+	//
 
 /***/ },
 /* 10 */
@@ -7346,12 +7347,9 @@
 	  }, [_h('div', {
 	    staticClass: "sidebarHead"
 	  }, [_m(0), " ", _h('div', {
-	    staticClass: "sidebar-toolbar"
+	    staticClass: "sidebarToolbar"
 	  }, [_h('div', {
-	    staticClass: "sClickable",
-	    attrs: {
-	      "id": "forumSelector"
-	    },
+	    staticClass: "forumSelector",
 	    on: {
 	      "click": function($event) {
 	        $event.stopPropagation();
@@ -7359,9 +7357,7 @@
 	      }
 	    }
 	  }, [_h('span', {
-	    attrs: {
-	      "id": "forumSelectorName"
-	    }
+	    staticClass: "forumSelector-name"
 	  }, [_s(forumDisplayName)]), " ", _m(1)]), " ", _h('toolbar-icon', {
 	    attrs: {
 	      "icon": "refresh",
@@ -7384,12 +7380,9 @@
 	      }
 	    }
 	  })]), " ", _h('ul', {
-	    staticClass: "dialogue sElevation2 sClickable",
+	    staticClass: "dialogue dialogue--forumSelect",
 	    class: {
-	      active: showDialogues.forumSelect
-	    },
-	    attrs: {
-	      "id": "forumSelect"
+	      'dialogue--active': showDialogues.forumSelect
 	    }
 	  }, [_l((forums), function(forum) {
 	    return _h('forum-select-item', {
@@ -7398,27 +7391,24 @@
 	      }
 	    }, ["\n          " + _s(forum.label) + "\n        "])
 	  })]), " ", _h('ul', {
-	    staticClass: "dialogue sElevation2",
+	    staticClass: "dialogue dialogue--overflow",
 	    class: {
-	      active: showDialogues.overflow
-	    },
-	    attrs: {
-	      "id": "overflow"
+	      'dialogue--active': showDialogues.overflow
 	    }
 	  }, [_h('li', {
-	    staticClass: "sClickable",
+	    staticClass: "dialogue-item",
 	    on: {
 	      "click": function($event) {
 	        showSearch = true
 	      }
 	    }
 	  }, ["ค้นหา"]), " ", _h('li', {
-	    staticClass: "sClickable",
+	    staticClass: "dialogue-item",
 	    on: {
 	      "click": goToSettings
 	    }
 	  }, ["ตั้งค่า"]), " ", _h('li', {
-	    staticClass: "sClickable",
+	    staticClass: "dialogue-item",
 	    on: {
 	      "click": function($event) {
 	        loadPage('about')
@@ -7431,33 +7421,25 @@
 	      value: (!showSearch),
 	      expression: "!showSearch"
 	    }],
-	    staticClass: "sForeBg",
-	    attrs: {
-	      "id": "leftPane"
-	    }
+	    staticClass: "leftPane"
 	  }, [_m(2), " ", _h('div', {
-	    attrs: {
-	      "id": "bestTopicContainer"
-	    }
+	    staticClass: "bestTopicContainer"
 	  }, [_h('div', {
-	    staticClass: "sClickable",
-	    class: {
-	      active: $store.state.showBestTopics
-	    },
-	    attrs: {
-	      "id": "bestTopicHeader"
-	    },
+	    staticClass: "topicHeader topicHeader--best",
 	    on: {
 	      "click": function($event) {
 	        $store.commit('toggleBestTopics')
 	      }
 	    }
-	  }, [_m(3), "กระทู้แนะนำ", _m(4)]), " ", _h('div', {
+	  }, [_m(3), "\n          กระทู้แนะนำ\n          ", _h('i', {
+	    staticClass: "ic topicHeader-dropdownIcon",
 	    class: {
-	      active: $store.state.showBestTopics
-	    },
-	    attrs: {
-	      "id": "bestTopicList"
+	      'topicHeader-dropdownIcon--active': $store.state.showBestTopics
+	    }
+	  }, ["\n            expand_more"])]), " ", _h('div', {
+	    staticClass: "topicList topicList--best",
+	    class: {
+	      'topicList--showBest': $store.state.showBestTopics
 	    }
 	  }, [_l(($store.state.bestTopics), function(topic) {
 	    return _h('best-topic-item', {
@@ -7465,10 +7447,8 @@
 	        "data": topic
 	      }
 	    })
-	  })])]), " ", _m(5), " ", _h('div', {
-	    attrs: {
-	      "id": "topicList"
-	    }
+	  })])]), " ", _m(4), " ", _h('div', {
+	    staticClass: "topicList"
 	  }, [_l(($store.state.topics), function(topic) {
 	    return _h('topic-item', {
 	      attrs: {
@@ -7476,14 +7456,11 @@
 	      }
 	    })
 	  }), " ", _h('button', {
-	    staticClass: "loadMore sButton sAccentBg sElevation0h2",
-	    attrs: {
-	      "data-tid": $store.state.loadMoreId
-	    },
+	    staticClass: "topicList-loadMore",
 	    on: {
 	      "click": loadMoreTopics
 	    }
-	  }, ["\n          โหลดกระทู้เพิ่ม\n        "])])]), " ", _h('div', {
+	  }, ["โหลดกระทู้เพิ่ม"])])]), " ", _h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -7492,7 +7469,7 @@
 	    }],
 	    staticClass: "searchPane"
 	  }, [_h('div', {
-	    staticClass: "searchContainer sForeBg"
+	    staticClass: "searchHeader"
 	  }, [_h('toolbar-icon', {
 	    attrs: {
 	      "icon": "arrow_back",
@@ -7510,7 +7487,7 @@
 	      value: ($store.state.searchQuery),
 	      expression: "$store.state.searchQuery"
 	    }],
-	    staticClass: "searchBar",
+	    staticClass: "searchHeader-input",
 	    attrs: {
 	      "type": "text",
 	      "placeholder": "คำค้นหา..."
@@ -7539,8 +7516,8 @@
 	      }
 	    }
 	  })]), " ", _h('div', {
-	    staticClass: "searchResultList sForeBg"
-	  }, [_m(6), " ", _l(($store.state.searchResults), function(topic) {
+	    staticClass: "searchResultList"
+	  }, [_m(5), " ", _l(($store.state.searchResults), function(topic) {
 	    return _h('search-result-item', {
 	      attrs: {
 	        "data": topic
@@ -7553,7 +7530,7 @@
 	      value: ($store.state.searchResults.length),
 	      expression: "$store.state.searchResults.length"
 	    }],
-	    staticClass: "loadMore sButton sAccentBg sElevation0h2",
+	    staticClass: "searchResultList-loadMore",
 	    on: {
 	      "click": loadMoreSearchResults
 	    }
@@ -7608,7 +7585,7 @@
 	    attrs: {
 	      "id": "rightPane"
 	    }
-	  }, [_m(7), " ", _h('div', {
+	  }, [_m(6), " ", _h('div', {
 	    staticClass: "sForeBg sElevation1",
 	    attrs: {
 	      "id": "topicView"
@@ -7638,7 +7615,7 @@
 	      value: (topicId),
 	      expression: "topicId"
 	    }]
-	  })]), " ", _m(8)]), " ", _m(9)])
+	  })]), " ", _m(7)]), " ", _m(8)])
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('div', {
 	    staticClass: "logo"
@@ -7658,31 +7635,25 @@
 	  }, ["arrow_drop_down"])
 	}},function (){with(this) {
 	  return _h('div', {
-	    staticClass: "loading sAccentText"
+	    staticClass: "loading loading--left"
 	  }, [_h('i', {
-	    staticClass: "ic"
+	    staticClass: "ics"
 	  }, ["refresh"])])
 	}},function (){with(this) {
 	  return _h('i', {
-	    staticClass: "ic headerIcon"
+	    staticClass: "ic topicHeader-icon"
 	  }, ["thumb_up"])
 	}},function (){with(this) {
-	  return _h('i', {
-	    staticClass: "ic dropdown"
-	  }, ["expand_more"])
-	}},function (){with(this) {
 	  return _h('div', {
-	    attrs: {
-	      "id": "topicListHeader"
-	    }
+	    staticClass: "topicHeader"
 	  }, [_h('i', {
-	    staticClass: "ic headerIcon"
+	    staticClass: "ic topicHeader-icon"
 	  }, ["schedule"]), "กระทู้ล่าสุด"])
 	}},function (){with(this) {
 	  return _h('div', {
-	    staticClass: "loading sAccentText"
+	    staticClass: "loading loading--search"
 	  }, [_h('i', {
-	    staticClass: "ic"
+	    staticClass: "ics"
 	  }, ["refresh"])])
 	}},function (){with(this) {
 	  return _h('div', {
@@ -7885,8 +7856,8 @@
 	  commit('hideBestTopics');
 
 	  if (!payload.loadMore) {
-	    $('#leftPane').addClass('wrapUp');
-	    $('#leftPane .loading').addClass('active');
+	    $('.leftPane').addClass('leftPane--wrapUp');
+	    $('.loading--left').addClass('loading--active');
 	    commit('resetTopics');
 
 	    _pantipInterface2.default.loadBestTopics(payload.forumName).then(function (data) {
@@ -7896,8 +7867,8 @@
 
 	  _pantipInterface2.default.loadTopics(payload.forumName, _loadMoreId).then(function (data) {
 	    //console.log(data);
-	    $('#leftPane').removeClass('wrapUp');
-	    $('#leftPane .loading').removeClass('active');
+	    $('.leftPane').removeClass('leftPane--wrapUp');
+	    $('.loading--left').removeClass('loading--active');
 
 	    var _iteratorNormalCompletion = true;
 	    var _didIteratorError = false;
@@ -7951,8 +7922,8 @@
 	  if (payload.loadMore) {
 	    searchArguments.push(state.searchResults.length, state.searchQueryString);
 	  } else {
-	    $('.searchResultList').addClass('wrapUp');
-	    $('.searchResultList .loading').addClass('active');
+	    $('.searchResultList').addClass('searchResultList--wrapUp');
+	    $('.loading--search').addClass('loading--active');
 	  }
 	  (_console = console).log.apply(_console, searchArguments);
 	  _pantipInterface2.default.search.apply(_pantipInterface2.default, searchArguments).then(function (data) {
@@ -7964,8 +7935,8 @@
 	    } else {
 	      state.searchResults = data.results;
 	      state.searchQueryString = data.queryString;
-	      $('.searchResultList').removeClass('wrapUp');
-	      $('.searchResultList .loading').removeClass('active');
+	      $('.searchResultList').removeClass('searchResultList--wrapUp');
+	      $('.loading--search').removeClass('loading--active');
 	    }
 	  });
 	};
@@ -8211,7 +8182,7 @@
 
 
 	// module
-	exports.push([module.id, "\n.toolbarIcon[data-v-74e5db62]{\n  display: inline-block;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n.label[data-v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  transition: all .1s ease;\n}\n.ic:hover + .label[data-v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n", ""]);
+	exports.push([module.id, "\n.toolbarIcon[data-v-74e5db62]{\n  display: inline-block;\n  margin: 0 5px;\n  line-height: 1;\n  position: relative; top: 0; right: 0;\n  z-index: 15;\n}\n.label[data-v-74e5db62]{\n  display: block;\n  padding: 8px 10px;\n  border-radius: 2px;\n  position: absolute;\n  bottom: -27px;\n  white-space: nowrap;\n  opacity: 0;\n  cursor: default;\n  transition: all .1s ease;\n}\n.ic:hover + .label[data-v-74e5db62]{\n  bottom: -30px;\n  opacity: 1;\n}\n", ""]);
 
 	// exports
 
@@ -8483,6 +8454,7 @@
 	//
 	//
 	//
+	//
 
 	exports.default = {
 	  props: {
@@ -8621,7 +8593,7 @@
 
 
 	// module
-	exports.push([module.id, "\nli[data-v-41c115fe]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n  transition: .2s all ease-in-out;\n}\nimg[data-v-41c115fe]{\n  height: 36px;\n  margin-right: 15px;\n}\nspan[data-v-41c115fe]{\n  vertical-align: top;\n  display: inline-block;\n}\n", ""]);
+	exports.push([module.id, "\nli[data-v-41c115fe]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n}\nimg[data-v-41c115fe]{\n  height: 36px;\n  margin-right: 15px;\n}\nspan[data-v-41c115fe]{\n  vertical-align: top;\n  display: inline-block;\n}\n", ""]);
 
 	// exports
 
@@ -8635,7 +8607,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	//
 	//
 	//
 	//
@@ -8680,6 +8651,7 @@
 
 	module.exports={render:function (){with(this) {
 	  return _h('li', {
+	    staticClass: "dialogue-item",
 	    on: {
 	      "click": loadForum
 	    }
@@ -8843,9 +8815,9 @@
 
 	module.exports={render:function (){with(this) {
 	  return _h('div', {
-	    staticClass: "topic sForeBg sClickable",
+	    staticClass: "topic",
 	    class: {
-	      active: isActive
+	      'topic--active': isActive
 	    },
 	    on: {
 	      "click": loadTopic
@@ -8865,7 +8837,7 @@
 	      "innerHTML": _s(data.disp_topic)
 	    }
 	  }), " ", _h('div', {
-	    staticClass: "topic-subtitle sSubtitle"
+	    staticClass: "topic-subtitle"
 	  }, ["\n      " + _s(data.author) + "\n    "])])])
 	}},staticRenderFns: []}
 	if (false) {
@@ -8992,9 +8964,9 @@
 
 	module.exports={render:function (){with(this) {
 	  return _h('div', {
-	    staticClass: "topic sForeBg sClickable",
+	    staticClass: "topic",
 	    class: {
-	      active: isActive, top: data.isTop
+	      'topic--active': isActive, 'topic--top': data.isTop
 	    },
 	    on: {
 	      "click": loadTopic
@@ -9014,7 +8986,7 @@
 	      "innerHTML": _s(data.disp_topic)
 	    }
 	  }), " ", _h('div', {
-	    staticClass: "topic-subtitle sSubtitle"
+	    staticClass: "topic-subtitle"
 	  }, ["\n      " + _s(data.author) + "\n      • ", _h('time', {
 	    attrs: {
 	      "datetime": data.utime

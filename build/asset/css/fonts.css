@@ -26,7 +26,7 @@
 	src: url('../misc/MaterialIcons-Regular.ttf')  format('truetype');
 }
 
-.ic{
+.ic, .ics{
   font-family: material-icon;
   font-style: normal;
   font-weight: normal;
@@ -41,5 +41,6 @@
   white-space: nowrap;
   text-rendering: optimizeLegibility;
 	vertical-align: middle;
-	margin-bottom: 5px;
 }
+
+.ic{ margin-bottom: 5px; }

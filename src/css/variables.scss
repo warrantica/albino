@@ -13,10 +13,58 @@ $base-font-family: sans-serif;
 $base-line-height: 1.25;
 
 /*============================================================*/
+/* Basic Mixins
+/*============================================================*/
+
+@mixin flex-row-center{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+@mixin flex-column-stretch{
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+}
+
+@mixin circle($radius){
+  width: $radius;
+  height: $radius;
+  border-radius: 50%;
+}
+
+@mixin elevation($level: 0) {
+  @if $level == 0{
+    box-shadow: 0 0px 0px rgba(0,0,0,0.16), 0 0px 0px rgba(0,0,0,0.23);
+  } @else if $level == 1{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  } @else if $level == 2{
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  } @else if $level == 3{
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  } @else if $level == 4{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  } @else if $level == 5{
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  } @else {
+    box-shadow: 0 0px 0px rgba(0,0,0,0.16), 0 0px 0px rgba(0,0,0,0.23);
+  }
+}
+
+@mixin transition ($timing: .2s) { transition: all $timing ease; }
+
+@mixin clickable{ cursor: pointer; }
+
+/*============================================================*/
 /* Style Presets
 /*============================================================*/
 
 .sSubtitle{ font-size: 11px; }
+
+@mixin subtitle{
+  font-size: 11px;
+}
 
 .sButton{
   display: block;
@@ -24,6 +72,15 @@ $base-line-height: 1.25;
   border: none;
   border-radius: 2px;
   transition: all .2s ease-in-out;
+}
+
+@mixin button {
+  @include transition;
+  @include theme-accent-bg;
+  display: block;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 2px;
 }
 
 .sElevation1{
@@ -47,52 +104,6 @@ $base-line-height: 1.25;
 }
 
 .sClickable{ cursor: pointer; }
-
-/*============================================================*/
-/* Mixins
-/*============================================================*/
-
-@mixin flex-row-center{
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-}
-
-@mixin flex-column-stretch{
-  display: flex;
-  flex-flow: column;
-  align-items: stretch;
-}
-
-@mixin elevation-0{
-  box-shadow: 0 0px 0px rgba(0,0,0,0.16), 0 0px 0px rgba(0,0,0,0.23);
-}
-
-@mixin elevation-1{
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-
-@mixin elevation-2{
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
-@mixin elevation-3{
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
-
-@mixin elevation-4{
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-@mixin elevation-5{
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-}
-
-@mixin transition-normal{ transition: all .2s ease; }
-
-@mixin transition ($timing) { transition: all $timing ease; }
-
-@mixin clickable{ cursor: pointer; }
 
 /*============================================================*/
 /* Vue Related
