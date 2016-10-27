@@ -6359,9 +6359,9 @@
 	    window.setTimeout(function () {
 	      var rightPane = document.getElementById('rightPane');
 	      if (rightPane.offsetHeight < rightPane.scrollHeight) {
-	        $('#fab').addClass('enable');
+	        $('.fab').addClass('fab--enable');
 	      } else {
-	        $('#fab').removeClass('enable');
+	        $('.fab').removeClass('fab--enable');
 	      }
 	    }, 50);
 	  },

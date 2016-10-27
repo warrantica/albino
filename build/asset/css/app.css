@@ -530,7 +530,10 @@ a:link, a:visited {
   margin: 0 auto 20px auto; }
 
 /*============================================================*/
-#fab {
+.fab {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  background: var(--accent);
+  color: var(--text-on-accent);
   position: absolute;
   bottom: 30px;
   right: 30px;
@@ -540,45 +543,35 @@ a:link, a:visited {
   text-align: center;
   overflow: hidden;
   transform: scale(0);
-  transition: all 0.2s cubic-bezier(0.8, -0.2, 0.2, 1.2); }
+  transition: all .1s ease; }
+  .fab:hover {
+    height: 112px; }
+  .fab--enable {
+    transform: scale(1); }
+  .fab-button {
+    cursor: pointer;
+    position: absolute;
+    width: 56px;
+    line-height: 56px;
+    transition: transform .2s ease-in-out .1s, opacity .1s ease-in-out 0s, background-color .1s ease-in-out 0s; }
+    .fab-button:hover {
+      background: rgba(255, 255, 255, 0.12); }
+    .fab-button--up {
+      top: 0;
+      left: 0;
+      opacity: 0; }
+    .fab-button--down {
+      bottom: 0;
+      left: 0; }
 
-#fab.enable {
-  transform: scale(1); }
-
-#fab:hover {
-  height: 112px; }
-
-#fab .topContainer, #fab .bottomContainer {
-  position: absolute;
-  width: 56px;
-  line-height: 56px;
-  transition: transform .2s ease-in-out .1s, opacity .1s ease-in-out 0s, background-color .1s ease-in-out 0s; }
-
-#fab .topContainer:hover, #fab .bottomContainer:hover {
-  background: rgba(255, 255, 255, 0.12); }
-
-#fab .topContainer {
-  top: 0;
-  left: 0;
-  opacity: 0;
-  overflow: hidden;
+.fab:hover .fab-button--up {
+  opacity: 1;
   transform: rotate(180deg); }
 
-#fab:hover .topContainer {
-  opacity: 1;
-  transform: rotate(0deg); }
-
-#fab .bottomContainer {
-  bottom: 0;
-  left: 0; }
-
-#fab .ic {
-  vertical-align: middle;
-  margin: 0; }
-
 /*============================================================*/
-#lightBox {
-  width: 100%;
+.lightBox {
+  cursor: pointer;
+  width: 100vw;
   height: 100vh;
   background: transparent;
   position: absolute;
@@ -587,25 +580,22 @@ a:link, a:visited {
   z-index: 20;
   opacity: 0;
   transition: background-color .2s ease-in-out 0s, top .01s ease-in-out .2s, opacity .2s ease-in-out .01s; }
-
-#lightBox.active {
-  top: 0;
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.3);
-  transition: background-color .2s ease-in-out .1s, top .01s ease-in-out 0s, opacity .2s ease-in-out 0s; }
-
-#lightBox img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(0, 0);
-  width: auto;
-  height: auto; }
-
-#lightBox img.active {
-  width: auto;
-  height: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: all .2s ease-in-out; }
+  .lightBox--active {
+    top: 0;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.3);
+    transition: background-color .2s ease-in-out .1s, top .01s ease-in-out 0s, opacity .2s ease-in-out 0s; }
+  .lightBox-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    width: auto;
+    height: auto; }
+    .lightBox-img--active {
+      transition: all 0.2s ease;
+      width: auto;
+      height: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); }

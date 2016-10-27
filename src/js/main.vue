@@ -91,9 +91,9 @@
         </div>
         <comment-view v-show="topicId"></comment-view>
       </div>
-      <div id="fab" class="disable sAccentBg sElevation4">
-        <div class="topContainer sClickable"><i class="ic">expand_less</i></div>
-        <div class="bottomContainer sClickable"><i class="ic">expand_more</i></div>
+      <div class="fab">
+        <div class="fab-button fab-button--up"><i class="ics">expand_more</i></div>
+        <div class="fab-button fab-button--down"><i class="ics">expand_more</i></div>
       </div>
     </div>
     <div class="lightBox">

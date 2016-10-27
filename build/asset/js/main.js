@@ -138,29 +138,29 @@
 
 	$('body').on('click', '.img-in-post', function (e) {
 	  $(this).addClass('inLightBox');
-	  $('#lightBox').addClass('active');
+	  $('.lightBox').addClass('lightBox--active');
 
 	  var dimensions = this.getBoundingClientRect();
-	  $('#lightBox img').attr('src', $(this).attr('src')).css({
+	  $('.lightBox-img').attr('src', $(this).attr('src')).css({
 	    'top': dimensions.top,
 	    'left': dimensions.left,
 	    'max-width': dimensions.width,
 	    'max-height': dimensions.height
 	  });
 	  window.setTimeout(function () {
-	    $('#lightBox img').css({
+	    $('.lightBox-img').css({
 	      'top': '',
 	      'left': '',
 	      'max-width': '99%',
 	      'max-height': '99vh'
-	    }).addClass('active');
+	    }).addClass('.lightBox-img--active');
 	  }, 50);
 	});
 
-	$('body').on('click', '#lightBox', function (e) {
-	  $(this).removeClass('active');
+	$('body').on('click', '.lightBox', function (e) {
+	  $(this).removeClass('lightBox--active');
 	  window.setTimeout(function () {
-	    $('#lightBox img').removeClass('active').removeAttr('style').removeAttr('src');
+	    $('.lightBox-img').removeClass('lightBox-img--active').removeAttr('style').removeAttr('src');
 	  }, 250);
 	  $('#rightPane .img-in-post').removeClass('inLightBox');
 	});
@@ -7003,9 +7003,9 @@
 	    window.setTimeout(function () {
 	      var rightPane = document.getElementById('rightPane');
 	      if (rightPane.offsetHeight < rightPane.scrollHeight) {
-	        $('#fab').addClass('enable');
+	        $('.fab').addClass('fab--enable');
 	      } else {
-	        $('#fab').removeClass('enable');
+	        $('.fab').removeClass('fab--enable');
 	      }
 	    }, 50);
 	  },
@@ -7649,31 +7649,25 @@
 	  }, ["refresh"])])
 	}},function (){with(this) {
 	  return _h('div', {
-	    staticClass: "loading sAccentText"
+	    staticClass: "loading loading--right"
 	  }, [_h('i', {
-	    staticClass: "ic"
+	    staticClass: "ics"
 	  }, ["hourglass_full"])])
 	}},function (){with(this) {
 	  return _h('div', {
-	    staticClass: "disable sAccentBg sElevation4",
-	    attrs: {
-	      "id": "fab"
-	    }
+	    staticClass: "fab"
 	  }, [_h('div', {
-	    staticClass: "topContainer sClickable"
+	    staticClass: "fab-button fab-button--up"
 	  }, [_h('i', {
-	    staticClass: "ic"
-	  }, ["expand_less"])]), " ", _h('div', {
-	    staticClass: "bottomContainer sClickable"
+	    staticClass: "ics"
+	  }, ["expand_more"])]), " ", _h('div', {
+	    staticClass: "fab-button fab-button--down"
 	  }, [_h('i', {
-	    staticClass: "ic"
+	    staticClass: "ics"
 	  }, ["expand_more"])])])
 	}},function (){with(this) {
 	  return _h('div', {
-	    staticClass: "sClickable",
-	    attrs: {
-	      "id": "lightBox"
-	    }
+	    staticClass: "lightBox"
 	  }, [_h('img', {
 	    attrs: {
 	      "src": ""
