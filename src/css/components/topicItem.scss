@@ -1,0 +1,48 @@
+// ===========================================================================
+// Sass for topicItem and bestTopicItem
+// ===========================================================================
+
+.topicItem{
+  @include flex-row-center;
+  @include transition;
+  @include clickable;
+  @include base-fore-bg;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  word-wrap: break-word;
+
+  &:hover{ @include base-hover-bg; }
+
+  &--active{ @include base-hover-bg; }
+
+  &-thumbnail{
+    margin-right: 10px;
+    width: 48px;
+    height: 48px;
+  }
+
+  &-thumbnailImage{
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &-text{ flex: 1; }
+
+  &-title{ font-size: 16px; }
+
+  &-subtitle{ @include subtitle; }
+
+  &-subtitle .ic{
+    font-size: 11px;
+    margin-bottom: 1px;
+  }
+
+  &-result{
+    @include subtitle;
+
+    & b{ @include theme-accent-text; }
+  }
+}

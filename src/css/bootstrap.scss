@@ -1,3 +1,7 @@
+// ===========================================================================
+// CSS reset, generic styles
+// ===========================================================================
+
 /* Modified Meyer's CSS reset */
 html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,a,img,strike,strong,sub,
 sup,b,u,i,ol,ul,li,fieldset,form,label,table,tbody,tfoot,thead,tr,th,td,canvas,
@@ -5,3 +9,55 @@ embed,header,nav,section,time,video{margin:0;padding:0;border:0;font-size:100%;
 font:inherit;vertical-align:baseline;}
 ol,ul{list-style:none;}
 table{border-collapse:collapse;border-spacing:0;}
+
+// ===========================================================================
+
+html, body{
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+body{
+  line-height: $base-line-height;
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  color: #212121;
+}
+
+::selection{ @include theme-accent-bg; }
+
+.app{
+  @include flex-row-center;
+  align-items: stretch;
+  height: 100%;
+  overflow: hidden;
+}
+
+a:link, a:visited{ text-decoration: none; }
+
+.loading{
+  @include circle(30px);
+  @include transition(.3s);
+  @include theme-accent-text;
+  text-align: center;
+  line-height: 28px;
+  opacity: 0;
+  position: absolute;
+  top: -40px;
+  left: calc(50% - 15px);
+  animation-name: spin;
+  animation-duration: .8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(.8, -0.2, 0.2, 1.2);
+
+  &--active{
+    top: 40px;
+    opacity: 1;
+  }
+}
+
+@keyframes spin{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}

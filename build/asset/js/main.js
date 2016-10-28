@@ -9666,7 +9666,7 @@
 	  return _h('div', {
 	    staticClass: "topic comment sForeBg sElevation1",
 	    class: {
-	      sub: sub
+	      'comment--sub': sub
 	    }
 	  }, [_h('div', {
 	    staticClass: "topic-info"
@@ -9699,7 +9699,7 @@
 	      "data": data.reactionData
 	    }
 	  }), " ", (data.reply_count) ? _h('div', {
-	    staticClass: "subContainer"
+	    staticClass: "comment-subContainer"
 	  }, [_l((data.replies), function(reply) {
 	    return _h('comment-item', {
 	      attrs: {
@@ -9714,7 +9714,7 @@
 	      value: (data.showLoadMoreSubButton),
 	      expression: "data.showLoadMoreSubButton"
 	    }],
-	    staticClass: "loadMoreSubComments sElevation0h2",
+	    staticClass: "topic-loadMore",
 	    on: {
 	      "click": loadMoreSubComments
 	    }

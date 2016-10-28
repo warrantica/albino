@@ -52,7 +52,7 @@ a:link, a:visited{
 
 @mixin base-subtitle{ color: var(--subtitle); }
 
-.sBackBg, .sub.comment{
+.sBackBg{
   background: var(--back);
   color: var(--text);
 }

@@ -1,0 +1,46 @@
+// ===========================================================================
+// Sass for fab
+// ===========================================================================
+
+.fab{
+  @include elevation(4);
+  @include transition(.1s);
+  @include theme-accent-bg;
+  position: absolute; bottom: 30px; right: 30px;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  text-align: center;
+  overflow: hidden;
+  transform: scale(0);
+
+  &:hover{ height: 112px; }
+
+  &--enable{ transform: scale(1); }
+
+  &-button{
+    @include clickable;
+    position: absolute;
+    width: 56px;
+    line-height: 56px;
+    transition: transform .2s ease-in-out .1s,
+                opacity .1s ease-in-out 0s,
+                background-color .1s ease-in-out 0s;
+
+    &:hover{ background: rgba(255, 255, 255, 0.12); }
+
+    &--up{
+      top: 0; left: 0;
+      opacity: 0;
+    }
+
+    &--down{
+      bottom: 0; left: 0;
+    }
+  }
+}
+
+.fab:hover .fab-button--up{
+  opacity: 1;
+  transform: rotate(180deg);
+}
