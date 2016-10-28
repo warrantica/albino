@@ -471,6 +471,9 @@ a:link, a:visited {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .comment {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background: var(--fore);
+  color: var(--text);
   width: 100%;
   box-sizing: border-box;
   margin: 20px 0;
@@ -691,3 +694,29 @@ a:link, a:visited {
       .pagination-page--current:hover {
         background: var(--accent);
         color: var(--text-on-accent); }
+
+.toolbarIcon {
+  display: inline-block;
+  margin: 0 10px;
+  line-height: 1;
+  position: relative;
+  z-index: 15; }
+  .toolbarIcon-icon {
+    cursor: pointer; }
+  .toolbarIcon-label {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    transition: all 0.1s ease;
+    background: var(--primary);
+    color: var(--text-on-primary);
+    display: block;
+    padding: 8px 10px;
+    border-radius: 2px;
+    position: absolute;
+    bottom: -27px;
+    white-space: nowrap;
+    opacity: 0;
+    cursor: default; }
+
+.toolbarIcon-icon:hover + .toolbarIcon-label {
+  bottom: -30px;
+  opacity: 1; }

@@ -153,6 +153,8 @@
 }
 
 .comment{
+  @include elevation(1);
+  @include base-fore-bg;
   width: 100%;
   box-sizing: border-box;
   margin: 20px 0;

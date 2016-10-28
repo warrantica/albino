@@ -1,0 +1,32 @@
+// ===========================================================================
+// Sass for toolbarIcon
+// ===========================================================================
+
+.toolbarIcon{
+  display: inline-block;
+  margin: 0 10px;
+  line-height: 1;
+  position: relative;
+  z-index: 15;
+
+  &-icon{ @include clickable; }
+
+  &-label{
+    @include elevation(2);
+    @include transition(.1s);
+    @include theme-primary-bg;
+    display: block;
+    padding: 8px 10px;
+    border-radius: 2px;
+    position: absolute;
+    bottom: -27px;
+    white-space: nowrap;
+    opacity: 0;
+    cursor: default;
+  }
+}
+
+.toolbarIcon-icon:hover + .toolbarIcon-label{
+  bottom: -30px;
+  opacity: 1;
+}

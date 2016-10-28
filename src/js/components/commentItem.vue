@@ -1,5 +1,5 @@
 <template>
-<div class="topic comment sForeBg sElevation1" :class="{'comment--sub':sub}">
+<div class="topic comment" :class="{'comment--sub':sub}">
   <div class="topic-info">
     <img class="topic-avatar" :src="data.user.avatar.medium" />
     <div class="topic-author" :class="{'topic-author--op':data.owner_topic }">
