@@ -1,9 +1,9 @@
 <template>
-  <div class="topic" @click="loadSearchResult">
-    <div class="topic-text">
-      <div class="topic-title" v-html="data.disp_topic"></div>
-      <div class="topic-subtitle">คห. {{ data.comment_num }} โดย {{ data.author }}</div>
-      <div class="topic-result" v-html="data.content"></div>
+  <div class="topicItem" @click="loadSearchResult">
+    <div class="topicItem-text">
+      <div class="topicItem-title" v-html="data.disp_topic"></div>
+      <div class="topicItem-subtitle">คห. {{ data.comment_num }} โดย {{ data.author }}</div>
+      <div class="topicItem-result" v-html="data.content"></div>
     </div>
   </div>
 </template>

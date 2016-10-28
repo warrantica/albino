@@ -79,15 +79,11 @@ a:link, a:visited{
   background: var(--hover);
 }
 
-.sidebarHead, .bestTopicContainer, .searchHeader, .topic-info{
-  border-bottom: 1px var(--border) solid;
-}
-
-.topicItem--top, .commentsInfo:before{
-  border-top: 1px var(--border) solid;
-}
-
-.topic-content{
+@mixin theme-font{
   font-size: var(--font-size);
   font-family: var(--font-face);
+}
+
+@mixin border($direction, $style: solid){
+  border-#{$direction}: 1px var(--border) $style;
 }

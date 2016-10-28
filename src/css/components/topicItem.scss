@@ -16,6 +16,8 @@
 
   &--active{ @include base-hover-bg; }
 
+  &--top{ @include border(top); }
+
   &-thumbnail{
     margin-right: 10px;
     width: 48px;

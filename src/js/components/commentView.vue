@@ -1,10 +1,10 @@
 <template>
 <div class="commentsView">
   <div class="commentsInfo" v-show="$store.state.totalComments > 0">
-    <div class="commentsCount sBackBg">
-      <i class="ic">chat_bubble</i> {{ $store.state.totalComments }} ความเห็น
+    <div class="commentsCount">
+      <i class="ic commentsCount-icon">chat_bubble</i> {{ $store.state.totalComments }} ความเห็น
     </div>
-    <div class="commentsSort sBackBg">
+    <div class="commentsSort">
       เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
     </div>
   </div>

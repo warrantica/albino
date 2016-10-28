@@ -91,10 +91,10 @@
 	_vue2.default.component('topicView', __webpack_require__(34));
 	_vue2.default.component('commentView', __webpack_require__(37));
 	_vue2.default.component('pagination', __webpack_require__(40));
-	_vue2.default.component('commentItem', __webpack_require__(45));
-	_vue2.default.component('reactionView', __webpack_require__(48));
-	_vue2.default.component('tips', __webpack_require__(53));
-	_vue2.default.component('about', __webpack_require__(57));
+	_vue2.default.component('commentItem', __webpack_require__(43));
+	_vue2.default.component('reactionView', __webpack_require__(46));
+	_vue2.default.component('tips', __webpack_require__(51));
+	_vue2.default.component('about', __webpack_require__(55));
 
 	//============================================================================
 	//Event binding stuff
@@ -9043,21 +9043,21 @@
 
 	module.exports={render:function (){with(this) {
 	  return _h('div', {
-	    staticClass: "topic",
+	    staticClass: "topicItem",
 	    on: {
 	      "click": loadSearchResult
 	    }
 	  }, [_h('div', {
-	    staticClass: "topic-text"
+	    staticClass: "topicItem-text"
 	  }, [_h('div', {
-	    staticClass: "topic-title",
+	    staticClass: "topicItem-title",
 	    domProps: {
 	      "innerHTML": _s(data.disp_topic)
 	    }
 	  }), " ", _h('div', {
-	    staticClass: "topic-subtitle"
+	    staticClass: "topicItem-subtitle"
 	  }, ["คห. " + _s(data.comment_num) + " โดย " + _s(data.author)]), " ", _h('div', {
-	    staticClass: "topic-result",
+	    staticClass: "topicItem-result",
 	    domProps: {
 	      "innerHTML": _s(data.content)
 	    }
@@ -9308,8 +9308,8 @@
 	    }],
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
-	    staticClass: "commentsCount sBackBg"
-	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\n    "]), " ", _m(1)]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
+	    staticClass: "commentsCount"
+	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\r\n    "]), " ", _m(1)]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
 	    return _h('comment-item', {
 	      attrs: {
 	        "data": comment
@@ -9318,12 +9318,12 @@
 	  }), " ", _h('pagination')])
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('i', {
-	    staticClass: "ic"
+	    staticClass: "ic commentsCount-icon"
 	  }, ["chat_bubble"])
 	}},function (){with(this) {
 	  return _h('div', {
-	    staticClass: "commentsSort sBackBg"
-	  }, ["\n      เรียงตาม: เวลาโพสต์ ", _h('i', {
+	    staticClass: "commentsSort"
+	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _h('i', {
 	    staticClass: "ic"
 	  }, ["arrow_drop_down"])])
 	}}]}
@@ -9340,14 +9340,11 @@
 
 	var __vue_exports__, __vue_options__
 
-	/* styles */
-	__webpack_require__(41)
-
 	/* script */
-	__vue_exports__ = __webpack_require__(43)
+	__vue_exports__ = __webpack_require__(41)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(44)
+	var __vue_template__ = __webpack_require__(42)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9362,7 +9359,6 @@
 	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\pagination.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-35dabb88"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -9383,46 +9379,6 @@
 
 /***/ },
 /* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(42);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(17)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-35dabb88&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./pagination.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-35dabb88&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./pagination.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(1)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n.pagination[data-v-35dabb88]{\n  width: 100%;\n  text-align: center;\n}\n.page[data-v-35dabb88]{\n  display: inline-block;\n  width: 18px;\n  line-height: 18px;\n  padding: 5px;\n  margin: 5px;\n  border-radius: 50%;\n  transition: all .2s ease;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 43 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9430,25 +9386,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 	//
 	//
 	//
@@ -9472,14 +9409,14 @@
 	  },
 
 	  methods: {
-	    goToPage: function goToPage(pageNumber) {
-	      this.$store.dispatch('goToCommentPage', pageNumber);
+	    goToPage: function goToPage(pageNum) {
+	      this.$store.dispatch('goToCommentPage', pageNum);
 	    }
 	  }
 	};
 
 /***/ },
-/* 44 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -9492,26 +9429,26 @@
 	    }],
 	    staticClass: "pagination"
 	  }, [_h('i', {
-	    staticClass: "ic sClickable",
+	    staticClass: "ics pagination-arrow",
 	    on: {
 	      "click": function($event) {
 	        goToPage(currentPage - 1)
 	      }
 	    }
 	  }, ["chevron_left"]), " ", _l((totalPages), function(page) {
-	    return _h('span', {
-	      staticClass: "page sClickable",
+	    return _h('div', {
+	      staticClass: "pagination-page",
 	      class: {
-	        sAccentBg: page == currentPage + 1, current: page == currentPage + 1
+	        'pagination-page--current': page == currentPage + 1
 	      },
 	      on: {
 	        "click": function($event) {
 	          goToPage(page - 1)
 	        }
 	      }
-	    }, ["\r\n    " + _s(page) + "\r\n  "])
+	    }, [_s(page)])
 	  }), " ", _h('i', {
-	    staticClass: "ic sClickable",
+	    staticClass: "ics pagination-arrow",
 	    on: {
 	      "click": function($event) {
 	        goToPage(currentPage + 1)
@@ -9527,16 +9464,16 @@
 	}
 
 /***/ },
-/* 45 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* script */
-	__vue_exports__ = __webpack_require__(46)
+	__vue_exports__ = __webpack_require__(44)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(47)
+	var __vue_template__ = __webpack_require__(45)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9570,7 +9507,7 @@
 
 
 /***/ },
-/* 46 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9589,6 +9526,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//
+	//
 	//
 	//
 	//
@@ -9659,7 +9598,7 @@
 	};
 
 /***/ },
-/* 47 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -9680,7 +9619,7 @@
 	    class: {
 	      'topic-author--op': data.owner_topic
 	    }
-	  }, [_s(data.user.name)]), " ", _h('div', {
+	  }, ["\r\n      " + _s(data.user.name) + "\r\n    "]), " ", _h('div', {
 	    staticClass: "topic-time"
 	  }, [_h('time', {
 	    staticClass: "timeago",
@@ -9718,7 +9657,7 @@
 	    on: {
 	      "click": loadMoreSubComments
 	    }
-	  }, ["\n      โหลดความเห็นย่อยเพิ่ม\n    "])]) : _e()])
+	  }, ["\r\n      โหลดความเห็นย่อยเพิ่ม\r\n    "])]) : _e()])
 	}},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -9728,19 +9667,19 @@
 	}
 
 /***/ },
-/* 48 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(49)
+	__webpack_require__(47)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(51)
+	__vue_exports__ = __webpack_require__(49)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(52)
+	var __vue_template__ = __webpack_require__(50)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9775,13 +9714,13 @@
 
 
 /***/ },
-/* 49 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(50);
+	var content = __webpack_require__(48);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -9801,7 +9740,7 @@
 	}
 
 /***/ },
-/* 50 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -9815,7 +9754,7 @@
 
 
 /***/ },
-/* 51 */
+/* 49 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9967,7 +9906,7 @@
 	};
 
 /***/ },
-/* 52 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -10057,16 +9996,16 @@
 	}
 
 /***/ },
-/* 53 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(54)
+	__webpack_require__(52)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(56)
+	var __vue_template__ = __webpack_require__(54)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -10101,13 +10040,13 @@
 
 
 /***/ },
-/* 54 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(55);
+	var content = __webpack_require__(53);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -10127,7 +10066,7 @@
 	}
 
 /***/ },
-/* 55 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -10141,7 +10080,7 @@
 
 
 /***/ },
-/* 56 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -10163,16 +10102,16 @@
 	}
 
 /***/ },
-/* 57 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(58)
+	__webpack_require__(56)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(60)
+	var __vue_template__ = __webpack_require__(58)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -10207,13 +10146,13 @@
 
 
 /***/ },
-/* 58 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(59);
+	var content = __webpack_require__(57);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(17)(content, {});
@@ -10233,7 +10172,7 @@
 	}
 
 /***/ },
-/* 59 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -10247,7 +10186,7 @@
 
 
 /***/ },
-/* 60 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {

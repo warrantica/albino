@@ -1,0 +1,38 @@
+// ===========================================================================
+// Sass for pagination
+// ===========================================================================
+
+.pagination{
+  @include flex-row-center;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+
+  &-arrow{
+    @include transition;
+    @include clickable;
+    border-radius: 50%;
+
+    &:hover{ @include base-hover-bg; }
+  }
+
+  &-page{
+    @include transition;
+    @include clickable;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    margin: 3px;
+    padding: 2px;
+    text-align: center;
+    border-radius: 50%;
+
+    &:hover{ @include base-hover-bg; }
+
+    &--current{
+      @include theme-accent-bg;
+      &:hover{ @include theme-accent-bg; }
+    }
+  }
+}

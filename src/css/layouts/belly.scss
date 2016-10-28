@@ -92,6 +92,7 @@
   }
 
   &-content{
+    @include theme-font;
     box-sizing: border-box;
     width: 100%;
     padding: 15px;
@@ -101,6 +102,7 @@
   }
 
   &-info{
+    @include border(bottom);
     padding: 15px;
     position: relative;
   }
@@ -164,36 +166,40 @@
 
   &-subContainer{
     @include flex-column-stretch;
-    padding:0 10px;
+    padding: 10px;
   }
 }
 
 // ===========================================================================
+// Content styling
+// ===========================================================================
 
-.rightPane u{
-  text-decoration: none;
-  border-bottom: 1px #333 solid;
-}
+.rightPane{
+  u{
+    text-decoration: none;
+    border-bottom: 1px #333 solid;
+  }
 
-.rightPane .spoil-style{
-  display: block;
-  width: 100%;
-  padding: 15px;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.07);
-}
+  .spoil-style{
+    display: block;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.07);
+  }
 
-.rightPane .img-in-post{
-  max-width: 100%;
-  margin: 10px 0;
-  cursor: pointer;
-  opacity: 1;
-  transition: opacity .2s ease .2s;
-}
+  .img-in-post{
+    @include clickable;
+    max-width: 100%;
+    margin: 10px 0;
+    opacity: 1;
+    transition: opacity .2s ease .2s;
+  }
 
-.rightPane .img-in-post.inLightBox{
-  opacity: 0;
-  transition: opacity .01s ease-in-out .1s;
+  .img-in-post.inLightBox{
+    opacity: 0;
+    transition: opacity .01s ease-in-out .1s;
+  }
 }
 
 // ===========================================================================
@@ -205,41 +211,38 @@
 }
 
 .commentsInfo{
+  @include flex-row-center;
+  justify-content: space-between;
   margin-bottom: 10px;
   position: relative;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.commentsInfo:before{
-  content: '';
-  height: 1px;
-  width: 100%;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  z-index: 1;
+  &:before{
+    @include border(top);
+    content: '';
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+  }
 }
 
 .commentsCount{
+  @include base-back-bg;
   margin-left: 10px;
   padding: 0 10px;
   z-index: 2;
-}
 
-.commentsCount i{
-  font-size: 14px;
-  margin-bottom: 1px;
+  &-icon{
+    font-size: 14px;
+    margin-bottom: 1px;
+  }
 }
 
 .commentsSort{
+  @include base-back-bg;
   margin-right: 10px;
   padding: 0 10px;
   z-index: 2;
-}
-
-.comment-content{
-  margin-bottom: 0px;
 }

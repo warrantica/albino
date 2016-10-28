@@ -14,6 +14,7 @@
 .sidebarHead{
   @include flex-row-center;
   @include base-fore-bg;
+  @include border(bottom);
   width: 100%;
   height: 64px;
 }
@@ -123,6 +124,8 @@
   }
 }
 
+.bestTopicContainer{ @include border(bottom); }
+
 .topicList{
   @include transition;
   width: 100%;
@@ -154,6 +157,7 @@
 .searchHeader{
   @include flex-row-center;
   @include base-fore-bg;
+  @include border(bottom);
 
   &-input{
     @include base-fore-bg;
