@@ -60,19 +60,9 @@ $base-line-height: 1.25;
 // Style Presets
 // ===========================================================================
 
-.sSubtitle{ font-size: 11px; }
-
 @mixin subtitle{
   @include base-subtitle;
   font-size: 11px;
-}
-
-.sButton{
-  display: block;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 2px;
-  transition: all .2s ease-in-out;
 }
 
 @mixin button {
@@ -83,28 +73,6 @@ $base-line-height: 1.25;
   border: none;
   border-radius: 2px;
 }
-
-.sElevation1{
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-
-.sElevation2{
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
-.sElevation4{
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.sElevation0h2{
-  box-shadow: 0 0px 0px rgba(0,0,0,0.16), 0 0px 0px rgba(0,0,0,0.23);
-}
-
-.sElevation0h2:hover{
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
-.sClickable{ cursor: pointer; }
 
 // ===========================================================================
 // Vue Related

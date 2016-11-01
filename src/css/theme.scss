@@ -20,50 +20,25 @@ a:link, a:visited{
   border-bottom: 1px var(--accent) solid;
 }
 
-.sPrimaryBg{
-  background: var(--primary);
-  color: var(--text-on-primary);
-}
-
 @mixin theme-primary-bg{
   background: var(--primary);
   color: var(--text-on-primary);
 }
 
-.sPrimaryText{ color: var(--primary); }
-
-.sAccentBg{
-  background: var(--accent);
-  color: var(--text-on-accent);
-}
+@mixin primary-text {color: var(--primary); }
 
 @mixin theme-accent-bg{
   background: var(--accent);
   color: var(--text-on-accent);
 }
 
-.sAccentText{ color: var(--accent); }
-
-@mixin theme-accent-text{
-  color: var(--accent);
-}
-
-.sSubtitle{ color: var(--subtitle); }
+@mixin theme-accent-text{ color: var(--accent); }
 
 @mixin base-subtitle{ color: var(--subtitle); }
-
-.sBackBg{
-  background: var(--back);
-  color: var(--text);
-}
 
 @mixin base-back-bg {
   background: var(--back);
   color: var(--text);
-}
-
-.sForeBg{
-  background: var(--fore);
 }
 
 @mixin base-fore-bg{
@@ -71,13 +46,7 @@ a:link, a:visited{
   color: var(--text);
 }
 
-.page:not(.current):hover{
-  background: var(--hover);
-}
-
-@mixin base-hover-bg{
-  background: var(--hover);
-}
+@mixin base-hover-bg{ background: var(--hover); }
 
 @mixin theme-font{
   font-size: var(--font-size);
