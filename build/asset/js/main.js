@@ -93,8 +93,8 @@
 	_vue2.default.component('pagination', __webpack_require__(38));
 	_vue2.default.component('commentItem', __webpack_require__(41));
 	_vue2.default.component('reactionView', __webpack_require__(44));
-	_vue2.default.component('tips', __webpack_require__(49));
-	_vue2.default.component('about', __webpack_require__(53));
+	_vue2.default.component('tips', __webpack_require__(47));
+	_vue2.default.component('about', __webpack_require__(51));
 
 	//============================================================================
 	//Event binding stuff
@@ -9601,14 +9601,11 @@
 
 	var __vue_exports__, __vue_options__
 
-	/* styles */
-	__webpack_require__(45)
-
 	/* script */
-	__vue_exports__ = __webpack_require__(47)
+	__vue_exports__ = __webpack_require__(45)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(48)
+	var __vue_template__ = __webpack_require__(46)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9623,7 +9620,6 @@
 	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\reactionView.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-58c21290"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -9644,46 +9640,6 @@
 
 /***/ },
 /* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(46);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(20)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-58c21290&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./reactionView.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-58c21290&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./reactionView.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 46 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(1)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n.reactions[data-v-58c21290]{\n  padding: 0 15px 15px 15px;\n  line-height: 28px;\n  position: relative; top: 0; left: 0;\n}\n.vote[data-v-58c21290]{\n  display: inline-block;\n  margin-right: 10px;\n  height: 28px;\n  vertical-align: top;\n}\n.emotions[data-v-58c21290], .emotionIcons[data-v-58c21290]{\n  display: inline-block;\n  height: 28px;\n}\n.emotionIcons img[data-v-58c21290]{\n  width: 18px;\n  height: auto;\n  margin-bottom: 5px;\n}\n.emotionIcons img[data-v-58c21290]:first-child{\n  width: 28px;\n  margin-bottom: 0;\n}\n.emotionCount[data-v-58c21290]{\n  display: inline-block;\n  vertical-align: top;\n}\n.emotionsInfo[data-v-58c21290]{\n  position: absolute;\n  top: -40px;\n  left: 10px;\n  padding: 10px 10px 0 10px;\n  -webkit-clip-path: circle(0 at 80px 100%);\n  transition: all .15s ease-in-out;\n}\n.emotions:hover + .emotionsInfo[data-v-58c21290]{\n  -webkit-clip-path: circle(100% at 50% 50%);\n}\n.emotionsInfo li[data-v-58c21290]{\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  margin-right: 10px;\n}\n.emotionsInfo img[data-v-58c21290]{\n  width: 18px;\n  margin-right: 5px;\n}\n.emotionsInfo span[data-v-58c21290]{\n  vertical-align: top;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 47 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9691,53 +9647,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
 	//
 	//
 	//
@@ -9835,7 +9744,7 @@
 	};
 
 /***/ },
-/* 48 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -9848,70 +9757,89 @@
 	      value: (data.voteSum),
 	      expression: "data.voteSum"
 	    }],
-	    staticClass: "vote"
-	  }, [_m(0), _s(data.voteSum) + "\n  "]), " ", _h('div', {
+	    staticClass: "reactions-vote"
+	  }, [_m(0), _s(data.voteSum) + "\r\n  "]), " ", _h('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
 	      value: (data.emotionSum),
 	      expression: "data.emotionSum"
 	    }],
-	    staticClass: "emotions"
+	    staticClass: "reactions-emotions"
 	  }, [_h('div', {
-	    staticClass: "emotionIcons"
+	    staticClass: "reactions-topEmotions"
 	  }, [(topEmotions[0]) ? _h('img', {
+	    staticClass: "reactions-topIcon",
 	    attrs: {
-	      "src": 'asset/img/emotions/' + topEmotions[0].name + '.png'
+	      "src": ("asset/img/emotions/" + (topEmotions[0].name) + ".png")
 	    }
 	  }) : _e(), " ", (topEmotions[1]) ? _h('img', {
+	    staticClass: "reactions-topIcon",
 	    attrs: {
-	      "src": 'asset/img/emotions/' + topEmotions[1].name + '.png'
+	      "src": ("asset/img/emotions/" + (topEmotions[1].name) + ".png")
 	    }
 	  }) : _e(), " ", (topEmotions[2]) ? _h('img', {
+	    staticClass: "reactions-topIcon",
 	    attrs: {
-	      "src": 'asset/img/emotions/' + topEmotions[2].name + '.png'
+	      "src": ("asset/img/emotions/" + (topEmotions[2].name) + ".png")
 	    }
-	  }) : _e()]), " ", _h('div', {
-	    staticClass: "emotionCount"
-	  }, [_s(data.emotionSum)])]), " ", _h('ul', {
-	    staticClass: "emotionsInfo sForeBg sElevation2"
-	  }, [_h('li', [_m(1), _h('span', ["ถูกใจ " + _s(data.emotionCounts.like)])]), " ", _h('li', [_m(2), _h('span', ["ขำกลิ้ง " + _s(data.emotionCounts.laugh)])]), " ", _h('li', [_m(3), _h('span', ["หลงรัก " + _s(data.emotionCounts.love)])]), " ", _h('li', [_m(4), _h('span', ["ซึ้ง " + _s(data.emotionCounts.impress)])]), " ", _h('li', [_m(5), _h('span', ["สยอง " + _s(data.emotionCounts.scary)])]), " ", _h('li', [_m(6), _h('span', ["ทึ่ง " + _s(data.emotionCounts.surprised)])])])]) : _e()
+	  }) : _e()]), "\r\n    " + _s(data.emotionSum) + "\r\n  "]), " ", _h('ul', {
+	    staticClass: "reactions-info"
+	  }, [_h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(1), "\r\n      ถูกใจ " + _s(data.emotionCounts.like) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(2), "\r\n      ขำกลิ้ง " + _s(data.emotionCounts.laugh) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(3), "\r\n      หลงรัก " + _s(data.emotionCounts.love) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(4), "\r\n      ซึ้ง " + _s(data.emotionCounts.impress) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(5), "\r\n      สยอง " + _s(data.emotionCounts.scary) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(6), "\r\n      ทึ่ง " + _s(data.emotionCounts.surprised) + "\r\n    "])])]) : _e()
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('i', {
-	    staticClass: "ic"
+	    staticClass: "ics reactions-voteIcon"
 	  }, ["add_box"])
 	}},function (){with(this) {
 	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
 	    attrs: {
 	      "src": "asset/img/emotions/like.png"
 	    }
 	  })
 	}},function (){with(this) {
 	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
 	    attrs: {
 	      "src": "asset/img/emotions/laugh.png"
 	    }
 	  })
 	}},function (){with(this) {
 	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
 	    attrs: {
 	      "src": "asset/img/emotions/love.png"
 	    }
 	  })
 	}},function (){with(this) {
 	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
 	    attrs: {
 	      "src": "asset/img/emotions/impress.png"
 	    }
 	  })
 	}},function (){with(this) {
 	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
 	    attrs: {
 	      "src": "asset/img/emotions/scary.png"
 	    }
 	  })
 	}},function (){with(this) {
 	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
 	    attrs: {
 	      "src": "asset/img/emotions/surprised.png"
 	    }
@@ -9925,16 +9853,16 @@
 	}
 
 /***/ },
-/* 49 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(50)
+	__webpack_require__(48)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(52)
+	var __vue_template__ = __webpack_require__(50)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -9969,13 +9897,13 @@
 
 
 /***/ },
-/* 50 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(51);
+	var content = __webpack_require__(49);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(20)(content, {});
@@ -9995,7 +9923,7 @@
 	}
 
 /***/ },
-/* 51 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -10009,7 +9937,7 @@
 
 
 /***/ },
-/* 52 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -10031,16 +9959,16 @@
 	}
 
 /***/ },
-/* 53 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(54)
+	__webpack_require__(52)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(56)
+	var __vue_template__ = __webpack_require__(54)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -10075,13 +10003,13 @@
 
 
 /***/ },
-/* 54 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(55);
+	var content = __webpack_require__(53);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(20)(content, {});
@@ -10101,7 +10029,7 @@
 	}
 
 /***/ },
-/* 55 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -10115,7 +10043,7 @@
 
 
 /***/ },
-/* 56 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {

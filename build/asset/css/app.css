@@ -720,3 +720,56 @@ a:link, a:visited {
 .toolbarIcon-icon:hover + .toolbarIcon-label {
   bottom: -30px;
   opacity: 1; }
+
+.reactions {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 0 15px 15px 15px;
+  position: relative; }
+  .reactions:hover .reactions-info {
+    -webkit-clip-path: circle(100% at 50% 50%); }
+  .reactions-vote {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-right: 10px; }
+  .reactions-voteIcon {
+    margin-right: 5px; }
+  .reactions-emotions {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center; }
+  .reactions-topEmotions {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center; }
+  .reactions-topIcon {
+    width: 18px;
+    height: auto;
+    margin-right: 5px; }
+    .reactions-topIcon:first-child {
+      width: 28px; }
+  .reactions-info {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    transition: all 0.15s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    background: var(--fore);
+    color: var(--text);
+    position: absolute;
+    top: -40px;
+    left: 10px;
+    padding: 10px;
+    -webkit-clip-path: circle(0 at 80px 100%); }
+  .reactions-infoItem {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-right: 10px; }
+    .reactions-infoItem:last-child {
+      margin-right: 0; }
+  .reactions-infoIcon {
+    width: 18px;
+    margin-right: 5px; }

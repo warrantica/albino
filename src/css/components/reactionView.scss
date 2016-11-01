@@ -1,0 +1,56 @@
+// ===========================================================================
+// Sass for reactionView
+// ===========================================================================
+
+.reactions{
+  @include flex-row-center;
+  padding: 0 15px 15px 15px;
+  position: relative;
+
+  &:hover .reactions-info{ -webkit-clip-path: circle(100% at 50% 50%); }
+
+  &-vote{
+    @include flex-row-center;
+    margin-right: 10px;
+  }
+
+  &-voteIcon{ margin-right: 5px;}
+
+  &-emotions{ @include flex-row-center; }
+
+  &-topEmotions{ @include flex-row-center; }
+
+  &-topIcon{
+    width: 18px;
+    height: auto;
+    margin-right: 5px;
+
+    &:first-child{
+      width: 28px;
+    }
+  }
+
+  &-info{
+    @include flex-row-center;
+    @include transition(.15s);
+    @include elevation(2);
+    @include base-fore-bg;
+    position: absolute;
+    top: -40px;
+    left: 10px;
+    padding: 10px;
+    -webkit-clip-path: circle(0 at 80px 100%);
+  }
+
+  &-infoItem{
+    @include flex-row-center;
+    margin-right: 10px;
+
+    &:last-child{ margin-right: 0; }
+  }
+
+  &-infoIcon{
+    width: 18px;
+    margin-right: 5px;
+  }
+}
