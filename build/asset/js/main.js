@@ -8701,7 +8701,7 @@
 	    }
 	  }), " ", _h('div', {
 	    staticClass: "topicItem-subtitle"
-	  }, ["\n      " + _s(data.author) + "\n    "])])])
+	  }, ["\r\n      " + _s(data.author) + "\r\n    "])])])
 	}},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()
@@ -8850,7 +8850,7 @@
 	    }
 	  }), " ", _h('div', {
 	    staticClass: "topicItem-subtitle"
-	  }, ["\n      " + _s(data.author) + "\n      • ", _h('time', {
+	  }, ["\r\n      " + _s(data.author) + "\r\n      • ", _h('time', {
 	    attrs: {
 	      "datetime": data.utime
 	    }
@@ -9124,7 +9124,7 @@
 	      expression: "data.tags"
 	    }],
 	    staticClass: "topic-tag"
-	  }, [_m(0), " " + _s(data.tags) + "\n  "]), " ", _h('div', {
+	  }, [_m(0), " " + _s(data.tags) + "\r\n  "]), " ", _h('div', {
 	    staticClass: "topic-content",
 	    domProps: {
 	      "innerHTML": _s(data.content)

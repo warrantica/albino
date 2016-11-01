@@ -1,20 +1,20 @@
 <template>
-  <div class="topicItem"
-       :class="{'topicItem--active': isActive, 'topicItem--top': data.isTop}"
-       @click="loadTopic">
-    <div class="topicItem-thumbnail">
-      <img class="topicItem-thumbnailImage" :src="thumbnail" />
-    </div>
-    <div class="topicItem-text">
-      <div class="topicItem-title" v-html="data.disp_topic"></div>
-      <div class="topicItem-subtitle">
-        {{ data.author }}
-        &#149; <time :datetime="data.utime">{{ data.timeFull }}</time>
-        <span v-show="data.comments">&#149; {{ data.comments }} <i class="ic">chat_bubble</i></span>
-        <span v-show="data.votes">&#149; {{ data.votes }} <i class="ic">add_box</i></span>
-      </div>
+<div class="topicItem"
+     :class="{'topicItem--active': isActive, 'topicItem--top': data.isTop}"
+     @click="loadTopic">
+  <div class="topicItem-thumbnail">
+    <img class="topicItem-thumbnailImage" :src="thumbnail" />
+  </div>
+  <div class="topicItem-text">
+    <div class="topicItem-title" v-html="data.disp_topic"></div>
+    <div class="topicItem-subtitle">
+      {{ data.author }}
+      &#149; <time :datetime="data.utime">{{ data.timeFull }}</time>
+      <span v-show="data.comments">&#149; {{ data.comments }} <i class="ic">chat_bubble</i></span>
+      <span v-show="data.votes">&#149; {{ data.votes }} <i class="ic">add_box</i></span>
     </div>
   </div>
+</div>
 </template>
 
 <script>

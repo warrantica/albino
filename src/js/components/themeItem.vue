@@ -1,14 +1,14 @@
 <template>
-  <div class="themeItem">
-    <input type="radio" name="theme" :id="name" :value="name" v-model="$parent.options.theme">
-    <label :for="name">
-      <div class="colorSample" :style="{background:primary}">
-        <div class="baseColor" :style="{background:baseData.fore}"></div>
-        <div class="accentSample" :style="{background:accent}"></div>
-      </div>
-      <div class="labelText">{{ label }}</div>
-    </label>
-  </div>
+<div class="themeItem">
+  <input type="radio" name="theme" :id="name" :value="name" v-model="$parent.options.theme">
+  <label :for="name">
+    <div class="colorSample" :style="{background:primary}">
+      <div class="baseColor" :style="{background:baseData.fore}"></div>
+      <div class="accentSample" :style="{background:accent}"></div>
+    </div>
+    <div class="labelText">{{ label }}</div>
+  </label>
+</div>
 </template>
 
 <style scoped>
@@ -63,29 +63,29 @@
 </style>
 
 <script>
-  let Vars = require('../vars.js');
+let Vars = require('../vars.js');
 
-  export default {
-    props: {
-      label: String,
-      name: String,
-      primary: String,
-      accent: String,
-      base: String,
-      checked: {
-        type: Boolean,
-        default: false
-      }
-    },
-
-    data(){ return {
-      baseData: {
-        name: '', fore: '', back: ''
-      }
-    }},
-
-    mounted(){
-      this.baseData = Vars.getBase(this.base);
+export default {
+  props: {
+    label: String,
+    name: String,
+    primary: String,
+    accent: String,
+    base: String,
+    checked: {
+      type: Boolean,
+      default: false
     }
+  },
+
+  data(){ return {
+    baseData: {
+      name: '', fore: '', back: ''
+    }
+  }},
+
+  mounted(){
+    this.baseData = Vars.getBase(this.base);
   }
+}
 </script>

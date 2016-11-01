@@ -1,8 +1,8 @@
 <template>
-  <li class="dialogue-item" @click="loadForum">
-    <img :src="'asset/forumIcon/'+name+'.png'" />
-    <span><slot></slot></span>
-  </li>
+<li class="dialogue-item" @click="loadForum">
+  <img :src="'asset/forumIcon/'+name+'.png'" />
+  <span><slot></slot></span>
+</li>
 </template>
 
 <style scoped>
@@ -24,15 +24,15 @@
 </style>
 
 <script>
-  export default {
-    props: {
-      name: String
-    },
+export default {
+  props: {
+    name: String
+  },
 
-    methods: {
-      loadForum(){
-        this.$store.dispatch('loadTopics', {forumName: this.name});
-      }
+  methods: {
+    loadForum(){
+      this.$store.dispatch('loadTopics', {forumName: this.name});
     }
   }
+}
 </script>

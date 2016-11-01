@@ -18,6 +18,6 @@
 </template>
 
 <script>
-  let Pantip = require('../pantipInterface.js');
-  export default { }
+let Pantip = require('../pantipInterface.js');
+export default { }
 </script>
