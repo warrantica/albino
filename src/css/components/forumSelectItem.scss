@@ -1,0 +1,13 @@
+// ===========================================================================
+// Sass for forumSelectItem
+// ===========================================================================
+
+.dialogue-item--forumSelect{
+  @include flex-row-center;
+  padding: 10px;
+}
+
+.dialogue-icon{
+  height: 36px;
+  margin-right: 15px;
+}

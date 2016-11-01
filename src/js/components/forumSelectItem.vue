@@ -1,27 +1,9 @@
 <template>
-<li class="dialogue-item" @click="loadForum">
-  <img :src="'asset/forumIcon/'+name+'.png'" />
-  <span><slot></slot></span>
+<li class="dialogue-item dialogue-item--forumSelect" @click="loadForum">
+  <img class="dialogue-icon" :src="'asset/forumIcon/'+name+'.png'" />
+  <slot></slot>
 </li>
 </template>
-
-<style scoped>
-  li{
-    padding: 10px 20px;
-    height: 36px;
-    line-height: 36px;
-  }
-
-  img{
-    height: 36px;
-    margin-right: 15px;
-  }
-
-  span{
-    vertical-align: top;
-    display: inline-block;
-  }
-</style>
 
 <script>
 export default {

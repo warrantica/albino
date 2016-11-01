@@ -85,16 +85,16 @@
 
 	_vue2.default.component('toolbarIcon', __webpack_require__(14));
 	_vue2.default.component('forumSelectItem', __webpack_require__(17));
-	_vue2.default.component('bestTopicItem', __webpack_require__(23));
-	_vue2.default.component('topicItem', __webpack_require__(26));
-	_vue2.default.component('searchResultItem', __webpack_require__(29));
-	_vue2.default.component('topicView', __webpack_require__(32));
-	_vue2.default.component('commentView', __webpack_require__(35));
-	_vue2.default.component('pagination', __webpack_require__(38));
-	_vue2.default.component('commentItem', __webpack_require__(41));
-	_vue2.default.component('reactionView', __webpack_require__(44));
-	_vue2.default.component('tips', __webpack_require__(47));
-	_vue2.default.component('about', __webpack_require__(51));
+	_vue2.default.component('bestTopicItem', __webpack_require__(20));
+	_vue2.default.component('topicItem', __webpack_require__(23));
+	_vue2.default.component('searchResultItem', __webpack_require__(26));
+	_vue2.default.component('topicView', __webpack_require__(29));
+	_vue2.default.component('commentView', __webpack_require__(32));
+	_vue2.default.component('pagination', __webpack_require__(35));
+	_vue2.default.component('commentItem', __webpack_require__(38));
+	_vue2.default.component('reactionView', __webpack_require__(41));
+	_vue2.default.component('tips', __webpack_require__(44));
+	_vue2.default.component('about', __webpack_require__(49));
 
 	//============================================================================
 	//Event binding stuff
@@ -8206,14 +8206,11 @@
 
 	var __vue_exports__, __vue_options__
 
-	/* styles */
-	__webpack_require__(18)
-
 	/* script */
-	__vue_exports__ = __webpack_require__(21)
+	__vue_exports__ = __webpack_require__(18)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(22)
+	var __vue_template__ = __webpack_require__(19)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -8228,7 +8225,6 @@
 	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\forumSelectItem.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-41c115fe"
 
 	/* hot reload */
 	if (false) {(function () {
@@ -8249,22 +8245,1392 @@
 
 /***/ },
 /* 18 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+	  props: {
+	    name: String
+	  },
+
+	  methods: {
+	    loadForum: function loadForum() {
+	      this.$store.dispatch('loadTopics', { forumName: this.name });
+	    }
+	  }
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return _h('li', {
+	    staticClass: "dialogue-item dialogue-item--forumSelect",
+	    on: {
+	      "click": loadForum
+	    }
+	  }, [_h('img', {
+	    staticClass: "dialogue-icon",
+	    attrs: {
+	      "src": 'asset/forumIcon/' + name + '.png'
+	    }
+	  }), " ", _t("default")])
+	}},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-41c115fe", module.exports)
+	  }
+	}
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* script */
+	__vue_exports__ = __webpack_require__(21)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(22)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\bestTopicItem.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-868bbca8", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-868bbca8", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] bestTopicItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+	  props: {
+	    data: {
+	      _id: String,
+	      disp_topic: String
+	    }
+	  },
+
+	  methods: {
+	    loadTopic: function loadTopic() {
+	      this.$store.dispatch('loadTopic', this.data._id);
+	    }
+	  },
+
+	  computed: {
+	    isActive: function isActive() {
+	      return this.data._id === this.$store.state.topicId;
+	    },
+	    thumbnail: function thumbnail() {
+	      return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
+	    }
+	  }
+	};
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return _h('div', {
+	    staticClass: "topicItem",
+	    class: {
+	      'topicItem--active': isActive
+	    },
+	    on: {
+	      "click": loadTopic
+	    }
+	  }, [_h('div', {
+	    staticClass: "topicItem-thumbnail"
+	  }, [_h('img', {
+	    staticClass: "topicItem-thumbnailImage",
+	    attrs: {
+	      "src": thumbnail
+	    }
+	  })]), " ", _h('div', {
+	    staticClass: "topicItem-text"
+	  }, [_h('div', {
+	    staticClass: "topicItem-title",
+	    domProps: {
+	      "innerHTML": _s(data.disp_topic)
+	    }
+	  }), " ", _h('div', {
+	    staticClass: "topicItem-subtitle"
+	  }, ["\r\n      " + _s(data.author) + "\r\n    "])])])
+	}},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-868bbca8", module.exports)
+	  }
+	}
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* script */
+	__vue_exports__ = __webpack_require__(24)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(25)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\topicItem.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-df29bfa0", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-df29bfa0", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] topicItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+	  props: {
+	    data: {
+	      _id: String,
+	      disp_topic: String,
+	      cover_img: String,
+	      author: String,
+	      commentsNum: Number,
+	      utime: String,
+	      timeFull: String,
+	      isTop: {
+	        type: Boolean,
+	        default: false
+	      }
+	    },
+	    commentIcon: String,
+	    voteIcon: String
+	  },
+
+	  methods: {
+	    loadTopic: function loadTopic() {
+	      this.$store.dispatch('loadTopic', this.data._id);
+	    }
+	  },
+
+	  computed: {
+	    isActive: function isActive() {
+	      return this.data._id === this.$store.state.topicId;
+	    },
+	    thumbnail: function thumbnail() {
+	      return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
+	    }
+	  },
+
+	  mounted: function mounted() {
+	    $('time').timeago();
+	  }
+	};
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return _h('div', {
+	    staticClass: "topicItem",
+	    class: {
+	      'topicItem--active': isActive, 'topicItem--top': data.isTop
+	    },
+	    on: {
+	      "click": loadTopic
+	    }
+	  }, [_h('div', {
+	    staticClass: "topicItem-thumbnail"
+	  }, [_h('img', {
+	    staticClass: "topicItem-thumbnailImage",
+	    attrs: {
+	      "src": thumbnail
+	    }
+	  })]), " ", _h('div', {
+	    staticClass: "topicItem-text"
+	  }, [_h('div', {
+	    staticClass: "topicItem-title",
+	    domProps: {
+	      "innerHTML": _s(data.disp_topic)
+	    }
+	  }), " ", _h('div', {
+	    staticClass: "topicItem-subtitle"
+	  }, ["\r\n      " + _s(data.author) + "\r\n      • ", _h('time', {
+	    attrs: {
+	      "datetime": data.utime
+	    }
+	  }, [_s(data.timeFull)]), " ", _h('span', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (data.comments),
+	      expression: "data.comments"
+	    }]
+	  }, ["• " + _s(data.comments) + " ", _m(0)]), " ", _h('span', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (data.votes),
+	      expression: "data.votes"
+	    }]
+	  }, ["• " + _s(data.votes) + " ", _m(1)])])])])
+	}},staticRenderFns: [function (){with(this) {
+	  return _h('i', {
+	    staticClass: "ic"
+	  }, ["chat_bubble"])
+	}},function (){with(this) {
+	  return _h('i', {
+	    staticClass: "ic"
+	  }, ["add_box"])
+	}}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-df29bfa0", module.exports)
+	  }
+	}
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* script */
+	__vue_exports__ = __webpack_require__(27)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(28)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\searchResultItem.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-8640068c", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-8640068c", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] searchResultItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+	  props: {
+	    data: {
+	      disp_topic: String,
+	      author: String,
+	      comment_num: String,
+	      topic_link: String,
+	      content: String
+	    }
+	  },
+
+	  methods: {
+	    loadSearchResult: function loadSearchResult() {
+	      this.$store.dispatch('loadSearchResult', this.data.topic_link);
+	    }
+	  }
+	};
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return _h('div', {
+	    staticClass: "topicItem",
+	    on: {
+	      "click": loadSearchResult
+	    }
+	  }, [_h('div', {
+	    staticClass: "topicItem-text"
+	  }, [_h('div', {
+	    staticClass: "topicItem-title",
+	    domProps: {
+	      "innerHTML": _s(data.disp_topic)
+	    }
+	  }), " ", _h('div', {
+	    staticClass: "topicItem-subtitle"
+	  }, ["คห. " + _s(data.comment_num) + " โดย " + _s(data.author)]), " ", _h('div', {
+	    staticClass: "topicItem-result",
+	    domProps: {
+	      "innerHTML": _s(data.content)
+	    }
+	  })])])
+	}},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-8640068c", module.exports)
+	  }
+	}
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* script */
+	__vue_exports__ = __webpack_require__(30)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(31)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\topicView.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-dcfa727c", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-dcfa727c", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] topicView.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+	  props: {
+	    data: {
+	      type: Object,
+	      default: function _default() {
+	        return {
+	          title: '',
+	          author: '',
+	          utime: '',
+	          timeFull: '',
+	          tags: '',
+	          content: '',
+	          emotionCount: {
+	            sum: 0
+	          }
+	        };
+	      }
+	    }
+	  }
+	};
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return _h('div', {
+	    staticClass: "topic"
+	  }, [_h('h1', {
+	    staticClass: "topic-title"
+	  }, [_s(data.title)]), " ", _h('div', {
+	    staticClass: "topic-info"
+	  }, [_h('img', {
+	    staticClass: "topic-avatar",
+	    attrs: {
+	      "src": data.avatarSrc
+	    }
+	  }), " ", _h('div', {
+	    staticClass: "topic-author topic-author--op"
+	  }, [_s(data.author)]), " ", _h('div', {
+	    staticClass: "topic-time"
+	  }, [_h('time', {
+	    staticClass: "timeago",
+	    attrs: {
+	      "datetime": data.utime
+	    }
+	  }, [_s(data.timeFull)])])]), " ", _h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (data.tags),
+	      expression: "data.tags"
+	    }],
+	    staticClass: "topic-tag"
+	  }, [_m(0), " " + _s(data.tags) + "\r\n  "]), " ", _h('div', {
+	    staticClass: "topic-content",
+	    domProps: {
+	      "innerHTML": _s(data.content)
+	    }
+	  }), " ", _h('reaction-view', {
+	    attrs: {
+	      "data": data.reactionData
+	    }
+	  })])
+	}},staticRenderFns: [function (){with(this) {
+	  return _h('i', {
+	    staticClass: "ic topic-tagIcon"
+	  }, ["label"])
+	}}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-dcfa727c", module.exports)
+	  }
+	}
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* script */
+	__vue_exports__ = __webpack_require__(33)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(34)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\commentView.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-6a342272", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-6a342272", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] commentView.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	var Pantip = __webpack_require__(6);
+	exports.default = {};
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return _h('div', {
+	    staticClass: "commentsView"
+	  }, [_h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: ($store.state.totalComments > 0),
+	      expression: "$store.state.totalComments > 0"
+	    }],
+	    staticClass: "commentsInfo"
+	  }, [_h('div', {
+	    staticClass: "commentsCount"
+	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\r\n    "]), " ", _m(1)]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
+	    return _h('comment-item', {
+	      attrs: {
+	        "data": comment
+	      }
+	    })
+	  }), " ", _h('pagination')])
+	}},staticRenderFns: [function (){with(this) {
+	  return _h('i', {
+	    staticClass: "ic commentsCount-icon"
+	  }, ["chat_bubble"])
+	}},function (){with(this) {
+	  return _h('div', {
+	    staticClass: "commentsSort"
+	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _h('i', {
+	    staticClass: "ic"
+	  }, ["arrow_drop_down"])])
+	}}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-6a342272", module.exports)
+	  }
+	}
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* script */
+	__vue_exports__ = __webpack_require__(36)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(37)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\pagination.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-35dabb88", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-35dabb88", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] pagination.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 36 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+	  computed: {
+	    totalPages: function totalPages() {
+	      return Math.ceil(this.$store.state.totalComments / this.$store.state.commentsPerPage);
+	    },
+	    currentPage: function currentPage() {
+	      return this.$store.state.commentPage;
+	    }
+	  },
+
+	  methods: {
+	    goToPage: function goToPage(pageNum) {
+	      this.$store.dispatch('goToCommentPage', pageNum);
+	    }
+	  }
+	};
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return _h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (totalPages > 1),
+	      expression: "totalPages > 1"
+	    }],
+	    staticClass: "pagination"
+	  }, [_h('i', {
+	    staticClass: "ics pagination-arrow",
+	    on: {
+	      "click": function($event) {
+	        goToPage(currentPage - 1)
+	      }
+	    }
+	  }, ["chevron_left"]), " ", _l((totalPages), function(page) {
+	    return _h('div', {
+	      staticClass: "pagination-page",
+	      class: {
+	        'pagination-page--current': page == currentPage + 1
+	      },
+	      on: {
+	        "click": function($event) {
+	          goToPage(page - 1)
+	        }
+	      }
+	    }, [_s(page)])
+	  }), " ", _h('i', {
+	    staticClass: "ics pagination-arrow",
+	    on: {
+	      "click": function($event) {
+	        goToPage(currentPage + 1)
+	      }
+	    }
+	  }, ["chevron_right"])])
+	}},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-35dabb88", module.exports)
+	  }
+	}
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* script */
+	__vue_exports__ = __webpack_require__(39)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(40)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\commentItem.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-691c7be0", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-691c7be0", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] commentItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _pantipInterface = __webpack_require__(6);
+
+	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
+
+	var _helpers = __webpack_require__(7);
+
+	var _helpers2 = _interopRequireDefault(_helpers);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+	  props: {
+	    data: {
+	      type: Object,
+	      default: function _default() {
+	        return {
+	          title: '',
+	          author: '',
+	          utime: '',
+	          timeFull: '',
+	          message: '',
+	          replies: [],
+	          user: {},
+	          commentNumber: 0,
+	          subData: {},
+	          showLoadMoreSubButton: false,
+	          reactionData: {}
+	        };
+	      }
+	    },
+
+	    sub: {
+	      type: Boolean,
+	      default: false
+	    }
+	  },
+
+	  methods: {
+	    loadMoreSubComments: function loadMoreSubComments() {
+	      var _this = this;
+
+	      _pantipInterface2.default.loadMoreSubComments(this.data.subData.last, this.data.subData.cid, this.data.subData.c).then(function (res) {
+	        res.replies.forEach(function (element, index, array) {
+	          _this.data.replies.push(_helpers2.default.vetComment(element, true));
+	        });
+
+	        _this.data.subData.last += 5;
+	        _this.data.showLoadMoreSubButton = _this.data.subData.last < _this.data.subData.c;
+	      });
+	    }
+	  }
+	};
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return _h('div', {
+	    staticClass: "topic comment",
+	    class: {
+	      'comment--sub': sub
+	    }
+	  }, [_h('div', {
+	    staticClass: "topic-info"
+	  }, [_h('img', {
+	    staticClass: "topic-avatar",
+	    attrs: {
+	      "src": data.user.avatar.medium
+	    }
+	  }), " ", _h('div', {
+	    staticClass: "topic-author",
+	    class: {
+	      'topic-author--op': data.owner_topic
+	    }
+	  }, ["\r\n      " + _s(data.user.name) + "\r\n    "]), " ", _h('div', {
+	    staticClass: "topic-time"
+	  }, [_h('time', {
+	    staticClass: "timeago",
+	    attrs: {
+	      "datetime": data.utime
+	    }
+	  }, [_s(data.data_addrtitle)])]), " ", _h('div', {
+	    staticClass: "topic-commentNumber"
+	  }, ["#" + _s(data.commentNumber)])]), " ", _h('div', {
+	    staticClass: "topic-content",
+	    domProps: {
+	      "innerHTML": _s(data.message)
+	    }
+	  }), " ", _h('reaction-view', {
+	    attrs: {
+	      "data": data.reactionData
+	    }
+	  }), " ", (data.reply_count) ? _h('div', {
+	    staticClass: "comment-subContainer"
+	  }, [_l((data.replies), function(reply) {
+	    return _h('comment-item', {
+	      attrs: {
+	        "data": reply,
+	        "sub": ""
+	      }
+	    })
+	  }), " ", _h('button', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (data.showLoadMoreSubButton),
+	      expression: "data.showLoadMoreSubButton"
+	    }],
+	    staticClass: "topic-loadMore",
+	    on: {
+	      "click": loadMoreSubComments
+	    }
+	  }, ["\r\n      โหลดความเห็นย่อยเพิ่ม\r\n    "])]) : _e()])
+	}},staticRenderFns: []}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-691c7be0", module.exports)
+	  }
+	}
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* script */
+	__vue_exports__ = __webpack_require__(42)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(43)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\reactionView.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-58c21290", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-58c21290", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] reactionView.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 42 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	exports.default = {
+	  props: {
+	    data: {
+	      type: Object,
+	      default: function _default() {
+	        return {
+	          voteSum: 0,
+	          emotionSum: 0,
+	          emotionCounts: {},
+	          emotionSortable: []
+	        };
+	      }
+	    }
+	  },
+
+	  computed: {
+	    topEmotions: function topEmotions() {
+	      var topEmotions = [];
+	      if (this.data === undefined) return [];
+	      if (this.data.emotionSortable === undefined) return [];
+	      this.data.emotionSortable.sort(function (a, b) {
+	        return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
+	      });
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+
+	      try {
+	        for (var _iterator = this.data.emotionSortable[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var emotion = _step.value;
+
+	          if (emotion.count > 0) topEmotions.push(emotion);
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+
+	      return topEmotions;
+	    }
+	  }
+	};
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports={render:function (){with(this) {
+	  return (data.voteSum || data.emotionSum) ? _h('div', {
+	    staticClass: "reactions"
+	  }, [_h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (data.voteSum),
+	      expression: "data.voteSum"
+	    }],
+	    staticClass: "reactions-vote"
+	  }, [_m(0), _s(data.voteSum) + "\r\n  "]), " ", _h('div', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (data.emotionSum),
+	      expression: "data.emotionSum"
+	    }],
+	    staticClass: "reactions-emotions"
+	  }, [_h('div', {
+	    staticClass: "reactions-topEmotions"
+	  }, [(topEmotions[0]) ? _h('img', {
+	    staticClass: "reactions-topIcon",
+	    attrs: {
+	      "src": ("asset/img/emotions/" + (topEmotions[0].name) + ".png")
+	    }
+	  }) : _e(), " ", (topEmotions[1]) ? _h('img', {
+	    staticClass: "reactions-topIcon",
+	    attrs: {
+	      "src": ("asset/img/emotions/" + (topEmotions[1].name) + ".png")
+	    }
+	  }) : _e(), " ", (topEmotions[2]) ? _h('img', {
+	    staticClass: "reactions-topIcon",
+	    attrs: {
+	      "src": ("asset/img/emotions/" + (topEmotions[2].name) + ".png")
+	    }
+	  }) : _e()]), "\r\n    " + _s(data.emotionSum) + "\r\n  "]), " ", _h('ul', {
+	    staticClass: "reactions-info"
+	  }, [_h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(1), "\r\n      ถูกใจ " + _s(data.emotionCounts.like) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(2), "\r\n      ขำกลิ้ง " + _s(data.emotionCounts.laugh) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(3), "\r\n      หลงรัก " + _s(data.emotionCounts.love) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(4), "\r\n      ซึ้ง " + _s(data.emotionCounts.impress) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(5), "\r\n      สยอง " + _s(data.emotionCounts.scary) + "\r\n    "]), " ", _h('li', {
+	    staticClass: "reactions-infoItem"
+	  }, [_m(6), "\r\n      ทึ่ง " + _s(data.emotionCounts.surprised) + "\r\n    "])])]) : _e()
+	}},staticRenderFns: [function (){with(this) {
+	  return _h('i', {
+	    staticClass: "ics reactions-voteIcon"
+	  }, ["add_box"])
+	}},function (){with(this) {
+	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
+	    attrs: {
+	      "src": "asset/img/emotions/like.png"
+	    }
+	  })
+	}},function (){with(this) {
+	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
+	    attrs: {
+	      "src": "asset/img/emotions/laugh.png"
+	    }
+	  })
+	}},function (){with(this) {
+	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
+	    attrs: {
+	      "src": "asset/img/emotions/love.png"
+	    }
+	  })
+	}},function (){with(this) {
+	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
+	    attrs: {
+	      "src": "asset/img/emotions/impress.png"
+	    }
+	  })
+	}},function (){with(this) {
+	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
+	    attrs: {
+	      "src": "asset/img/emotions/scary.png"
+	    }
+	  })
+	}},function (){with(this) {
+	  return _h('img', {
+	    staticClass: "reactions-infoIcon",
+	    attrs: {
+	      "src": "asset/img/emotions/surprised.png"
+	    }
+	  })
+	}}]}
+	if (false) {
+	  module.hot.accept()
+	  if (module.hot.data) {
+	     require("vue-hot-reload-api").rerender("data-v-58c21290", module.exports)
+	  }
+	}
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+
+	/* styles */
+	__webpack_require__(45)
+
+	/* template */
+	var __vue_template__ = __webpack_require__(48)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\pages\\tipsPage.vue"
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+	__vue_options__._scopeId = "data-v-25bb61da"
+
+	/* hot reload */
+	if (false) {(function () {
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  module.hot.accept()
+	  if (!module.hot.data) {
+	    hotAPI.createRecord("data-v-25bb61da", __vue_options__)
+	  } else {
+	    hotAPI.reload("data-v-25bb61da", __vue_options__)
+	  }
+	})()}
+	if (__vue_options__.functional) {console.error("[vue-loader] tipsPage.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(19);
+	var content = __webpack_require__(46);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(20)(content, {});
+	var update = __webpack_require__(47)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-41c115fe&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./forumSelectItem.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-41c115fe&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./forumSelectItem.vue");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-25bb61da&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./tipsPage.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-25bb61da&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./tipsPage.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -8274,7 +9640,7 @@
 	}
 
 /***/ },
-/* 19 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -8282,13 +9648,13 @@
 
 
 	// module
-	exports.push([module.id, "\nli[data-v-41c115fe]{\n  padding: 10px 20px;\n  height: 36px;\n  line-height: 36px;\n}\nimg[data-v-41c115fe]{\n  height: 36px;\n  margin-right: 15px;\n}\nspan[data-v-41c115fe]{\n  vertical-align: top;\n  display: inline-block;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 20 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -8510,1434 +9876,7 @@
 
 
 /***/ },
-/* 21 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-	  props: {
-	    name: String
-	  },
-
-	  methods: {
-	    loadForum: function loadForum() {
-	      this.$store.dispatch('loadTopics', { forumName: this.name });
-	    }
-	  }
-	};
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return _h('li', {
-	    staticClass: "dialogue-item",
-	    on: {
-	      "click": loadForum
-	    }
-	  }, [_h('img', {
-	    attrs: {
-	      "src": 'asset/forumIcon/' + name + '.png'
-	    }
-	  }), " ", _h('span', [_t("default")])])
-	}},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-41c115fe", module.exports)
-	  }
-	}
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* script */
-	__vue_exports__ = __webpack_require__(24)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(25)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\bestTopicItem.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-868bbca8", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-868bbca8", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] bestTopicItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 24 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-	  props: {
-	    data: {
-	      _id: String,
-	      disp_topic: String
-	    }
-	  },
-
-	  methods: {
-	    loadTopic: function loadTopic() {
-	      this.$store.dispatch('loadTopic', this.data._id);
-	    }
-	  },
-
-	  computed: {
-	    isActive: function isActive() {
-	      return this.data._id === this.$store.state.topicId;
-	    },
-	    thumbnail: function thumbnail() {
-	      return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
-	    }
-	  }
-	};
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return _h('div', {
-	    staticClass: "topicItem",
-	    class: {
-	      'topicItem--active': isActive
-	    },
-	    on: {
-	      "click": loadTopic
-	    }
-	  }, [_h('div', {
-	    staticClass: "topicItem-thumbnail"
-	  }, [_h('img', {
-	    staticClass: "topicItem-thumbnailImage",
-	    attrs: {
-	      "src": thumbnail
-	    }
-	  })]), " ", _h('div', {
-	    staticClass: "topicItem-text"
-	  }, [_h('div', {
-	    staticClass: "topicItem-title",
-	    domProps: {
-	      "innerHTML": _s(data.disp_topic)
-	    }
-	  }), " ", _h('div', {
-	    staticClass: "topicItem-subtitle"
-	  }, ["\r\n      " + _s(data.author) + "\r\n    "])])])
-	}},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-868bbca8", module.exports)
-	  }
-	}
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* script */
-	__vue_exports__ = __webpack_require__(27)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(28)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\topicItem.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-df29bfa0", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-df29bfa0", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] topicItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 27 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-	  props: {
-	    data: {
-	      _id: String,
-	      disp_topic: String,
-	      cover_img: String,
-	      author: String,
-	      commentsNum: Number,
-	      utime: String,
-	      timeFull: String,
-	      isTop: {
-	        type: Boolean,
-	        default: false
-	      }
-	    },
-	    commentIcon: String,
-	    voteIcon: String
-	  },
-
-	  methods: {
-	    loadTopic: function loadTopic() {
-	      this.$store.dispatch('loadTopic', this.data._id);
-	    }
-	  },
-
-	  computed: {
-	    isActive: function isActive() {
-	      return this.data._id === this.$store.state.topicId;
-	    },
-	    thumbnail: function thumbnail() {
-	      return this.data.cover_img !== '' ? this.data.cover_img : 'asset/img/thumbnail.png';
-	    }
-	  },
-
-	  mounted: function mounted() {
-	    $('time').timeago();
-	  }
-	};
-
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return _h('div', {
-	    staticClass: "topicItem",
-	    class: {
-	      'topicItem--active': isActive, 'topicItem--top': data.isTop
-	    },
-	    on: {
-	      "click": loadTopic
-	    }
-	  }, [_h('div', {
-	    staticClass: "topicItem-thumbnail"
-	  }, [_h('img', {
-	    staticClass: "topicItem-thumbnailImage",
-	    attrs: {
-	      "src": thumbnail
-	    }
-	  })]), " ", _h('div', {
-	    staticClass: "topicItem-text"
-	  }, [_h('div', {
-	    staticClass: "topicItem-title",
-	    domProps: {
-	      "innerHTML": _s(data.disp_topic)
-	    }
-	  }), " ", _h('div', {
-	    staticClass: "topicItem-subtitle"
-	  }, ["\r\n      " + _s(data.author) + "\r\n      • ", _h('time', {
-	    attrs: {
-	      "datetime": data.utime
-	    }
-	  }, [_s(data.timeFull)]), " ", _h('span', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (data.comments),
-	      expression: "data.comments"
-	    }]
-	  }, ["• " + _s(data.comments) + " ", _m(0)]), " ", _h('span', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (data.votes),
-	      expression: "data.votes"
-	    }]
-	  }, ["• " + _s(data.votes) + " ", _m(1)])])])])
-	}},staticRenderFns: [function (){with(this) {
-	  return _h('i', {
-	    staticClass: "ic"
-	  }, ["chat_bubble"])
-	}},function (){with(this) {
-	  return _h('i', {
-	    staticClass: "ic"
-	  }, ["add_box"])
-	}}]}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-df29bfa0", module.exports)
-	  }
-	}
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* script */
-	__vue_exports__ = __webpack_require__(30)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(31)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\searchResultItem.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-8640068c", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-8640068c", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] searchResultItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 30 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-	  props: {
-	    data: {
-	      disp_topic: String,
-	      author: String,
-	      comment_num: String,
-	      topic_link: String,
-	      content: String
-	    }
-	  },
-
-	  methods: {
-	    loadSearchResult: function loadSearchResult() {
-	      this.$store.dispatch('loadSearchResult', this.data.topic_link);
-	    }
-	  }
-	};
-
-/***/ },
-/* 31 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return _h('div', {
-	    staticClass: "topicItem",
-	    on: {
-	      "click": loadSearchResult
-	    }
-	  }, [_h('div', {
-	    staticClass: "topicItem-text"
-	  }, [_h('div', {
-	    staticClass: "topicItem-title",
-	    domProps: {
-	      "innerHTML": _s(data.disp_topic)
-	    }
-	  }), " ", _h('div', {
-	    staticClass: "topicItem-subtitle"
-	  }, ["คห. " + _s(data.comment_num) + " โดย " + _s(data.author)]), " ", _h('div', {
-	    staticClass: "topicItem-result",
-	    domProps: {
-	      "innerHTML": _s(data.content)
-	    }
-	  })])])
-	}},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-8640068c", module.exports)
-	  }
-	}
-
-/***/ },
-/* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* script */
-	__vue_exports__ = __webpack_require__(33)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(34)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\topicView.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-dcfa727c", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-dcfa727c", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] topicView.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 33 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-	  props: {
-	    data: {
-	      type: Object,
-	      default: function _default() {
-	        return {
-	          title: '',
-	          author: '',
-	          utime: '',
-	          timeFull: '',
-	          tags: '',
-	          content: '',
-	          emotionCount: {
-	            sum: 0
-	          }
-	        };
-	      }
-	    }
-	  }
-	};
-
-/***/ },
-/* 34 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return _h('div', {
-	    staticClass: "topic"
-	  }, [_h('h1', {
-	    staticClass: "topic-title"
-	  }, [_s(data.title)]), " ", _h('div', {
-	    staticClass: "topic-info"
-	  }, [_h('img', {
-	    staticClass: "topic-avatar",
-	    attrs: {
-	      "src": data.avatarSrc
-	    }
-	  }), " ", _h('div', {
-	    staticClass: "topic-author topic-author--op"
-	  }, [_s(data.author)]), " ", _h('div', {
-	    staticClass: "topic-time"
-	  }, [_h('time', {
-	    staticClass: "timeago",
-	    attrs: {
-	      "datetime": data.utime
-	    }
-	  }, [_s(data.timeFull)])])]), " ", _h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (data.tags),
-	      expression: "data.tags"
-	    }],
-	    staticClass: "topic-tag"
-	  }, [_m(0), " " + _s(data.tags) + "\r\n  "]), " ", _h('div', {
-	    staticClass: "topic-content",
-	    domProps: {
-	      "innerHTML": _s(data.content)
-	    }
-	  }), " ", _h('reaction-view', {
-	    attrs: {
-	      "data": data.reactionData
-	    }
-	  })])
-	}},staticRenderFns: [function (){with(this) {
-	  return _h('i', {
-	    staticClass: "ic topic-tagIcon"
-	  }, ["label"])
-	}}]}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-dcfa727c", module.exports)
-	  }
-	}
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* script */
-	__vue_exports__ = __webpack_require__(36)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(37)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\commentView.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-6a342272", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-6a342272", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] commentView.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	var Pantip = __webpack_require__(6);
-	exports.default = {};
-
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return _h('div', {
-	    staticClass: "commentsView"
-	  }, [_h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: ($store.state.totalComments > 0),
-	      expression: "$store.state.totalComments > 0"
-	    }],
-	    staticClass: "commentsInfo"
-	  }, [_h('div', {
-	    staticClass: "commentsCount"
-	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\r\n    "]), " ", _m(1)]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
-	    return _h('comment-item', {
-	      attrs: {
-	        "data": comment
-	      }
-	    })
-	  }), " ", _h('pagination')])
-	}},staticRenderFns: [function (){with(this) {
-	  return _h('i', {
-	    staticClass: "ic commentsCount-icon"
-	  }, ["chat_bubble"])
-	}},function (){with(this) {
-	  return _h('div', {
-	    staticClass: "commentsSort"
-	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _h('i', {
-	    staticClass: "ic"
-	  }, ["arrow_drop_down"])])
-	}}]}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-6a342272", module.exports)
-	  }
-	}
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* script */
-	__vue_exports__ = __webpack_require__(39)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(40)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\pagination.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-35dabb88", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-35dabb88", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] pagination.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 39 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-	  computed: {
-	    totalPages: function totalPages() {
-	      return Math.ceil(this.$store.state.totalComments / this.$store.state.commentsPerPage);
-	    },
-	    currentPage: function currentPage() {
-	      return this.$store.state.commentPage;
-	    }
-	  },
-
-	  methods: {
-	    goToPage: function goToPage(pageNum) {
-	      this.$store.dispatch('goToCommentPage', pageNum);
-	    }
-	  }
-	};
-
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return _h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (totalPages > 1),
-	      expression: "totalPages > 1"
-	    }],
-	    staticClass: "pagination"
-	  }, [_h('i', {
-	    staticClass: "ics pagination-arrow",
-	    on: {
-	      "click": function($event) {
-	        goToPage(currentPage - 1)
-	      }
-	    }
-	  }, ["chevron_left"]), " ", _l((totalPages), function(page) {
-	    return _h('div', {
-	      staticClass: "pagination-page",
-	      class: {
-	        'pagination-page--current': page == currentPage + 1
-	      },
-	      on: {
-	        "click": function($event) {
-	          goToPage(page - 1)
-	        }
-	      }
-	    }, [_s(page)])
-	  }), " ", _h('i', {
-	    staticClass: "ics pagination-arrow",
-	    on: {
-	      "click": function($event) {
-	        goToPage(currentPage + 1)
-	      }
-	    }
-	  }, ["chevron_right"])])
-	}},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-35dabb88", module.exports)
-	  }
-	}
-
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* script */
-	__vue_exports__ = __webpack_require__(42)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(43)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\commentItem.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-691c7be0", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-691c7be0", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] commentItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _pantipInterface = __webpack_require__(6);
-
-	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
-
-	var _helpers = __webpack_require__(7);
-
-	var _helpers2 = _interopRequireDefault(_helpers);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-	  props: {
-	    data: {
-	      type: Object,
-	      default: function _default() {
-	        return {
-	          title: '',
-	          author: '',
-	          utime: '',
-	          timeFull: '',
-	          message: '',
-	          replies: [],
-	          user: {},
-	          commentNumber: 0,
-	          subData: {},
-	          showLoadMoreSubButton: false,
-	          reactionData: {}
-	        };
-	      }
-	    },
-
-	    sub: {
-	      type: Boolean,
-	      default: false
-	    }
-	  },
-
-	  methods: {
-	    loadMoreSubComments: function loadMoreSubComments() {
-	      var _this = this;
-
-	      _pantipInterface2.default.loadMoreSubComments(this.data.subData.last, this.data.subData.cid, this.data.subData.c).then(function (res) {
-	        res.replies.forEach(function (element, index, array) {
-	          _this.data.replies.push(_helpers2.default.vetComment(element, true));
-	        });
-
-	        _this.data.subData.last += 5;
-	        _this.data.showLoadMoreSubButton = _this.data.subData.last < _this.data.subData.c;
-	      });
-	    }
-	  }
-	};
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return _h('div', {
-	    staticClass: "topic comment",
-	    class: {
-	      'comment--sub': sub
-	    }
-	  }, [_h('div', {
-	    staticClass: "topic-info"
-	  }, [_h('img', {
-	    staticClass: "topic-avatar",
-	    attrs: {
-	      "src": data.user.avatar.medium
-	    }
-	  }), " ", _h('div', {
-	    staticClass: "topic-author",
-	    class: {
-	      'topic-author--op': data.owner_topic
-	    }
-	  }, ["\r\n      " + _s(data.user.name) + "\r\n    "]), " ", _h('div', {
-	    staticClass: "topic-time"
-	  }, [_h('time', {
-	    staticClass: "timeago",
-	    attrs: {
-	      "datetime": data.utime
-	    }
-	  }, [_s(data.data_addrtitle)])]), " ", _h('div', {
-	    staticClass: "topic-commentNumber"
-	  }, ["#" + _s(data.commentNumber)])]), " ", _h('div', {
-	    staticClass: "topic-content",
-	    domProps: {
-	      "innerHTML": _s(data.message)
-	    }
-	  }), " ", _h('reaction-view', {
-	    attrs: {
-	      "data": data.reactionData
-	    }
-	  }), " ", (data.reply_count) ? _h('div', {
-	    staticClass: "comment-subContainer"
-	  }, [_l((data.replies), function(reply) {
-	    return _h('comment-item', {
-	      attrs: {
-	        "data": reply,
-	        "sub": ""
-	      }
-	    })
-	  }), " ", _h('button', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (data.showLoadMoreSubButton),
-	      expression: "data.showLoadMoreSubButton"
-	    }],
-	    staticClass: "topic-loadMore",
-	    on: {
-	      "click": loadMoreSubComments
-	    }
-	  }, ["\r\n      โหลดความเห็นย่อยเพิ่ม\r\n    "])]) : _e()])
-	}},staticRenderFns: []}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-691c7be0", module.exports)
-	  }
-	}
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* script */
-	__vue_exports__ = __webpack_require__(45)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(46)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\reactionView.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-58c21290", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-58c21290", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] reactionView.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 45 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
-	exports.default = {
-	  props: {
-	    data: {
-	      type: Object,
-	      default: function _default() {
-	        return {
-	          voteSum: 0,
-	          emotionSum: 0,
-	          emotionCounts: {},
-	          emotionSortable: []
-	        };
-	      }
-	    }
-	  },
-
-	  computed: {
-	    topEmotions: function topEmotions() {
-	      var topEmotions = [];
-	      if (this.data === undefined) return [];
-	      if (this.data.emotionSortable === undefined) return [];
-	      this.data.emotionSortable.sort(function (a, b) {
-	        return a.count > b.count ? -1 : a.count < b.count ? 1 : 0;
-	      });
-	      var _iteratorNormalCompletion = true;
-	      var _didIteratorError = false;
-	      var _iteratorError = undefined;
-
-	      try {
-	        for (var _iterator = this.data.emotionSortable[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          var emotion = _step.value;
-
-	          if (emotion.count > 0) topEmotions.push(emotion);
-	        }
-	      } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion && _iterator.return) {
-	            _iterator.return();
-	          }
-	        } finally {
-	          if (_didIteratorError) {
-	            throw _iteratorError;
-	          }
-	        }
-	      }
-
-	      return topEmotions;
-	    }
-	  }
-	};
-
-/***/ },
-/* 46 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports={render:function (){with(this) {
-	  return (data.voteSum || data.emotionSum) ? _h('div', {
-	    staticClass: "reactions"
-	  }, [_h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (data.voteSum),
-	      expression: "data.voteSum"
-	    }],
-	    staticClass: "reactions-vote"
-	  }, [_m(0), _s(data.voteSum) + "\r\n  "]), " ", _h('div', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (data.emotionSum),
-	      expression: "data.emotionSum"
-	    }],
-	    staticClass: "reactions-emotions"
-	  }, [_h('div', {
-	    staticClass: "reactions-topEmotions"
-	  }, [(topEmotions[0]) ? _h('img', {
-	    staticClass: "reactions-topIcon",
-	    attrs: {
-	      "src": ("asset/img/emotions/" + (topEmotions[0].name) + ".png")
-	    }
-	  }) : _e(), " ", (topEmotions[1]) ? _h('img', {
-	    staticClass: "reactions-topIcon",
-	    attrs: {
-	      "src": ("asset/img/emotions/" + (topEmotions[1].name) + ".png")
-	    }
-	  }) : _e(), " ", (topEmotions[2]) ? _h('img', {
-	    staticClass: "reactions-topIcon",
-	    attrs: {
-	      "src": ("asset/img/emotions/" + (topEmotions[2].name) + ".png")
-	    }
-	  }) : _e()]), "\r\n    " + _s(data.emotionSum) + "\r\n  "]), " ", _h('ul', {
-	    staticClass: "reactions-info"
-	  }, [_h('li', {
-	    staticClass: "reactions-infoItem"
-	  }, [_m(1), "\r\n      ถูกใจ " + _s(data.emotionCounts.like) + "\r\n    "]), " ", _h('li', {
-	    staticClass: "reactions-infoItem"
-	  }, [_m(2), "\r\n      ขำกลิ้ง " + _s(data.emotionCounts.laugh) + "\r\n    "]), " ", _h('li', {
-	    staticClass: "reactions-infoItem"
-	  }, [_m(3), "\r\n      หลงรัก " + _s(data.emotionCounts.love) + "\r\n    "]), " ", _h('li', {
-	    staticClass: "reactions-infoItem"
-	  }, [_m(4), "\r\n      ซึ้ง " + _s(data.emotionCounts.impress) + "\r\n    "]), " ", _h('li', {
-	    staticClass: "reactions-infoItem"
-	  }, [_m(5), "\r\n      สยอง " + _s(data.emotionCounts.scary) + "\r\n    "]), " ", _h('li', {
-	    staticClass: "reactions-infoItem"
-	  }, [_m(6), "\r\n      ทึ่ง " + _s(data.emotionCounts.surprised) + "\r\n    "])])]) : _e()
-	}},staticRenderFns: [function (){with(this) {
-	  return _h('i', {
-	    staticClass: "ics reactions-voteIcon"
-	  }, ["add_box"])
-	}},function (){with(this) {
-	  return _h('img', {
-	    staticClass: "reactions-infoIcon",
-	    attrs: {
-	      "src": "asset/img/emotions/like.png"
-	    }
-	  })
-	}},function (){with(this) {
-	  return _h('img', {
-	    staticClass: "reactions-infoIcon",
-	    attrs: {
-	      "src": "asset/img/emotions/laugh.png"
-	    }
-	  })
-	}},function (){with(this) {
-	  return _h('img', {
-	    staticClass: "reactions-infoIcon",
-	    attrs: {
-	      "src": "asset/img/emotions/love.png"
-	    }
-	  })
-	}},function (){with(this) {
-	  return _h('img', {
-	    staticClass: "reactions-infoIcon",
-	    attrs: {
-	      "src": "asset/img/emotions/impress.png"
-	    }
-	  })
-	}},function (){with(this) {
-	  return _h('img', {
-	    staticClass: "reactions-infoIcon",
-	    attrs: {
-	      "src": "asset/img/emotions/scary.png"
-	    }
-	  })
-	}},function (){with(this) {
-	  return _h('img', {
-	    staticClass: "reactions-infoIcon",
-	    attrs: {
-	      "src": "asset/img/emotions/surprised.png"
-	    }
-	  })
-	}}]}
-	if (false) {
-	  module.hot.accept()
-	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-58c21290", module.exports)
-	  }
-	}
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-
-	/* styles */
-	__webpack_require__(48)
-
-	/* template */
-	var __vue_template__ = __webpack_require__(50)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\pages\\tipsPage.vue"
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-25bb61da"
-
-	/* hot reload */
-	if (false) {(function () {
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  module.hot.accept()
-	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-25bb61da", __vue_options__)
-	  } else {
-	    hotAPI.reload("data-v-25bb61da", __vue_options__)
-	  }
-	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] tipsPage.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-	module.exports = __vue_exports__
-
-
-/***/ },
 /* 48 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(49);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(20)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-25bb61da&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./tipsPage.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-25bb61da&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./tipsPage.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 49 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(1)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
@@ -9959,16 +9898,16 @@
 	}
 
 /***/ },
-/* 51 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 
 	/* styles */
-	__webpack_require__(52)
+	__webpack_require__(50)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(54)
+	var __vue_template__ = __webpack_require__(52)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -10003,16 +9942,16 @@
 
 
 /***/ },
-/* 52 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(53);
+	var content = __webpack_require__(51);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(20)(content, {});
+	var update = __webpack_require__(47)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -10029,7 +9968,7 @@
 	}
 
 /***/ },
-/* 53 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(1)();
@@ -10043,7 +9982,7 @@
 
 
 /***/ },
-/* 54 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){with(this) {
