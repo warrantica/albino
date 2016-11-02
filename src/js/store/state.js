@@ -1,4 +1,9 @@
 export const state = {
+  showDialogues: {
+    forumSelect: false,
+    overflow: false,
+    commentSort: false
+  },
   showBestTopics: false,
 
   forumName: '',

@@ -4,9 +4,15 @@
     <div class="commentsCount">
       <i class="ic commentsCount-icon">chat_bubble</i> {{ $store.state.totalComments }} ความเห็น
     </div>
-    <div class="commentsSort" @click="">
+    <div class="commentsSort" @click.stop="showDialogues.commentSort = true">
       เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
     </div>
+    <ul class="dialogue dialogue--commentSort"
+        :class="{ 'dialogue--active': showDialogues.commentSort }">
+      <li class="dialogue-item" @click="">เวลาโพสต์</li>
+      <li class="dialogue-item">ความร้อนแรง</li>
+      <li class="dialogue-item">เฉพาะจขกท.</li>
+    </ul>
   </div>
   <pagination></pagination>
 
@@ -19,5 +25,9 @@
 
 <script>
 let Pantip = require('../pantipInterface.js');
-export default { }
+export default {
+  computed: {
+    showDialogues(){ return this.$store.state.showDialogues }
+  }
+}
 </script>

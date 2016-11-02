@@ -7067,16 +7067,15 @@
 	    return {
 	      forums: _vars2.default.forumInfo,
 	      currentPage: 'tips',
-	      showDialogues: {
-	        forumSelect: false,
-	        overflow: false
-	      },
 	      showSearch: false
 	    };
 	  },
 
 
 	  computed: {
+	    showDialogues: function showDialogues() {
+	      return this.$store.state.showDialogues;
+	    },
 	    topicId: function topicId() {
 	      return this.$store.state.topicId;
 	    },
@@ -7668,6 +7667,11 @@
 	  value: true
 	});
 	var state = exports.state = {
+	  showDialogues: {
+	    forumSelect: false,
+	    overflow: false,
+	    commentSort: false
+	  },
 	  showBestTopics: false,
 
 	  forumName: '',
@@ -8879,9 +8883,21 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	var Pantip = __webpack_require__(6);
-	exports.default = {};
+	exports.default = {
+	  computed: {
+	    showDialogues: function showDialogues() {
+	      return this.$store.state.showDialogues;
+	    }
+	  }
+	};
 
 /***/ },
 /* 34 */
@@ -8903,9 +8919,22 @@
 	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\r\n    "]), " ", _h('div', {
 	    staticClass: "commentsSort",
 	    on: {
+	      "click": function($event) {
+	        $event.stopPropagation();
+	        showDialogues.commentSort = true
+	      }
+	    }
+	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _m(1)]), " ", _h('ul', {
+	    staticClass: "dialogue dialogue--commentSort",
+	    class: {
+	      'dialogue--active': showDialogues.commentSort
+	    }
+	  }, [_h('li', {
+	    staticClass: "dialogue-item",
+	    on: {
 	      "click": function($event) {}
 	    }
-	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _m(1)])]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
+	  }, ["เวลาโพสต์"]), " ", _m(2), " ", _m(3)])]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
 	    return _h('comment-item', {
 	      attrs: {
 	        "data": comment
@@ -8920,6 +8949,14 @@
 	  return _h('i', {
 	    staticClass: "ic"
 	  }, ["arrow_drop_down"])
+	}},function (){with(this) {
+	  return _h('li', {
+	    staticClass: "dialogue-item"
+	  }, ["ความร้อนแรง"])
+	}},function (){with(this) {
+	  return _h('li', {
+	    staticClass: "dialogue-item"
+	  }, ["เฉพาะจขกท."])
 	}}]}
 	if (false) {
 	  module.hot.accept()

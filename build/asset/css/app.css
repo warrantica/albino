@@ -139,39 +139,6 @@ a:link, a:visited {
   min-width: 80px;
   text-align: right; }
 
-.dialogue {
-  display: flex;
-  flex-flow: column;
-  align-items: stretch;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  background: var(--fore);
-  color: var(--text);
-  display: block;
-  font-size: 14px;
-  position: absolute;
-  -webkit-clip-path: circle(0px at 100% 0px);
-  z-index: 20;
-  transition: all .3s ease-in-out; }
-  .dialogue--active {
-    -webkit-clip-path: circle(100% at 50% 50%); }
-  .dialogue--forumSelect {
-    top: 10px;
-    right: 70px;
-    height: 90vh;
-    overflow: hidden; }
-  .dialogue--forumSelect.dialogue--active {
-    overflow: auto; }
-  .dialogue--overflow {
-    top: 10px;
-    right: 10px; }
-  .dialogue-item {
-    transition: all 0.2s ease;
-    cursor: pointer;
-    line-height: 1;
-    padding: 15px 20px; }
-    .dialogue-item:hover {
-      background: var(--hover); }
-
 .leftPane {
   transition: all 0.5s ease;
   background: var(--fore);
@@ -488,11 +455,48 @@ a:link, a:visited {
     margin-bottom: 1px; }
 
 .commentsSort {
+  cursor: pointer;
   background: var(--back);
   color: var(--text);
   margin-right: 10px;
   padding: 0 10px;
   z-index: 2; }
+
+.dialogue {
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: all 0.2s ease;
+  background: var(--fore);
+  color: var(--text);
+  display: block;
+  font-size: 14px;
+  position: absolute;
+  -webkit-clip-path: circle(0px at 100% 0px);
+  z-index: 20; }
+  .dialogue--active {
+    -webkit-clip-path: circle(100% at 50% 50%); }
+  .dialogue--forumSelect {
+    top: 10px;
+    right: 70px;
+    height: 90vh;
+    overflow: hidden; }
+  .dialogue--forumSelect.dialogue--active {
+    overflow: auto; }
+  .dialogue--overflow {
+    top: 10px;
+    right: 10px; }
+  .dialogue--commentSort {
+    top: 0;
+    right: 15px; }
+  .dialogue-item {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    line-height: 1;
+    padding: 15px 20px; }
+    .dialogue-item:hover {
+      background: var(--hover); }
 
 .fab {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);

@@ -112,14 +112,12 @@ export default {
   data(){ return{
     forums: Vars.forumInfo,
     currentPage: 'tips',
-    showDialogues: {
-      forumSelect: false,
-      overflow: false
-    },
     showSearch: false,
   }},
 
   computed: {
+    showDialogues(){ return this.$store.state.showDialogues },
+
     topicId(){ return this.$store.state.topicId },
 
     forumDisplayName(){
