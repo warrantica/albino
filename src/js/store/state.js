@@ -42,9 +42,11 @@ export const mutations = {
   resetTopics(state){ state.topics = [] },
   addToTopics(state, topic){ state.topics.push(topic) },
 
-  setTopicTitle(state, title){ state.topicTitle = title; },
+  setSearchQuery(state, query){ state.searchQuery = query; },
 
   setTopicId(state, id){ state.topicId = id; },
+
+  setTopicTitle(state, title){ state.topicTitle = title; },
 
   setTotalComments(state, number){ state.totalComments = number; },
 

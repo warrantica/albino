@@ -7048,6 +7048,113 @@
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
+	var _vuex = __webpack_require__(4);
+
 	var _vars = __webpack_require__(5);
 
 	var _vars2 = _interopRequireDefault(_vars);
@@ -7072,13 +7179,7 @@
 	  },
 
 
-	  computed: {
-	    showDialogues: function showDialogues() {
-	      return this.$store.state.showDialogues;
-	    },
-	    topicId: function topicId() {
-	      return this.$store.state.topicId;
-	    },
+	  computed: _extends({
 	    forumDisplayName: function forumDisplayName() {
 	      if (this.currentForum !== '') {
 	        var _iteratorNormalCompletion = true;
@@ -7089,7 +7190,7 @@
 	          for (var _iterator = this.forums[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	            var forum = _step.value;
 
-	            if (forum.name === this.$store.state.forumName) return forum.label;
+	            if (forum.name === this.forumName) return forum.label;
 	          }
 	        } catch (err) {
 	          _didIteratorError = true;
@@ -7108,25 +7209,27 @@
 	      } else {
 	        return 'เลือกห้อง';
 	      }
-	    }
-	  },
+	    },
 
-	  methods: {
-	    dismissDialogues: function dismissDialogues() {
-	      this.$store.dispatch('dismissDialogues');
-	    },
-	    showDialogue: function showDialogue(name) {
-	      this.$store.dispatch('showDialogue', name);
-	    },
+
+	    searchQuery: {
+	      get: function get() {
+	        return this.$store.state.searchQuery;
+	      },
+	      set: function set(value) {
+	        this.$store.commit('setSearchQuery', value);
+	      }
+	    }
+
+	  }, (0, _vuex.mapState)(['showDialogues', 'showBestTopics', 'topicId', 'bestTopics', 'topics', 'searchResults', 'topicTitle', 'unreadComments', 'topicData', 'pageName', 'loadMoreId', 'forumName'])),
+
+	  methods: _extends({
 	    refreshTopics: function refreshTopics() {
-	      this.$store.dispatch('loadTopics', { forumName: this.$store.state.forumName });
+	      this.$store.dispatch('loadTopics', { forumName: this.forumName });
 	    },
 	    loadMoreTopics: function loadMoreTopics() {
-	      this.$store.dispatch('loadTopics', { forumName: this.$store.state.forumName, loadMore: true });
-	      $('.topicItem.' + this.$store.state.loadMoreId).addClass('topicItem--beforeMore');
-	    },
-	    doSearch: function doSearch() {
-	      this.$store.dispatch('search');
+	      this.$store.dispatch('loadTopics', { forumName: this.forumName, loadMore: true });
+	      $('.topicItem.' + this.loadMoreId).addClass('topicItem--beforeMore');
 	    },
 	    loadMoreSearchResults: function loadMoreSearchResults() {
 	      this.$store.dispatch('search', { loadMore: true });
@@ -7144,16 +7247,13 @@
 	        })();
 	      }
 	    },
-	    loadPage: function loadPage(name) {
-	      this.$store.dispatch('loadPage', name);
-	    },
 	    openInPantip: function openInPantip() {
-	      if (this.$store.state.topicId !== 0) window.open('http://pantip.com/topic/' + this.$store.state.topicId, '_blank');
+	      if (this.$store.state.topicId !== 0) window.open('http://pantip.com/topic/' + this.topicId, '_blank');
 	    },
 	    goToSettings: function goToSettings() {
 	      chrome.runtime.openOptionsPage();
 	    }
-	  },
+	  }, (0, _vuex.mapActions)(['dismissDialogues', 'showDialogue', 'search', 'loadPage'])),
 
 	  mounted: function mounted() {
 	    var _this2 = this;
@@ -7170,110 +7270,7 @@
 	      _this2.$store.dispatch('loadPage', 'tips');
 	    });
 	  }
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	};
 
 /***/ },
 /* 10 */
@@ -7377,14 +7374,14 @@
 	  }, [_m(3), "\n          กระทู้แนะนำ\n          ", _h('i', {
 	    staticClass: "ic topicHeader-dropdownIcon",
 	    class: {
-	      'topicHeader-dropdownIcon--active': $store.state.showBestTopics
+	      'topicHeader-dropdownIcon--active': showBestTopics
 	    }
 	  }, ["\n            expand_more"])]), " ", _h('div', {
 	    staticClass: "topicList topicList--best",
 	    class: {
-	      'topicList--showBest': $store.state.showBestTopics
+	      'topicList--showBest': showBestTopics
 	    }
-	  }, [_l(($store.state.bestTopics), function(topic) {
+	  }, [_l((bestTopics), function(topic) {
 	    return _h('best-topic-item', {
 	      attrs: {
 	        "data": topic
@@ -7392,7 +7389,7 @@
 	    })
 	  })])]), " ", _m(4), " ", _h('div', {
 	    staticClass: "topicList"
-	  }, [_l(($store.state.topics), function(topic) {
+	  }, [_l((topics), function(topic) {
 	    return _h('topic-item', {
 	      attrs: {
 	        "data": topic
@@ -7427,8 +7424,8 @@
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
-	      value: ($store.state.searchQuery),
-	      expression: "$store.state.searchQuery"
+	      value: (searchQuery),
+	      expression: "searchQuery"
 	    }],
 	    staticClass: "searchHeader-input",
 	    attrs: {
@@ -7436,16 +7433,16 @@
 	      "placeholder": "คำค้นหา..."
 	    },
 	    domProps: {
-	      "value": _s($store.state.searchQuery)
+	      "value": _s(searchQuery)
 	    },
 	    on: {
 	      "keyup": function($event) {
 	        if ($event.keyCode !== 13) return;
-	        doSearch($event)
+	        search($event)
 	      },
 	      "input": function($event) {
 	        if ($event.target.composing) return;
-	        $store.state.searchQuery = $event.target.value
+	        searchQuery = $event.target.value
 	      }
 	    }
 	  }), " ", _h('toolbar-icon', {
@@ -7455,12 +7452,12 @@
 	    },
 	    nativeOn: {
 	      "click": function($event) {
-	        doSearch($event)
+	        search($event)
 	      }
 	    }
 	  })]), " ", _h('div', {
 	    staticClass: "searchResultList"
-	  }, [_m(5), " ", _l(($store.state.searchResults), function(topic) {
+	  }, [_m(5), " ", _l((searchResults), function(topic) {
 	    return _h('search-result-item', {
 	      attrs: {
 	        "data": topic
@@ -7470,8 +7467,8 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: ($store.state.searchResults.length),
-	      expression: "$store.state.searchResults.length"
+	      value: (searchResults.length),
+	      expression: "searchResults.length"
 	    }],
 	    staticClass: "searchResultList-loadMore",
 	    on: {
@@ -7484,7 +7481,7 @@
 	  }, [_h('div', {
 	    staticClass: "bellyBar-title",
 	    domProps: {
-	      "textContent": _s($store.state.topicTitle)
+	      "textContent": _s(topicTitle)
 	    }
 	  }), " ", _h('div', {
 	    staticClass: "bellyBar-controls"
@@ -7502,11 +7499,11 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: ($store.state.unreadComments),
-	      expression: "$store.state.unreadComments"
+	      value: (unreadComments),
+	      expression: "unreadComments"
 	    }],
 	    staticClass: "bellyBar-refreshBadge"
-	  }, ["\n            " + _s($store.state.unreadComments) + "\n          "])]), " ", _h('toolbar-icon', {
+	  }, ["\n            " + _s(unreadComments) + "\n          "])]), " ", _h('toolbar-icon', {
 	    attrs: {
 	      "icon": "open_in_new",
 	      "label": "เปิดใน Pantip.com"
@@ -7528,9 +7525,9 @@
 	      expression: "topicId != 0"
 	    }],
 	    attrs: {
-	      "data": $store.state.topicData
+	      "data": topicData
 	    }
-	  }), " ", _h($store.state.pageName, {
+	  }), " ", _h(pageName, {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -7716,11 +7713,14 @@
 	  addToTopics: function addToTopics(state, topic) {
 	    state.topics.push(topic);
 	  },
-	  setTopicTitle: function setTopicTitle(state, title) {
-	    state.topicTitle = title;
+	  setSearchQuery: function setSearchQuery(state, query) {
+	    state.searchQuery = query;
 	  },
 	  setTopicId: function setTopicId(state, id) {
 	    state.topicId = id;
+	  },
+	  setTopicTitle: function setTopicTitle(state, title) {
+	    state.topicTitle = title;
 	  },
 	  setTotalComments: function setTotalComments(state, number) {
 	    state.totalComments = number;
@@ -8885,6 +8885,15 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _vuex = __webpack_require__(4);
+
+	var _pantipInterface = __webpack_require__(6);
+
+	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	//
 	//
 	//
@@ -8911,13 +8920,10 @@
 	//
 	//
 
-	var Pantip = __webpack_require__(6);
 	exports.default = {
-	  computed: {
-	    showDialogues: function showDialogues() {
-	      return this.$store.state.showDialogues;
-	    }
-	  }
+	  computed: (0, _vuex.mapState)(['showDialogues', 'totalComments', 'shownComments']),
+
+	  methods: (0, _vuex.mapActions)(['showDialogue'])
 	};
 
 /***/ },
@@ -8931,18 +8937,18 @@
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
-	      value: ($store.state.totalComments > 0),
-	      expression: "$store.state.totalComments > 0"
+	      value: (totalComments > 0),
+	      expression: "totalComments > 0"
 	    }],
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
 	    staticClass: "commentsCount"
-	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\r\n    "]), " ", _h('div', {
+	  }, [_m(0), " " + _s(totalComments) + " ความเห็น\r\n    "]), " ", _h('div', {
 	    staticClass: "commentsSort",
 	    on: {
 	      "click": function($event) {
 	        $event.stopPropagation();
-	        $store.dispatch('showDialogue', 'commentSort')
+	        showDialogue('commentSort')
 	      }
 	    }
 	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _m(1)]), " ", _h('ul', {
@@ -8955,7 +8961,7 @@
 	    on: {
 	      "click": function($event) {}
 	    }
-	  }, ["เวลาโพสต์"]), " ", _m(2), " ", _m(3)])]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
+	  }, ["เวลาโพสต์"]), " ", _m(2), " ", _m(3)])]), " ", _h('pagination'), " ", _l((shownComments), function(comment) {
 	    return _h('comment-item', {
 	      attrs: {
 	        "data": comment

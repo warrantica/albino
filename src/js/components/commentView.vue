@@ -1,10 +1,10 @@
 <template>
 <div class="commentsView">
-  <div class="commentsInfo" v-show="$store.state.totalComments > 0">
+  <div class="commentsInfo" v-show="totalComments > 0">
     <div class="commentsCount">
-      <i class="ic commentsCount-icon">chat_bubble</i> {{ $store.state.totalComments }} ความเห็น
+      <i class="ic commentsCount-icon">chat_bubble</i> {{ totalComments }} ความเห็น
     </div>
-    <div class="commentsSort" @click.stop="$store.dispatch('showDialogue', 'commentSort')">
+    <div class="commentsSort" @click.stop="showDialogue('commentSort')">
       เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
     </div>
     <ul class="dialogue dialogue--commentSort"
@@ -16,7 +16,7 @@
   </div>
   <pagination></pagination>
 
-  <comment-item v-for="comment in $store.state.shownComments" :data="comment">
+  <comment-item v-for="comment in shownComments" :data="comment">
   </comment-item>
 
   <pagination></pagination>
@@ -24,10 +24,17 @@
 </template>
 
 <script>
-let Pantip = require('../pantipInterface.js');
+import { mapState, mapActions } from 'vuex';
+import Pantip from '../pantipInterface';
 export default {
-  computed: {
-    showDialogues(){ return this.$store.state.showDialogues }
-  }
+  computed: mapState([
+    'showDialogues',
+    'totalComments',
+    'shownComments'
+  ]),
+
+  methods: mapActions([
+    'showDialogue'
+  ])
 }
 </script>

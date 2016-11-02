@@ -35,17 +35,17 @@
             <i class="ic topicHeader-icon">thumb_up</i>
             กระทู้แนะนำ
             <i class="ic topicHeader-dropdownIcon"
-               :class="{ 'topicHeader-dropdownIcon--active': $store.state.showBestTopics }">
+               :class="{ 'topicHeader-dropdownIcon--active': showBestTopics }">
               expand_more</i>
           </div>
           <div class="topicList topicList--best"
-               :class="{ 'topicList--showBest': $store.state.showBestTopics }">
-            <best-topic-item v-for="topic in $store.state.bestTopics" :data="topic"></best-topic-item>
+               :class="{ 'topicList--showBest': showBestTopics }">
+            <best-topic-item v-for="topic in bestTopics" :data="topic"></best-topic-item>
           </div>
         </div>
         <div class="topicHeader"><i class="ic topicHeader-icon">schedule</i>กระทู้ล่าสุด</div>
         <div class="topicList">
-          <topic-item v-for="topic in $store.state.topics" :data="topic"></topic-item>
+          <topic-item v-for="topic in topics" :data="topic"></topic-item>
           <button class="topicList-loadMore"
                   @click="loadMoreTopics">โหลดกระทู้เพิ่ม</button>
         </div>
@@ -54,17 +54,17 @@
         <div class="searchHeader">
           <toolbar-icon icon="arrow_back" label="กลับไปหน้ารายชื่อกระทู้" @click.native="showSearch = false"></toolbar-icon>
           <input class="searchHeader-input" type="text"
-                 v-model="$store.state.searchQuery"
+                 v-model="searchQuery"
                  placeholder="คำค้นหา..."
-                 @keyup.enter="doSearch">
-          <toolbar-icon icon="search" label="ค้นหา" @click.native="doSearch"></toolbar-icon>
+                 @keyup.enter="search">
+          <toolbar-icon icon="search" label="ค้นหา" @click.native="search"></toolbar-icon>
         </div>
         <div class="searchResultList">
           <div class="loading loading--search"><i class="ics">refresh</i></div>
-          <search-result-item v-for="topic in $store.state.searchResults" :data="topic"></search-result-item>
+          <search-result-item v-for="topic in searchResults" :data="topic"></search-result-item>
           <button class="searchResultList-loadMore"
                   @click="loadMoreSearchResults"
-                  v-show="$store.state.searchResults.length">
+                  v-show="searchResults.length">
             โหลดกระทู้เพิ่ม
           </button>
         </div>
@@ -72,12 +72,12 @@
     </div>
     <div class="belly">
       <div class="bellyBar">
-        <div class="bellyBar-title" v-text="$store.state.topicTitle"></div>
+        <div class="bellyBar-title" v-text="topicTitle"></div>
         <div class="bellyBar-controls">
           <div class="bellyBar-refresh" @click="refreshTopic">
             <toolbar-icon icon="refresh" label="รีเฟรชกระทู้"></toolbar-icon>
-            <div class="bellyBar-refreshBadge" v-show="$store.state.unreadComments">
-              {{ $store.state.unreadComments }}
+            <div class="bellyBar-refreshBadge" v-show="unreadComments">
+              {{ unreadComments }}
             </div>
           </div>
           <toolbar-icon icon="open_in_new" label="เปิดใน Pantip.com" @click.native="openInPantip"></toolbar-icon>
@@ -86,8 +86,8 @@
       <div class="rightPane">
         <div class="loading loading--right"><i class="ics">hourglass_full</i></div>
         <div class="topicContainer">
-          <topic-view :data="$store.state.topicData" v-show="topicId != 0"></topic-view>
-          <component :is="$store.state.pageName" v-show="topicId == 0"></component>
+          <topic-view :data="topicData" v-show="topicId != 0"></topic-view>
+          <component :is="pageName" v-show="topicId == 0"></component>
         </div>
         <comment-view v-show="topicId"></comment-view>
       </div>
@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import Vars from './vars';
 import Pantip from './pantipInterface';
 import Helper from './helpers';
@@ -116,35 +117,42 @@ export default {
   }},
 
   computed: {
-    showDialogues(){ return this.$store.state.showDialogues },
-
-    topicId(){ return this.$store.state.topicId },
-
     forumDisplayName(){
       if(this.currentForum !== ''){
         for(let forum of this.forums)
-          if(forum.name === this.$store.state.forumName) return forum.label;
-      }else{
-        return 'เลือกห้อง';
-      }
-    }
+          if(forum.name === this.forumName) return forum.label;
+      }else{ return 'เลือกห้อง'; }
+    },
+
+    searchQuery: {
+      get(){ return this.$store.state.searchQuery; },
+      set(value){ this.$store.commit('setSearchQuery', value); }
+    },
+
+    ...mapState([
+      'showDialogues',
+      'showBestTopics',
+      'topicId',
+      'bestTopics',
+      'topics',
+      'searchResults',
+      'topicTitle',
+      'unreadComments',
+      'topicData',
+      'pageName',
+      'loadMoreId',
+      'forumName'
+    ])
   },
 
   methods: {
-    dismissDialogues(){ this.$store.dispatch('dismissDialogues'); },
-    showDialogue(name){ this.$store.dispatch('showDialogue', name) },
-
     refreshTopics(){
-      this.$store.dispatch('loadTopics', {forumName: this.$store.state.forumName});
+      this.$store.dispatch('loadTopics', {forumName: this.forumName});
     },
 
     loadMoreTopics(){
-      this.$store.dispatch('loadTopics', {forumName: this.$store.state.forumName, loadMore: true});
-      $('.topicItem.' + this.$store.state.loadMoreId).addClass('topicItem--beforeMore');
-    },
-
-    doSearch(){
-      this.$store.dispatch('search');
+      this.$store.dispatch('loadTopics', {forumName: this.forumName, loadMore: true});
+      $('.topicItem.' + this.loadMoreId).addClass('topicItem--beforeMore');
     },
 
     loadMoreSearchResults(){
@@ -161,18 +169,21 @@ export default {
       }
     },
 
-    loadPage(name){
-      this.$store.dispatch('loadPage', name);
-    },
-
     openInPantip(){
       if(this.$store.state.topicId !== 0)
-        window.open(`http://pantip.com/topic/${this.$store.state.topicId}`, '_blank');
+        window.open(`http://pantip.com/topic/${this.topicId}`, '_blank');
     },
 
     goToSettings(){
       chrome.runtime.openOptionsPage();
-    }
+    },
+
+    ...mapActions([
+      'dismissDialogues',
+      'showDialogue',
+      'search',
+      'loadPage'
+    ]),
   },
 
   mounted(){
