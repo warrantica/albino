@@ -7,12 +7,12 @@
           <img src="asset/img/logoHover.png" class="logo-colored"/>
         </div>
         <div class="sidebarToolbar">
-          <div class="forumSelector" @click.stop="showDialogues.forumSelect = true">
+          <div class="forumSelector" @click.stop="showDialogue('forumSelect')">
             <span class="forumSelector-name">{{ forumDisplayName }}</span>
             <i class="ic">arrow_drop_down</i>
           </div>
           <toolbar-icon icon="refresh" label="รีเฟรชรายชื่อกระทู้" @click.native="refreshTopics"></toolbar-icon>
-          <toolbar-icon icon="more_vert" label="อื่น ๆ" @click.native.stop="showDialogues.overflow = true"></toolbar-icon>
+          <toolbar-icon icon="more_vert" label="อื่น ๆ" @click.native.stop="showDialogue('overflow')"></toolbar-icon>
         </div>
         <ul class="dialogue dialogue--forumSelect"
             :class="{ 'dialogue--active':showDialogues.forumSelect }">
@@ -131,13 +131,8 @@ export default {
   },
 
   methods: {
-    dismissDialogues(){
-      for(let key in this.showDialogues){
-        if(this.showDialogues.hasOwnProperty(key)){
-          this.showDialogues[key] = false;
-        }
-      }
-    },
+    dismissDialogues(){ this.$store.dispatch('dismissDialogues'); },
+    showDialogue(name){ this.$store.dispatch('showDialogue', name) },
 
     refreshTopics(){
       this.$store.dispatch('loadTopics', {forumName: this.$store.state.forumName});

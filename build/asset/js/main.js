@@ -7113,11 +7113,10 @@
 
 	  methods: {
 	    dismissDialogues: function dismissDialogues() {
-	      for (var key in this.showDialogues) {
-	        if (this.showDialogues.hasOwnProperty(key)) {
-	          this.showDialogues[key] = false;
-	        }
-	      }
+	      this.$store.dispatch('dismissDialogues');
+	    },
+	    showDialogue: function showDialogue(name) {
+	      this.$store.dispatch('showDialogue', name);
 	    },
 	    refreshTopics: function refreshTopics() {
 	      this.$store.dispatch('loadTopics', { forumName: this.$store.state.forumName });
@@ -7297,7 +7296,7 @@
 	    on: {
 	      "click": function($event) {
 	        $event.stopPropagation();
-	        showDialogues.forumSelect = true
+	        showDialogue('forumSelect')
 	      }
 	    }
 	  }, [_h('span', {
@@ -7320,7 +7319,7 @@
 	    nativeOn: {
 	      "click": function($event) {
 	        $event.stopPropagation();
-	        showDialogues.overflow = true
+	        showDialogue('overflow')
 	      }
 	    }
 	  })]), " ", _h('ul', {
@@ -7752,7 +7751,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.goToCommentPage = exports.loadMoreComments = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = undefined;
+	exports.goToCommentPage = exports.loadMoreComments = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = exports.showDialogue = exports.dismissDialogues = undefined;
 
 	var _vars = __webpack_require__(5);
 
@@ -7770,16 +7769,38 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+	var dismissDialogues = exports.dismissDialogues = function dismissDialogues(_ref) {
+	  var dispatch = _ref.dispatch,
+	      commit = _ref.commit,
+	      state = _ref.state;
+
+	  for (var key in state.showDialogues) {
+	    if (state.showDialogues.hasOwnProperty(key)) {
+	      state.showDialogues[key] = false;
+	    }
+	  }
+	};
+
+	var showDialogue = exports.showDialogue = function showDialogue(_ref2, name) {
+	  var dispatch = _ref2.dispatch,
+	      commit = _ref2.commit,
+	      state = _ref2.state;
+
+	  dispatch('dismissDialogues');
+	  if (state.showDialogues[name] === undefined) return false;
+	  state.showDialogues[name] = true;
+	};
+
 	/*
 	payload = {
 	  forumName : name of forum to load
 	  loadMore : whether or not this request is from a load more button
 	}
 	*/
-	var loadTopics = exports.loadTopics = function loadTopics(_ref, payload) {
-	  var dispatch = _ref.dispatch,
-	      commit = _ref.commit,
-	      state = _ref.state;
+	var loadTopics = exports.loadTopics = function loadTopics(_ref3, payload) {
+	  var dispatch = _ref3.dispatch,
+	      commit = _ref3.commit,
+	      state = _ref3.state;
 
 	  var _loadMoreId = payload.loadMore ? state.loadMoreId : 0;
 
@@ -7838,12 +7859,12 @@
 	  loadMore : whether or not this request is from a load more button
 	}
 	*/
-	var search = exports.search = function search(_ref2, payload) {
+	var search = exports.search = function search(_ref4, payload) {
 	  var _console;
 
-	  var dispatch = _ref2.dispatch,
-	      commit = _ref2.commit,
-	      state = _ref2.state;
+	  var dispatch = _ref4.dispatch,
+	      commit = _ref4.commit,
+	      state = _ref4.state;
 
 	  if (state.searchQuery === '') return false;
 	  if (payload === undefined) payload = {};
@@ -7872,10 +7893,10 @@
 	  });
 	};
 
-	var loadPage = exports.loadPage = function loadPage(_ref3, pageName) {
-	  var dispatch = _ref3.dispatch,
-	      commit = _ref3.commit,
-	      state = _ref3.state;
+	var loadPage = exports.loadPage = function loadPage(_ref5, pageName) {
+	  var dispatch = _ref5.dispatch,
+	      commit = _ref5.commit,
+	      state = _ref5.state;
 
 	  commit('setTopicTitle', '');
 	  commit('setTopicId', 0);
@@ -7884,10 +7905,10 @@
 	  state.pageName = pageName;
 	};
 
-	var loadTopic = exports.loadTopic = function loadTopic(_ref4, topicId) {
-	  var dispatch = _ref4.dispatch,
-	      commit = _ref4.commit,
-	      state = _ref4.state;
+	var loadTopic = exports.loadTopic = function loadTopic(_ref6, topicId) {
+	  var dispatch = _ref6.dispatch,
+	      commit = _ref6.commit,
+	      state = _ref6.state;
 
 	  _helpers2.default.setRightPaneCurtains(false);
 
@@ -7941,20 +7962,20 @@
 	  });
 	};
 
-	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref5, url) {
-	  var dispatch = _ref5.dispatch,
-	      commit = _ref5.commit,
-	      state = _ref5.state;
+	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref7, url) {
+	  var dispatch = _ref7.dispatch,
+	      commit = _ref7.commit,
+	      state = _ref7.state;
 
 	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
 	    dispatch('loadTopic', id);
 	  });
 	};
 
-	var loadComments = exports.loadComments = function loadComments(_ref6, data) {
-	  var dispatch = _ref6.dispatch,
-	      commit = _ref6.commit,
-	      state = _ref6.state;
+	var loadComments = exports.loadComments = function loadComments(_ref8, data) {
+	  var dispatch = _ref8.dispatch,
+	      commit = _ref8.commit,
+	      state = _ref8.state;
 	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
@@ -7983,10 +8004,10 @@
 	  });
 	};
 
-	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref7, pageNumber) {
-	  var dispatch = _ref7.dispatch,
-	      commit = _ref7.commit,
-	      state = _ref7.state;
+	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref9, pageNumber) {
+	  var dispatch = _ref9.dispatch,
+	      commit = _ref9.commit,
+	      state = _ref9.state;
 
 	  var start = pageNumber * state.commentsPerPage;
 	  _pantipInterface2.default.loadComments(state.topicId, ++state.loadedPage).then(function (data) {
@@ -8010,10 +8031,10 @@
 	  });
 	};
 
-	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref8, pageNumber) {
-	  var dispatch = _ref8.dispatch,
-	      commit = _ref8.commit,
-	      state = _ref8.state;
+	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref10, pageNumber) {
+	  var dispatch = _ref10.dispatch,
+	      commit = _ref10.commit,
+	      state = _ref10.state;
 
 	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
 
@@ -8921,7 +8942,7 @@
 	    on: {
 	      "click": function($event) {
 	        $event.stopPropagation();
-	        showDialogues.commentSort = true
+	        $store.dispatch('showDialogue', 'commentSort')
 	      }
 	    }
 	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _m(1)]), " ", _h('ul', {

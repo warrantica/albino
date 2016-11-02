@@ -2,6 +2,20 @@ import Vars from '../vars';
 import Pantip from '../pantipInterface';
 import Helper from '../helpers';
 
+export const dismissDialogues = ({ dispatch, commit, state }) => {
+  for(let key in state.showDialogues){
+    if(state.showDialogues.hasOwnProperty(key)){
+      state.showDialogues[key] = false;
+    }
+  }
+}
+
+export const showDialogue = ({dispatch, commit, state}, name) => {
+  dispatch('dismissDialogues');
+  if(state.showDialogues[name] === undefined) return false;
+  state.showDialogues[name] = true;
+}
+
 /*
 payload = {
   forumName : name of forum to load

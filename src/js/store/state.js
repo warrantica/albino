@@ -34,43 +34,26 @@ export const state = {
 }
 
 export const mutations = {
-  toggleBestTopics(state){
-    state.showBestTopics = ! state.showBestTopics;
-  },
-
+  toggleBestTopics(state){ state.showBestTopics = ! state.showBestTopics; },
   hideBestTopics(state){ state.showBestTopics = false },
 
   setForumName(state, name){ state.forumName = name },
 
   resetTopics(state){ state.topics = [] },
-
   addToTopics(state, topic){ state.topics.push(topic) },
 
-  setTopicTitle(state, title){
-    state.topicTitle = title;
-  },
+  setTopicTitle(state, title){ state.topicTitle = title; },
 
-  setTopicId(state, id){
-    state.topicId = id;
-  },
+  setTopicId(state, id){ state.topicId = id; },
 
-  setTotalComments(state, number){
-    state.totalComments = number;
-  },
+  setTotalComments(state, number){ state.totalComments = number; },
 
-  setCommentsPerPage(state, number){
-    state.commentsPerPage = number;
-  },
+  setCommentsPerPage(state, number){ state.commentsPerPage = number; },
 
-  setCommentPage(state, page){
-    state.commentPage = page;
-  },
+  setCommentPage(state, page){ state.commentPage = page; },
 
-  resetShownComments(state){
-    state.shownComments = [];
-  },
+  resetShownComments(state){ state.shownComments = []; },
 
   resetUnreadComments(state){ state.unreadComments = 0 },
-
   setUnreadComments(state, number){ state.unreadComments = number }
 }

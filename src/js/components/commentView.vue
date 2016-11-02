@@ -4,7 +4,7 @@
     <div class="commentsCount">
       <i class="ic commentsCount-icon">chat_bubble</i> {{ $store.state.totalComments }} ความเห็น
     </div>
-    <div class="commentsSort" @click.stop="showDialogues.commentSort = true">
+    <div class="commentsSort" @click.stop="$store.dispatch('showDialogue', 'commentSort')">
       เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
     </div>
     <ul class="dialogue dialogue--commentSort"
