@@ -129,5 +129,11 @@ module.exports = {
 
   getFontFace(fontName){
     return this.fontFaces.find(font => font.label === fontName);
-  }
+  },
+
+  commentSortMode: [
+    { label: 'เวลาโพสต์', value: 'time' },
+    { label: 'เฉพาะจขกท.', value: 'story' },
+    { label: 'ความร้อนแรง', value: 'hot' },
+  ]
 };

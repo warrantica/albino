@@ -6030,7 +6030,10 @@
 	    return this.fontFaces.find(function (font) {
 	      return font.label === fontName;
 	    });
-	  }
+	  },
+
+
+	  commentSortMode: [{ label: 'เวลาโพสต์', value: 'time' }, { label: 'เฉพาะจขกท.', value: 'story' }, { label: 'ความร้อนแรง', value: 'hot' }]
 	};
 
 /***/ },

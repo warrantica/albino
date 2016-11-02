@@ -6625,7 +6625,10 @@
 	    return this.fontFaces.find(function (font) {
 	      return font.label === fontName;
 	    });
-	  }
+	  },
+
+
+	  commentSortMode: [{ label: 'เวลาโพสต์', value: 'time' }, { label: 'เฉพาะจขกท.', value: 'story' }, { label: 'ความร้อนแรง', value: 'hot' }]
 	};
 
 /***/ },
@@ -7687,6 +7690,7 @@
 	  topicData: {},
 
 	  comments: [],
+	  sortedComments: [],
 	  shownComments: [],
 	  totalComments: 0,
 	  commentsPerPage: 5,
@@ -7751,7 +7755,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.goToCommentPage = exports.loadMoreComments = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = exports.showDialogue = exports.dismissDialogues = undefined;
+	exports.sortComments = exports.goToCommentPage = exports.loadMoreComments = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = exports.showDialogue = exports.dismissDialogues = undefined;
 
 	var _vars = __webpack_require__(5);
 
@@ -7944,7 +7948,10 @@
 	    $('time.timeago').timeago();
 
 	    //load comments
-	    dispatch('loadComments', values[1], topicId === state.topicId);
+	    dispatch('loadComments', {
+	      data: values[1],
+	      isRefresh: topicId === state.topicId
+	    });
 
 	    _helpers2.default.setRightPaneCurtains(true);
 	    _helpers2.default.showFAB();
@@ -7972,18 +7979,23 @@
 	  });
 	};
 
-	var loadComments = exports.loadComments = function loadComments(_ref8, data) {
+	/*
+	payload = {
+	  data
+	  isRefresh
+	}
+	*/
+	var loadComments = exports.loadComments = function loadComments(_ref8, payload) {
 	  var dispatch = _ref8.dispatch,
 	      commit = _ref8.commit,
 	      state = _ref8.state;
-	  var isRefresh = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
-	    commit('setTotalComments', data.count);
+	    commit('setTotalComments', payload.data.count);
 	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
 	    commit('resetShownComments');
 
-	    data.comments.forEach(function (element, index, array) {
+	    payload.data.comments.forEach(function (element, index, array) {
 	      array[index] = _helpers2.default.vetComment(element);
 	      if (element.reply_count > 0) {
 	        element.replies.forEach(function (subElement, subIndex, subArray) {
@@ -7992,10 +8004,10 @@
 	      }
 	    });
 
-	    state.comments = state.totalComments ? data.comments : [];
+	    state.comments = state.totalComments ? payload.data.comments : [];
 
 	    if (state.commentsPerPage < state.totalComments) {
-	      var start = isRefresh ? state.commentPage * state.commentsPerPage : 0;
+	      var start = payload.isRefresh ? state.commentPage * state.commentsPerPage : 0;
 	      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
 	    } else {
 	      commit('setCommentPage', 0);
@@ -8004,13 +8016,13 @@
 	  });
 	};
 
-	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref9, pageNumber) {
+	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref9) {
 	  var dispatch = _ref9.dispatch,
 	      commit = _ref9.commit,
 	      state = _ref9.state;
 
-	  var start = pageNumber * state.commentsPerPage;
-	  _pantipInterface2.default.loadComments(state.topicId, ++state.loadedPage).then(function (data) {
+	  //let start = pageNumber*state.commentsPerPage;
+	  return _pantipInterface2.default.loadComments(state.topicId, ++state.loadedPage).then(function (data) {
 	    var _state$comments;
 
 	    data.comments.forEach(function (element, index, array) {
@@ -8024,10 +8036,10 @@
 
 	    (_state$comments = state.comments).push.apply(_state$comments, _toConsumableArray(data.comments));
 
-	    state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+	    //state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
 
 	    //DANGER!?
-	    if (state.shownComments.length === 0) dispatch('loadMoreComments', pageNumber);
+	    if (state.totalComments > state.comments.length) dispatch('loadMoreComments');
 	  });
 	};
 
@@ -8044,12 +8056,37 @@
 	  state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
 	  state.commentPage = pageNumber;
 
-	  if (state.shownComments.length === 0) dispatch('loadMoreComments', pageNumber);
+	  if (state.shownComments.length === 0) {
+	    dispatch('loadMoreComments').then(function (data) {
+	      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+	    });
+	  }
 
 	  var scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
 	  $('.rightPane').stop().animate({
 	    scrollTop: $('.rightPane').scrollTop() + scrollTo - 64
 	  }, "0.5s");
+	};
+
+	var sortComments = exports.sortComments = function sortComments(_ref11, mode) {
+	  var dispatch = _ref11.dispatch,
+	      commit = _ref11.commit,
+	      state = _ref11.state;
+
+	  state.sortedComments = [];
+	  switch (mode) {
+	    default:
+	    case 'time':
+	      //Referenced, not copied
+	      state.sortedComments = state.comments;
+	      break;
+	    case 'story':
+
+	      break;
+	    case 'hot':
+
+	      break;
+	  }
 	};
 
 /***/ },
@@ -8892,39 +8929,48 @@
 
 	var _pantipInterface2 = _interopRequireDefault(_pantipInterface);
 
+	var _vars = __webpack_require__(5);
+
+	var _vars2 = _interopRequireDefault(_vars);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-
 	exports.default = {
+	  data: function data() {
+	    return {
+	      sortMode: _vars2.default.commentSortMode
+	    };
+	  },
+
+
 	  computed: (0, _vuex.mapState)(['showDialogues', 'totalComments', 'shownComments']),
 
-	  methods: (0, _vuex.mapActions)(['showDialogue'])
-	};
+	  methods: (0, _vuex.mapActions)(['showDialogue', 'sortComments'])
+	}; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 34 */
@@ -8956,12 +9002,19 @@
 	    class: {
 	      'dialogue--active': showDialogues.commentSort
 	    }
-	  }, [_h('li', {
-	    staticClass: "dialogue-item",
-	    on: {
-	      "click": function($event) {}
-	    }
-	  }, ["เวลาโพสต์"]), " ", _m(2), " ", _m(3)])]), " ", _h('pagination'), " ", _l((shownComments), function(comment) {
+	  }, [_l((sortMode), function(mode) {
+	    return _h('li', {
+	      staticClass: "dialogue-item",
+	      domProps: {
+	        "textContent": _s(mode.label)
+	      },
+	      on: {
+	        "click": function($event) {
+	          sortComments(mode.value)
+	        }
+	      }
+	    })
+	  })])]), " ", _h('pagination'), " ", _l((shownComments), function(comment) {
 	    return _h('comment-item', {
 	      attrs: {
 	        "data": comment
@@ -8976,14 +9029,6 @@
 	  return _h('i', {
 	    staticClass: "ic"
 	  }, ["arrow_drop_down"])
-	}},function (){with(this) {
-	  return _h('li', {
-	    staticClass: "dialogue-item"
-	  }, ["ความร้อนแรง"])
-	}},function (){with(this) {
-	  return _h('li', {
-	    staticClass: "dialogue-item"
-	  }, ["เฉพาะจขกท."])
 	}}]}
 	if (false) {
 	  module.hot.accept()

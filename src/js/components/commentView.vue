@@ -9,9 +9,9 @@
     </div>
     <ul class="dialogue dialogue--commentSort"
         :class="{ 'dialogue--active': showDialogues.commentSort }">
-      <li class="dialogue-item" @click="">เวลาโพสต์</li>
-      <li class="dialogue-item">ความร้อนแรง</li>
-      <li class="dialogue-item">เฉพาะจขกท.</li>
+      <li class="dialogue-item" v-for="mode in sortMode"
+          v-text="mode.label"
+          @click="sortComments(mode.value)"></li>
     </ul>
   </div>
   <pagination></pagination>
@@ -26,7 +26,12 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import Pantip from '../pantipInterface';
+import Vars from '../vars';
 export default {
+  data(){ return {
+    sortMode: Vars.commentSortMode
+  }},
+
   computed: mapState([
     'showDialogues',
     'totalComments',
@@ -34,7 +39,8 @@ export default {
   ]),
 
   methods: mapActions([
-    'showDialogue'
+    'showDialogue',
+    'sortComments'
   ])
 }
 </script>

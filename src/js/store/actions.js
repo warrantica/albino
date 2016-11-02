@@ -129,7 +129,10 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
     $('time.timeago').timeago();
 
     //load comments
-    dispatch('loadComments', values[1], topicId === state.topicId);
+    dispatch('loadComments', {
+      data: values[1],
+      isRefresh: topicId === state.topicId
+    });
 
 
     Helper.setRightPaneCurtains(true);
@@ -154,13 +157,19 @@ export const loadSearchResult = ({ dispatch, commit, state }, url) => {
   });
 }
 
-export const loadComments = ({ dispatch, commit, state }, data, isRefresh = false) => {
+/*
+payload = {
+  data
+  isRefresh
+}
+*/
+export const loadComments = ({ dispatch, commit, state }, payload) => {
   chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
-    commit('setTotalComments', data.count);
+    commit('setTotalComments', payload.data.count);
     commit('setCommentsPerPage', parseInt(item.commentsPerPage));
     commit('resetShownComments');
 
-    data.comments.forEach((element, index, array) => {
+    payload.data.comments.forEach((element, index, array) => {
       array[index] = Helper.vetComment(element);
       if(element.reply_count > 0){
         element.replies.forEach((subElement, subIndex, subArray) => {
@@ -169,10 +178,10 @@ export const loadComments = ({ dispatch, commit, state }, data, isRefresh = fals
       }
     });
 
-    state.comments = state.totalComments ? data.comments : [];
+    state.comments = state.totalComments ? payload.data.comments : [];
 
     if(state.commentsPerPage < state.totalComments){
-      let start = isRefresh ? state.commentPage*state.commentsPerPage : 0;
+      let start = payload.isRefresh ? state.commentPage*state.commentsPerPage : 0;
       state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
     }else{
       commit('setCommentPage', 0);
@@ -182,9 +191,9 @@ export const loadComments = ({ dispatch, commit, state }, data, isRefresh = fals
   });
 }
 
-export const loadMoreComments = ({ dispatch, commit, state }, pageNumber) => {
-  let start = pageNumber*state.commentsPerPage;
-  Pantip.loadComments(state.topicId, ++state.loadedPage).then(data => {
+export const loadMoreComments = ({ dispatch, commit, state }) => {
+  //let start = pageNumber*state.commentsPerPage;
+  return Pantip.loadComments(state.topicId, ++state.loadedPage).then(data => {
     data.comments.forEach((element, index, array) => {
       array[index] = Helper.vetComment(element);
       if(element.reply_count > 0){
@@ -196,10 +205,10 @@ export const loadMoreComments = ({ dispatch, commit, state }, pageNumber) => {
 
     state.comments.push(...data.comments);
 
-    state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+    //state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
 
     //DANGER!?
-    if(state.shownComments.length === 0) dispatch('loadMoreComments', pageNumber);
+    if(state.totalComments > state.comments.length) dispatch('loadMoreComments');
   });
 }
 
@@ -213,10 +222,31 @@ export const goToCommentPage = ({ dispatch, commit, state }, pageNumber) => {
   state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
   state.commentPage = pageNumber;
 
-  if(state.shownComments.length === 0) dispatch('loadMoreComments', pageNumber);
+  if(state.shownComments.length === 0){
+    dispatch('loadMoreComments').then(data => {
+      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+    });
+  }
 
   let scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
   $('.rightPane').stop().animate({
     scrollTop: $('.rightPane').scrollTop() + scrollTo - 64
   }, "0.5s");
+}
+
+export const sortComments = ({dispatch, commit, state}, mode) => {
+  state.sortedComments = [];
+  switch (mode) {
+    default:
+    case 'time':
+      //Referenced, not copied
+      state.sortedComments = state.comments;
+      break;
+    case 'story':
+
+      break;
+    case 'hot':
+
+      break;
+  }
 }

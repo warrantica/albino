@@ -23,6 +23,7 @@ export const state = {
   topicData: {},
 
   comments: [],
+  sortedComments: [],
   shownComments: [],
   totalComments: 0,
   commentsPerPage: 5,
