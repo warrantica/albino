@@ -8900,7 +8900,12 @@
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
 	    staticClass: "commentsCount"
-	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\r\n    "]), " ", _m(1)]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
+	  }, [_m(0), " " + _s($store.state.totalComments) + " ความเห็น\r\n    "]), " ", _h('div', {
+	    staticClass: "commentsSort",
+	    on: {
+	      "click": function($event) {}
+	    }
+	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _m(1)])]), " ", _h('pagination'), " ", _l(($store.state.shownComments), function(comment) {
 	    return _h('comment-item', {
 	      attrs: {
 	        "data": comment
@@ -8912,11 +8917,9 @@
 	    staticClass: "ic commentsCount-icon"
 	  }, ["chat_bubble"])
 	}},function (){with(this) {
-	  return _h('div', {
-	    staticClass: "commentsSort"
-	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _h('i', {
+	  return _h('i', {
 	    staticClass: "ic"
-	  }, ["arrow_drop_down"])])
+	  }, ["arrow_drop_down"])
 	}}]}
 	if (false) {
 	  module.hot.accept()
