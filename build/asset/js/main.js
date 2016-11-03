@@ -7914,47 +7914,37 @@
 	      commit = _ref6.commit,
 	      state = _ref6.state;
 
+
+	  var isRefresh = topicId === state.topicId;
 	  _helpers2.default.setRightPaneCurtains(false);
 
-	  if (topicId !== state.currentTopic) $('.rightPane').animate({ scrollTop: 0 }, "0.5s");
+	  if (!isRefresh) $('.rightPane').animate({ scrollTop: 0 }, "0.5s");
 
 	  commit('setTopicId', topicId);
 	  commit('setTopicTitle', '');
 
-	  return Promise.all([_pantipInterface2.default.loadTopic(topicId), _pantipInterface2.default.loadComments(topicId)]).then(function (values) {
-	    //console.log(values);
-
-	    values[0].utime = _helpers2.default.convertTimeFormatToISO(values[0].utime);
-	    commit('setTopicTitle', values[0]['title']);
-
-	    state.loadedPage = 1;
-	    state.commentPage = 0;
+	  _pantipInterface2.default.loadTopic(topicId).then(function (data) {
+	    data.utime = _helpers2.default.convertTimeFormatToISO(data.utime);
+	    commit('setTopicTitle', data['title']);
 
 	    //load topic
-	    values[0].content = _helpers2.default.sanitiseContent(values[0].content);
+	    data.content = _helpers2.default.sanitiseContent(data.content);
 
-	    if (values[0].avatarSrc === '') values[0].avatarSrc = 'asset/img/default_avatar.png';
-	    if (values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
+	    if (data.avatarSrc === '') data.avatarSrc = 'asset/img/default_avatar.png';
+	    if (data.tags.length > 0) data.tags = data.tags.join(', ');
 
 	    //reactions
-	    values[0].reactionData = {
-	      voteSum: values[0].voteCount,
-	      emotionSum: values[0].emotionCount.sum,
-	      emotionCounts: values[0].emotionCount,
-	      emotionSortable: values[0].emotions
+	    data.reactionData = {
+	      voteSum: data.voteCount,
+	      emotionSum: data.emotionCount.sum,
+	      emotionCounts: data.emotionCount,
+	      emotionSortable: data.emotions
 	    };
 
-	    state.topicData = values[0];
+	    state.topicData = data;
 	    $('time.timeago').timeago();
 
-	    //load comments
-	    dispatch('loadComments', {
-	      data: values[1],
-	      isRefresh: topicId === state.topicId
-	    });
-
 	    _helpers2.default.setRightPaneCurtains(true);
-	    _helpers2.default.showFAB();
 
 	    //set up polling
 	    commit('resetUnreadComments');
@@ -7967,6 +7957,77 @@
 	      });
 	    }, 30000);
 	  });
+
+	  _pantipInterface2.default.loadComments(topicId).then(function (data) {
+	    if (!isRefresh) {
+	      state.loadedPage = 1;
+	      state.commentPage = 0;
+	    }
+
+	    dispatch('loadComments', { data: data, isRefresh: isRefresh });
+	    _helpers2.default.showFAB();
+	  });
+
+	  //=========================================================================================================
+	  //=========================================================================================================
+	  //=========================================================================================================
+	  //=========================================================================================================
+	  /*
+	    return Promise.all([
+	      Pantip.loadTopic(topicId),
+	      Pantip.loadComments(topicId)
+	    ]).then(values => {
+	      //console.log(values);
+	  
+	      values[0].utime = Helper.convertTimeFormatToISO(values[0].utime);
+	      commit('setTopicTitle', values[0]['title']);
+	  
+	      state.loadedPage = 1;
+	      state.commentPage = 0;
+	  
+	      //load topic
+	      values[0].content = Helper.sanitiseContent(values[0].content);
+	  
+	      if(values[0].avatarSrc === '') values[0].avatarSrc = 'asset/img/default_avatar.png';
+	      if(values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
+	  
+	      //reactions
+	      values[0].reactionData = {
+	        voteSum: values[0].voteCount,
+	        emotionSum: values[0].emotionCount.sum,
+	        emotionCounts: values[0].emotionCount,
+	        emotionSortable: values[0].emotions
+	      };
+	  
+	      state.topicData = values[0];
+	      $('time.timeago').timeago();
+	  
+	      //load comments
+	      dispatch('loadComments', {
+	        data: values[1],
+	        isRefresh: topicId === state.topicId
+	      });
+	  
+	  
+	      Helper.setRightPaneCurtains(true);
+	      Helper.showFAB();
+	  
+	      //set up polling
+	      commit('resetUnreadComments');
+	      window.clearInterval(state.topicRefreshIntervalId);
+	      state.topicRefreshIntervalId =  window.setInterval(() => {
+	        Pantip.loadComments(topicId).then(data => {
+	          if(data.count >= values[1].count){
+	            commit('setUnreadComments', data.count - values[1].count);
+	          }
+	        });
+	      }, 30000);
+	    });
+	  */
+	  //=========================================================================================================
+	  //=========================================================================================================
+	  //=========================================================================================================
+	  //=========================================================================================================
 	};
 
 	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref7, url) {
@@ -8005,6 +8066,9 @@
 	    });
 
 	    state.comments = state.totalComments ? payload.data.comments : [];
+
+	    dispatch('sortComments', 'story');
+	    console.log(state.sortedComments);
 
 	    if (state.commentsPerPage < state.totalComments) {
 	      var start = payload.isRefresh ? state.commentPage * state.commentsPerPage : 0;
@@ -8081,10 +8145,14 @@
 	      state.sortedComments = state.comments;
 	      break;
 	    case 'story':
-
+	      state.comments.forEach(function (element, index, array) {
+	        if (element.owner_topic) state.sortedComments.push(element);
+	      });
 	      break;
 	    case 'hot':
-
+	      //concat for shallow copy
+	      /*state.sortedComments = state.comments.concat().sort((a, b) => {
+	        });*/
 	      break;
 	  }
 	};
