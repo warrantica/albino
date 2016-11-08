@@ -2,16 +2,17 @@
 <div class="commentsView">
   <div class="commentsInfo" v-show="totalComments > 0">
     <div class="commentsCount">
-      <i class="ic commentsCount-icon">chat_bubble</i> {{ totalComments }} ความเห็น
+      <i class="ic commentsCount-icon">chat_bubble</i>
+      {{ sortedComments.length }} จากทั้งหมด {{ totalComments }} ความเห็น
     </div>
     <div class="commentsSort" @click.stop="showDialogue('commentSort')">
-      เรียงตาม: เวลาโพสต์ <i class="ic">arrow_drop_down</i>
+      เรียงตาม: {{ sortModeLabel }}<i class="ic">arrow_drop_down</i>
     </div>
     <ul class="dialogue dialogue--commentSort"
         :class="{ 'dialogue--active': showDialogues.commentSort }">
-      <li class="dialogue-item" v-for="mode in sortMode"
+      <li class="dialogue-item" v-for="mode in sortModes"
           v-text="mode.label"
-          @click="sortComments(mode.value)"></li>
+          @click="changeSortMode(mode.value)"></li>
     </ul>
   </div>
   <pagination></pagination>
@@ -29,18 +30,26 @@ import Pantip from '../pantipInterface';
 import Vars from '../vars';
 export default {
   data(){ return {
-    sortMode: Vars.commentSortMode
+    sortModes: Vars.commentSortMode
   }},
 
-  computed: mapState([
-    'showDialogues',
-    'totalComments',
-    'shownComments'
-  ]),
+  computed: {
+    sortModeLabel(){
+      return this.sortModes.find(mode => mode.value === this.sortMode).label;
+    },
+
+    ...mapState([
+      'showDialogues',
+      'totalComments',
+      'sortedComments',
+      'sortMode',
+      'shownComments'
+    ])
+  },
 
   methods: mapActions([
     'showDialogue',
-    'sortComments'
+    'changeSortMode'
   ])
 }
 </script>

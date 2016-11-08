@@ -6836,11 +6836,11 @@
 	    });
 	  },
 	  loadComments: function loadComments(topicID) {
-	    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+	    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
 	    return new Promise(function (resolve, reject) {
 	      var url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=3&time=' + Math.random() + '&param=';
-	      if (page !== 0) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
+	      if (page > 1) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
 
 	      $.ajax({
 	        type: 'GET',
@@ -7692,6 +7692,7 @@
 	  comments: [],
 	  sortedComments: [],
 	  shownComments: [],
+	  sortMode: 'time',
 	  totalComments: 0,
 	  commentsPerPage: 5,
 	  commentPage: 0,
@@ -7735,6 +7736,9 @@
 	  setCommentPage: function setCommentPage(state, page) {
 	    state.commentPage = page;
 	  },
+	  incrementLoadedPage: function incrementLoadedPage(state) {
+	    state.loadedPage++;
+	  },
 	  resetShownComments: function resetShownComments(state) {
 	    state.shownComments = [];
 	  },
@@ -7755,7 +7759,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.sortComments = exports.goToCommentPage = exports.loadMoreComments = exports.loadComments = exports.loadSearchResult = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = exports.showDialogue = exports.dismissDialogues = undefined;
+	exports.changeSortMode = exports.sortComments = exports.goToCommentPage = exports.loadSearchResult = exports.loadMoreComments = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = exports.showDialogue = exports.dismissDialogues = undefined;
 
 	var _vars = __webpack_require__(5);
 
@@ -7923,6 +7927,7 @@
 	  commit('setTopicId', topicId);
 	  commit('setTopicTitle', '');
 
+	  //Topic
 	  _pantipInterface2.default.loadTopic(topicId).then(function (data) {
 	    data.utime = _helpers2.default.convertTimeFormatToISO(data.utime);
 	    commit('setTopicTitle', data['title']);
@@ -7951,144 +7956,51 @@
 	    window.clearInterval(state.topicRefreshIntervalId);
 	    state.topicRefreshIntervalId = window.setInterval(function () {
 	      _pantipInterface2.default.loadComments(topicId).then(function (data) {
-	        if (data.count >= values[1].count) {
-	          commit('setUnreadComments', data.count - values[1].count);
+	        if (data.count >= data.count) {
+	          commit('setUnreadComments', data.count - data.count);
 	        }
 	      });
 	    }, 30000);
 	  });
 
-	  _pantipInterface2.default.loadComments(topicId).then(function (data) {
-	    if (!isRefresh) {
-	      state.loadedPage = 1;
-	      state.commentPage = 0;
-	    }
+	  //Comments
+	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
 
-	    dispatch('loadComments', { data: data, isRefresh: isRefresh });
-	    _helpers2.default.showFAB();
-	  });
+	    //Reset relevant states
+	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
+	    commit('resetShownComments');
+	    state.loadedPage = 1;
+	    state.comments = [];
 
-	  //=========================================================================================================
-	  //=========================================================================================================
-	  //=========================================================================================================
-	  //=========================================================================================================
-	  /*
-	    return Promise.all([
-	      Pantip.loadTopic(topicId),
-	      Pantip.loadComments(topicId)
-	    ]).then(values => {
-	      //console.log(values);
-	  
-	      values[0].utime = Helper.convertTimeFormatToISO(values[0].utime);
-	      commit('setTopicTitle', values[0]['title']);
-	  
-	      state.loadedPage = 1;
-	      state.commentPage = 0;
-	  
-	      //load topic
-	      values[0].content = Helper.sanitiseContent(values[0].content);
-	  
-	      if(values[0].avatarSrc === '') values[0].avatarSrc = 'asset/img/default_avatar.png';
-	      if(values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
-	  
-	      //reactions
-	      values[0].reactionData = {
-	        voteSum: values[0].voteCount,
-	        emotionSum: values[0].emotionCount.sum,
-	        emotionCounts: values[0].emotionCount,
-	        emotionSortable: values[0].emotions
-	      };
-	  
-	      state.topicData = values[0];
-	      $('time.timeago').timeago();
-	  
-	      //load comments
-	      dispatch('loadComments', {
-	        data: values[1],
-	        isRefresh: topicId === state.topicId
-	      });
-	  
-	  
-	      Helper.setRightPaneCurtains(true);
-	      Helper.showFAB();
-	  
-	      //set up polling
-	      commit('resetUnreadComments');
-	      window.clearInterval(state.topicRefreshIntervalId);
-	      state.topicRefreshIntervalId =  window.setInterval(() => {
-	        Pantip.loadComments(topicId).then(data => {
-	          if(data.count >= values[1].count){
-	            commit('setUnreadComments', data.count - values[1].count);
-	          }
-	        });
-	      }, 30000);
+	    dispatch('loadMoreComments').then(function (data) {
+
+	      if (!isRefresh) dispatch('sortComments', 'time');
+
+	      if (state.commentsPerPage < state.sortedComments.length) {
+	        var start = isRefresh ? state.commentPage * state.commentsPerPage : 0;
+	        state.shownComments = state.sortedComments.slice(start, start + state.commentsPerPage);
+	      } else {
+	        commit('setCommentPage', 0);
+	        state.shownComments = state.sortedComments;
+	      }
+
+	      _helpers2.default.showFAB();
 	    });
-	  */
-	  //=========================================================================================================
-	  //=========================================================================================================
-	  //=========================================================================================================
-	  //=========================================================================================================
+	  });
 	};
 
-	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref7, url) {
+	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref7) {
 	  var dispatch = _ref7.dispatch,
 	      commit = _ref7.commit,
 	      state = _ref7.state;
 
-	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
-	    dispatch('loadTopic', id);
-	  });
-	};
-
-	/*
-	payload = {
-	  data
-	  isRefresh
-	}
-	*/
-	var loadComments = exports.loadComments = function loadComments(_ref8, payload) {
-	  var dispatch = _ref8.dispatch,
-	      commit = _ref8.commit,
-	      state = _ref8.state;
-
-	  chrome.storage.sync.get({ commentsPerPage: '5' }, function (item) {
-	    commit('setTotalComments', payload.data.count);
-	    commit('setCommentsPerPage', parseInt(item.commentsPerPage));
-	    commit('resetShownComments');
-
-	    payload.data.comments.forEach(function (element, index, array) {
-	      array[index] = _helpers2.default.vetComment(element);
-	      if (element.reply_count > 0) {
-	        element.replies.forEach(function (subElement, subIndex, subArray) {
-	          subArray[subIndex] = _helpers2.default.vetComment(subElement, true);
-	        });
-	      }
-	    });
-
-	    state.comments = state.totalComments ? payload.data.comments : [];
-
-	    dispatch('sortComments', 'story');
-	    console.log(state.sortedComments);
-
-	    if (state.commentsPerPage < state.totalComments) {
-	      var start = payload.isRefresh ? state.commentPage * state.commentsPerPage : 0;
-	      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
-	    } else {
-	      commit('setCommentPage', 0);
-	      state.shownComments = state.comments;
-	    }
-	  });
-	};
-
-	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref9) {
-	  var dispatch = _ref9.dispatch,
-	      commit = _ref9.commit,
-	      state = _ref9.state;
-
-	  //let start = pageNumber*state.commentsPerPage;
-	  return _pantipInterface2.default.loadComments(state.topicId, ++state.loadedPage).then(function (data) {
+	  //console.log('loading page ' + state.loadedPage);
+	  return _pantipInterface2.default.loadComments(state.topicId, state.loadedPage).then(function (data) {
 	    var _state$comments;
 
+	    commit('setTotalComments', data.count);
+
+	    //vet comments
 	    data.comments.forEach(function (element, index, array) {
 	      array[index] = _helpers2.default.vetComment(element);
 	      if (element.reply_count > 0) {
@@ -8099,32 +8011,37 @@
 	    });
 
 	    (_state$comments = state.comments).push.apply(_state$comments, _toConsumableArray(data.comments));
-
-	    //state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+	    commit('incrementLoadedPage');
 
 	    //DANGER!?
 	    if (state.totalComments > state.comments.length) dispatch('loadMoreComments');
+
+	    return true;
 	  });
 	};
 
-	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref10, pageNumber) {
-	  var dispatch = _ref10.dispatch,
-	      commit = _ref10.commit,
-	      state = _ref10.state;
+	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref8, url) {
+	  var dispatch = _ref8.dispatch,
+	      commit = _ref8.commit,
+	      state = _ref8.state;
 
-	  if (pageNumber < 0 || pageNumber >= state.totalComments / state.commentsPerPage) return false;
+	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
+	    dispatch('loadTopic', id);
+	  });
+	};
+
+	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref9, pageNumber) {
+	  var dispatch = _ref9.dispatch,
+	      commit = _ref9.commit,
+	      state = _ref9.state;
+
+	  if (pageNumber < 0 || pageNumber >= state.sortedComments.length / state.commentsPerPage) return false;
 
 	  commit('resetShownComments');
 
 	  var start = pageNumber * state.commentsPerPage;
-	  state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+	  state.shownComments = state.sortedComments.slice(start, start + state.commentsPerPage);
 	  state.commentPage = pageNumber;
-
-	  if (state.shownComments.length === 0) {
-	    dispatch('loadMoreComments').then(function (data) {
-	      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
-	    });
-	  }
 
 	  var scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
 	  $('.rightPane').stop().animate({
@@ -8132,12 +8049,13 @@
 	  }, "0.5s");
 	};
 
-	var sortComments = exports.sortComments = function sortComments(_ref11, mode) {
-	  var dispatch = _ref11.dispatch,
-	      commit = _ref11.commit,
-	      state = _ref11.state;
+	var sortComments = exports.sortComments = function sortComments(_ref10, mode) {
+	  var dispatch = _ref10.dispatch,
+	      commit = _ref10.commit,
+	      state = _ref10.state;
 
 	  state.sortedComments = [];
+	  state.sortMode = mode;
 	  switch (mode) {
 	    default:
 	    case 'time':
@@ -8155,6 +8073,17 @@
 	        });*/
 	      break;
 	  }
+	};
+
+	var changeSortMode = exports.changeSortMode = function changeSortMode(_ref11, mode) {
+	  var dispatch = _ref11.dispatch,
+	      commit = _ref11.commit,
+	      state = _ref11.state;
+
+	  dispatch('sortComments', mode);
+
+	  commit('setCommentPage', 0);
+	  state.shownComments = state.sortedComments.slice(0, state.commentsPerPage);
 	};
 
 /***/ },
@@ -8991,6 +8920,33 @@
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
 	var _vuex = __webpack_require__(4);
 
 	var _pantipInterface = __webpack_require__(6);
@@ -9006,39 +8962,23 @@
 	exports.default = {
 	  data: function data() {
 	    return {
-	      sortMode: _vars2.default.commentSortMode
+	      sortModes: _vars2.default.commentSortMode
 	    };
 	  },
 
 
-	  computed: (0, _vuex.mapState)(['showDialogues', 'totalComments', 'shownComments']),
+	  computed: _extends({
+	    sortModeLabel: function sortModeLabel() {
+	      var _this = this;
 
-	  methods: (0, _vuex.mapActions)(['showDialogue', 'sortComments'])
-	}; //
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	      return this.sortModes.find(function (mode) {
+	        return mode.value === _this.sortMode;
+	      }).label;
+	    }
+	  }, (0, _vuex.mapState)(['showDialogues', 'totalComments', 'sortedComments', 'sortMode', 'shownComments'])),
+
+	  methods: (0, _vuex.mapActions)(['showDialogue', 'changeSortMode'])
+	};
 
 /***/ },
 /* 34 */
@@ -9057,7 +8997,7 @@
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
 	    staticClass: "commentsCount"
-	  }, [_m(0), " " + _s(totalComments) + " ความเห็น\r\n    "]), " ", _h('div', {
+	  }, [_m(0), "\r\n      " + _s(sortedComments.length) + " จากทั้งหมด " + _s(totalComments) + " ความเห็น\r\n    "]), " ", _h('div', {
 	    staticClass: "commentsSort",
 	    on: {
 	      "click": function($event) {
@@ -9065,12 +9005,12 @@
 	        showDialogue('commentSort')
 	      }
 	    }
-	  }, ["\r\n      เรียงตาม: เวลาโพสต์ ", _m(1)]), " ", _h('ul', {
+	  }, ["\r\n      เรียงตาม: " + _s(sortModeLabel), _m(1)]), " ", _h('ul', {
 	    staticClass: "dialogue dialogue--commentSort",
 	    class: {
 	      'dialogue--active': showDialogues.commentSort
 	    }
-	  }, [_l((sortMode), function(mode) {
+	  }, [_l((sortModes), function(mode) {
 	    return _h('li', {
 	      staticClass: "dialogue-item",
 	      domProps: {
@@ -9078,7 +9018,7 @@
 	      },
 	      on: {
 	        "click": function($event) {
-	          sortComments(mode.value)
+	          changeSortMode(mode.value)
 	        }
 	      }
 	    })
@@ -9172,7 +9112,7 @@
 	exports.default = {
 	  computed: {
 	    totalPages: function totalPages() {
-	      return Math.ceil(this.$store.state.totalComments / this.$store.state.commentsPerPage);
+	      return Math.ceil(this.$store.state.sortedComments.length / this.$store.state.commentsPerPage);
 	    },
 	    currentPage: function currentPage() {
 	      return this.$store.state.commentPage;

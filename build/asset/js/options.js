@@ -6241,11 +6241,11 @@
 	    });
 	  },
 	  loadComments: function loadComments(topicID) {
-	    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+	    var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
 	    return new Promise(function (resolve, reject) {
 	      var url = 'http://pantip.com/forum/topic/render_comments?tid=' + topicID + '&type=3&time=' + Math.random() + '&param=';
-	      if (page !== 0) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
+	      if (page > 1) url += 'page' + page + '&page=' + page + '&parent=2&expand=1';
 
 	      $.ajax({
 	        type: 'GET',

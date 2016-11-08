@@ -101,6 +101,7 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
   commit('setTopicId', topicId);
   commit('setTopicTitle', '');
 
+  //Topic
   Pantip.loadTopic(topicId).then(data => {
     data.utime = Helper.convertTimeFormatToISO(data.utime);
     commit('setTopicTitle', data['title']);
@@ -129,133 +130,45 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
     window.clearInterval(state.topicRefreshIntervalId);
     state.topicRefreshIntervalId =  window.setInterval(() => {
       Pantip.loadComments(topicId).then(data => {
-        if(data.count >= values[1].count){
-          commit('setUnreadComments', data.count - values[1].count);
+        if(data.count >= data.count){
+          commit('setUnreadComments', data.count - data.count);
         }
       });
     }, 30000);
   });
 
-  Pantip.loadComments(topicId).then(data => {
-    if(!isRefresh){
-      state.loadedPage = 1;
-      state.commentPage = 0;
-    }
-
-    dispatch('loadComments', { data, isRefresh });
-    Helper.showFAB();
-  });
-
-  //THEN load more comments
-
-//=========================================================================================================
-//=========================================================================================================
-//=========================================================================================================
-//=========================================================================================================
-/*
-  return Promise.all([
-    Pantip.loadTopic(topicId),
-    Pantip.loadComments(topicId)
-  ]).then(values => {
-    //console.log(values);
-
-    values[0].utime = Helper.convertTimeFormatToISO(values[0].utime);
-    commit('setTopicTitle', values[0]['title']);
-
-    state.loadedPage = 1;
-    state.commentPage = 0;
-
-    //load topic
-    values[0].content = Helper.sanitiseContent(values[0].content);
-
-    if(values[0].avatarSrc === '') values[0].avatarSrc = 'asset/img/default_avatar.png';
-    if(values[0].tags.length > 0) values[0].tags = values[0].tags.join(', ');
-
-    //reactions
-    values[0].reactionData = {
-      voteSum: values[0].voteCount,
-      emotionSum: values[0].emotionCount.sum,
-      emotionCounts: values[0].emotionCount,
-      emotionSortable: values[0].emotions
-    };
-
-    state.topicData = values[0];
-    $('time.timeago').timeago();
-
-    //load comments
-    dispatch('loadComments', {
-      data: values[1],
-      isRefresh: topicId === state.topicId
-    });
-
-
-    Helper.setRightPaneCurtains(true);
-    Helper.showFAB();
-
-    //set up polling
-    commit('resetUnreadComments');
-    window.clearInterval(state.topicRefreshIntervalId);
-    state.topicRefreshIntervalId =  window.setInterval(() => {
-      Pantip.loadComments(topicId).then(data => {
-        if(data.count >= values[1].count){
-          commit('setUnreadComments', data.count - values[1].count);
-        }
-      });
-    }, 30000);
-  });
-*/
-//=========================================================================================================
-//=========================================================================================================
-//=========================================================================================================
-//=========================================================================================================
-}
-
-export const loadSearchResult = ({ dispatch, commit, state }, url) => {
-  Pantip.getTopicIdFromSearch(url).then(id => {
-    dispatch('loadTopic', id);
-  });
-}
-
-/*
-payload = {
-  data
-  isRefresh
-}
-*/
-export const loadComments = ({ dispatch, commit, state }, payload) => {
+  //Comments
   chrome.storage.sync.get({ commentsPerPage: '5' }, item => {
-    commit('setTotalComments', payload.data.count);
+
+    //Reset relevant states
     commit('setCommentsPerPage', parseInt(item.commentsPerPage));
     commit('resetShownComments');
+    state.loadedPage = 1;
+    state.comments = [];
 
-    payload.data.comments.forEach((element, index, array) => {
-      array[index] = Helper.vetComment(element);
-      if(element.reply_count > 0){
-        element.replies.forEach((subElement, subIndex, subArray) => {
-          subArray[subIndex] = Helper.vetComment(subElement, true);
-        });
+    dispatch('loadMoreComments').then(data => {
+
+      if(!isRefresh) dispatch('sortComments', 'time');
+
+      if(state.commentsPerPage < state.sortedComments.length){
+        let start = isRefresh ? state.commentPage*state.commentsPerPage : 0;
+        state.shownComments = state.sortedComments.slice(start, start + state.commentsPerPage);
+      }else{
+        commit('setCommentPage', 0);
+        state.shownComments = state.sortedComments;
       }
+
+      Helper.showFAB();
     });
-
-    state.comments = state.totalComments ? payload.data.comments : [];
-
-    dispatch('sortComments', 'story');
-    console.log(state.sortedComments);
-
-    if(state.commentsPerPage < state.totalComments){
-      let start = payload.isRefresh ? state.commentPage*state.commentsPerPage : 0;
-      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
-    }else{
-      commit('setCommentPage', 0);
-      state.shownComments = state.comments;
-    }
-
   });
 }
 
 export const loadMoreComments = ({ dispatch, commit, state }) => {
-  //let start = pageNumber*state.commentsPerPage;
-  return Pantip.loadComments(state.topicId, ++state.loadedPage).then(data => {
+  //console.log('loading page ' + state.loadedPage);
+  return Pantip.loadComments(state.topicId, state.loadedPage).then(data => {
+    commit('setTotalComments', data.count);
+
+    //vet comments
     data.comments.forEach((element, index, array) => {
       array[index] = Helper.vetComment(element);
       if(element.reply_count > 0){
@@ -266,29 +179,30 @@ export const loadMoreComments = ({ dispatch, commit, state }) => {
     });
 
     state.comments.push(...data.comments);
-
-    //state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+    commit('incrementLoadedPage');
 
     //DANGER!?
     if(state.totalComments > state.comments.length) dispatch('loadMoreComments');
+
+    return true;
+  });
+}
+
+export const loadSearchResult = ({ dispatch, commit, state }, url) => {
+  Pantip.getTopicIdFromSearch(url).then(id => {
+    dispatch('loadTopic', id);
   });
 }
 
 export const goToCommentPage = ({ dispatch, commit, state }, pageNumber) => {
-  if(pageNumber < 0 || pageNumber >= state.totalComments/state.commentsPerPage)
+  if(pageNumber < 0 || pageNumber >= state.sortedComments.length/state.commentsPerPage)
     return false;
 
   commit('resetShownComments');
 
   let start = pageNumber*state.commentsPerPage;
-  state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
+  state.shownComments = state.sortedComments.slice(start, start + state.commentsPerPage);
   state.commentPage = pageNumber;
-
-  if(state.shownComments.length === 0){
-    dispatch('loadMoreComments').then(data => {
-      state.shownComments = state.comments.slice(start, start + state.commentsPerPage);
-    });
-  }
 
   let scrollTo = document.querySelector('.commentsInfo').getBoundingClientRect().top;
   $('.rightPane').stop().animate({
@@ -298,6 +212,7 @@ export const goToCommentPage = ({ dispatch, commit, state }, pageNumber) => {
 
 export const sortComments = ({dispatch, commit, state}, mode) => {
   state.sortedComments = [];
+  state.sortMode = mode;
   switch (mode) {
     default:
     case 'time':
@@ -316,4 +231,11 @@ export const sortComments = ({dispatch, commit, state}, mode) => {
       });*/
       break;
   }
+}
+
+export const changeSortMode = ({dispatch, commit, state}, mode) => {
+  dispatch('sortComments', mode);
+
+  commit('setCommentPage', 0);
+  state.shownComments = state.sortedComments.slice(0, state.commentsPerPage);
 }

@@ -25,6 +25,7 @@ export const state = {
   comments: [],
   sortedComments: [],
   shownComments: [],
+  sortMode: 'time',
   totalComments: 0,
   commentsPerPage: 5,
   commentPage: 0,
@@ -54,6 +55,8 @@ export const mutations = {
   setCommentsPerPage(state, number){ state.commentsPerPage = number; },
 
   setCommentPage(state, page){ state.commentPage = page; },
+
+  incrementLoadedPage(state){ state.loadedPage++; },
 
   resetShownComments(state){ state.shownComments = []; },
 

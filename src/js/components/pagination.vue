@@ -13,7 +13,7 @@
 export default {
   computed: {
     totalPages(){
-      return Math.ceil(this.$store.state.totalComments/this.$store.state.commentsPerPage);
+      return Math.ceil(this.$store.state.sortedComments.length/this.$store.state.commentsPerPage);
     },
 
     currentPage(){ return this.$store.state.commentPage }
