@@ -91,6 +91,12 @@ export const loadPage = ({ dispatch, commit, state }, pageName) => {
   state.pageName = pageName;
 }
 
+export const loadSearchResult = ({ dispatch, commit, state }, url) => {
+  Pantip.getTopicIdFromSearch(url).then(id => {
+    dispatch('loadTopic', id);
+  });
+}
+
 export const loadTopic = ({ dispatch, commit, state }, topicId) => {
 
   let isRefresh = topicId === state.topicId;
@@ -185,12 +191,6 @@ export const loadMoreComments = ({ dispatch, commit, state }) => {
     if(state.totalComments > state.comments.length) dispatch('loadMoreComments');
 
     return true;
-  });
-}
-
-export const loadSearchResult = ({ dispatch, commit, state }, url) => {
-  Pantip.getTopicIdFromSearch(url).then(id => {
-    dispatch('loadTopic', id);
   });
 }
 
