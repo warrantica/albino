@@ -188,7 +188,7 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
         state.shownComments = state.sortedComments;
       }
 
-      Helper.showFAB();
+      Helper.FABVisibility(state.sortedComments.length);
     });
   });
 }

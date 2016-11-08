@@ -6352,15 +6352,8 @@
 	      $('.loading--right').addClass('loading--active');
 	    }
 	  },
-	  showFAB: function showFAB() {
-	    window.setTimeout(function () {
-	      var rightPane = document.querySelector('.rightPane');
-	      if (rightPane.offsetHeight < rightPane.scrollHeight) {
-	        $('.fab').addClass('fab--enable');
-	      } else {
-	        $('.fab').removeClass('fab--enable');
-	      }
-	    }, 50);
+	  FABVisibility: function FABVisibility(visibility) {
+	    if (visibility) $('.fab').addClass('fab--enable');else $('.fab').removeClass('fab--enable');
 	  },
 	  vetComment: function vetComment(comment) {
 	    var isSub = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;

@@ -62,15 +62,9 @@ module.exports = {
     }
   },
 
-  showFAB(){
-    window.setTimeout(() => {
-      let rightPane = document.querySelector('.rightPane');
-      if(rightPane.offsetHeight < rightPane.scrollHeight){
-        $('.fab').addClass('fab--enable');
-      }else{
-        $('.fab').removeClass('fab--enable');
-      }
-    }, 50);
+  FABVisibility(visibility){
+    if(visibility) $('.fab').addClass('fab--enable')
+    else $('.fab').removeClass('fab--enable');
   },
 
   vetComment(comment, isSub = false){
