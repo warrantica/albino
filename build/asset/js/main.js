@@ -7759,7 +7759,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.changeSortMode = exports.sortComments = exports.goToCommentPage = exports.loadSearchResult = exports.loadMoreComments = exports.loadTopic = exports.loadPage = exports.search = exports.loadTopics = exports.showDialogue = exports.dismissDialogues = undefined;
+	exports.changeSortMode = exports.sortComments = exports.goToCommentPage = exports.loadMoreComments = exports.loadTopic = exports.loadSearchResult = exports.loadPage = exports.search = exports.loadTopics = exports.showDialogue = exports.dismissDialogues = undefined;
 
 	var _vars = __webpack_require__(5);
 
@@ -7777,6 +7777,10 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+	// =========================================================================================================
+	// Dismiss Dialogues
+	// =========================================================================================================
+
 	var dismissDialogues = exports.dismissDialogues = function dismissDialogues(_ref) {
 	  var dispatch = _ref.dispatch,
 	      commit = _ref.commit,
@@ -7789,6 +7793,11 @@
 	  }
 	};
 
+	// =========================================================================================================
+	// Show Dialogue
+	//   name
+	// =========================================================================================================
+
 	var showDialogue = exports.showDialogue = function showDialogue(_ref2, name) {
 	  var dispatch = _ref2.dispatch,
 	      commit = _ref2.commit,
@@ -7799,12 +7808,12 @@
 	  state.showDialogues[name] = true;
 	};
 
-	/*
-	payload = {
-	  forumName : name of forum to load
-	  loadMore : whether or not this request is from a load more button
-	}
-	*/
+	// =========================================================================================================
+	// Load Topics
+	//   forumName : name of forum to load
+	//   loadMore : whether or not this request is from a load more button
+	// =========================================================================================================
+
 	var loadTopics = exports.loadTopics = function loadTopics(_ref3, payload) {
 	  var dispatch = _ref3.dispatch,
 	      commit = _ref3.commit,
@@ -7862,11 +7871,11 @@
 	  });
 	};
 
-	/*
-	payload = {
-	  loadMore : whether or not this request is from a load more button
-	}
-	*/
+	// =========================================================================================================
+	// Search
+	//   loadMore : whether or not this request is from a load more button
+	// =========================================================================================================
+
 	var search = exports.search = function search(_ref4, payload) {
 	  var _console;
 
@@ -7901,6 +7910,11 @@
 	  });
 	};
 
+	// =========================================================================================================
+	// Load Page
+	//   pageName
+	// =========================================================================================================
+
 	var loadPage = exports.loadPage = function loadPage(_ref5, pageName) {
 	  var dispatch = _ref5.dispatch,
 	      commit = _ref5.commit,
@@ -7913,10 +7927,30 @@
 	  state.pageName = pageName;
 	};
 
-	var loadTopic = exports.loadTopic = function loadTopic(_ref6, topicId) {
+	// =========================================================================================================
+	// Load Search Resutls
+	//   url
+	// =========================================================================================================
+
+	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref6, url) {
 	  var dispatch = _ref6.dispatch,
 	      commit = _ref6.commit,
 	      state = _ref6.state;
+
+	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
+	    dispatch('loadTopic', id);
+	  });
+	};
+
+	// =========================================================================================================
+	// Load Topic
+	//   topicId
+	// =========================================================================================================
+
+	var loadTopic = exports.loadTopic = function loadTopic(_ref7, topicId) {
+	  var dispatch = _ref7.dispatch,
+	      commit = _ref7.commit,
+	      state = _ref7.state;
 
 
 	  var isRefresh = topicId === state.topicId;
@@ -7989,12 +8023,15 @@
 	  });
 	};
 
-	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref7) {
-	  var dispatch = _ref7.dispatch,
-	      commit = _ref7.commit,
-	      state = _ref7.state;
+	// =========================================================================================================
+	// Load Comments
+	// =========================================================================================================
 
-	  //console.log('loading page ' + state.loadedPage);
+	var loadMoreComments = exports.loadMoreComments = function loadMoreComments(_ref8) {
+	  var dispatch = _ref8.dispatch,
+	      commit = _ref8.commit,
+	      state = _ref8.state;
+
 	  return _pantipInterface2.default.loadComments(state.topicId, state.loadedPage).then(function (data) {
 	    var _state$comments;
 
@@ -8013,22 +8050,16 @@
 	    (_state$comments = state.comments).push.apply(_state$comments, _toConsumableArray(data.comments));
 	    commit('incrementLoadedPage');
 
-	    //DANGER!?
 	    if (state.totalComments > state.comments.length) dispatch('loadMoreComments');
 
 	    return true;
 	  });
 	};
 
-	var loadSearchResult = exports.loadSearchResult = function loadSearchResult(_ref8, url) {
-	  var dispatch = _ref8.dispatch,
-	      commit = _ref8.commit,
-	      state = _ref8.state;
-
-	  _pantipInterface2.default.getTopicIdFromSearch(url).then(function (id) {
-	    dispatch('loadTopic', id);
-	  });
-	};
+	// =========================================================================================================
+	// Go To Comment Page
+	//   pageNumber
+	// =========================================================================================================
 
 	var goToCommentPage = exports.goToCommentPage = function goToCommentPage(_ref9, pageNumber) {
 	  var dispatch = _ref9.dispatch,
@@ -8048,6 +8079,11 @@
 	    scrollTop: $('.rightPane').scrollTop() + scrollTo - 64
 	  }, "0.5s");
 	};
+
+	// =========================================================================================================
+	// Sort Comments
+	//   mode : sorting mode
+	// =========================================================================================================
 
 	var sortComments = exports.sortComments = function sortComments(_ref10, mode) {
 	  var dispatch = _ref10.dispatch,
@@ -8074,6 +8110,11 @@
 	      break;
 	  }
 	};
+
+	// =========================================================================================================
+	// Change Sort Mode
+	//   mode
+	// =========================================================================================================
 
 	var changeSortMode = exports.changeSortMode = function changeSortMode(_ref11, mode) {
 	  var dispatch = _ref11.dispatch,

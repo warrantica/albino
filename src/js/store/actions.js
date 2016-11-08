@@ -2,6 +2,10 @@ import Vars from '../vars';
 import Pantip from '../pantipInterface';
 import Helper from '../helpers';
 
+// =========================================================================================================
+// Dismiss Dialogues
+// =========================================================================================================
+
 export const dismissDialogues = ({ dispatch, commit, state }) => {
   for(let key in state.showDialogues){
     if(state.showDialogues.hasOwnProperty(key)){
@@ -10,18 +14,23 @@ export const dismissDialogues = ({ dispatch, commit, state }) => {
   }
 }
 
+// =========================================================================================================
+// Show Dialogue
+//   name
+// =========================================================================================================
+
 export const showDialogue = ({dispatch, commit, state}, name) => {
   dispatch('dismissDialogues');
   if(state.showDialogues[name] === undefined) return false;
   state.showDialogues[name] = true;
 }
 
-/*
-payload = {
-  forumName : name of forum to load
-  loadMore : whether or not this request is from a load more button
-}
-*/
+// =========================================================================================================
+// Load Topics
+//   forumName : name of forum to load
+//   loadMore : whether or not this request is from a load more button
+// =========================================================================================================
+
 export const loadTopics = ({ dispatch, commit, state }, payload) => {
   let _loadMoreId = payload.loadMore ? state.loadMoreId : 0;
 
@@ -52,11 +61,11 @@ export const loadTopics = ({ dispatch, commit, state }, payload) => {
   });
 }
 
-/*
-payload = {
-  loadMore : whether or not this request is from a load more button
-}
-*/
+// =========================================================================================================
+// Search
+//   loadMore : whether or not this request is from a load more button
+// =========================================================================================================
+
 export const search = ({ dispatch, commit, state }, payload) => {
   if(state.searchQuery === '') return false;
   if(payload === undefined) payload = {};
@@ -83,6 +92,11 @@ export const search = ({ dispatch, commit, state }, payload) => {
   });
 }
 
+// =========================================================================================================
+// Load Page
+//   pageName
+// =========================================================================================================
+
 export const loadPage = ({ dispatch, commit, state }, pageName) => {
   commit('setTopicTitle', '');
   commit('setTopicId', 0);
@@ -91,11 +105,21 @@ export const loadPage = ({ dispatch, commit, state }, pageName) => {
   state.pageName = pageName;
 }
 
+// =========================================================================================================
+// Load Search Resutls
+//   url
+// =========================================================================================================
+
 export const loadSearchResult = ({ dispatch, commit, state }, url) => {
   Pantip.getTopicIdFromSearch(url).then(id => {
     dispatch('loadTopic', id);
   });
 }
+
+// =========================================================================================================
+// Load Topic
+//   topicId
+// =========================================================================================================
 
 export const loadTopic = ({ dispatch, commit, state }, topicId) => {
 
@@ -169,8 +193,11 @@ export const loadTopic = ({ dispatch, commit, state }, topicId) => {
   });
 }
 
+// =========================================================================================================
+// Load Comments
+// =========================================================================================================
+
 export const loadMoreComments = ({ dispatch, commit, state }) => {
-  //console.log('loading page ' + state.loadedPage);
   return Pantip.loadComments(state.topicId, state.loadedPage).then(data => {
     commit('setTotalComments', data.count);
 
@@ -187,12 +214,16 @@ export const loadMoreComments = ({ dispatch, commit, state }) => {
     state.comments.push(...data.comments);
     commit('incrementLoadedPage');
 
-    //DANGER!?
     if(state.totalComments > state.comments.length) dispatch('loadMoreComments');
 
     return true;
   });
 }
+
+// =========================================================================================================
+// Go To Comment Page
+//   pageNumber
+// =========================================================================================================
 
 export const goToCommentPage = ({ dispatch, commit, state }, pageNumber) => {
   if(pageNumber < 0 || pageNumber >= state.sortedComments.length/state.commentsPerPage)
@@ -209,6 +240,11 @@ export const goToCommentPage = ({ dispatch, commit, state }, pageNumber) => {
     scrollTop: $('.rightPane').scrollTop() + scrollTo - 64
   }, "0.5s");
 }
+
+// =========================================================================================================
+// Sort Comments
+//   mode : sorting mode
+// =========================================================================================================
 
 export const sortComments = ({dispatch, commit, state}, mode) => {
   state.sortedComments = [];
@@ -232,6 +268,11 @@ export const sortComments = ({dispatch, commit, state}, mode) => {
       break;
   }
 }
+
+// =========================================================================================================
+// Change Sort Mode
+//   mode
+// =========================================================================================================
 
 export const changeSortMode = ({dispatch, commit, state}, mode) => {
   dispatch('sortComments', mode);
