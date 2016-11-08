@@ -216,6 +216,7 @@ module.exports = {
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         success: function(data){
           let dataJSON = JSON.parse(data);
+          console.log(dataJSON);
           let res = {}
           if(dataJSON['count'] !== undefined){
             res['count'] = dataJSON['count'];

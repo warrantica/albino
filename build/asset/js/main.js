@@ -6628,7 +6628,7 @@
 	  },
 
 
-	  commentSortMode: [{ label: 'เวลาโพสต์', value: 'time' }, { label: 'เฉพาะจขกท.', value: 'story' }, { label: 'ความร้อนแรง', value: 'hot' }]
+	  commentSortMode: [{ label: 'เวลาโพสต์', value: 'time' }, { label: 'เฉพาะจขกท.', value: 'story' }, { label: 'คะแนนโหวต', value: 'score' }, { label: 'ความร้อนแรง', value: 'hot' }]
 	};
 
 /***/ },
@@ -6850,6 +6850,7 @@
 	        headers: { 'X-Requested-With': 'XMLHttpRequest' },
 	        success: function success(data) {
 	          var dataJSON = JSON.parse(data);
+	          console.log(dataJSON);
 	          var res = {};
 	          if (dataJSON['count'] !== undefined) {
 	            res['count'] = dataJSON['count'];
@@ -6986,6 +6987,9 @@
 	      },
 	      emotionSortable: [{ name: "impress", count: comment.emotion.impress.count }, { name: "laugh", count: comment.emotion.laugh.count }, { name: "like", count: comment.emotion.like.count }, { name: "love", count: comment.emotion.love.count }, { name: "scary", count: comment.emotion.scary.count }, { name: "surprised", count: comment.emotion.surprised.count }]
 	    };
+
+	    //hotness = replies + emotionSum + voteSum
+	    comment.hotness = 5 * comment.reply_count + 1 * comment.emotion.sum + 2 * comment.good_bad_vote.point;
 
 	    return comment;
 	  }
@@ -8098,8 +8102,15 @@
 	      break;
 	    case 'hot':
 	      //concat for shallow copy
-	      /*state.sortedComments = state.comments.concat().sort((a, b) => {
-	        });*/
+	      state.sortedComments = state.comments.concat().sort(function (a, b) {
+	        return a.hotness < b.hotness ? 1 : a.hotness == b.hotness ? 0 : -1;
+	      });
+	      break;
+	    case 'score':
+	      //concat for shallow copy
+	      state.sortedComments = state.comments.concat().sort(function (a, b) {
+	        return a.voteCount < b.voteCount ? 1 : a.voteCount == b.voteCount ? 0 : -1;
+	      });
 	      break;
 	  }
 	};

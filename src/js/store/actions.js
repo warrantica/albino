@@ -262,9 +262,15 @@ export const sortComments = ({dispatch, commit, state}, mode) => {
       break;
     case 'hot':
       //concat for shallow copy
-      /*state.sortedComments = state.comments.concat().sort((a, b) => {
-
-      });*/
+      state.sortedComments = state.comments.concat().sort((a, b) => {
+        return a.hotness < b.hotness ? 1 : (a.hotness == b.hotness ? 0 : -1);
+      });
+      break;
+    case 'score':
+      //concat for shallow copy
+      state.sortedComments = state.comments.concat().sort((a, b) => {
+        return a.voteCount < b.voteCount ? 1 : (a.voteCount == b.voteCount ? 0 : -1);
+      });
       break;
   }
 }

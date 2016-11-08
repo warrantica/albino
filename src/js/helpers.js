@@ -109,6 +109,11 @@ module.exports = {
       ]
     };
 
+    //hotness = replies + emotionSum + voteSum
+    comment.hotness = 5*comment.reply_count
+                    + 1*comment.emotion.sum
+                    + 2*comment.good_bad_vote.point;
+
     return comment;
   }
 }

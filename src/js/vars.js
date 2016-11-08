@@ -134,6 +134,7 @@ module.exports = {
   commentSortMode: [
     { label: 'เวลาโพสต์', value: 'time' },
     { label: 'เฉพาะจขกท.', value: 'story' },
+    { label: 'คะแนนโหวต', value: 'score' },
     { label: 'ความร้อนแรง', value: 'hot' },
   ]
 };
