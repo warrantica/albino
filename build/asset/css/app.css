@@ -422,6 +422,9 @@ a:link, a:visited {
   opacity: 0;
   transition: opacity .01s ease-in-out .1s; }
 
+.rightPane .video_preview {
+  max-width: 100%; }
+
 .rightPane iframe {
   max-width: 100%; }
 

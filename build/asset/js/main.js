@@ -6655,7 +6655,7 @@
 	          success: function success(data) {
 	            var bestTopics = new Array();
 
-	            data = data.replace(/^[^]*<!-- .columns -->([^]*)<p>[^]*$/, '$1');
+	            data = data.replace(/^[^]*?<!-- .columns -->([^]*?)<p>[^]*$/, '$1');
 	            //console.log(data);
 
 	            $(data).find('.m-thumb').each(function (i) {
