@@ -6628,7 +6628,7 @@
 	  },
 
 
-	  commentSortMode: [{ label: 'เวลาโพสต์', value: 'time' }, { label: 'เฉพาะจขกท.', value: 'story' }, { label: 'คะแนนโหวต', value: 'score' }, { label: 'ความร้อนแรง', value: 'hot' }]
+	  commentSortMode: [{ label: 'เวลาโพสต์', value: 'time' }, { label: 'เฉพาะจขกท.', value: 'story' }, { label: 'คะแนนโหวต', value: 'score' }, { label: 'ความร้อนแรง', value: 'hot' }, { label: 'ดรามามิเตอร์', value: 'controversial' }]
 	};
 
 /***/ },
@@ -6990,6 +6990,9 @@
 
 	    //hotness = replies + emotionSum + voteSum
 	    comment.hotness = 5 * comment.reply_count + 1 * comment.emotion.sum + 2 * comment.good_bad_vote.point;
+
+	    //controversy = replies + scary + laugh
+	    comment.controversy = 5 * comment.reply_count + 2 * comment.emotion.scary.count + 1 * comment.emotion.laugh.count;
 
 	    return comment;
 	  }
@@ -8100,16 +8103,22 @@
 	        if (element.owner_topic) state.sortedComments.push(element);
 	      });
 	      break;
+	    case 'score':
+	      //concat for shallow copy
+	      state.sortedComments = state.comments.concat().sort(function (a, b) {
+	        return a.voteCount < b.voteCount ? 1 : a.voteCount == b.voteCount ? 0 : -1;
+	      });
+	      break;
 	    case 'hot':
 	      //concat for shallow copy
 	      state.sortedComments = state.comments.concat().sort(function (a, b) {
 	        return a.hotness < b.hotness ? 1 : a.hotness == b.hotness ? 0 : -1;
 	      });
 	      break;
-	    case 'score':
+	    case 'controversial':
 	      //concat for shallow copy
 	      state.sortedComments = state.comments.concat().sort(function (a, b) {
-	        return a.voteCount < b.voteCount ? 1 : a.voteCount == b.voteCount ? 0 : -1;
+	        return a.controversy < b.controversy ? 1 : a.controversy == b.controversy ? 0 : -1;
 	      });
 	      break;
 	  }
@@ -8991,6 +9000,9 @@
 	//
 	//
 	//
+	//
+	//
+	//
 
 	var _vuex = __webpack_require__(4);
 
@@ -9042,7 +9054,14 @@
 	    staticClass: "commentsInfo"
 	  }, [_h('div', {
 	    staticClass: "commentsCount"
-	  }, [_m(0), "\r\n      " + _s(sortedComments.length) + " จากทั้งหมด " + _s(totalComments) + " ความเห็น\r\n    "]), " ", _h('div', {
+	  }, [_m(0), " ", _h('span', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (sortedComments.length !== totalComments),
+	      expression: "sortedComments.length !== totalComments"
+	    }]
+	  }, ["\r\n        " + _s(sortedComments.length) + " จากทั้งหมด\r\n      "]), "\r\n      " + _s(totalComments) + " ความเห็น\r\n    "]), " ", _h('div', {
 	    staticClass: "commentsSort",
 	    on: {
 	      "click": function($event) {

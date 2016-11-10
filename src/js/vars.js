@@ -136,5 +136,6 @@ module.exports = {
     { label: 'เฉพาะจขกท.', value: 'story' },
     { label: 'คะแนนโหวต', value: 'score' },
     { label: 'ความร้อนแรง', value: 'hot' },
+    { label: 'ดรามามิเตอร์', value: 'controversial' },
   ]
 };

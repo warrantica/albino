@@ -6033,7 +6033,7 @@
 	  },
 
 
-	  commentSortMode: [{ label: 'เวลาโพสต์', value: 'time' }, { label: 'เฉพาะจขกท.', value: 'story' }, { label: 'คะแนนโหวต', value: 'score' }, { label: 'ความร้อนแรง', value: 'hot' }]
+	  commentSortMode: [{ label: 'เวลาโพสต์', value: 'time' }, { label: 'เฉพาะจขกท.', value: 'story' }, { label: 'คะแนนโหวต', value: 'score' }, { label: 'ความร้อนแรง', value: 'hot' }, { label: 'ดรามามิเตอร์', value: 'controversial' }]
 	};
 
 /***/ },
@@ -6395,6 +6395,9 @@
 
 	    //hotness = replies + emotionSum + voteSum
 	    comment.hotness = 5 * comment.reply_count + 1 * comment.emotion.sum + 2 * comment.good_bad_vote.point;
+
+	    //controversy = replies + scary + laugh
+	    comment.controversy = 5 * comment.reply_count + 2 * comment.emotion.scary.count + 1 * comment.emotion.laugh.count;
 
 	    return comment;
 	  }

@@ -3,7 +3,10 @@
   <div class="commentsInfo" v-show="totalComments > 0">
     <div class="commentsCount">
       <i class="ic commentsCount-icon">chat_bubble</i>
-      {{ sortedComments.length }} จากทั้งหมด {{ totalComments }} ความเห็น
+      <span v-show="sortedComments.length !== totalComments">
+        {{ sortedComments.length }} จากทั้งหมด
+      </span>
+      {{ totalComments }} ความเห็น
     </div>
     <div class="commentsSort" @click.stop="showDialogue('commentSort')">
       เรียงตาม: {{ sortModeLabel }}<i class="ic">arrow_drop_down</i>

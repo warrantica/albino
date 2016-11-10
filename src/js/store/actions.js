@@ -260,16 +260,22 @@ export const sortComments = ({dispatch, commit, state}, mode) => {
         if(element.owner_topic) state.sortedComments.push(element);
       });
       break;
+    case 'score':
+      //concat for shallow copy
+      state.sortedComments = state.comments.concat().sort((a, b) => {
+        return a.voteCount < b.voteCount ? 1 : (a.voteCount == b.voteCount ? 0 : -1);
+      });
+      break;
     case 'hot':
       //concat for shallow copy
       state.sortedComments = state.comments.concat().sort((a, b) => {
         return a.hotness < b.hotness ? 1 : (a.hotness == b.hotness ? 0 : -1);
       });
       break;
-    case 'score':
+    case 'controversial':
       //concat for shallow copy
       state.sortedComments = state.comments.concat().sort((a, b) => {
-        return a.voteCount < b.voteCount ? 1 : (a.voteCount == b.voteCount ? 0 : -1);
+        return a.controversy < b.controversy ? 1 : (a.controversy == b.controversy ? 0 : -1);
       });
       break;
   }
