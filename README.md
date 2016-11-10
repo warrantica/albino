@@ -13,33 +13,20 @@ git clone https://github.com/warrantica/albino.git
 cd albino
 ```
 
-- Install browserify globally
+- Install webpack globally
 ```bash
-npm install -g browserify
+npm install -g webpack
 ```
 
 - Install other packages
 ```bash
 npm install
 ```
-This will create a `node_modules` directory, containing vueify, babel and their dependencies.
-
-**Note: As of beta 3 and later, Albino uses webpack + vue-loader instead of browserify. Do this instead:**
-- Install webpack
-```bash
-npm install -g webpack
-```
+This will create a `node_modules` directory, containing vue-loader, babel-loader and their dependencies.
 
 ### Actually Building the Thing
 - Run
 ```
-npm run build
-```
-This will run browserify and vueify.
-
-**Note: As of beta 3 and later, Albino uses webpack + vue-loader instead of browserify. Do this instead:**
-- Run
-```bash
 webpack
 ```
 
