@@ -85,7 +85,7 @@
 
 	_vue2.default.component('toolbarIcon', __webpack_require__(14));
 	_vue2.default.component('forumSelectItem', __webpack_require__(17));
-	_vue2.default.component('bestTopicItem', __webpack_require__(20));
+	_vue2.default.component('curationItem', __webpack_require__(20));
 	_vue2.default.component('topicItem', __webpack_require__(23));
 	_vue2.default.component('searchResultItem', __webpack_require__(26));
 	_vue2.default.component('topicView', __webpack_require__(29));
@@ -6638,9 +6638,10 @@
 	'use strict';
 
 	module.exports = {
-	  loadBestTopics: function loadBestTopics(forumName) {
+	  loadCurations: function loadCurations(forumName) {
 	    if (forumName === 'all') forumName = '';
 	    var loadUrl = 'http://m.pantip.com/forum/' + forumName;
+	    var htmlRegex = /^[^]*?columns -->([^]*?)<p>[^]*?columns -->([^]*?)<p>[^]*$/;
 
 	    return new Promise(function (resolve, reject) {
 	      chrome.cookies.set({
@@ -6653,29 +6654,41 @@
 	          url: loadUrl,
 	          dataType: 'text',
 	          success: function success(data) {
-	            var bestTopics = new Array();
+	            var topicsHtml = { best: '', trend: '' };
+	            var topics = { best: [], trend: [] };
+	            data.replace(htmlRegex, function (matches, p1, p2) {
+	              topicsHtml.best = p1;
+	              topicsHtml.trend = p2;
+	            });
 
-	            data = data.replace(/^[^]*?<!-- .columns -->([^]*?)<p>[^]*$/, '$1');
-	            //console.log(data);
-
-	            $(data).find('.m-thumb').each(function (i) {
+	            function prepareTopic(el) {
 	              var item = {};
-	              item['_id'] = $(this).find('a').attr('href').substr(7);
+	              item['_id'] = el.find('a').attr('href').substr(7);
 
-	              item['disp_topic'] = $(this).find('.subject').text().trim();
+	              item['disp_topic'] = el.find('.subject').text().trim();
 	              //Note: "author" is misspelled in Pantip's source code
-	              item['author'] = $(this).find('.auther').text().trim();
+	              item['author'] = el.find('.auther').text().trim();
 
-	              var img = $(this).find('img');
+	              var img = el.find('img');
 	              item['cover_img'] = img.length ? img.attr('src') : '';
 
-	              bestTopics.push(item);
+	              return item;
+	            }
+
+	            $(topicsHtml.best).find('.m-thumb').each(function (i) {
+	              topics.best.push(prepareTopic($(this)));
 	            });
+
+	            $(topicsHtml.trend).find('.m-thumb').each(function (i) {
+	              topics.trend.push(prepareTopic($(this)));
+	            });
+
+	            //console.log(topics);
 	            chrome.cookies.remove({
 	              url: 'http://m.pantip.com',
 	              name: 'mobilerun'
 	            }, function () {
-	              return resolve(bestTopics);
+	              return resolve(topics);
 	            });
 	          },
 	          error: function error() {
@@ -7155,6 +7168,20 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	var _vuex = __webpack_require__(4);
 
@@ -7224,7 +7251,7 @@
 	      }
 	    }
 
-	  }, (0, _vuex.mapState)(['showDialogues', 'showBestTopics', 'topicId', 'bestTopics', 'topics', 'searchResults', 'topicTitle', 'unreadComments', 'topicData', 'pageName', 'loadMoreId', 'forumName'])),
+	  }, (0, _vuex.mapState)(['showDialogues', 'showBestTopics', 'showTrendTopics', 'topicId', 'curations', 'topics', 'searchResults', 'topicTitle', 'unreadComments', 'topicData', 'pageName', 'loadMoreId', 'forumName'])),
 
 	  methods: _extends({
 	    refreshTopics: function refreshTopics() {
@@ -7366,9 +7393,9 @@
 	    }],
 	    staticClass: "leftPane"
 	  }, [_m(2), " ", _h('div', {
-	    staticClass: "bestTopicContainer"
+	    staticClass: "curationsContainer"
 	  }, [_h('div', {
-	    staticClass: "topicHeader topicHeader--best",
+	    staticClass: "topicHeader topicHeader--curations",
 	    on: {
 	      "click": function($event) {
 	        $store.commit('toggleBestTopics')
@@ -7380,17 +7407,42 @@
 	      'topicHeader-dropdownIcon--active': showBestTopics
 	    }
 	  }, ["\n            expand_more"])]), " ", _h('div', {
-	    staticClass: "topicList topicList--best",
+	    staticClass: "topicList topicList--curations",
 	    class: {
-	      'topicList--showBest': showBestTopics
+	      'topicList--showCurations': showBestTopics
 	    }
-	  }, [_l((bestTopics), function(topic) {
-	    return _h('best-topic-item', {
+	  }, [_l((curations.best), function(topic) {
+	    return _h('curation-item', {
 	      attrs: {
 	        "data": topic
 	      }
 	    })
-	  })])]), " ", _m(4), " ", _h('div', {
+	  })])]), " ", _h('div', {
+	    staticClass: "curationsContainer"
+	  }, [_h('div', {
+	    staticClass: "topicHeader topicHeader--curations",
+	    on: {
+	      "click": function($event) {
+	        $store.commit('toggleTrendTopics')
+	      }
+	    }
+	  }, [_m(4), "\n          กระทู้ยอดนิยม\n          ", _h('i', {
+	    staticClass: "ic topicHeader-dropdownIcon",
+	    class: {
+	      'topicHeader-dropdownIcon--active': showTrendTopics
+	    }
+	  }, ["\n            expand_more"])]), " ", _h('div', {
+	    staticClass: "topicList topicList--curations",
+	    class: {
+	      'topicList--showCurations': showTrendTopics
+	    }
+	  }, [_l((curations.trend), function(topic) {
+	    return _h('curation-item', {
+	      attrs: {
+	        "data": topic
+	      }
+	    })
+	  })])]), " ", _m(5), " ", _h('div', {
 	    staticClass: "topicList"
 	  }, [_l((topics), function(topic) {
 	    return _h('topic-item', {
@@ -7460,7 +7512,7 @@
 	    }
 	  })]), " ", _h('div', {
 	    staticClass: "searchResultList"
-	  }, [_m(5), " ", _l((searchResults), function(topic) {
+	  }, [_m(6), " ", _l((searchResults), function(topic) {
 	    return _h('search-result-item', {
 	      attrs: {
 	        "data": topic
@@ -7518,7 +7570,7 @@
 	    }
 	  })])]), " ", _h('div', {
 	    staticClass: "rightPane"
-	  }, [_m(6), " ", _h('div', {
+	  }, [_m(7), " ", _h('div', {
 	    staticClass: "topicContainer"
 	  }, [_h('topic-view', {
 	    directives: [{
@@ -7545,7 +7597,7 @@
 	      value: (topicId),
 	      expression: "topicId"
 	    }]
-	  })]), " ", _m(7)]), " ", _m(8)])
+	  })]), " ", _m(8)]), " ", _m(9)])
 	}},staticRenderFns: [function (){with(this) {
 	  return _h('div', {
 	    staticClass: "logo"
@@ -7573,6 +7625,10 @@
 	  return _h('i', {
 	    staticClass: "ic topicHeader-icon"
 	  }, ["thumb_up"])
+	}},function (){with(this) {
+	  return _h('i', {
+	    staticClass: "ic topicHeader-icon"
+	  }, ["whatshot"])
 	}},function (){with(this) {
 	  return _h('div', {
 	    staticClass: "topicHeader"
@@ -7672,10 +7728,11 @@
 	    commentSort: false
 	  },
 	  showBestTopics: false,
+	  showTrendTopics: false,
 
 	  forumName: '',
 	  topics: [],
-	  bestTopics: [],
+	  curations: { best: [], trend: [] },
 	  loadMoreId: 0,
 	  topTopicId: 0,
 
@@ -7708,6 +7765,12 @@
 	  },
 	  hideBestTopics: function hideBestTopics(state) {
 	    state.showBestTopics = false;
+	  },
+	  toggleTrendTopics: function toggleTrendTopics(state) {
+	    state.showTrendTopics = !state.showTrendTopics;
+	  },
+	  hideTrendTopics: function hideTrendTopics(state) {
+	    state.showTrendTopics = false;
 	  },
 	  setForumName: function setForumName(state, name) {
 	    state.forumName = name;
@@ -7829,8 +7892,8 @@
 	    $('.loading--left').addClass('loading--active');
 	    commit('resetTopics');
 
-	    _pantipInterface2.default.loadBestTopics(payload.forumName).then(function (data) {
-	      return state.bestTopics = data;
+	    _pantipInterface2.default.loadCurations(payload.forumName).then(function (data) {
+	      return state.curations = data;
 	    });
 	  }
 
@@ -8376,7 +8439,7 @@
 	if (typeof __vue_options__ === "function") {
 	  __vue_options__ = __vue_options__.options
 	}
-	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\bestTopicItem.vue"
+	__vue_options__.__file = "C:\\sites\\albino\\albino\\src\\js\\components\\curationItem.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 
@@ -8387,12 +8450,12 @@
 	  if (!hotAPI.compatible) return
 	  module.hot.accept()
 	  if (!module.hot.data) {
-	    hotAPI.createRecord("data-v-868bbca8", __vue_options__)
+	    hotAPI.createRecord("data-v-3eed32ec", __vue_options__)
 	  } else {
-	    hotAPI.reload("data-v-868bbca8", __vue_options__)
+	    hotAPI.reload("data-v-3eed32ec", __vue_options__)
 	  }
 	})()}
-	if (__vue_options__.functional) {console.error("[vue-loader] bestTopicItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+	if (__vue_options__.functional) {console.error("[vue-loader] curationItem.vue: functional components are not supported and should be defined in plain js files using render functions.")}
 
 	module.exports = __vue_exports__
 
@@ -8481,7 +8544,7 @@
 	if (false) {
 	  module.hot.accept()
 	  if (module.hot.data) {
-	     require("vue-hot-reload-api").rerender("data-v-868bbca8", module.exports)
+	     require("vue-hot-reload-api").rerender("data-v-3eed32ec", module.exports)
 	  }
 	}
 

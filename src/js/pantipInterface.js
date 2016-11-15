@@ -1,7 +1,8 @@
 module.exports = {
-  loadBestTopics(forumName){
+  loadCurations(forumName){
     if(forumName === 'all') forumName = '';
     let loadUrl = 'http://m.pantip.com/forum/' + forumName;
+    let htmlRegex = /^[^]*?columns -->([^]*?)<p>[^]*?columns -->([^]*?)<p>[^]*$/;
 
     return new Promise((resolve, reject) => {
       chrome.cookies.set({
@@ -14,28 +15,40 @@ module.exports = {
           url: loadUrl,
           dataType: 'text',
           success: function(data){
-            let bestTopics = new Array();
+            let topicsHtml = { best: '', trend: '' };
+            let topics = { best: [], trend: [] };
+            data.replace(htmlRegex, (matches, p1, p2) => {
+              topicsHtml.best = p1;
+              topicsHtml.trend = p2;
+            });
 
-            data = data.replace(/^[^]*?<!-- .columns -->([^]*?)<p>[^]*$/, '$1');
-            //console.log(data);
-
-            $(data).find('.m-thumb').each(function(i){
+            function prepareTopic(el){
               let item = {};
-              item['_id'] = $(this).find('a').attr('href').substr(7);
+              item['_id'] = el.find('a').attr('href').substr(7);
 
-              item['disp_topic'] = $(this).find('.subject').text().trim();
+              item['disp_topic'] = el.find('.subject').text().trim();
               //Note: "author" is misspelled in Pantip's source code
-              item['author'] = $(this).find('.auther').text().trim();
+              item['author'] = el.find('.auther').text().trim();
 
-              let img = $(this).find('img');
+              let img = el.find('img');
               item['cover_img'] = img.length ? img.attr('src') : '';
 
-              bestTopics.push(item);
+              return item;
+            }
+
+            $(topicsHtml.best).find('.m-thumb').each(function(i){
+              topics.best.push(prepareTopic($(this)));
             });
+
+            $(topicsHtml.trend).find('.m-thumb').each(function(i){
+              topics.trend.push(prepareTopic($(this)));
+            });
+
+            //console.log(topics);
             chrome.cookies.remove({
               url: 'http://m.pantip.com',
               name: 'mobilerun'
-            }, () => resolve(bestTopics));
+            }, () => resolve(topics));
           },
           error: function(){
             chrome.cookies.remove({

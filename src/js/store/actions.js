@@ -43,7 +43,7 @@ export const loadTopics = ({ dispatch, commit, state }, payload) => {
     $('.loading--left').addClass('loading--active');
     commit('resetTopics');
 
-    Pantip.loadBestTopics(payload.forumName).then(data => state.bestTopics = data);
+    Pantip.loadCurations(payload.forumName).then(data => state.curations = data);
   }
 
   Pantip.loadTopics(payload.forumName, _loadMoreId).then(data => {

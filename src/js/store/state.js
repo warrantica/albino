@@ -5,10 +5,11 @@ export const state = {
     commentSort: false
   },
   showBestTopics: false,
+  showTrendTopics: false,
 
   forumName: '',
   topics: [],
-  bestTopics: [],
+  curations: { best: [], trend: [] },
   loadMoreId: 0,
   topTopicId: 0,
 
@@ -38,6 +39,8 @@ export const state = {
 export const mutations = {
   toggleBestTopics(state){ state.showBestTopics = ! state.showBestTopics; },
   hideBestTopics(state){ state.showBestTopics = false },
+  toggleTrendTopics(state){ state.showTrendTopics = ! state.showTrendTopics; },
+  hideTrendTopics(state){ state.showTrendTopics = false },
 
   setForumName(state, name){ state.forumName = name },
 

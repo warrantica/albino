@@ -6043,9 +6043,10 @@
 	'use strict';
 
 	module.exports = {
-	  loadBestTopics: function loadBestTopics(forumName) {
+	  loadCurations: function loadCurations(forumName) {
 	    if (forumName === 'all') forumName = '';
 	    var loadUrl = 'http://m.pantip.com/forum/' + forumName;
+	    var htmlRegex = /^[^]*?columns -->([^]*?)<p>[^]*?columns -->([^]*?)<p>[^]*$/;
 
 	    return new Promise(function (resolve, reject) {
 	      chrome.cookies.set({
@@ -6058,29 +6059,41 @@
 	          url: loadUrl,
 	          dataType: 'text',
 	          success: function success(data) {
-	            var bestTopics = new Array();
+	            var topicsHtml = { best: '', trend: '' };
+	            var topics = { best: [], trend: [] };
+	            data.replace(htmlRegex, function (matches, p1, p2) {
+	              topicsHtml.best = p1;
+	              topicsHtml.trend = p2;
+	            });
 
-	            data = data.replace(/^[^]*?<!-- .columns -->([^]*?)<p>[^]*$/, '$1');
-	            //console.log(data);
-
-	            $(data).find('.m-thumb').each(function (i) {
+	            function prepareTopic(el) {
 	              var item = {};
-	              item['_id'] = $(this).find('a').attr('href').substr(7);
+	              item['_id'] = el.find('a').attr('href').substr(7);
 
-	              item['disp_topic'] = $(this).find('.subject').text().trim();
+	              item['disp_topic'] = el.find('.subject').text().trim();
 	              //Note: "author" is misspelled in Pantip's source code
-	              item['author'] = $(this).find('.auther').text().trim();
+	              item['author'] = el.find('.auther').text().trim();
 
-	              var img = $(this).find('img');
+	              var img = el.find('img');
 	              item['cover_img'] = img.length ? img.attr('src') : '';
 
-	              bestTopics.push(item);
+	              return item;
+	            }
+
+	            $(topicsHtml.best).find('.m-thumb').each(function (i) {
+	              topics.best.push(prepareTopic($(this)));
 	            });
+
+	            $(topicsHtml.trend).find('.m-thumb').each(function (i) {
+	              topics.trend.push(prepareTopic($(this)));
+	            });
+
+	            //console.log(topics);
 	            chrome.cookies.remove({
 	              url: 'http://m.pantip.com',
 	              name: 'mobilerun'
 	            }, function () {
-	              return resolve(bestTopics);
+	              return resolve(topics);
 	            });
 	          },
 	          error: function error() {

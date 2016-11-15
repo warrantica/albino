@@ -16,7 +16,7 @@ import store from './store';
 
 Vue.component('toolbarIcon', require('./components/toolbarIcon.vue'));
 Vue.component('forumSelectItem', require('./components/forumSelectItem.vue'));
-Vue.component('bestTopicItem', require('./components/bestTopicItem.vue'));
+Vue.component('curationItem', require('./components/curationItem.vue'));
 Vue.component('topicItem', require('./components/topicItem.vue'));
 Vue.component('searchResultItem', require('./components/searchResultItem.vue'));
 Vue.component('topicView', require('./components/topicView.vue'));

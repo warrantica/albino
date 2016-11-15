@@ -161,7 +161,7 @@ a:link, a:visited {
   width: 100%;
   padding: 10px 10px 0 10px;
   font-size: 16px; }
-  .topicHeader--best {
+  .topicHeader--curations {
     cursor: pointer;
     padding-bottom: 10px; }
   .topicHeader-icon {
@@ -175,17 +175,17 @@ a:link, a:visited {
     .topicHeader-dropdownIcon--active {
       transform: rotate(180deg); }
 
-.bestTopicContainer {
+.curationsContainer {
   border-bottom: 1px var(--border) solid; }
 
 .topicList {
   transition: all 0.2s ease;
   width: 100%;
   opacity: 1; }
-  .topicList--best {
+  .topicList--curations {
     max-height: 0;
     overflow: hidden; }
-  .topicList--showBest {
+  .topicList--showCurations {
     max-height: 800px; }
   .topicList-loadMore {
     transition: all 0.2s ease;

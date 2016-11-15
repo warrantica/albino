@@ -67,7 +67,7 @@
   padding: 10px 10px 0 10px;
   font-size: 16px;
 
-  &--best{
+  &--curations{
     @include clickable;
     padding-bottom: 10px;
   }
@@ -87,19 +87,19 @@
   }
 }
 
-.bestTopicContainer{ @include border(bottom); }
+.curationsContainer{ @include border(bottom); }
 
 .topicList{
   @include transition;
   width: 100%;
   opacity: 1;
 
-  &--best{
+  &--curations{
     max-height: 0;
     overflow: hidden;
   }
 
-  &--showBest{ max-height: 800px; }
+  &--showCurations{ max-height: 800px; }
 
   &-loadMore{
     @include button;

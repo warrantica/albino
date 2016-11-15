@@ -29,8 +29,8 @@
       </div>
       <div class="leftPane" v-show="!showSearch">
         <div class="loading loading--left"><i class="ics">refresh</i></div>
-        <div class="bestTopicContainer">
-          <div class="topicHeader topicHeader--best"
+        <div class="curationsContainer">
+          <div class="topicHeader topicHeader--curations"
                @click="$store.commit('toggleBestTopics')">
             <i class="ic topicHeader-icon">thumb_up</i>
             กระทู้แนะนำ
@@ -38,9 +38,23 @@
                :class="{ 'topicHeader-dropdownIcon--active': showBestTopics }">
               expand_more</i>
           </div>
-          <div class="topicList topicList--best"
-               :class="{ 'topicList--showBest': showBestTopics }">
-            <best-topic-item v-for="topic in bestTopics" :data="topic"></best-topic-item>
+          <div class="topicList topicList--curations"
+               :class="{ 'topicList--showCurations': showBestTopics }">
+            <curation-item v-for="topic in curations.best" :data="topic"></curation-item>
+          </div>
+        </div>
+        <div class="curationsContainer">
+          <div class="topicHeader topicHeader--curations"
+               @click="$store.commit('toggleTrendTopics')">
+            <i class="ic topicHeader-icon">whatshot</i>
+            กระทู้ยอดนิยม
+            <i class="ic topicHeader-dropdownIcon"
+               :class="{ 'topicHeader-dropdownIcon--active': showTrendTopics }">
+              expand_more</i>
+          </div>
+          <div class="topicList topicList--curations"
+               :class="{ 'topicList--showCurations': showTrendTopics }">
+            <curation-item v-for="topic in curations.trend" :data="topic"></curation-item>
           </div>
         </div>
         <div class="topicHeader"><i class="ic topicHeader-icon">schedule</i>กระทู้ล่าสุด</div>
@@ -132,8 +146,9 @@ export default {
     ...mapState([
       'showDialogues',
       'showBestTopics',
+      'showTrendTopics',
       'topicId',
-      'bestTopics',
+      'curations',
       'topics',
       'searchResults',
       'topicTitle',
